@@ -41,6 +41,91 @@ paths:
                   $ref: '#/components/schemas/iniciatives'          
         '400':
           description: Any problem in the Server
+          
+    post:
+      tags:
+        - Iniciatives
+      summary: Add a new Iniciative
+      description: Add a new Iniciative 
+      operationId: addIniciative
+      requestBody:
+        description: Create a new iniciative
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newIniciative'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/iniciatives'          
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+          
+          
+  /iniciatives/{iniciativesID}:
+    put:
+      tags:
+        - Iniciatives
+      summary: Update an existing iniciative
+      description: Update an existing inciative by Id
+      operationId: updateIniciative
+      parameters:
+        - name: iniciativesID
+          in: path
+          description: ID of activity
+          required: true
+          schema:
+            type: integer
+            format: int64
+            
+            
+      requestBody:
+        description: Update an existent iniciative
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newIniciative'
+
+
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/iniciatives'          
+
+        '400':
+          description: Invalid ID supplied
+    delete:
+      tags:
+        - Iniciatives
+      summary: Delete an exisiting iniciative
+      description: Delete an iniciative by ID
+      operationId: deleteIniciative
+      parameters:
+        - name: iniciativesID
+          in: path
+          description: ID of activity
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/iniciatives'    
+          
   /ods:
     get:
       tags:
@@ -253,6 +338,31 @@ components:
         name:
           type: string
           example: Computer Science
+          
+    newIniciative:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        start_date:
+          type: string
+          format: date
+          example: "2025-06-01"
+        end_date:
+          type: string
+          format: date
+          example: "2025-08-01"
+        hours:
+          type: number
+          format: int64
+          example: 120
+        school_year:
+          type: string
+          example: 2024-2025
+        innovative:
+          type: boolean
 
             
           
