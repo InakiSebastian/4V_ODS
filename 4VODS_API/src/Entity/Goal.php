@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GoalRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GoalRepository::class)]
@@ -18,6 +20,17 @@ class Goal
 
     #[ORM\ManyToOne(inversedBy: 'goals')]
     private ?ods $idOds = null;
+
+    /**
+     * @var Collection<int, IniciativeGoal>
+     */
+    #[ORM\OneToMany(targetEntity: IniciativeGoal::class, mappedBy: 'idGoal')]
+    private Collection $iniciativeGoals;
+
+    public function __construct()
+    {
+        $this->iniciativeGoals = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -44,6 +57,36 @@ class Goal
     public function setIdOds(?ods $idOds): static
     {
         $this->idOds = $idOds;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, IniciativeGoal>
+     */
+    public function getIniciativeGoals(): Collection
+    {
+        return $this->iniciativeGoals;
+    }
+
+    public function addIniciativeGoal(IniciativeGoal $iniciativeGoal): static
+    {
+        if (!$this->iniciativeGoals->contains($iniciativeGoal)) {
+            $this->iniciativeGoals->add($iniciativeGoal);
+            $iniciativeGoal->setIdGoal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIniciativeGoal(IniciativeGoal $iniciativeGoal): static
+    {
+        if ($this->iniciativeGoals->removeElement($iniciativeGoal)) {
+            // set the owning side to null (unless already changed)
+            if ($iniciativeGoal->getIdGoal() === $this) {
+                $iniciativeGoal->setIdGoal(null);
+            }
+        }
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\IniciativeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,17 @@ class Iniciative
 
     #[ORM\Column]
     private ?int $hours = null;
+
+    /**
+     * @var Collection<int, IniciativeGoal>
+     */
+    #[ORM\OneToMany(targetEntity: IniciativeGoal::class, mappedBy: 'idIniciative', orphanRemoval: true)]
+    private Collection $iniciativeGoals;
+
+    public function __construct()
+    {
+        $this->iniciativeGoals = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +103,36 @@ class Iniciative
     public function setHours(int $hours): static
     {
         $this->hours = $hours;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, IniciativeGoal>
+     */
+    public function getIniciativeGoals(): Collection
+    {
+        return $this->iniciativeGoals;
+    }
+
+    public function addIniciativeGoal(IniciativeGoal $iniciativeGoal): static
+    {
+        if (!$this->iniciativeGoals->contains($iniciativeGoal)) {
+            $this->iniciativeGoals->add($iniciativeGoal);
+            $iniciativeGoal->setIdIniciative($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIniciativeGoal(IniciativeGoal $iniciativeGoal): static
+    {
+        if ($this->iniciativeGoals->removeElement($iniciativeGoal)) {
+            // set the owning side to null (unless already changed)
+            if ($iniciativeGoal->getIdIniciative() === $this) {
+                $iniciativeGoal->setIdIniciative(null);
+            }
+        }
 
         return $this;
     }
