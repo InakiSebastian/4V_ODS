@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Model;
+
 class Company
 {
     private int $id; 

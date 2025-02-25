@@ -1,6 +1,9 @@
 <?php
 
+namespace App\Model;
+
 use Symfony\Component\Validator\Constraints as Assert;
+use DateTime;
 
 class NewIniciativeDTO
 {
@@ -23,7 +26,6 @@ class NewIniciativeDTO
         private array $teachers,
         #[Assert\NotBlank(message: "La lista de entidades externas de la iniciativa es obligatoria")]
         private array $companies,
-        #[Assert\NotBlank(message: "La lista de módulos de la iniciativa es obligatoria")]
         private array $subjects,
         #[Assert\NotBlank(message: "La lista de metas de la iniciativa es obligatoria")]
         private array $goals,

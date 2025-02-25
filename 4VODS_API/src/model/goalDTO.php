@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Model;
+
 class GoalDTO{
     private int $id;
     private string $description;
