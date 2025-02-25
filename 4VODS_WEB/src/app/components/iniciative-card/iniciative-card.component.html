@@ -1,0 +1,23 @@
+<div class="card h-100">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                <p class="fs-4">
+                    {{iniciative?.Name}}
+                </p>
+            </div>
+            <div class="col p-0 d-flex justify-content-end align-items-center">
+                <p class="small">{{iniciative?.StartDate | formatDate}} - {{iniciative?.EndDate | formatDate}}</p>
+            </div>            
+        </div>
+    </div>
+
+    <div class="card-body">
+        <p>
+            {{iniciative?.Description}}
+        </p>
+    </div>
+    <div class="card-footer text-muted">
+        <p>Duración: {{iniciative?.Hours}} horas</p>
+    </div>
+</div>

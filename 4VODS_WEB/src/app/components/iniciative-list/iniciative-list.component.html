@@ -1,1 +1,9 @@
-<p>iniciative-list works!</p>
+<div class="container">
+    <div class="row row-cols-2 gy-4">
+        @for(iniciative of iniciativeList; track $index){
+            <div class="col">
+                <app-iniciative-card [iniciative]="iniciative"></app-iniciative-card>
+            </div>
+        }
+    </div>
+</div>
