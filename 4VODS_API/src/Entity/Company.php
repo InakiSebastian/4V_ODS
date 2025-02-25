@@ -24,6 +24,9 @@ class Company
     #[ORM\OneToMany(targetEntity: CompanyIniciative::class, mappedBy: 'idCompany', orphanRemoval: true)]
     private Collection $companyIniciatives;
 
+    #[ORM\Column]
+    private ?bool $_Active = True;
+
     public function __construct()
     {
         $this->companyIniciatives = new ArrayCollection();
@@ -72,6 +75,18 @@ class Company
                 $companyIniciative->setIdCompany(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->_Active;
+    }
+
+    public function setActive(bool $_Active): static
+    {
+        $this->_Active = $_Active;
 
         return $this;
     }

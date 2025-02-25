@@ -27,6 +27,9 @@ class Goal
     #[ORM\OneToMany(targetEntity: IniciativeGoal::class, mappedBy: 'idGoal')]
     private Collection $iniciativeGoals;
 
+    #[ORM\Column]
+    private ?bool $_Active = True;
+
     public function __construct()
     {
         $this->iniciativeGoals = new ArrayCollection();
@@ -87,6 +90,18 @@ class Goal
                 $iniciativeGoal->setIdGoal(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->_Active;
+    }
+
+    public function setActive(bool $_Active): static
+    {
+        $this->_Active = $_Active;
 
         return $this;
     }

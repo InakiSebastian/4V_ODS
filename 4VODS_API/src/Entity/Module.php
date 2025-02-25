@@ -34,6 +34,9 @@ class Module
     #[ORM\OneToMany(targetEntity: ModuleIniciative::class, mappedBy: 'idModule', orphanRemoval: true)]
     private Collection $moduleIniciatives;
 
+    #[ORM\Column]
+    private ?bool $_Active = True;
+
     public function __construct()
     {
         $this->teacherModules = new ArrayCollection();
@@ -125,6 +128,18 @@ class Module
                 $moduleIniciative->setIdModule(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->_Active;
+    }
+
+    public function setActive(bool $_Active): static
+    {
+        $this->_Active = $_Active;
 
         return $this;
     }

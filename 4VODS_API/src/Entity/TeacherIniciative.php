@@ -21,6 +21,9 @@ class TeacherIniciative
     #[ORM\JoinColumn(nullable: false)]
     private ?iniciative $idIniciative = null;
 
+    #[ORM\Column]
+    private ?bool $_Active = True;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +49,18 @@ class TeacherIniciative
     public function setIdIniciative(?iniciative $idIniciative): static
     {
         $this->idIniciative = $idIniciative;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->_Active;
+    }
+
+    public function setActive(bool $_Active): static
+    {
+        $this->_Active = $_Active;
 
         return $this;
     }

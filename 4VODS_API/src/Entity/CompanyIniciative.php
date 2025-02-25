@@ -21,6 +21,9 @@ class CompanyIniciative
     #[ORM\JoinColumn(nullable: false)]
     private ?company $idCompany = null;
 
+    #[ORM\Column]
+    private ?bool $_Active = True;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +49,18 @@ class CompanyIniciative
     public function setIdCompany(?company $idCompany): static
     {
         $this->idCompany = $idCompany;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->_Active;
+    }
+
+    public function setActive(bool $_Active): static
+    {
+        $this->_Active = $_Active;
 
         return $this;
     }

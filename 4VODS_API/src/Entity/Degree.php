@@ -24,6 +24,9 @@ class Degree
     #[ORM\OneToMany(targetEntity: Module::class, mappedBy: 'idDegree', orphanRemoval: true)]
     private Collection $modules;
 
+    #[ORM\Column]
+    private ?bool $_Active = True;
+
     public function __construct()
     {
         $this->modules = new ArrayCollection();
@@ -72,6 +75,18 @@ class Degree
                 $module->setIdDegree(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->_Active;
+    }
+
+    public function setActive(bool $_Active): static
+    {
+        $this->_Active = $_Active;
 
         return $this;
     }

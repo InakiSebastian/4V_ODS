@@ -23,9 +23,9 @@ class Iniciative
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $startDay = null;
+    private ?\DateTimeInterface $startDate = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\Column]
@@ -54,6 +54,15 @@ class Iniciative
      */
     #[ORM\OneToMany(targetEntity: ModuleIniciative::class, mappedBy: 'idIniciative', orphanRemoval: true)]
     private Collection $moduleIniciatives;
+
+    #[ORM\Column]
+    private ?bool $_Active = True;
+
+    #[ORM\Column(length: 10)]
+    private ?string $schoolYear = null;
+
+    #[ORM\Column]
+    private ?bool $innovative = null;
 
     public function __construct()
     {
@@ -92,14 +101,14 @@ class Iniciative
         return $this;
     }
 
-    public function getStartDay(): ?\DateTimeInterface
+    public function getStartDate(): ?\DateTimeInterface
     {
-        return $this->startDay;
+        return $this->startDate;
     }
 
-    public function setStartDay(\DateTimeInterface $startDay): static
+    public function setStartDate(\DateTimeInterface $startDate): static
     {
-        $this->startDay = $startDay;
+        $this->startDate = $startDate;
 
         return $this;
     }
@@ -244,6 +253,42 @@ class Iniciative
                 $moduleIniciative->setIdIniciative(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->_Active;
+    }
+
+    public function setActive(bool $_Active): static
+    {
+        $this->_Active = $_Active;
+
+        return $this;
+    }
+
+    public function getSchoolYear(): ?string
+    {
+        return $this->schoolYear;
+    }
+
+    public function setSchoolYear(string $schoolYear): static
+    {
+        $this->schoolYear = $schoolYear;
+
+        return $this;
+    }
+
+    public function isInnovative(): ?bool
+    {
+        return $this->innovative;
+    }
+
+    public function setInnovative(bool $innovative): static
+    {
+        $this->innovative = $innovative;
 
         return $this;
     }

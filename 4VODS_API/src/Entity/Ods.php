@@ -24,6 +24,12 @@ class Ods
     #[ORM\OneToMany(targetEntity: Goal::class, mappedBy: 'idOds')]
     private Collection $goals;
 
+    #[ORM\Column]
+    private ?bool $_Active = True;
+
+    #[ORM\Column(length: 50)]
+    private ?string $dimension = null;
+
     public function __construct()
     {
         $this->goals = new ArrayCollection();
@@ -72,6 +78,30 @@ class Ods
                 $goal->setIdOds(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->_Active;
+    }
+
+    public function setActive(bool $_Active): static
+    {
+        $this->_Active = $_Active;
+
+        return $this;
+    }
+
+    public function getDimension(): ?string
+    {
+        return $this->dimension;
+    }
+
+    public function setDimension(string $dimension): static
+    {
+        $this->dimension = $dimension;
 
         return $this;
     }

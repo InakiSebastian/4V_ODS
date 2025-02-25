@@ -21,6 +21,9 @@ class TeacherModule
     #[ORM\JoinColumn(nullable: false)]
     private ?teacher $idTeacher = null;
 
+    #[ORM\Column]
+    private ?bool $_Active = True;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +49,18 @@ class TeacherModule
     public function setIdTeacher(?teacher $idTeacher): static
     {
         $this->idTeacher = $idTeacher;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->_Active;
+    }
+
+    public function setActive(bool $_Active): static
+    {
+        $this->_Active = $_Active;
 
         return $this;
     }

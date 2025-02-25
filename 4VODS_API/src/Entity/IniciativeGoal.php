@@ -20,6 +20,9 @@ class IniciativeGoal
     #[ORM\ManyToOne(inversedBy: 'iniciativeGoals')]
     private ?Goal $idGoal = null;
 
+    #[ORM\Column]
+    private ?bool $_Active = True;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +48,18 @@ class IniciativeGoal
     public function setIdGoal(?Goal $idGoal): static
     {
         $this->idGoal = $idGoal;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->_Active;
+    }
+
+    public function setActive(bool $_Active): static
+    {
+        $this->_Active = $_Active;
 
         return $this;
     }
