@@ -6,9 +6,9 @@ export class Iniciative {
     private endDate: Date;
     private hours: number;
 
-    private tipoIniciativa: string //TODOIKER: cambiar a tipo enum
+    private iniciativeType: string //TODOIKER: cambiar a tipo enum
 
-    constructor(id: number, name: string, description: string, startDate: Date, endDate: Date, hours: number, tipoIniciativa: string){
+    constructor(id: number, name: string, description: string, startDate: Date, endDate: Date, hours: number, iniciativeType: string){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -16,7 +16,7 @@ export class Iniciative {
         this.endDate = endDate;
         this.hours = hours;
 
-        this.tipoIniciativa = tipoIniciativa;
+        this.iniciativeType = iniciativeType;
     }
 
     get Id(): number{
@@ -43,10 +43,11 @@ export class Iniciative {
         return this.hours;
     }
     
-    get TipoIniciativa(): string
+    get IniciativeType(): string
     {
-        
+        return this.iniciativeType;
     }
+
     set Id(id: number){
         this.id = id;
     }
@@ -65,5 +66,7 @@ export class Iniciative {
     set Hours(hours: number){
         this.hours = hours;
     }
-
+    set IniciativeType(type: string){
+        this.iniciativeType = type;
+    }
 }
