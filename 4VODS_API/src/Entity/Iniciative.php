@@ -37,9 +37,30 @@ class Iniciative
     #[ORM\OneToMany(targetEntity: IniciativeGoal::class, mappedBy: 'idIniciative', orphanRemoval: true)]
     private Collection $iniciativeGoals;
 
+    /**
+     * @var Collection<int, TeacherIniciative>
+     */
+    #[ORM\OneToMany(targetEntity: TeacherIniciative::class, mappedBy: 'idIniciative', orphanRemoval: true)]
+    private Collection $teacherIniciatives;
+
+    /**
+     * @var Collection<int, CompanyIniciative>
+     */
+    #[ORM\OneToMany(targetEntity: CompanyIniciative::class, mappedBy: 'idIniciative', orphanRemoval: true)]
+    private Collection $companyIniciatives;
+
+    /**
+     * @var Collection<int, ModuleIniciative>
+     */
+    #[ORM\OneToMany(targetEntity: ModuleIniciative::class, mappedBy: 'idIniciative', orphanRemoval: true)]
+    private Collection $moduleIniciatives;
+
     public function __construct()
     {
         $this->iniciativeGoals = new ArrayCollection();
+        $this->teacherIniciatives = new ArrayCollection();
+        $this->companyIniciatives = new ArrayCollection();
+        $this->moduleIniciatives = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,6 +152,96 @@ class Iniciative
             // set the owning side to null (unless already changed)
             if ($iniciativeGoal->getIdIniciative() === $this) {
                 $iniciativeGoal->setIdIniciative(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TeacherIniciative>
+     */
+    public function getTeacherIniciatives(): Collection
+    {
+        return $this->teacherIniciatives;
+    }
+
+    public function addTeacherIniciative(TeacherIniciative $teacherIniciative): static
+    {
+        if (!$this->teacherIniciatives->contains($teacherIniciative)) {
+            $this->teacherIniciatives->add($teacherIniciative);
+            $teacherIniciative->setIdIniciative($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeacherIniciative(TeacherIniciative $teacherIniciative): static
+    {
+        if ($this->teacherIniciatives->removeElement($teacherIniciative)) {
+            // set the owning side to null (unless already changed)
+            if ($teacherIniciative->getIdIniciative() === $this) {
+                $teacherIniciative->setIdIniciative(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CompanyIniciative>
+     */
+    public function getCompanyIniciatives(): Collection
+    {
+        return $this->companyIniciatives;
+    }
+
+    public function addCompanyIniciative(CompanyIniciative $companyIniciative): static
+    {
+        if (!$this->companyIniciatives->contains($companyIniciative)) {
+            $this->companyIniciatives->add($companyIniciative);
+            $companyIniciative->setIdIniciative($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompanyIniciative(CompanyIniciative $companyIniciative): static
+    {
+        if ($this->companyIniciatives->removeElement($companyIniciative)) {
+            // set the owning side to null (unless already changed)
+            if ($companyIniciative->getIdIniciative() === $this) {
+                $companyIniciative->setIdIniciative(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ModuleIniciative>
+     */
+    public function getModuleIniciatives(): Collection
+    {
+        return $this->moduleIniciatives;
+    }
+
+    public function addModuleIniciative(ModuleIniciative $moduleIniciative): static
+    {
+        if (!$this->moduleIniciatives->contains($moduleIniciative)) {
+            $this->moduleIniciatives->add($moduleIniciative);
+            $moduleIniciative->setIdIniciative($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModuleIniciative(ModuleIniciative $moduleIniciative): static
+    {
+        if ($this->moduleIniciatives->removeElement($moduleIniciative)) {
+            // set the owning side to null (unless already changed)
+            if ($moduleIniciative->getIdIniciative() === $this) {
+                $moduleIniciative->setIdIniciative(null);
             }
         }
 
