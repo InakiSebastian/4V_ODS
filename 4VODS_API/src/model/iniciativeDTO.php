@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Model;
+
+use DateTime;
 class IniciativeDTO
 {
     private int $id;

@@ -1,6 +1,8 @@
 <?php
 
-class SubjectDTO{
+namespace App\Model;
+
+class ModuleDTO{
     private int $id;
     private string $name;
     private int $idDegree;
