@@ -21,6 +21,8 @@ tags:
     description: Everything about Modules
   - name: Degree
     description: Everything about Degrees
+  - name: Diffusion
+    description: Everything about Diffusion
   
   
 paths:
@@ -143,6 +145,23 @@ paths:
                   $ref: '#/components/schemas/degree'          
         '400':
           description: Any problem in the Server
+  /diffusion:
+    get:
+      tags:
+        - Diffusion
+      summary: get all diffusions
+      operationId: getAllDiffusion
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/diffusion'          
+        '400':
+          description: Any problem in the Server
           
 components:
   schemas:
@@ -179,7 +198,7 @@ components:
         innovative:
           type: boolean
           example: false
-        activity_type:
+        type:
           type: string
           enum: 
             - proyecto
@@ -265,7 +284,7 @@ components:
           type: integer
           format: int64
           example: 1
-        name:
+        type:
           type: string
           enum: 
             - instagram
