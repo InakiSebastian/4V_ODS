@@ -1,9 +1,22 @@
 <div class="container my-5">
     <div class="row row-cols-2 gy-4">
         @for(iniciative of iniciativeList; track $index){
+        <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#customModal">
             <div class="col">
                 <app-iniciative-card [iniciative]="iniciative"></app-iniciative-card>
             </div>
+        </a>
+        
         }
     </div>
+
+    <!-- Modal corregido -->
+    <div class="modal fade" id="customModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog custom-modal-width">
+            <div class="modal-content">
+                <app-iniciative-detail/>
+            </div>
+        </div>
+    </div>
+
 </div>
