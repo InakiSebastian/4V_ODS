@@ -8,25 +8,24 @@
     tools:context=".activities.MainActivity">
 
         <EditText
-        android:id="@+id/busqueda"
+        android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:hint="@string/buscar"
+        android:hint="@string/search"
         android:inputType="text"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:singleLine="false"
-        android:backgroundTint="@color/sombras_bordes"
+        android:backgroundTint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/busqueda" />
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
