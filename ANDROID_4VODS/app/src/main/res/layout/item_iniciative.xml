@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:background="@color/fondo_principal"
-        android:shadowColor="@color/sombras_bordes"
+        android:background="@color/white"
+        android:shadowColor="@color/black"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp">
 
