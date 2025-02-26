@@ -1,4 +1,4 @@
-package com.inakisebastian.android_4vods;
+package com.javierprado.android_4vods;
 
 import org.junit.Test;
 
