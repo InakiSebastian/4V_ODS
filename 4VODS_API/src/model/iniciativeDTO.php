@@ -1,5 +1,13 @@
 <?php
 
+namespace App\Model;
+
+use DateTime;
+use App\Entity\Teacher;
+use App\Entity\Company;
+use App\Entity\Module;
+use App\Entity\Goal;
+
 class IniciativeDTO
 {
     private int $id;
@@ -13,7 +21,7 @@ class IniciativeDTO
     
     private array $teachers;
     private array $companies;
-    private array $subjects;
+    private array $modules;
     private array $goals;
     
     private bool $isActive;

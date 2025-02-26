@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Model;
+
 class TeacherDTO
 {
     private int $id;

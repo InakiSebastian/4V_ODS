@@ -1,6 +1,13 @@
 <?php
 
+namespace App\Model;
+
 use Symfony\Component\Validator\Constraints as Assert;
+use DateTime;
+use App\Entity\Teacher;
+use App\Entity\Company;
+use App\Entity\Module;
+use App\Entity\Goal;
 
 class NewIniciativeDTO
 {
@@ -20,15 +27,16 @@ class NewIniciativeDTO
         private float $hours,
         
         #[Assert\NotBlank(message: "La lista de profesores de la iniciativa es obligatoria")]
+        /** @var Teacher[] */
         private array $teachers,
         #[Assert\NotBlank(message: "La lista de entidades externas de la iniciativa es obligatoria")]
+        /** @var Company[] */
         private array $companies,
-        #[Assert\NotBlank(message: "La lista de módulos de la iniciativa es obligatoria")]
-        private array $subjects,
+        /** @var Module[] */
+        private array $modules,
         #[Assert\NotBlank(message: "La lista de metas de la iniciativa es obligatoria")]
+        /** @var Goal[] */
         private array $goals,
-        
-
     ){}
 
     public function getId(): int
@@ -61,21 +69,25 @@ class NewIniciativeDTO
         return $this->hours;
     }
 
+    /** @return Teacher[] */
     public function getTeachers(): array
     {
         return $this->teachers;
     }
 
+    /** @return Company[] */
     public function getCompanies(): array
     {
         return $this->companies;
     }
 
-    public function getSubjects(): array
+    /** @return Module[] */
+    public function getModules(): array
     {
-        return $this->subjects;
+        return $this->modules;
     }
 
+    /** @return Goal[] */
     public function getGoals(): array
     {
         return $this->goals;

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Model;
+
 class SubjectDTO{
     private int $id;
     private string $name;
