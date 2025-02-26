@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class SubjectDTO{
+class ModuleDTO{
     private int $id;
     private string $name;
     private int $idDegree;

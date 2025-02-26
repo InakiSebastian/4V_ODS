@@ -19,9 +19,13 @@ class IniciativeDTO
     private int $idIniciativeType;
     private int $idDifusionType;
     
+    /** @var Teacher[] */
     private array $teachers;
+    /** @var Company[] */
     private array $companies;
+    /** @var Module[] */
     private array $modules;
+    /** @var Goal[] */
     private array $goals;
     
     private bool $isActive;
