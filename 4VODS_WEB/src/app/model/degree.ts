@@ -1,4 +1,4 @@
-export class Ciclo {
+export class Degree {
     private id: number;
     private name: string;
 

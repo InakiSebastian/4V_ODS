@@ -1,4 +1,4 @@
-export class Modulo {
+export class Module {
     private id: number
     private idCiclo: number
     private name: string
