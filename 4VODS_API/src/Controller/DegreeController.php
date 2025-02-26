@@ -15,7 +15,7 @@ class DegreeController extends AbstractController
     #[Route('/', name: 'get_all', methods: ['GET'])]
     public function getListDegrees(): JsonResponse
     {
-        $iniciatives = $this->degreeService->getAllDegrees();
-        return $this->json($iniciatives);
+        $degrees = $this->degreeService->getAllDegrees();
+        return $this->json($degrees);
     }
 }

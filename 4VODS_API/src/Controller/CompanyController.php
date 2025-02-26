@@ -13,9 +13,9 @@ class CompanyController extends AbstractController
     public function __construct(private CompanyService $companyService) {}
 
     #[Route('/', name: 'get_all', methods: ['GET'])]
-    public function getListIniciatives(): JsonResponse
+    public function getListCompanies(): JsonResponse
     {
-        $iniciatives = $this->companyService->getAllComanies();
-        return $this->json($iniciatives);
+        $companies = $this->companyService->getAllComanies();
+        return $this->json($companies);
     }
 }

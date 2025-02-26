@@ -4,10 +4,10 @@ namespace App\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use DateTime;
-use App\Entity\Teacher;
-use App\Entity\Company;
-use App\Entity\Module;
-use App\Entity\Goal;
+use App\Entity\TeacherIniciative;
+use App\Entity\CompanyIniciative;
+use App\Entity\ModuleIniciative;
+use App\Entity\IniciativeGoal;
 
 class NewIniciativeDTO
 {
@@ -69,25 +69,25 @@ class NewIniciativeDTO
         return $this->hours;
     }
 
-    /** @return Teacher[] */
+    /** @return TeacherIniciative[] */
     public function getTeachers(): array
     {
         return $this->teachers;
     }
 
-    /** @return Company[] */
+    /** @return CompanyIniciative[] */
     public function getCompanies(): array
     {
         return $this->companies;
     }
 
-    /** @return Module[] */
+    /** @return ModuleIniciative[] */
     public function getModules(): array
     {
         return $this->modules;
     }
 
-    /** @return Goal[] */
+    /** @return IniciativeGoal[] */
     public function getGoals(): array
     {
         return $this->goals;

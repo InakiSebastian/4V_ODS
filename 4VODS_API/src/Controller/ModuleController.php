@@ -13,9 +13,9 @@ class ModuleController extends AbstractController
     public function __construct(private ModuleService $moduleService) {}
 
     #[Route('/', name: 'get_all', methods: ['GET'])]
-    public function getListIniciatives(): JsonResponse
+    public function getListModules(): JsonResponse
     {
-        $iniciatives = $this->moduleService->getAllModules();
-        return $this->json($iniciatives);
+        $modules = $this->moduleService->getAllModules();
+        return $this->json($modules);
     }
 }

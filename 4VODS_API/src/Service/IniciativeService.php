@@ -49,24 +49,23 @@ class IniciativeService {
         }
 
         $iniciative = new Iniciative();
-        $iniciative->setId($dto->getId());
-        $iniciative->setNombre($dto->getNombre());
+        $iniciative->setName($dto->getNombre());
         $iniciative->setDescription($dto->getDescription());
         $iniciative->setStartDate($dto->getStartDate());
         $iniciative->setEndDate($dto->getEndDate());
         $iniciative->setHours($dto->getHours());
 
         foreach ($dto->getTeachers() as $teacher) {
-            $iniciative->addTeacher($teacher);
+            $iniciative->addTeacherIniciative($teacher);
         }
         foreach ($dto->getCompanies() as $company) {
-            $iniciative->addCompany($company);
+            $iniciative->addCompanyIniciative($company);
         }
         foreach ($dto->getModules() as $module) {
-            $iniciative->addModule($module);
+            $iniciative->addModuleIniciative($module);
         }
         foreach ($dto->getGoals() as $goal) {
-            $iniciative->addGoal($goal);
+            $iniciative->addIniciativeGoal($goal);
         }
 
         $this->entityManager->persist($iniciative);

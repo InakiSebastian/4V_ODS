@@ -3,6 +3,8 @@
 namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Degree;
+
 class DegreeService {
 
     public function __construct(private EntityManagerInterface $entityManager)

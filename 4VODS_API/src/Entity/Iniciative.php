@@ -64,12 +64,22 @@ class Iniciative
     #[ORM\Column]
     private ?bool $innovative = null;
 
+    /**
+     * @var Collection<int, Diffusion>
+     */
+    #[ORM\OneToMany(targetEntity: Diffusion::class, mappedBy: 'iniciative', orphanRemoval: true)]
+    private Collection $diffusions;
+
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
+
     public function __construct()
     {
         $this->iniciativeGoals = new ArrayCollection();
         $this->teacherIniciatives = new ArrayCollection();
         $this->companyIniciatives = new ArrayCollection();
         $this->moduleIniciatives = new ArrayCollection();
+        $this->diffusions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -289,6 +299,48 @@ class Iniciative
     public function setInnovative(bool $innovative): static
     {
         $this->innovative = $innovative;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Diffusion>
+     */
+    public function getDiffusions(): Collection
+    {
+        return $this->diffusions;
+    }
+
+    public function addDiffusion(Diffusion $diffusion): static
+    {
+        if (!$this->diffusions->contains($diffusion)) {
+            $this->diffusions->add($diffusion);
+            $diffusion->setIniciative($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiffusion(Diffusion $diffusion): static
+    {
+        if ($this->diffusions->removeElement($diffusion)) {
+            // set the owning side to null (unless already changed)
+            if ($diffusion->getIniciative() === $this) {
+                $diffusion->setIniciative(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

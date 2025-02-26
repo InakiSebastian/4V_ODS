@@ -3,18 +3,18 @@
 namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\Company;
+use App\Entity\Diffusion;
 
-class CompanyService {
+class DiffusionService {
 
     public function __construct(private EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
-    public function getAllComanies(): array
+    public function getAllDiffusions(): array
     {
-        return $this->entityManager->getRepository(Company::class)->findAll();
+        return $this->entityManager->getRepository(Diffusion::class)->findAll();
     }
 
 }

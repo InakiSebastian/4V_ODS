@@ -13,9 +13,9 @@ class GoalController extends AbstractController
     public function __construct(private GoalService $goalService) {}
 
     #[Route('/', name: 'get_all', methods: ['GET'])]
-    public function getListIniciatives(): JsonResponse
+    public function getListGoals(): JsonResponse
     {
-        $iniciatives = $this->goalService->getAllGoals();
-        return $this->json($iniciatives);
+        $goals = $this->goalService->getAllGoals();
+        return $this->json($goals);
     }
 }

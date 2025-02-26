@@ -13,9 +13,9 @@ class TeacherController extends AbstractController
     public function __construct(private TeacherService $teacherService) {}
 
     #[Route('/', name: 'get_all', methods: ['GET'])]
-    public function getListIniciatives(): JsonResponse
+    public function getListTeachers(): JsonResponse
     {
-        $iniciatives = $this->teacherService->getAllTeachers();
-        return $this->json($iniciatives);
+        $teachers = $this->teacherService->getAllTeachers();
+        return $this->json($teachers);
     }
 }

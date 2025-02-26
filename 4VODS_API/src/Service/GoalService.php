@@ -3,6 +3,8 @@
 namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Goal;
+
 class GoalService {
 
     public function __construct(private EntityManagerInterface $entityManager)
