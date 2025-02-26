@@ -1,7 +1,7 @@
 <?php
 
-use App\Entity\Company;
-use Doctrine\ORM\EntityManagerInterface;
+namespace App\Controller;
+
 use App\Service\CompanyService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,7 +15,7 @@ class CompanyController extends AbstractController
     #[Route('/', name: 'get_all', methods: ['GET'])]
     public function getListCompanies(): JsonResponse
     {
-        $companies = $this->companyService->getAllComanies();
+        $companies = $this->companyService->getAllCompanies();
         return $this->json($companies);
     }
 }

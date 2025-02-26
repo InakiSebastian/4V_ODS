@@ -1,7 +1,7 @@
 <?php
 
-use App\Entity\Degree;
-use Doctrine\ORM\EntityManagerInterface;
+namespace App\Controller;
+
 use App\Service\DegreeService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

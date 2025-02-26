@@ -1,7 +1,7 @@
 <?php
 
-use App\Entity\Diffusion;
-use Doctrine\ORM\EntityManagerInterface;
+namespace App\Controller;
+
 use App\Service\DiffusionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

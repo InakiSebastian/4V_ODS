@@ -12,7 +12,7 @@ class CompanyService {
         $this->entityManager = $entityManager;
     }
 
-    public function getAllComanies(): array
+    public function getAllCompanies(): array
     {
         return $this->entityManager->getRepository(Company::class)->findAll();
     }

@@ -2,10 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Goal;
-use App\Entity\Ods;
-use App\Entity\Meta;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Service\OdsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
