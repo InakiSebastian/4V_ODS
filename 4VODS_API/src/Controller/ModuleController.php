@@ -2,6 +2,7 @@
 
 use App\Entity\Module;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\ModuleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,7 @@ class ModuleController extends AbstractController
     #[Route('/', name: 'get_all', methods: ['GET'])]
     public function getListIniciatives(): JsonResponse
     {
-        $iniciatives = $this->moduleService->getAll();
+        $iniciatives = $this->moduleService->getAllModules();
         return $this->json($iniciatives);
     }
 }

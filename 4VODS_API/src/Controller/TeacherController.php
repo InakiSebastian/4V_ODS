@@ -2,6 +2,7 @@
 
 use App\Entity\Teacher;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\TeacherService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,7 @@ class TeacherController extends AbstractController
     #[Route('/', name: 'get_all', methods: ['GET'])]
     public function getListIniciatives(): JsonResponse
     {
-        $iniciatives = $this->teacherService->getAll();
+        $iniciatives = $this->teacherService->getAllTeachers();
         return $this->json($iniciatives);
     }
 }

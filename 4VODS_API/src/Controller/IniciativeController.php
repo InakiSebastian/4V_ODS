@@ -17,14 +17,14 @@ class IniciativeController extends AbstractController
     #[Route('/', name: 'get_all', methods: ['GET'])]
     public function getListIniciatives(): JsonResponse
     {
-        $iniciatives = $this->iniciativeService->getAll();
+        $iniciatives = $this->iniciativeService->getAllIniciatives();
         return $this->json($iniciatives);
     }
 
     #[Route('/{id}', name: 'get_one', methods: ['GET'])]
     public function getIniciativeById(int $id): JsonResponse
     {
-        $iniciative = $this->iniciativeService->getById($id);
+        $iniciative = $this->iniciativeService->getIniciative($id);
         if (!$iniciative) {
             return $this->json(['message' => 'Iniciative not found'], 404);
         }
