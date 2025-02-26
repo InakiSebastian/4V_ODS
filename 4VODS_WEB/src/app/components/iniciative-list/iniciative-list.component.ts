@@ -18,4 +18,6 @@ export class IniciativeListComponent {
   ngOnInit(){
     this.iniciativeList = this.iniciativeService.getIniciatives();
   }
+
+  
 }
