@@ -20,8 +20,11 @@ export class IniciativeService {
     return this.iniciativeList;
   }
 
-  public deleteIniciative(id: number){
-    
+  public deleteIniciative(id: number): void {
+    const index = this.iniciativeList.findIndex(iniciative => iniciative.Id === id);
+    if (index !== -1) {
+      this.iniciativeList.splice(index, 1);
+    }
   }
   
   
