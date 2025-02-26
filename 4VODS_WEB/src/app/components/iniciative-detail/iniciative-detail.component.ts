@@ -1,9 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { Iniciative } from '../../model/iniciative';
+import { Module } from '../../model/module';
+import { Degree } from '../../model/degree';
+import { CommonModule } from '@angular/common';
+import { Teacher } from '../../model/teacher';
 
 @Component({
   selector: 'app-iniciative-detail',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './iniciative-detail.component.html',
   styleUrl: './iniciative-detail.component.scss'
 })
@@ -17,6 +21,30 @@ export class IniciativeDetailComponent {
   endDate: Date | null = null
   hours: number = 454;
   iniciativeType: string = 'f3egv2th';
+
+  modules: Module[] = [new Module(1, 1, 'Modulo 1'), new Module(2, 1, 'Chico figma 2'), new Module(3, 1, 'Modulo 3'), new Module(1, 2, 'Moviles 1'), new Module(2, 2, 'Empresa 2')];
+
+
+  //gestion de módulos
+  idDegrees: number[] = []
+  
+  degrees: Degree[] = [new Degree(1, 'DAM'), new Degree(2, 'ASIR')];
+  degreeCards = this.degrees.map(d => ({
+    name: d.Name,
+    modulesD: this.modules.filter(m => m.IdCiclo === d.Id) // Filtra solo los módulos que pertenecen al grado
+  }));
+
+
+  ngOnInit() {
+    this.modules.forEach((m) =>{
+      if(!this.idDegrees.includes(m.IdCiclo)){
+        this.idDegrees.push(m.IdCiclo);
+      }
+    }) //TODOIKER: HACER UNA PETICION A LA API PARA OBTENER LOS GRADOS DE IDS
+  }
+
+  //gestión de profesores
+  profesores: Teacher[] = [new Teacher(1, 'Profesor 1'), new Teacher(2, 'Profesor 2'), new Teacher(3, 'Profesor 3')];
 
   
 }
