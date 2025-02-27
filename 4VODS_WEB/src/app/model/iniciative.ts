@@ -7,6 +7,7 @@ export class Iniciative {
     private hours: number;
 
     private iniciativeType: string //TODOIKER: cambiar a tipo enum
+    
 
     constructor(id: number, name: string, description: string, startDate: Date, endDate: Date, hours: number, iniciativeType: string){
         this.id = id;

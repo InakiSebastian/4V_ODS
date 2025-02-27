@@ -1,13 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Iniciative } from '../../model/iniciative';
 import { FormatDatePipe } from '../../pipes/format-date.pipe';
-import { FinPobrezaIconComponent } from "../../assets/fin-pobreza-icon/fin-pobreza-icon.component";
 import { IniciativeService } from '../../services/iniciative.service';
-import { SaludBienestarIconComponent } from "../../assets/salud-bienestar-icon/salud-bienestar-icon.component";
 
 @Component({
   selector: 'app-iniciative-card',
-  imports: [FormatDatePipe, FinPobrezaIconComponent, SaludBienestarIconComponent],
+  imports: [FormatDatePipe],
   templateUrl: './iniciative-card.component.html',
   styleUrl: './iniciative-card.component.scss'
 })
