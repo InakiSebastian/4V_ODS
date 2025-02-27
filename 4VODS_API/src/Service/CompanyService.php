@@ -11,10 +11,22 @@ class CompanyService {
     {
         $this->entityManager = $entityManager;
     }
-
+    public function toDTO($company): array
+    {
+        return [
+            'id' => $company->getId(),
+            'name' => $company->getName(),
+        ];
+    }
     public function getAllCompanies(): array
     {
-        return $this->entityManager->getRepository(Company::class)->findAll();
+
+        $companies = $this->entityManager->getRepository(Company::class)->findAll();
+        $companiesDTO = [];
+        foreach ($companies as $company) {
+            $companiesDTO[] = $this->toDTO($company);
+        }
+        return $companiesDTO;
     }
 
 }

@@ -11,10 +11,23 @@ class DiffusionService {
     {
         $this->entityManager = $entityManager;
     }
-
+    public function toDTO($diffusion): array
+    {
+        return [
+            'id' => $diffusion->getId(),
+            'type' => $diffusion->getType(),
+            'link' => $diffusion->getLink(),
+            'iniciative' =>  $diffusion->getIniciative()->getId(),
+        ];
+    }
     public function getAllDiffusions(): array
     {
-        return $this->entityManager->getRepository(Diffusion::class)->findAll();
+        $diffusions = $this->entityManager->getRepository(Diffusion::class)->findAll();
+        $diffusionsDTO = [];
+        foreach ($diffusions as $diffusion) {
+            $diffusionsDTO[] = $this->toDTO($diffusion);
+        }
+        return $diffusionsDTO;
     }
 
 }
