@@ -1,12 +1,9 @@
 <div class="container my-5">
-    <div class="row row-cols-2 gy-4">
+    <div class="row row-cols-2 gy-4"><!--NO SÉ POR QUÉ NO FUNCIONA EL DE BOOTSTRAP-->
         @for(iniciative of iniciativeList; track $index){
-        <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#customModal">
-            <div class="col">
+            <div class="col" (click)="setIdIniciativa($event, iniciative.Id)" data-bs-toggle="modal" data-bs-target="#customModal" [style]="{'cursor': 'pointer'}"> 
                 <app-iniciative-card [iniciative]="iniciative"></app-iniciative-card>
             </div>
-        </a>
-        
         }
     </div>
 
@@ -14,7 +11,7 @@
     <div class="modal fade" id="customModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog custom-modal-width">
             <div class="modal-content">
-                <app-iniciative-detail/>
+                <app-iniciative-detail [idIniciativa]="idIniciativa"/>
             </div>
         </div>
     </div>

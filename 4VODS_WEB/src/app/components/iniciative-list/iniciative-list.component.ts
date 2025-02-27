@@ -11,7 +11,9 @@ import { IniciativeDetailComponent } from '../../components/iniciative-detail/in
   styleUrl: './iniciative-list.component.scss'
 })
 export class IniciativeListComponent {
+
   iniciativeList: Iniciative[] = [];
+  idIniciativa!: number;
 
   constructor(private iniciativeService: IniciativeService){}
 
@@ -19,5 +21,8 @@ export class IniciativeListComponent {
     this.iniciativeList = this.iniciativeService.getIniciatives();
   }
 
+  setIdIniciativa($event: MouseEvent,arg1: number) {
+    
+  }
   
 }

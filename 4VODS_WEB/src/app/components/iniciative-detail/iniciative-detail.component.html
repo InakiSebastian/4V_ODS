@@ -17,6 +17,8 @@
     </div>
     <div class="card-body">
         <div class="tab-content" id="myTabContent">
+
+            <!--DETALLES EN GENERAL PÁGINA-->
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <h5 class="modal-title">{{ name }}</h5>
                 <hr>
@@ -28,6 +30,10 @@
                         <p class="m-2"><span class="fw-bold">Horas totales:</span> {{ hours }}</p>
                         <p class="m-2"><span class="fw-bold">Tipo de iniciativa:</span>
                             {{ iniciativeType }}</p>
+                        <p class="m-2"><span class="fw-bold">Curso:</span>
+                            2020-2021</p>
+                        <p class="m-2"><span class="fw-bold">Inicio-fin:</span>
+                            20/2/2020 - 20/2/2021</p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -36,31 +42,83 @@
                 </div>
             </div>
 
+            <!--CUATROVIENTOS PÁGINA-->
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <h5 class="modal-title">
+                <h5 class="modal-title d-flex justify-content-center">
                     Ciclos y módulos participantes:
                 </h5>
                 <hr>
-                <div class="row scrollable-container">
+                <div class="row scrollable-container ms-3">
                     <div class="card p-0" *ngFor="let dgree of degreeCards">
                         <div class="card-header">
                             {{ dgree.name }}
                         </div>
                         <div class="card-body">
                             <div class="card mt-2" *ngFor="let module of dgree.modulesD">
-                                <div class="card-header">
+                                <div class="card-header" [style]="{'background-color': generarColor()}">
                                     {{ module.Name }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <h5 class="modal-title d-flex justify-content-center mt-3">
+                    Profesores participantes:
+                </h5>
+                <hr>
+                <div class="row scrollable-container ms-3 mb-5">
+                    <div class="card p-0 m-2" *ngFor="let teacher of teachers">
+                        <!--m-auto  [style]="{'background-color': generarColor()}"-->
+                        <div class="m-3 text-center d-flex justify-content-center">
+                            {{ teacher.Name }}
+                        </div>
+                    </div>
+                </div>
             </div>
 
+
+            <!-- 2030 PÁGINA -->
             <div class="tab-pane fade" id="disabled" role="tabpanel" aria-labelledby="disabled-tab">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit rem accusamus officia quia eos ducimus
-                consequuntur! Impedit aliquid vero suscipit.
+                <h5 class="modal-title d-flex justify-content-center mt-3">
+                    ODSs relacionados:
+                </h5>
+                <hr>
+
+                <!-- Contenedor de imágenes -->
+                <div class="row scrollable-container ms-3 mt-3">
+                    <img *ngFor="let image of images" [src]="image.url" alt="Foto ODS {{image.id}}"
+                        class="rounded-5 img-thumbnail m-2"
+                        style="width: 11%; height: 13%; cursor: pointer; transition: transform 0.2s;"
+                        (click)="seleccionarODS(image.id)" (mouseover)="hover=true" (mouseleave)="hover=false"
+                        [ngStyle]="hover ? {'transform': 'scale(1.1)'} : {}">
+                </div>
+
+                <!-- Contenedor de la imagen grande y la información -->
+                <div class="container mt-4">
+                    <div class="row">
+                        <!-- Imagen grande (50% del ancho) -->
+                        <div class="col-md-6 text-center">
+                            <img *ngIf="odsSeleccionado" [src]="imagenSeleccionada" alt="ODS Seleccionado"
+                                class="img-fluid rounded shadow-lg fade show" style="max-width: 100%;">
+                        </div>
+
+                        <!-- Nombre y metas (50% del ancho, alineadas en columna) -->
+                        <div class="col-md-6 d-flex flex-column align-items-start">
+                            <!-- Nombre del ODS -->
+                            <h4 class="text-primary fade show">{{ odsSeleccionado?.description }}</h4>
+
+                            <!-- Lista de metas (debajo del nombre) -->
+                            <h5 class="text-secondary mt-3">Metas relacionadas:</h5>
+                            <ul class="list-group w-100">
+                                <li *ngFor="let meta of metasSeleccionadas" class="list-group-item fade show">
+                                    {{ meta.description }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </div>
