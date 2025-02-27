@@ -2,10 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Goal;
-use App\Entity\Ods;
-use App\Entity\Meta;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\OdsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,9 +13,9 @@ class OdsController extends AbstractController
     public function __construct(private OdsService $odsService) {}
 
     #[Route('/', name: 'get_all', methods: ['GET'])]
-    public function getListIniciatives(): JsonResponse
+    public function getListOdss(): JsonResponse
     {
-        $iniciatives = $this->odsService->getAll();
-        return $this->json($iniciatives, 200, [], ['groups' => 'iniciative:read']);
+        $odss = $this->odsService->getAllOdss();
+        return $this->json($odss);
     }
 }

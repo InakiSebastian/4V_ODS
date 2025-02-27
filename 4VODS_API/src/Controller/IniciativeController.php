@@ -17,25 +17,25 @@ class IniciativeController extends AbstractController
     #[Route('/', name: 'get_all', methods: ['GET'])]
     public function getListIniciatives(): JsonResponse
     {
-        $iniciatives = $this->iniciativeService->getAll();
-        return $this->json($iniciatives, 200, [], ['groups' => 'iniciative:read']);
+        $iniciatives = $this->iniciativeService->getAllIniciatives();
+        return $this->json($iniciatives);
     }
 
     #[Route('/{id}', name: 'get_one', methods: ['GET'])]
     public function getIniciativeById(int $id): JsonResponse
     {
-        $iniciative = $this->iniciativeService->getById($id);
+        $iniciative = $this->iniciativeService->getIniciative($id);
         if (!$iniciative) {
             return $this->json(['message' => 'Iniciative not found'], 404);
         }
-        return $this->json($iniciative, 200, [], ['groups' => 'iniciative:read']);
+        return $this->json($iniciative);
     }
 
     #[Route('/', name: 'create', methods: ['POST'])]
     public function create(#[MapRequestPayload] NewIniciativeDTO $newIniciativeDTO): JsonResponse
     {
         $iniciative = $this->iniciativeService->createIniciative($newIniciativeDTO);
-        return $this->json($iniciative, 201, [], ['groups' => 'iniciative:read']);
+        return $this->json($iniciative, 201);
     }
 
     #[Route('/{id}', name: 'update', methods: ['PUT'])]
@@ -45,7 +45,7 @@ class IniciativeController extends AbstractController
         if (!$updatedIniciative) {
             return $this->json(['message' => 'Iniciative not found'], 404);
         }
-        return $this->json($updatedIniciative, 200, [], ['groups' => 'iniciative:read']);
+        return $this->json($updatedIniciative);
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]

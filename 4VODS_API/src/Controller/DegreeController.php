@@ -1,7 +1,8 @@
 <?php
 
-use App\Entity\Degree;
-use Doctrine\ORM\EntityManagerInterface;
+namespace App\Controller;
+
+use App\Service\DegreeService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,9 +13,9 @@ class DegreeController extends AbstractController
     public function __construct(private DegreeService $degreeService) {}
 
     #[Route('/', name: 'get_all', methods: ['GET'])]
-    public function getListIniciatives(): JsonResponse
+    public function getListDegrees(): JsonResponse
     {
-        $iniciatives = $this->degreeService->getAll();
-        return $this->json($iniciatives, 200, [], ['groups' => 'iniciative:read']);
+        $degrees = $this->degreeService->getAllDegrees();
+        return $this->json($degrees);
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-use App\Entity\Company;
-use Doctrine\ORM\EntityManagerInterface;
+namespace App\Controller;
+
+use App\Service\CompanyService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,9 +13,9 @@ class CompanyController extends AbstractController
     public function __construct(private CompanyService $companyService) {}
 
     #[Route('/', name: 'get_all', methods: ['GET'])]
-    public function getListIniciatives(): JsonResponse
+    public function getListCompanies(): JsonResponse
     {
-        $iniciatives = $this->companyService->getAll();
-        return $this->json($iniciatives, 200, [], ['groups' => 'iniciative:read']);
+        $companies = $this->companyService->getAllCompanies();
+        return $this->json($companies);
     }
 }

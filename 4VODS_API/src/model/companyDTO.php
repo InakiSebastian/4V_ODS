@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class Company
+class CompanyDTO
 {
     private int $id; 
     private string $name;

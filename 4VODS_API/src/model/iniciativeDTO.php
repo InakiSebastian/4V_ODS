@@ -3,6 +3,11 @@
 namespace App\Model;
 
 use DateTime;
+use App\Entity\TeacherIniciative;
+use App\Entity\CompanyIniciative;
+use App\Entity\ModuleIniciative;
+use App\Entity\IniciativeGoal;
+use App\Entity\DiffusionIniciative;
 
 class IniciativeDTO
 {
@@ -12,13 +17,20 @@ class IniciativeDTO
     private DateTime $startDate;
     private DateTime $endDate;
     private float $hours;
-    private int $idIniciativeType;
-    private int $idDifusionType;
+    private string $schoolYear;
+    private int $innovative;
+    private string $type;
     
+    /** @var TeacherIniciative[] */
     private array $teachers;
+    /** @var CompanyIniciative[] */
     private array $companies;
-    private array $subjects;
+    /** @var ModuleIniciative[] */
+    private array $modules;
+    /** @var IniciativeGoal[] */
     private array $goals;
+    /** @var DiffusionIniciative[] */
+    private array $diffusions;
     
     private bool $isActive;
 
