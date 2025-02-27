@@ -48,6 +48,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataHolder> {
 
     public class DataHolder extends RecyclerView.ViewHolder {
         TextView txtSchoolYear;
+        TextView txtType;
         TextView txtName;
         TextView txtDescription;
         FlexboxLayout imageContainer;
@@ -55,6 +56,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataHolder> {
         public DataHolder(@NonNull View itemView) {
             super(itemView);
             txtSchoolYear = (TextView) itemView.findViewById(R.id.txtSchoolYear);
+            txtType = (TextView) itemView.findViewById(R.id.txtType);
             txtName = (TextView) itemView.findViewById(R.id.txtName);
             txtDescription = (TextView) itemView.findViewById(R.id.txtDescription);
             imageContainer = (FlexboxLayout) itemView.findViewById(R.id.imageContainer);
@@ -62,6 +64,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataHolder> {
 
         public void assignData(IniciativeCard iniciative,final OnItemClickListener onItemClickListener) {
             txtSchoolYear.setText(iniciative.getSchool_year());
+            txtType.setText(iniciative.getType());
             txtName.setText(iniciative.getName());
             txtDescription.setText(iniciative.getDescription());
             List<Integer> imageIds = Arrays.asList(R.drawable.ods1, R.drawable.ods2, R.drawable.ods3, R.drawable.ods4, R.drawable.ods5, R.drawable.ods6, R.drawable.ods7, R.drawable.ods8, R.drawable.ods9, R.drawable.ods10, R.drawable.ods11, R.drawable.ods12, R.drawable.ods13, R.drawable.ods14, R.drawable.ods15, R.drawable.ods16, R.drawable.ods17);            List<Integer> odss = iniciative.getOdss();
@@ -94,4 +97,5 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataHolder> {
     public interface OnItemClickListener{
         void onItemClick(int id);
     }
+
 }
