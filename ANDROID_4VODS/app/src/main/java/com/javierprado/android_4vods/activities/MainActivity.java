@@ -1,6 +1,7 @@
 package com.javierprado.android_4vods.activities;
 
 import android.os.Bundle;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,8 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.javierprado.android_4vods.R;
 import com.javierprado.android_4vods.adapters.DataAdapter;
 import com.javierprado.android_4vods.models.Iniciative;
+import com.javierprado.android_4vods.models.IniciativeCard;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,13 +36,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        ArrayList<Iniciative> listIniciative = new ArrayList<>();
+        Spinner spinner = findViewById(R.id.optionsFilter);
+        String[] opciones = {"Título", "Año Escolar", "Ods", "Horas(menor)", "Horas(mayor)"};
+        ArrayList<IniciativeCard> listIniciative = new ArrayList<>();
 
-        listIniciative.add(new Iniciative(1, "Reforestación Local", "Plantación de árboles en áreas deforestadas.", "2025-02-15", "2025-02-28", 15, true, "2024-2025", true, "proyecto"));
-        listIniciative.add(new Iniciative(2, "Recogida de Alimentos", "Campaña de recolección de alimentos para familias necesitadas.", "2025-03-10", "2025-03-20", 10, true, "2024-2025", false, "voluntariado"));
-        listIniciative.add(new Iniciative(3, "Charlas de Reciclaje", "Taller educativo sobre la importancia del reciclaje.", "2025-04-05", "2025-04-07", 5, false, "2024-2025", true, "taller"));
-        listIniciative.add(new Iniciative(4, "Apoyo Escolar", "Clases de refuerzo para estudiantes de primaria.", "2025-05-01", "2025-06-15", 30, true, "2024-2025", false, "voluntariado"));
-        listIniciative.add(new Iniciative(5, "Limpieza de Playas", "Jornada de limpieza y concienciación ambiental en la playa.", "2025-06-10", "2025-06-11", 8, true, "2024-2025", true, "proyecto"));
+        listIniciative.add(new IniciativeCard(1, "Reforestación Local", "Plantación de árboles en áreas deforestadas.", 15, "2024-2025", Arrays.asList(1, 3, 5, 7, 9, 11, 13, 15, 17)));
+        listIniciative.add(new IniciativeCard(2, "Recogida de Alimentos", "Campaña de recolección de alimentos para familias necesitadas.", 150, "2024-2025", Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16)));
+        listIniciative.add(new IniciativeCard(3, "Charlas de Reciclaje", "Taller educativo sobre la importancia del reciclaje.", 5, "2024-2025", Arrays.asList(1, 5, 9, 13, 17)));
+        listIniciative.add(new IniciativeCard(4, "Apoyo Escolar", "Clases de refuerzo para estudiantes de primaria.", 30, "2024-2025", Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 1, 3, 5, 7, 9, 11, 13, 15, 17)));
+        listIniciative.add(new IniciativeCard(5, "Limpieza de Playas", "Jornada de limpieza y concienciación ambiental en la playa.", 800, "2024-2025", Arrays.asList(3, 6, 9, 12, 15)));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         DataAdapter dataAdapter = new DataAdapter(listIniciative, new DataAdapter.OnItemClickListener() {
