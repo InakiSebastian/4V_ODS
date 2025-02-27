@@ -11,6 +11,7 @@ public class Iniciative implements Serializable {
     private String endDate;
     private int hours;
     private String schoolYear;
+    private String type;
     private List<Teacher> teachers;
     private List<Company> companies;
     private List<Module> modules;
@@ -18,7 +19,7 @@ public class Iniciative implements Serializable {
 
     // Getters y setters
 
-    public Iniciative(int id, String name, String description, String startDate, String endDate, int hours, String schoolYear, List<Teacher> teachers, List<Company> companies, List<Module> modules, List<Goal> goals) {
+    public Iniciative(int id, String name, String description, String startDate, String endDate, int hours, String schoolYear, String type, List<Teacher> teachers, List<Company> companies, List<Module> modules, List<Goal> goals) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -26,6 +27,7 @@ public class Iniciative implements Serializable {
         this.endDate = endDate;
         this.hours = hours;
         this.schoolYear = schoolYear;
+        this.type = type;
         this.teachers = teachers;
         this.companies = companies;
         this.modules = modules;
@@ -70,6 +72,14 @@ public class Iniciative implements Serializable {
 
     public void setSchoolYear(String schoolYear) {
         this.schoolYear = schoolYear;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getHours() {

@@ -33,7 +33,7 @@ public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
         Fragment fragment = null;
         Bundle bundle = new Bundle();
-        bundle.putSerializable("iniciative", iniciative); // Guardamos el dato en un Bundle
+        bundle.putSerializable("iniciative", iniciative);
         ArrayList<Fragment> fragmentsList = new ArrayList<>();
         fragmentsList.add(new DetailsFragment());
         fragmentsList.add(new CuatrovientosFragment());

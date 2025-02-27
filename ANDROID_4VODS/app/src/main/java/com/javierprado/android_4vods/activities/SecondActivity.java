@@ -44,8 +44,18 @@ public class SecondActivity extends AppCompatActivity  {
         // Crear los objetos necesarios para el constructor de Iniciative
 
         Teacher teacher = new Teacher(1, "Alice Smith");
+        Teacher teacher2 = new Teacher(2, "Alice Smith2");
+        Teacher teacher3 = new Teacher(3, "Alice Smith3");
+        Teacher teacher4 = new Teacher(4, "Alice Smith4");
+        Teacher teacher5 = new Teacher(5, "Alice Smith5");
+        Teacher teacher6 = new Teacher(6, "Alice Smith6");
         List<Teacher> teachers = new ArrayList<>();
         teachers.add(teacher);
+        teachers.add(teacher2);
+        teachers.add(teacher3);
+        teachers.add(teacher4);
+        teachers.add(teacher5);
+        teachers.add(teacher6);
 
         Company company = new Company("Green Energy Co.",1);
         List<Company> companies = new ArrayList<>();
@@ -53,8 +63,21 @@ public class SecondActivity extends AppCompatActivity  {
 
         Degree degree = new Degree(1, "Business Administration");
         Module module = new Module(1, "Business Strategy", degree);
+        Degree degree2 = new Degree(1, "Business");
+        Module module2 = new Module(1, "Strategy", degree2);
+        Module module3 = new Module(1, "Strategy2", degree2);
+        Module module4 = new Module(1, "Strategy2", degree);
+        Module module5 = new Module(1, "Strategy2", degree);
+        Module module6 = new Module(1, "Strategy2", degree);
+        Module module7 = new Module(1, "Strategy2", degree);
         List<Module> modules = new ArrayList<>();
         modules.add(module);
+        modules.add(module2);
+        modules.add(module3);
+        modules.add(module4);
+        modules.add(module5);
+        modules.add(module6);
+        modules.add(module7);
 
         Goal goal = new Goal(1, "Reduce poverty levels by 20%", 1);
         List<Goal> goals = new ArrayList<>();
@@ -68,6 +91,7 @@ public class SecondActivity extends AppCompatActivity  {
                 "2025-12-31T00:00:00+01:00", // endDate
                 200, // hours
                 "2024-2025", // schoolYear
+                "Taller", //Type
                 teachers, // teachers
                 companies, // companies
                 modules, // modules
