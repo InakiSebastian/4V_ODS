@@ -6,6 +6,7 @@ use App\Repository\GoalRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Ods;
 
 #[ORM\Entity(repositoryClass: GoalRepository::class)]
 class Goal
@@ -19,7 +20,7 @@ class Goal
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'goals')]
-    private ?ods $idOds = null;
+    private ?Ods $idOds = null;
 
     /**
      * @var Collection<int, IniciativeGoal>
