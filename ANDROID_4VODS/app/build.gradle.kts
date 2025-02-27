@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.inakisebastian.android_4vods"
+    namespace = "com.javierprado.android_4vods"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.inakisebastian.android_4vods"
+        applicationId = "com.javierprado.android_4vods"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -35,6 +35,8 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation(libs.activity)
+    implementation(libs.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
