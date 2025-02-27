@@ -6,8 +6,7 @@ use DateTime;
 use App\Entity\TeacherIniciative;
 use App\Entity\CompanyIniciative;
 use App\Entity\ModuleIniciative;
-use App\Entity\IniciativeGoal;
-use App\Entity\DiffusionIniciative;
+use App\Entity\GoalIniciative;
 
 class IniciativeDTO
 {
@@ -17,9 +16,8 @@ class IniciativeDTO
     private DateTime $startDate;
     private DateTime $endDate;
     private float $hours;
-    private string $schoolYear;
-    private int $innovative;
-    private string $type;
+    private int $idIniciativeType;
+    private int $idDifusionType;
     
     /** @var TeacherIniciative[] */
     private array $teachers;
@@ -27,10 +25,8 @@ class IniciativeDTO
     private array $companies;
     /** @var ModuleIniciative[] */
     private array $modules;
-    /** @var IniciativeGoal[] */
+    /** @var GoalIniciative[] */
     private array $goals;
-    /** @var DiffusionIniciative[] */
-    private array $diffusions;
     
     private bool $isActive;
 

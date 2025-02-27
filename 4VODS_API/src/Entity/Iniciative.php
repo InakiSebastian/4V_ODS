@@ -291,7 +291,7 @@ class Iniciative
         return $this;
     }
 
-    public function getInnovative(): ?bool
+    public function isInnovative(): ?bool
     {
         return $this->innovative;
     }

@@ -11,22 +11,10 @@ class ModuleService {
     {
         $this->entityManager = $entityManager;
     }
-    public function toDTO($module): array
-    {
-        return [
-            'id' => $module->getId(),
-            'name' => $module->getName(),
-            'idDegree' => $module->getIdDegree()->getId(),
-        ];
-    }
+
     public function getAllModules(): array
     {
-        $modules = $this->entityManager->getRepository(Module::class)->findAll();
-        $modulesDTO = [];
-        foreach ($modules as $module) {
-            $modulesDTO[] = $this->toDTO($module);
-        }
-        return $modulesDTO;
+        return $this->entityManager->getRepository(Module::class)->findAll();
     }
 
 }

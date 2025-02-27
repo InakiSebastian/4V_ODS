@@ -11,22 +11,10 @@ class OdsService {
     {
         $this->entityManager = $entityManager;
     }
-    public function toDTO($ods): array
-    {
-        return [
-            'id' => $ods->getId(),
-            'description' => $ods->getDescription(),
-            'dimension' => $ods->getDimension(),
-        ];
-    }
+
     public function getAllOdss(): array
     {
-        $odss = $this->entityManager->getRepository(Ods::class)->findAll();
-        $odssDTO = [];
-        foreach ($odss as $ods) {
-            $odssDTO[] = $this->toDTO($ods);
-        }
-        return $odssDTO;
+        return $this->entityManager->getRepository(Ods::class)->findAll();
     }
 
 }

@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use App\Repository\TeacherModuleRepository;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Module;
-use App\Entity\Teacher;
 
 #[ORM\Entity(repositoryClass: TeacherModuleRepository::class)]
 class TeacherModule
@@ -17,11 +15,11 @@ class TeacherModule
 
     #[ORM\ManyToOne(inversedBy: 'teacherModules')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Module $idModule = null;
+    private ?module $idModule = null;
 
     #[ORM\ManyToOne(inversedBy: 'teacherModules')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Teacher $idTeacher = null;
+    private ?teacher $idTeacher = null;
 
     #[ORM\Column]
     private ?bool $_Active = True;

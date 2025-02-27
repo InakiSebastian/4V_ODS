@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\DiffusionRepository;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Iniciative;
 
 #[ORM\Entity(repositoryClass: DiffusionRepository::class)]
 class Diffusion
@@ -22,7 +21,7 @@ class Diffusion
 
     #[ORM\ManyToOne(inversedBy: 'diffusions')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Iniciative $iniciative = null;
+    private ?iniciative $iniciative = null;
 
     public function getId(): ?int
     {

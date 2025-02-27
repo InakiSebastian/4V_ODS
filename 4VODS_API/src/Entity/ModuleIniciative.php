@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use App\Repository\ModuleIniciativeRepository;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Module;
-use App\Entity\Iniciative;
 
 #[ORM\Entity(repositoryClass: ModuleIniciativeRepository::class)]
 class ModuleIniciative
@@ -17,11 +15,11 @@ class ModuleIniciative
 
     #[ORM\ManyToOne(inversedBy: 'moduleIniciatives')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Module $idModule = null;
+    private ?module $idModule = null;
 
     #[ORM\ManyToOne(inversedBy: 'moduleIniciatives')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Iniciative $idIniciative = null;
+    private ?iniciative $idIniciative = null;
 
     #[ORM\Column]
     private ?bool $_Active = True;

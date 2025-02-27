@@ -11,21 +11,10 @@ class TeacherService {
     {
         $this->entityManager = $entityManager;
     }
-    public function toDTO($teacher): array
-    {
-        return [
-            'id' => $teacher->getId(),
-            'name' => $teacher->getName(),
-        ];
-    }
+
     public function getAllTeachers(): array
     {
-        $teachers = $this->entityManager->getRepository(Teacher::class)->findAll();
-        $teachersDTO = [];
-        foreach ($teachers as $teacher) {
-            $teachersDTO[] = $this->toDTO($teacher);
-        }
-        return $teachersDTO;
+        return $this->entityManager->getRepository(Teacher::class)->findAll();
     }
 
 }

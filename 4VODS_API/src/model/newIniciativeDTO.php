@@ -4,54 +4,49 @@ namespace App\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use DateTime;
+use App\Entity\TeacherIniciative;
+use App\Entity\CompanyIniciative;
+use App\Entity\ModuleIniciative;
+use App\Entity\IniciativeGoal;
 
 class NewIniciativeDTO
 {
     public function __construct (
-
+        #[Assert\NotBlank(message: "El id de la iniciativa es obligatorio")]
+        private int $id,
         #[Assert\NotBlank(message: "El nombre de la iniciativa es obligatorio")]
-        private string $name,
-
+        private string $nombre,
         #[Assert\NotBlank(message: "La descripción de la iniciativa es obligatoria")]
         private string $description,
-
         #[Assert\NotBlank(message: "La fecha inicial de la iniciativa es obligatoria")]
         private DateTime $startDate,
-
-        private ?DateTime $endDate,
-
+        
+        // TODORepasar fecha fin
+        private DateTime $endDate,
         #[Assert\NotBlank(message: "La duración de la iniciativa es obligatoria")]
         private float $hours,
-
-        #[Assert\NotBlank(message: "El curso escolar de la iniciativa es obligatorio")]
-        private string $schoolYear,
-
-        #[Assert\NotBlank(message: "La innovación de la iniciativa es obligatoria")]
-        #[Assert\Type('integer')]
-        private int $innovative,
-
-        #[Assert\NotBlank(message: "El tipo de la iniciativa es obligatorio")]
-        private string $type,
-
+        
         #[Assert\NotBlank(message: "La lista de profesores de la iniciativa es obligatoria")]
-        #[Assert\All([new Assert\Type('integer')])]
-        private array $teachers = [],
-
+        /** @var Teacher[] */
+        private array $teachers,
         #[Assert\NotBlank(message: "La lista de entidades externas de la iniciativa es obligatoria")]
-        #[Assert\All([new Assert\Type('integer')])]
-        private array $companies = [],
-
-        #[Assert\All([new Assert\Type('integer')])]
-        private array $modules = [],
-
+        /** @var Company[] */
+        private array $companies,
+        /** @var Module[] */
+        private array $modules,
         #[Assert\NotBlank(message: "La lista de metas de la iniciativa es obligatoria")]
-        #[Assert\All([new Assert\Type('integer')])]
-        private array $goals = []
+        /** @var Goal[] */
+        private array $goals,
     ){}
 
-    public function getName(): string
+    public function getId(): int
     {
-        return $this->name;
+        return $this->id;
+    }
+
+    public function getNombre(): string
+    {
+        return $this->nombre;
     }
 
     public function getDescription(): string
@@ -64,7 +59,7 @@ class NewIniciativeDTO
         return $this->startDate;
     }
 
-    public function getEndDate(): ?DateTime
+    public function getEndDate(): DateTime
     {
         return $this->endDate;
     }
@@ -74,43 +69,27 @@ class NewIniciativeDTO
         return $this->hours;
     }
 
-    public function getSchoolYear(): string
-    {
-        return $this->schoolYear;
-    }
-
-    public function getInnovative(): int
-    {
-        return $this->innovative;
-    }
-
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    /** @return int[] */
+    /** @return TeacherIniciative[] */
     public function getTeachers(): array
     {
         return $this->teachers;
     }
 
-    /** @return int[] */
+    /** @return CompanyIniciative[] */
     public function getCompanies(): array
     {
         return $this->companies;
     }
 
-    /** @return int[] */
+    /** @return ModuleIniciative[] */
     public function getModules(): array
     {
         return $this->modules;
     }
 
-    /** @return int[] */
+    /** @return IniciativeGoal[] */
     public function getGoals(): array
     {
         return $this->goals;
     }
-
 }

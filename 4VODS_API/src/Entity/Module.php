@@ -6,7 +6,6 @@ use App\Repository\ModuleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Degree;
 
 #[ORM\Entity(repositoryClass: ModuleRepository::class)]
 class Module
@@ -21,7 +20,7 @@ class Module
 
     #[ORM\ManyToOne(inversedBy: 'modules')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Degree $idDegree = null;
+    private ?degree $idDegree = null;
 
     /**
      * @var Collection<int, TeacherModule>

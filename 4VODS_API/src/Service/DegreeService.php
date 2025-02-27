@@ -11,21 +11,10 @@ class DegreeService {
     {
         $this->entityManager = $entityManager;
     }
-    public function toDTO($degree): array
-    {
-        return [
-            'id' => $degree->getId(),
-            'name' => $degree->getName(),
-        ];
-    }
+
     public function getAllDegrees(): array
     {
-        $degrees = $this->entityManager->getRepository(Degree::class)->findAll();
-        $degreesDTO = [];
-        foreach ($degrees as $degree) {
-            $degreesDTO[] = $this->toDTO($degree);
-        }
-        return $degreesDTO;
+        return $this->entityManager->getRepository(Degree::class)->findAll();
     }
 
 }
