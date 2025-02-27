@@ -1,18 +1,29 @@
 .scrollable-container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;  /* Evita que los elementos se acomoden en varias filas */
-    overflow-y: auto;   /* Agrega desplazamiento horizontal si hay desbordamiento */
-    gap: 10px;          /* Espacio entre las tarjetas */
-    scrollbar-width: thin; /* Para navegadores como Firefox */
-    scrollbar-color: #ccc transparent; /* Color de la barra de desplazamiento */
+    max-height: 200px;
+    max-width: 100px;
+    overflow-y: auto; /* Agrega scroll solo si es necesario */
+    overflow-x: hidden; 
 }
 
 .scrollable-container::-webkit-scrollbar {
-    height: 8px; /* Altura de la barra de desplazamiento */
+    width: 8px;
+    /* Ancho de la barra */
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+    background: #00000013;
+    /* Color del fondo de la barra */
+    border-radius: 5px;
+    /* Bordes redondeados */
 }
 
 .scrollable-container::-webkit-scrollbar-thumb {
-    background: #888; /* Color de la barra de desplazamiento */
-    border-radius: 10px; /* Bordes redondeados */
+    background: #888;
+    /* Color del "pulgar" (la parte que se mueve) */
+    border-radius: 5px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    /* Color cuando pasas el mouse */
 }

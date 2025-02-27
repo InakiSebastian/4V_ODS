@@ -14,7 +14,7 @@ export class IniciativeService {
   constructor(private odsService: OdsService) {
     this.odsList = this.odsService.getOds();
     this.iniciativeList = [
-      new Iniciative(1, 'Reciclaje loco', 'Actividad para concienciar sobre el reciclaje', new Date, new Date, 30, '2021', [this.odsList[12], this.odsList[14]], IniciativeType.Charla),
+      new Iniciative(1, 'Reciclaje loco', 'Actividad para concienciar sobre el reciclaje', new Date, new Date, 30, '2021', [this.odsList[12], this.odsList[14],this.odsList[12], this.odsList[14],this.odsList[12], this.odsList[14]], IniciativeType.Charla),
       new Iniciative(2, 'Róbale a tu jefe', 'Redistribución de la riqueza', new Date, new Date, 30.5, '2023', [this.odsList[2], this.odsList[7]], IniciativeType.Charla),
       new Iniciative(3, 'Comida solidaria', 'Concienciación sobre la reducción del hambre', new Date, new Date, 50, '2021', [this.odsList[0]], IniciativeType.Proyecto),
       new Iniciative(4, 'Peces vivos', 'Concienciación sobre la desintoxicación de nuestros ríos', new Date, new Date, 65, '2022', [this.odsList[13]], IniciativeType.Taller),
