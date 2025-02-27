@@ -1,6 +1,8 @@
 package com.javierprado.android_4vods.adapters;
 
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,26 +12,41 @@ import com.javierprado.android_4vods.fragments.CuatrovientosFragment;
 import com.javierprado.android_4vods.fragments.DetailsFragment;
 import com.javierprado.android_4vods.fragments.OdsFragment;
 import com.javierprado.android_4vods.fragments.RrssFragment;
+import com.javierprado.android_4vods.models.Iniciative;
+
+import java.util.ArrayList;
 
 public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
     private int numberOfTabs;
+    private Iniciative iniciative;
 
-    public MyPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+    public MyPagerAdapter(@NonNull FragmentManager fm, int behavior, Iniciative iniciative) {
         super(fm, behavior);
         this.numberOfTabs = behavior;
+        this.iniciative = iniciative;
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-            case 0 : return new DetailsFragment();
-            case 1 : return new CuatrovientosFragment();
-            case 2 : return new OdsFragment();
-            case 3 : return new RrssFragment();
-            default: return null;
+
+        Fragment fragment = null;
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("iniciative", iniciative); // Guardamos el dato en un Bundle
+        ArrayList<Fragment> fragmentsList = new ArrayList<>();
+        fragmentsList.add(new DetailsFragment());
+        fragmentsList.add(new CuatrovientosFragment());
+        fragmentsList.add(new OdsFragment());
+        fragmentsList.add(new RrssFragment());
+
+        fragment = fragmentsList.get(position);
+
+        if (fragment != null) {
+            fragment.setArguments(bundle);
         }
+
+        return fragment;
     }
 
     @Override

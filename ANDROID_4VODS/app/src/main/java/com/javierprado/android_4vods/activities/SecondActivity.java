@@ -13,8 +13,18 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.javierprado.android_4vods.R;
 import com.javierprado.android_4vods.adapters.MyPagerAdapter;
+import com.javierprado.android_4vods.fragments.DetailsFragment;
+import com.javierprado.android_4vods.models.Company;
+import com.javierprado.android_4vods.models.Degree;
+import com.javierprado.android_4vods.models.Goal;
+import com.javierprado.android_4vods.models.Iniciative;
+import com.javierprado.android_4vods.models.Module;
+import com.javierprado.android_4vods.models.Teacher;
 
-public class SecondActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SecondActivity extends AppCompatActivity  {
     TabLayout tabLayout;
     ViewPager viewPager;
     @Override
@@ -27,6 +37,44 @@ public class SecondActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        Bundle bundle = getIntent().getExtras();
+
+        int id = bundle.getInt("id");
+
+        // Crear los objetos necesarios para el constructor de Iniciative
+
+        Teacher teacher = new Teacher(1, "Alice Smith");
+        List<Teacher> teachers = new ArrayList<>();
+        teachers.add(teacher);
+
+        Company company = new Company("Green Energy Co.",1);
+        List<Company> companies = new ArrayList<>();
+        companies.add(company);
+
+        Degree degree = new Degree(1, "Business Administration");
+        Module module = new Module(1, "Business Strategy", degree);
+        List<Module> modules = new ArrayList<>();
+        modules.add(module);
+
+        Goal goal = new Goal(1, "Reduce poverty levels by 20%", 1);
+        List<Goal> goals = new ArrayList<>();
+        goals.add(goal);
+
+        Iniciative iniciative = new Iniciative(
+                1, // id
+                "Business Growth", // name
+                "Help startups with strategy", // description
+                "2025-02-01T00:00:00+01:00", // startDate
+                "2025-12-31T00:00:00+01:00", // endDate
+                200, // hours
+                "2024-2025", // schoolYear
+                teachers, // teachers
+                companies, // companies
+                modules, // modules
+                goals // goals
+        );
+
+
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -36,10 +84,11 @@ public class SecondActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("ODS"));
         tabLayout.addTab(tabLayout.newTab().setText("RRSS"));
 
-        MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+        MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount(),iniciative);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
@@ -59,4 +108,8 @@ public class SecondActivity extends AppCompatActivity {
 
 
     }
+
+
+
+
 }

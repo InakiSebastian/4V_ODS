@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.javierprado.android_4vods.R;
+import com.javierprado.android_4vods.models.Iniciative;
 
 
 public class CuatrovientosFragment extends Fragment {
+    private Iniciative receivedIniciative;
 
 
     public CuatrovientosFragment() {
@@ -23,6 +25,16 @@ public class CuatrovientosFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cuatrovientos, container, false);
+
+        if (getArguments() != null) {
+            receivedIniciative = (Iniciative) getArguments().getSerializable("iniciative");
+        }
+
+        if (receivedIniciative != null) {
+            // AQUI CAMBIAR LOS TXTVIEWS O LO QUE SE QUIERA
+        }
+
+
         return view;
     }
 }
