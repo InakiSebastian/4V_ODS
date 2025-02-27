@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Ods } from '../model/ods';
+import { Iniciative } from '../model/iniciative';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,9 @@ export class OdsService {
 
   getOds(): Ods[] {
     return this.odsList;
+  }
+
+  getOdsById(id: number): number | undefined{
+    return this.odsList.find(o => o.Id === id)?.Id;    
   }
 }

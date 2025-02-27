@@ -7,11 +7,11 @@ export class Ods{
         this.description = description;
     }
 
-    Id(): number {
+    get Id(): number {
         return this.id;
     }
 
-    Description(): string {
+    get Description(): string {
         return this.description;
     }
 }
