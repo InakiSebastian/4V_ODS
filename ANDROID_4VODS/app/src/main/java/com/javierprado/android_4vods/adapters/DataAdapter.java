@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.flexbox.FlexboxLayout;
 import com.javierprado.android_4vods.R;
-import com.javierprado.android_4vods.models.Iniciative;
 import com.javierprado.android_4vods.models.IniciativeCard;
 
 import java.util.ArrayList;

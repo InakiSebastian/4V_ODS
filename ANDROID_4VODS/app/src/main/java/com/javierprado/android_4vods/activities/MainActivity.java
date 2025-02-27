@@ -1,5 +1,6 @@
 package com.javierprado.android_4vods.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -14,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.javierprado.android_4vods.R;
 import com.javierprado.android_4vods.adapters.DataAdapter;
-import com.javierprado.android_4vods.models.Iniciative;
+
 import com.javierprado.android_4vods.models.IniciativeCard;
 
 import java.util.ArrayList;
@@ -51,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int id) {
                 Toast.makeText(MainActivity.this, id + "", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
+
             }
         });
         recyclerView.setAdapter(dataAdapter);
