@@ -16,7 +16,7 @@ class GoalService {
         return [
             'id' => $goal->getId(),
             'description' => $goal->getDescription(),
-            'idOds' => $goal->getIdOds()->getId(),
+            'ods' => $goal->getIdOds()->getId(),
         ];
     }
     public function getAllGoals(): array

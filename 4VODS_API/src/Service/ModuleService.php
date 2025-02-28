@@ -16,7 +16,7 @@ class ModuleService {
         return [
             'id' => $module->getId(),
             'name' => $module->getName(),
-            'idDegree' => $module->getIdDegree()->getId(),
+            'degree' => $module->getIdDegree()->getId(),
         ];
     }
     public function getAllModules(): array

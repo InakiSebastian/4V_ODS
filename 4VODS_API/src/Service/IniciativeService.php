@@ -13,6 +13,8 @@ use App\Entity\CompanyIniciative;
 use App\Entity\ModuleIniciative;
 use App\Entity\IniciativeGoal;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\PseudoTypes\LowercaseString;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -107,7 +109,7 @@ class IniciativeService {
                 $iniciativeDTO['goals'][] = [
                 'id' => $goal->getId(),
                 'description' => $goal->getIdGoal()->getDescription(),
-                'idOds' => $goal->getIdGoal()->getIdOds()->getId()
+                'ods' => $goal->getIdGoal()->getIdOds()->getId()
             ];
         }
 
@@ -129,7 +131,11 @@ class IniciativeService {
         if ($dto->getHours() <= 0) {
             throw new BadRequestHttpException('La duración de la iniciativa debe ser mayor a 0.');
         }
-    
+        
+        if (strtolower($dto->getType()) != "proyecto" && strtolower($dto->getType()) != "taller" && strtolower($dto->getType()) != "charla" && strtolower($dto->getType()) != "otros") {
+            throw new BadRequestException('El tipo de iniciativa debe ser proyecto, taller, charla u otros');
+        }
+
         $iniciative = new Iniciative();
         $iniciative->setName($dto->getName());
         $iniciative->setDescription($dto->getDescription());
@@ -238,13 +244,17 @@ class IniciativeService {
             throw new BadRequestHttpException('La duración de la iniciativa debe ser mayor a 0.');
         }
 
+        if (strtolower($dto->getType()) != "proyecto" && strtolower($dto->getType()) != "taller" && strtolower($dto->getType()) != "charla" && strtolower($dto->getType()) != "otros") {
+            throw new BadRequestException('El tipo de iniciativa debe ser proyecto, taller, charla u otros');
+        }
+
         $iniciative->setName($dto->getName());
         $iniciative->setDescription($dto->getDescription());
         $iniciative->setStartDate($dto->getStartDate());
         $iniciative->setEndDate($dto->getEndDate());
         $iniciative->setHours($dto->getHours());
+        $iniciative->setSchoolYear($dto->getSchoolYear());
 
-        // Limpiar relaciones existentes
         foreach ($iniciative->getTeacherIniciatives() as $teacherIniciative) {
             $this->entityManager->remove($teacherIniciative);
         }
@@ -258,9 +268,8 @@ class IniciativeService {
             $this->entityManager->remove($goalIniciative);
         }
         
-        $this->entityManager->flush(); // Guardar los cambios después de eliminar relaciones
+        $this->entityManager->flush();
 
-        // Agregar nuevas relaciones
         $teachers = [];
         foreach ($dto->getTeachers() as $teacherId) {
             $teacher = $this->entityManager->getRepository(Teacher::class)->find($teacherId);
@@ -318,6 +327,7 @@ class IniciativeService {
             'startDate' => $iniciative->getStartDate()->format('Y-m-d'),
             'endDate' => $iniciative->getEndDate() ? $iniciative->getEndDate()->format('Y-m-d') : null,
             'hours' => $iniciative->getHours(),
+            'schoolYear' => $iniciative->getSchoolYear(),
             'teachers' => $teachers,
             'companies' => $companies,
             'modules' => $modules,
