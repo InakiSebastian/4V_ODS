@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Model;
+
 class DegreeDTO
 {
     private int $id;

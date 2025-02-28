@@ -1,6 +1,8 @@
 <?php
 
-class Company
+namespace App\Model;
+
+class CompanyDTO
 {
     private int $id; 
     private string $name;
