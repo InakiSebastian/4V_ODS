@@ -9,18 +9,18 @@ public class IniciativeCard {
     private String name;
     private String description;
     private int hours;
-    private String school_year;
+    private String schoolYear;
     private String type;
-    private List<Integer> odss = new ArrayList<Integer>();
+    private List<Integer> ods = new ArrayList<Integer>();
 
-    public IniciativeCard(int id, String name, String description, int hours, String school_year, String type, List<Integer> odss) {
+    public IniciativeCard(int id, String name, String description, int hours, String schoolYear, String type, List<Integer> ods) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.hours = hours;
-        this.school_year = school_year;
+        this.schoolYear = schoolYear;
         this.type = type;
-        this.odss = odss;
+        this.ods = ods;
     }
 
     // Getters y Setters
@@ -56,12 +56,12 @@ public class IniciativeCard {
         this.hours = hours;
     }
 
-    public String getSchool_year() {
-        return school_year;
+    public String getSchoolYear() {
+        return schoolYear;
     }
 
-    public void setSchool_year(String school_year) {
-        this.school_year = school_year;
+    public void setSchoolYear(String schoolYear) {
+        this.schoolYear = schoolYear;
     }
 
     public String getType() {
@@ -72,11 +72,11 @@ public class IniciativeCard {
         this.type = type;
     }
 
-    public List<Integer> getOdss() {
-        return odss;
+    public List<Integer> getOds() {
+        return ods;
     }
 
-    public void setOdss(List<Integer> odss) {
-        this.odss = odss;
+    public void setOds(List<Integer> ods) {
+        this.ods = ods;
     }
 }

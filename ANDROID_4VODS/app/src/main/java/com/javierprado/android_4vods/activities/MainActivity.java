@@ -1,6 +1,5 @@
 package com.javierprado.android_4vods.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -67,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     List<IniciativeCard> cards = response.body();
                     originalList.clear();
                     originalList.addAll(cards);
+                    dataAdapter.notifyDataSetChanged();
                     for (IniciativeCard card : cards) {
                         Log.d("4VApi", "Card: " + card.getName());
                     }
@@ -88,12 +87,6 @@ public class MainActivity extends AppCompatActivity {
         List<String> opciones = Arrays.asList("Título", "Año Escolar(Tiene que ser igual)", "Ods", "Horas(menor)", "Horas(mayor)", "Tipo");
         SpinnerAdapter adapter = new SpinnerAdapter(this, opciones);
         spinner.setAdapter(adapter);
-
-//        originalList.add(new IniciativeCard(1, "Reforestación Local", "Plantación de árboles en áreas deforestadas.", 15, "2025-2026", "Taller", Arrays.asList(1, 3, 5, 7, 9, 11, 13, 15, 17)));
-//        originalList.add(new IniciativeCard(2, "Recogida de Alimentos", "Campaña de recolección de alimentos para familias necesitadas.", 150, "2024-2025", "Charla", Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16)));
-//        originalList.add(new IniciativeCard(3, "Charlas de Reciclaje", "Taller educativo sobre la importancia del reciclaje.", 5, "2024-2025", "Taller", Arrays.asList(1, 5, 9, 13, 17)));
-//        originalList.add(new IniciativeCard(4, "Apoyo Escolar", "Clases de refuerzo para estudiantes de primaria.", 30, "2024-2025", "Proyecto", Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 1, 3, 5, 7, 9, 11, 13, 15, 17)));
-//        originalList.add(new IniciativeCard(5, "Limpieza de Playas", "Jornada de limpieza y concienciación ambiental en la playa.", 800, "2024-2025", "Otro", Arrays.asList(3, 6, 9, 12, 15)));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         dataAdapter = new DataAdapter(originalList, id -> {
@@ -143,14 +136,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case "Año Escolar(Tiene que ser igual)":
-                    if (item.getSchool_year().toLowerCase().equals(searchText)) {
+                    if (item.getSchoolYear().toLowerCase().equals(searchText)) {
                         filteredList.add(item);
                     }
                     break;
                 case "Ods":
                     try {
                         int odsValue = Integer.parseInt(searchText);
-                        if (item.getOdss().contains(odsValue)) {
+                        if (item.getOds().contains(odsValue)) {
                             filteredList.add(item);
                         }
                     } catch (NumberFormatException ignored) {

@@ -23,10 +23,11 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataHolder> {
     ArrayList<IniciativeCard> listIniciative;
     private OnItemClickListener itemListener;
 
-    public DataAdapter(ArrayList<IniciativeCard> listIniciative,OnItemClickListener itemListener){
-        this.listIniciative = listIniciative;
+    public DataAdapter(ArrayList<IniciativeCard> listIniciative, OnItemClickListener itemListener) {
+        this.listIniciative = (listIniciative != null) ? listIniciative : new ArrayList<>();
         this.itemListener = itemListener;
     }
+
 
     @NonNull
     @Override
@@ -42,8 +43,9 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataHolder> {
 
     @Override
     public int getItemCount() {
-        return listIniciative.size();
+        return (listIniciative != null) ? listIniciative.size() : 0;
     }
+
 
     public class DataHolder extends RecyclerView.ViewHolder {
         TextView txtSchoolYear;
@@ -62,11 +64,15 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataHolder> {
         }
 
         public void assignData(IniciativeCard iniciative,final OnItemClickListener onItemClickListener) {
-            txtSchoolYear.setText(iniciative.getSchool_year());
+            txtSchoolYear.setText(iniciative.getSchoolYear());
             txtType.setText(iniciative.getType());
             txtName.setText(iniciative.getName());
             txtDescription.setText(iniciative.getDescription());
-            List<Integer> imageIds = Arrays.asList(R.drawable.ods1, R.drawable.ods2, R.drawable.ods3, R.drawable.ods4, R.drawable.ods5, R.drawable.ods6, R.drawable.ods7, R.drawable.ods8, R.drawable.ods9, R.drawable.ods10, R.drawable.ods11, R.drawable.ods12, R.drawable.ods13, R.drawable.ods14, R.drawable.ods15, R.drawable.ods16, R.drawable.ods17);            List<Integer> odss = iniciative.getOdss();
+            List<Integer> imageIds = Arrays.asList(R.drawable.ods1, R.drawable.ods2, R.drawable.ods3, R.drawable.ods4, R.drawable.ods5, R.drawable.ods6, R.drawable.ods7, R.drawable.ods8, R.drawable.ods9, R.drawable.ods10, R.drawable.ods11, R.drawable.ods12, R.drawable.ods13, R.drawable.ods14, R.drawable.ods15, R.drawable.ods16, R.drawable.ods17);
+            List<Integer> odss = iniciative.getOds();
+            if (odss == null) {
+                odss = new ArrayList<>(); // Handle null case
+            }
             List<Integer> odssImagenes = new ArrayList<>();
 
             for (int i = 0; i < odss.size(); i++) {
@@ -78,7 +84,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataHolder> {
 
             for (int imageId : odssImagenes) {
                 ImageView imageView = new ImageView(itemView.getContext());
-
                 imageView.setLayoutParams(new ViewGroup.LayoutParams(100, 100));
                 imageView.setImageResource(imageId);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
