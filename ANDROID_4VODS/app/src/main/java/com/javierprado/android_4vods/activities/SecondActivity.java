@@ -79,14 +79,33 @@ public class SecondActivity extends AppCompatActivity  {
         modules.add(module6);
         modules.add(module7);
 
-        Goal goal = new Goal(1, "Reduce poverty levels by 20%", 1);
+        Goal goal = new Goal(1, "Reduce poverty levels by 20%", 4);
+        Goal goal2 = new Goal(1, "Reduce poverty levels by 20%", 2);
+        Goal goal3 = new Goal(1, "Reduce poverty levels by 20%", 5);
+        Goal goal4 = new Goal(1, "Reduce poverty levels by 20%", 6);
+        Goal goal5 = new Goal(1, "Reduce poverty levels by 20%", 7);
+        Goal goal6 = new Goal(1, "Reduce poverty levels by 20%", 8);
+        Goal goal7 = new Goal(1, "Reduce poverty levels by 20%", 9);
+        Goal goal8 = new Goal(1, "Reduce poverty levels by 20%", 10);
+        Goal goal9 = new Goal(1, "Reduce poverty levels by 20%", 11);
+        Goal goal0= new Goal(1, "Reduce poverty levels by 20%", 12);
+
         List<Goal> goals = new ArrayList<>();
         goals.add(goal);
+        goals.add(goal2);
+        goals.add(goal3);
+        goals.add(goal4);
+        goals.add(goal5);
+        goals.add(goal6);
+        goals.add(goal7);
+        goals.add(goal8);
+        goals.add(goal9);
+        goals.add(goal0);
 
         Iniciative iniciative = new Iniciative(
                 1, // id
                 "Business Growth", // name
-                "Help startups with strategy", // description
+                "Help startups with strategy strategy strategy strategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategyvv strategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategy", // description
                 "2025-02-01T00:00:00+01:00", // startDate
                 "2025-12-31T00:00:00+01:00", // endDate
                 200, // hours

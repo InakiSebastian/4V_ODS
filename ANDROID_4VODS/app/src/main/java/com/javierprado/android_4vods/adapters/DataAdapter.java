@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -56,7 +55,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataHolder> {
         public DataHolder(@NonNull View itemView) {
             super(itemView);
             txtSchoolYear = (TextView) itemView.findViewById(R.id.txtSchoolYear);
-            txtType = (TextView) itemView.findViewById(R.id.txtType);
+            txtType = (TextView) itemView.findViewById(R.id.txtTypeTitle);
             txtName = (TextView) itemView.findViewById(R.id.txtName);
             txtDescription = (TextView) itemView.findViewById(R.id.txtDescription);
             imageContainer = (FlexboxLayout) itemView.findViewById(R.id.imageContainer);

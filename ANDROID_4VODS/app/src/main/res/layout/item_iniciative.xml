@@ -28,7 +28,7 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:id="@+id/txtType"
+                    android:id="@+id/txtTypeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
