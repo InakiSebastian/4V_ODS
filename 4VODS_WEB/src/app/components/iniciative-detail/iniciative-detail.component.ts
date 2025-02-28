@@ -1,11 +1,14 @@
 import { Component, Input } from '@angular/core';
-import { Iniciative } from '../../model/iniciative';
 import { Module } from '../../model/module';
 import { Degree } from '../../model/degree';
 import { CommonModule } from '@angular/common';
 import { Teacher } from '../../model/teacher';
 import { Ods } from '../../model/ods';
 import { Goal } from '../../model/goal';
+import { Difusion } from '../../model/difusion';
+import { IniciativeService } from '../../services/iniciative.service';
+import { Iniciative } from '../../model/iniciative';
+import { CompliteIniciative } from '../../model/complite-iniciative';
 
 @Component({
   selector: 'app-iniciative-detail',
@@ -15,7 +18,11 @@ import { Goal } from '../../model/goal';
 })
 export class IniciativeDetailComponent {
 
-  @Input() idIniciativa!: number
+  @Input() idIniciative: number = 1
+
+  constructor(private iniciativeService: IniciativeService){
+    this.render(this.iniciativeService.getCompliteIniciativeById(this.idIniciative)!);
+  }
 
   name: string = 'erewr';
   description: string = 'Luis Carrero Blanco (Santoña, Kantabria, Espainia, 1904ko martxoaren 4a - Madril, Espainia, 1973ko abenduaren 20a) Francoren Gobernuan zenbait kargu izan zituen amiral eta politikaria izan zen. ETAk erail zuen, Espainiako Ministroen Kontseiluko presidente zela, diktaduraren azken urteetan. Hil ondoren, erregimen frankistak Carrero Blanco dukea titulua eman zion. \n \n Carrero Blanco zen gobernuko kideen eta Francoren inguruko pertsonen artean, diktadorea ordezka zezakeen bakarra. Hau hil zutenean, frankismoa ondorengorik gabe geratu zen. Izan ere, aurrerantzean ez zuen inork asmatu diktadorearen uste osoa eta botere-taldeena biltzen. Arias Navarro saiatu zen, baina berehala ikusi zen honek ez zuela karismarik erregimenari leial izan zitzaizkienen eta gainerako gizartearen babesa bereganatzeko.';
@@ -24,10 +31,27 @@ export class IniciativeDetailComponent {
   hours: number = 454;
   iniciativeType: string = 'f3egv2th';
 
-  modules: Module[] = [new Module(1, 1, 'Modulo 1'), new Module(2, 1, 'Chico figma 2'), new Module(3, 1, 'Modulo 3'), new Module(1, 2, 'Moviles 1'), new Module(2, 2, 'Empresa 2')];
+  modules: Module[] = [];
+  teachers: Teacher[] = [];
+  goals: Goal[] = [];
+  odsList: Ods[] = [];
 
+  render(iniciative: CompliteIniciative){
+    this.name = iniciative.Name;
+    this.description = iniciative.Description;
+    this.startDate = iniciative.StartDate;
+    this.endDate = iniciative.EndDate;
+    this.hours = iniciative.Hours;
+    this.iniciativeType = iniciative.IniciativeType;
 
-  //gestion de módulos
+    this.modules = iniciative.Modules;
+    this.teachers = iniciative.Teachers
+    this.goals = iniciative.Goals
+    this.difusions = iniciative.Difusions
+  }
+  //Detalles:
+
+  //Gestión de módulos
   idDegrees: number[] = []
 
   degrees: Degree[] = [new Degree(1, 'DAM'), new Degree(2, 'ASIR')];
@@ -35,6 +59,7 @@ export class IniciativeDetailComponent {
     name: d.Name,
     modulesD: this.modules.filter(m => m.IdCiclo === d.Id) // Filtra solo los módulos que pertenecen al grado
   }));
+  difusions: Difusion[] = [ new Difusion(1,1,"Insta", "oiejfierwngwwiñetjnbtrinjb"), new Difusion(1,1,"Insta", "oiejfierwngwwiñetjnbtrinjb"), new Difusion(1,1,"Insta", "oiejfierwngwwiñetjnbtrinjb"), new Difusion(1,1,"Insta", "oiejfierwngwwiñetjnbtrinjb"), new Difusion(1,1,"Insta", "oiejfierwngwwiñetjnbtrinjb")];
 
 
   ngOnInit() {
@@ -55,27 +80,11 @@ export class IniciativeDetailComponent {
   }
 
   //gestión de profesores
-  teachers: Teacher[] = [new Teacher(1, 'Profesor 1'), new Teacher(2, 'Profesor 2'), new Teacher(3, 'Profesor 3'), new Teacher(1, 'Profesor 1'), new Teacher(2, 'Profesor 2'), new Teacher(3, 'Profesor 3'), new Teacher(1, 'Profesor 1'), new Teacher(2, 'Profesor 2'), new Teacher(3, 'Profesor 3'), new Teacher(1, 'Profesor 1'), new Teacher(2, 'Profesor 2'), new Teacher(3, 'Profesor 3')];
+  
 
-  //gestión odss
-  images = [
-    { id: 1, url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTzM7RGYyvbjwAy5Ar4kJ6ZN1kFBnZGUSVyA&s" },
-    { id: 2, url: "https://www.carlosgonzalo.es/wp-content/uploads/2024/04/ODS-12.png" },
-    { id: 3, url: "https://www.carlosgonzalo.es/wp-content/uploads/2024/04/ODS-15.png" }
-  ];
+  
 
-  odsList: Ods[] = [
-    new Ods(1, "Fin de la Pobreza"),
-    new Ods(2, "Hambre Cero"),
-    new Ods(3, "Salud y Bienestar")
-  ];
-
-  goals: Goal[] = [
-    new Goal(1, 1, "Erradicar la pobreza extrema."),
-    new Goal(2, 1, "Acceso equitativo a recursos económicos."),
-    new Goal(3, 2, "Acabar con la malnutrición."),
-    new Goal(4, 3, "Garantizar el acceso a servicios de salud.")
-  ];
+  
 
   odsSeleccionado: Ods | null = null;
   metasSeleccionadas: Goal[] = [];
@@ -85,7 +94,6 @@ export class IniciativeDetailComponent {
   seleccionarODS(idODS: number): void {
     this.odsSeleccionado = this.odsList.find(ods => ods.id === idODS) || null;
     this.metasSeleccionadas = this.goals.filter(goal => goal.idODS === idODS);
-    const imagen = this.images.find(img => img.id === idODS);
-    this.imagenSeleccionada = imagen ? imagen.url : '';
+    this.imagenSeleccionada = "odsIcons/"+idODS+".png";
   }
 }

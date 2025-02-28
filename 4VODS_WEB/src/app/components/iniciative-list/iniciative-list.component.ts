@@ -3,10 +3,11 @@ import { IniciativeCardComponent } from "../iniciative-card/iniciative-card.comp
 import { Iniciative } from '../../model/iniciative';
 import { IniciativeService } from '../../services/iniciative.service';
 import { IniciativeDetailComponent } from '../../components/iniciative-detail/iniciative-detail.component';
+import { ModalComponent } from "../modal/modal.component";
 
 @Component({
   selector: 'app-iniciative-list',
-  imports: [IniciativeCardComponent, IniciativeDetailComponent],
+  imports: [IniciativeCardComponent, ModalComponent],
   templateUrl: './iniciative-list.component.html',
   styleUrl: './iniciative-list.component.scss'
 })
@@ -14,6 +15,7 @@ export class IniciativeListComponent {
 
   iniciativeList: Iniciative[] = [];
   idIniciativa!: number;
+  idSelected: number|null = 1;
 
   constructor(private iniciativeService: IniciativeService){}
 
@@ -21,8 +23,9 @@ export class IniciativeListComponent {
     this.iniciativeList = this.iniciativeService.getIniciatives();
   }
 
-  setIdIniciativa($event: MouseEvent,arg1: number) {
-    
+  setIdIniciativa($event: MouseEvent, id: number) {
+    $event.preventDefault();
+    this.idSelected = id; 
   }
   
 }

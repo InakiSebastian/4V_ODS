@@ -10,7 +10,6 @@ export class Iniciative {
     private hours: number;
     private academicYear: string;
     private ods: Ods[];
-
     private iniciativeType: IniciativeType; 
 
 

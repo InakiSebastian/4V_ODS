@@ -21,3 +21,38 @@
     width: auto;      /* Ocupa solo el ancho del contenido */
     min-width: 150px; /* Tamaño mínimo para evitar que se vean demasiado pequeñas */
 }
+#disabled{
+    .card {
+        border-radius: 10px;
+        transition: transform 0.2s ease-in-out;
+    }
+    
+    .card:hover {
+        transform: scale(1.05);
+    }
+    
+    .card-header {
+        display: flex;
+        align-items: center;
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+}
+
+#rrss{
+    .card {
+        border-radius: 10px;
+        transition: transform 0.2s ease-in-out;
+    }
+    
+    .card:hover {
+        transform: scale(1.05);
+    }
+    
+    .card-header {
+        display: flex;
+        align-items: center;
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+}

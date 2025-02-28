@@ -1,12 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Iniciative } from '../../model/iniciative';
-import { FormatDatePipe } from '../../pipes/format-date.pipe';
 import { IniciativeService } from '../../services/iniciative.service';
-import { OdsService } from '../../services/ods.service';
 
 @Component({
   selector: 'app-iniciative-card',
-  imports: [FormatDatePipe],
+  imports: [],
   templateUrl: './iniciative-card.component.html',
   styleUrl: './iniciative-card.component.scss'
 })

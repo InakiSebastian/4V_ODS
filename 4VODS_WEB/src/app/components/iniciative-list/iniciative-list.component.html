@@ -8,12 +8,6 @@
     </div>
 
     <!-- Modal corregido -->
-    <div class="modal fade" id="customModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog custom-modal-width">
-            <div class="modal-content">
-                <app-iniciative-detail [idIniciativa]="idIniciativa"/>
-            </div>
-        </div>
-    </div>
+    <app-modal [contentType]="'detail'" [idIniciative]="idSelected"/>
 
 </div>
