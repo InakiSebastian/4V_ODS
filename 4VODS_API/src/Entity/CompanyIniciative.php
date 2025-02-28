@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\CompanyIniciativeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Company;
+use App\Entity\Iniciative;
 
 #[ORM\Entity(repositoryClass: CompanyIniciativeRepository::class)]
 class CompanyIniciative
@@ -15,11 +17,11 @@ class CompanyIniciative
 
     #[ORM\ManyToOne(inversedBy: 'companyIniciatives')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?iniciative $idIniciative = null;
+    private ?Iniciative $idIniciative = null;
 
     #[ORM\ManyToOne(inversedBy: 'companyIniciatives')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?company $idCompany = null;
+    private ?Company $idCompany = null;
 
     #[ORM\Column]
     private ?bool $_Active = True;

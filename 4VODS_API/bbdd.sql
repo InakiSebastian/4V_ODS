@@ -71,3 +71,6 @@ INSERT INTO `teacher_iniciative` (`id_teacher_id`, `id_iniciative_id`, `_active`
 (1, 1, 1),
 (2, 2, 1),
 (3, 3, 1);
+
+--Insertar datos en la tabla diffusion
+INSERT INTO `diffusion`( `iniciative_id`, `type`, `link`) VALUES ('1','instagram','https://asdf')
