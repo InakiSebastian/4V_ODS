@@ -42,7 +42,7 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.TeacherV
 
         TeacherViewHolder(View itemView) {
             super(itemView);
-            teacherName = itemView.findViewById(R.id.txtTeacher);
+            teacherName = itemView.findViewById(R.id.txtGoal);
         }
 
         void bind(Teacher teacher) {

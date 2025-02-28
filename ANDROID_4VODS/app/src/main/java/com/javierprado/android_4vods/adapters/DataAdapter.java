@@ -68,7 +68,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataHolder> {
             txtType.setText(iniciative.getType());
             txtName.setText(iniciative.getName());
             txtDescription.setText(iniciative.getDescription());
-            List<Integer> imageIds = Arrays.asList(R.drawable.ods1, R.drawable.ods2, R.drawable.ods3, R.drawable.ods4, R.drawable.ods5, R.drawable.ods6, R.drawable.ods7, R.drawable.ods8, R.drawable.ods9, R.drawable.ods10, R.drawable.ods11, R.drawable.ods12, R.drawable.ods13, R.drawable.ods14, R.drawable.ods15, R.drawable.ods16, R.drawable.ods17);
+            List<Integer> imageIds = Arrays.asList(R.drawable.ods1, R.drawable.ods2, R.drawable.ods3, R.drawable.ic_launcher_background, R.drawable.ods5, R.drawable.ods6, R.drawable.ods7, R.drawable.ods8, R.drawable.ods9, R.drawable.ods10, R.drawable.ods11, R.drawable.ods12, R.drawable.ods13, R.drawable.ods14, R.drawable.ods15, R.drawable.ods16, R.drawable.ods17);
             List<Integer> odss = iniciative.getOds();
             if (odss == null) {
                 odss = new ArrayList<>(); // Handle null case

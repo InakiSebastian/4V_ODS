@@ -71,6 +71,7 @@ public class SecondActivity extends AppCompatActivity  {
         Module module6 = new Module(1, "Strategy2", degree);
         Module module7 = new Module(1, "Strategy2", degree);
         List<Module> modules = new ArrayList<>();
+
         modules.add(module);
         modules.add(module2);
         modules.add(module3);
@@ -79,10 +80,10 @@ public class SecondActivity extends AppCompatActivity  {
         modules.add(module6);
         modules.add(module7);
 
-        Goal goal = new Goal(1, "Reduce poverty levels by 20%", 4);
-        Goal goal2 = new Goal(1, "Reduce poverty levels by 20%", 2);
-        Goal goal3 = new Goal(1, "Reduce poverty levels by 20%", 5);
-        Goal goal4 = new Goal(1, "Reduce poverty levels by 20%", 6);
+        Goal goal = new Goal(1, "GOAL 4", 4);
+        Goal goal2 = new Goal(2, "GOAL 4", 4);
+        Goal goal3 = new Goal(1, "GOAL 5", 5);
+        Goal goal4 = new Goal(1, "GOAL 6", 6);
         Goal goal5 = new Goal(1, "Reduce poverty levels by 20%", 7);
         Goal goal6 = new Goal(1, "Reduce poverty levels by 20%", 8);
         Goal goal7 = new Goal(1, "Reduce poverty levels by 20%", 9);
@@ -105,17 +106,18 @@ public class SecondActivity extends AppCompatActivity  {
         Iniciative iniciative = new Iniciative(
                 1, // id
                 "Business Growth", // name
-                "Help startups with strategy strategy strategy strategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategyvv strategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategy", // description
+                "This initiative is designed to empower startups by providing them with the necessary tools, resources, and strategic frameworks to drive sustainable business growth. Over the course of the year, participants will engage in a comprehensive program focusing on market expansion, operational improvements, and innovation management. The goal is to help businesses identify key opportunities in their industry, enhance their value proposition, and implement effective business strategies that can scale. The initiative will cover a wide range of topics, including financial planning, customer acquisition, team management, and digital transformation, all tailored to the unique needs of startups. Additionally, expert mentors and industry leaders will guide participants through real-world challenges, offering hands-on advice to optimize their growth trajectory and ensure long-term success in the competitive marketplace.", // description
                 "2025-02-01T00:00:00+01:00", // startDate
                 "2025-12-31T00:00:00+01:00", // endDate
                 200, // hours
                 "2024-2025", // schoolYear
-                "Taller", //Type
+                "Taller", // Type
                 teachers, // teachers
                 companies, // companies
                 modules, // modules
                 goals // goals
         );
+
 
 
 
