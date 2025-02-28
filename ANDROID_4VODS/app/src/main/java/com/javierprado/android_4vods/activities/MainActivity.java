@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -19,6 +20,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.javierprado.android_4vods.API.Api4VService;
+import com.javierprado.android_4vods.API.ApiClient;
 import com.javierprado.android_4vods.R;
 import com.javierprado.android_4vods.adapters.DataAdapter;
 import com.javierprado.android_4vods.adapters.SpinnerAdapter;
@@ -28,6 +31,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -50,6 +57,30 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        Api4VService apiService = ApiClient.getApi4VService();
+        Call<List<IniciativeCard>> call = apiService.getIniciatives();
+
+        call.enqueue(new Callback<List<IniciativeCard>>() {
+            @Override
+            public void onResponse(Call<List<IniciativeCard>> call, Response<List<IniciativeCard>> response) {
+                if (response.isSuccessful()) {
+                    List<IniciativeCard> cards = response.body();
+                    originalList.clear();
+                    originalList.addAll(cards);
+                    for (IniciativeCard card : cards) {
+                        Log.d("4VApi", "Card: " + card.getName());
+                    }
+                } else {
+                    Log.e("4VApi", "Error en la respuesta: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<IniciativeCard>> call, Throwable t) {
+                Log.e("4VApi", "Error en la llamada", t);
+            }
+        });
+
         recyclerView = findViewById(R.id.recyclerView);
         searchEditText = findViewById(R.id.search);
         spinner = findViewById(R.id.optionsFilter);
@@ -58,11 +89,11 @@ public class MainActivity extends AppCompatActivity {
         SpinnerAdapter adapter = new SpinnerAdapter(this, opciones);
         spinner.setAdapter(adapter);
 
-        originalList.add(new IniciativeCard(1, "Reforestación Local", "Plantación de árboles en áreas deforestadas.", 15, "2025-2026", "Taller", Arrays.asList(1, 3, 5, 7, 9, 11, 13, 15, 17)));
-        originalList.add(new IniciativeCard(2, "Recogida de Alimentos", "Campaña de recolección de alimentos para familias necesitadas.", 150, "2024-2025", "Charla", Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16)));
-        originalList.add(new IniciativeCard(3, "Charlas de Reciclaje", "Taller educativo sobre la importancia del reciclaje.", 5, "2024-2025", "Taller", Arrays.asList(1, 5, 9, 13, 17)));
-        originalList.add(new IniciativeCard(4, "Apoyo Escolar", "Clases de refuerzo para estudiantes de primaria.", 30, "2024-2025", "Proyecto", Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 1, 3, 5, 7, 9, 11, 13, 15, 17)));
-        originalList.add(new IniciativeCard(5, "Limpieza de Playas", "Jornada de limpieza y concienciación ambiental en la playa.", 800, "2024-2025", "Otro", Arrays.asList(3, 6, 9, 12, 15)));
+//        originalList.add(new IniciativeCard(1, "Reforestación Local", "Plantación de árboles en áreas deforestadas.", 15, "2025-2026", "Taller", Arrays.asList(1, 3, 5, 7, 9, 11, 13, 15, 17)));
+//        originalList.add(new IniciativeCard(2, "Recogida de Alimentos", "Campaña de recolección de alimentos para familias necesitadas.", 150, "2024-2025", "Charla", Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16)));
+//        originalList.add(new IniciativeCard(3, "Charlas de Reciclaje", "Taller educativo sobre la importancia del reciclaje.", 5, "2024-2025", "Taller", Arrays.asList(1, 5, 9, 13, 17)));
+//        originalList.add(new IniciativeCard(4, "Apoyo Escolar", "Clases de refuerzo para estudiantes de primaria.", 30, "2024-2025", "Proyecto", Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 1, 3, 5, 7, 9, 11, 13, 15, 17)));
+//        originalList.add(new IniciativeCard(5, "Limpieza de Playas", "Jornada de limpieza y concienciación ambiental en la playa.", 800, "2024-2025", "Otro", Arrays.asList(3, 6, 9, 12, 15)));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         dataAdapter = new DataAdapter(originalList, id -> {
