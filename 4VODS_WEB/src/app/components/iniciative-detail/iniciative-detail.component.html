@@ -42,42 +42,55 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">Editar</button>
-                    <button type="button" class="btn btn-danger ms-2" data-bs-dismiss="modal">Borrar</button>
+                    <button type="button" class="btn btn-danger ms-2" data-bs-dismiss="modal" (click)="deleteIniciative($event)">Borrar</button>
                 </div>
             </div>
 
             <!--CUATROVIENTOS PÁGINA-->
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                @if (this.degrees.length != 0){
                 <h5 class="modal-title d-flex justify-content-center">
                     Ciclos y módulos participantes:
                 </h5>
                 <hr>
-                <div class="row scrollable-container ms-3">
+                <div class="row scrollable-container m-3">
                     <div class="card p-0" *ngFor="let dgree of degreeCards">
                         <div class="card-header">
                             {{ dgree.name }}
                         </div>
                         <div class="card-body">
                             <div class="card mt-2" *ngFor="let module of dgree.modulesD">
-                                <div class="card-header" [style]="{'background-color': generarColor()}">
+                                <div class="card-header" [style]="{'background-color': this.generateColor()}">
                                     {{ module.Name }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                }
+                @else {
+                <p class="modal-title d-flex justify-content-center mb-5">
+                    No participa ningún módulo
+                </p>
+                }
+                @if(this.teachers.length != 0){
                 <h5 class="modal-title d-flex justify-content-center mt-3">
                     Profesores participantes:
                 </h5>
                 <hr>
                 <div class="row scrollable-container ms-3 mb-5">
                     <div class="card p-0 m-2" *ngFor="let teacher of teachers">
-                        <!--m-auto  [style]="{'background-color': generarColor()}"-->
                         <div class="m-3 text-center d-flex justify-content-center">
                             {{ teacher.Name }}
                         </div>
                     </div>
                 </div>
+                }
+                @else {
+                <p class="modal-title d-flex justify-content-center mb-5">
+                    No participa ningún profesor
+                </p>
+                }
             </div>
 
 
@@ -88,36 +101,58 @@
                 </h5>
                 <hr>
 
+                @if(this.odsList.length != 0){
                 <!-- Contenedor de imágenes -->
-                <div class="row scrollable-container ms-3 mt-3">
-                    <img *ngFor="let image of images" [src]="image.url" alt="Foto ODS {{image.id}}"
-                        class="rounded-5 img-thumbnail m-2"
-                        style="width: 11%; height: 13%; cursor: pointer; transition: transform 0.2s;"
-                        (click)="seleccionarODS(image.id)" (mouseover)="hover=true" (mouseleave)="hover=false"
-                        [ngStyle]="hover ? {'transform': 'scale(1.1)'} : {}">
+                <div class="row scrollable-container m-3 mb-5">
+                    <img *ngFor="let ods of odsList" src="odsIcons/{{ods.Id}}.png" alt="Foto ODS {{ods.id}}"
+                        class=" rounded m-2 mb-4" style="width: 11%; height: 13%; cursor: pointer;"
+                        (click)="this.selectODS(ods.id)">
                 </div>
+                }
+                @else {
+                <p class="modal-title d-flex justify-content-center mb-5">
+                    No pertenece a ningun ODS
+                </p>
+                }
 
                 <!-- Contenedor de la imagen grande y la información -->
-                <div class="container mt-4">
+                <div class="container mt-4" *ngIf="this.showDetailOds">
                     <div class="row">
                         <!-- Imagen grande (50% del ancho) -->
-                        <div class="col-md-6 text-center">
-                            <img *ngIf="odsSeleccionado" [src]="imagenSeleccionada" alt="ODS Seleccionado"
-                                class="img-fluid rounded shadow-lg fade show" style="max-width: 100%;">
+                        <div class="col-md-4 text-center">
+                            <img *ngIf="selectedODS" [src]="selectedImage" alt="ODS Seleccionado"
+                                class="img-fluid rounded shadow-lg fade show" style="width: 100%;">
                         </div>
 
                         <!-- Nombre y metas (50% del ancho, alineadas en columna) -->
                         <div class="col-md-6 d-flex flex-column align-items-start">
                             <!-- Nombre del ODS -->
-                            <h4 class="text-primary fade show">{{ odsSeleccionado?.description }}</h4>
+                            <h4 class="text-primary fade show">{{ selectedODS?.description }}</h4>
 
                             <!-- Lista de metas (debajo del nombre) -->
+                            @if(this.selectedGoals.length != 0){
                             <h5 class="text-secondary mt-3">Metas relacionadas:</h5>
                             <ul class="list-group w-100">
-                                <li *ngFor="let meta of metasSeleccionadas" class="list-group-item fade show">
-                                    {{ meta.description }}
+                                <li *ngFor="let meta of selectedGoals" class="list-group-item fade show">
+                                    <div class="row">
+                                        <div class="col-1">
+
+                                        </div>
+                                        <div class="col-11">
+                                            {{ meta.description }}
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
+                            }
+                            @else {
+                            <p class="modal-title d-flex justify-content-center mb-5">
+                                No pertenece a ninguna meta
+                            </p>}
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn-close" aria-label="Close"
+                                (click)="closeODS($event)"></button>
                         </div>
                     </div>
                 </div>
@@ -146,7 +181,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
 

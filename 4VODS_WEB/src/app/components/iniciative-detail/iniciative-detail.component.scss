@@ -22,21 +22,19 @@
     min-width: 150px; /* Tamaño mínimo para evitar que se vean demasiado pequeñas */
 }
 #disabled{
-    .card {
+    img {
         border-radius: 10px;
-        transition: transform 0.2s ease-in-out;
+    }
+    .scrollable-container{
+        img {
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        img:hover {
+            transform: scale(1.15);
+        }
     }
     
-    .card:hover {
-        transform: scale(1.05);
-    }
-    
-    .card-header {
-        display: flex;
-        align-items: center;
-        background-color: #f8f9fa;
-        font-weight: bold;
-    }
 }
 
 #rrss{

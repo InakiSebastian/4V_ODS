@@ -9,6 +9,5 @@ import { IniciativeDetailComponent } from '../iniciative-detail/iniciative-detai
 })
 export class ModalComponent {
   @Input() contentType: string = "ee"; //'detail', 'edit', 'create'
-  @Input() idIniciative: number | null = null
 
 }

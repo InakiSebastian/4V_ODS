@@ -1,14 +1,20 @@
 import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+// Modelos
 import { Module } from '../../model/module';
 import { Degree } from '../../model/degree';
-import { CommonModule } from '@angular/common';
 import { Teacher } from '../../model/teacher';
 import { Ods } from '../../model/ods';
 import { Goal } from '../../model/goal';
 import { Difusion } from '../../model/difusion';
-import { IniciativeService } from '../../services/iniciative.service';
-import { Iniciative } from '../../model/iniciative';
 import { CompliteIniciative } from '../../model/complite-iniciative';
+
+// Servicios
+import { IniciativeService } from '../../services/iniciative.service';
+import { ModalService } from '../../services/modal.service';
+import { OdsService } from '../../services/ods.service';
+import { DegreeService } from '../../services/degree.service';
 
 @Component({
   selector: 'app-iniciative-detail',
@@ -18,82 +24,121 @@ import { CompliteIniciative } from '../../model/complite-iniciative';
 })
 export class IniciativeDetailComponent {
 
-  @Input() idIniciative: number = 1
+  idIniciative: number = 0;
 
-  constructor(private iniciativeService: IniciativeService){
-    this.render(this.iniciativeService.getCompliteIniciativeById(this.idIniciative)!);
-  }
-
-  name: string = 'erewr';
-  description: string = 'Luis Carrero Blanco (Santoña, Kantabria, Espainia, 1904ko martxoaren 4a - Madril, Espainia, 1973ko abenduaren 20a) Francoren Gobernuan zenbait kargu izan zituen amiral eta politikaria izan zen. ETAk erail zuen, Espainiako Ministroen Kontseiluko presidente zela, diktaduraren azken urteetan. Hil ondoren, erregimen frankistak Carrero Blanco dukea titulua eman zion. \n \n Carrero Blanco zen gobernuko kideen eta Francoren inguruko pertsonen artean, diktadorea ordezka zezakeen bakarra. Hau hil zutenean, frankismoa ondorengorik gabe geratu zen. Izan ere, aurrerantzean ez zuen inork asmatu diktadorearen uste osoa eta botere-taldeena biltzen. Arias Navarro saiatu zen, baina berehala ikusi zen honek ez zuela karismarik erregimenari leial izan zitzaizkienen eta gainerako gizartearen babesa bereganatzeko.';
+  // Datos de la iniciativa
+  name: string = '';
+  description: string = '';
   startDate: Date = new Date();
-  endDate: Date | null = null
-  hours: number = 454;
-  iniciativeType: string = 'f3egv2th';
+  endDate: Date | null = null;
+  hours: number = 0;
+  iniciativeType: string = '';
+  odsList: Ods[] = [];
 
+  // Datos de la iniciativa completa
   modules: Module[] = [];
   teachers: Teacher[] = [];
   goals: Goal[] = [];
-  odsList: Ods[] = [];
+  difusions: Difusion[] = [];
 
-  render(iniciative: CompliteIniciative){
+  // Datos para la visualización
+  idDegrees: number[] = [];
+  degrees: Degree[] = [];
+
+  //Auxiliares
+  selectedODS: Ods | null = null;
+  selectedGoals: Goal[] = [];
+  selectedImage: string = '';
+  showDetailOds: boolean = false;
+
+  hover = false;
+  
+  constructor(
+    private iniciativeService: IniciativeService,
+    private modalService: ModalService,
+    private degreeService: DegreeService
+  ) {
+   
+  }
+
+  render(iniciative: CompliteIniciative) { //datos de la iniciativa separados
+    this.showDetailOds = false;
     this.name = iniciative.Name;
     this.description = iniciative.Description;
     this.startDate = iniciative.StartDate;
     this.endDate = iniciative.EndDate;
     this.hours = iniciative.Hours;
     this.iniciativeType = iniciative.IniciativeType;
-
     this.modules = iniciative.Modules;
-    this.teachers = iniciative.Teachers
-    this.goals = iniciative.Goals
-    this.difusions = iniciative.Difusions
-  }
-  //Detalles:
+    this.teachers = iniciative.Teachers;
+    this.goals = iniciative.Goals;
+    this.difusions = iniciative.Difusions;
+    this.odsList = iniciative.Ods;
 
-  //Gestión de módulos
-  idDegrees: number[] = []
-
-  degrees: Degree[] = [new Degree(1, 'DAM'), new Degree(2, 'ASIR')];
-  degreeCards = this.degrees.map(d => ({
-    name: d.Name,
-    modulesD: this.modules.filter(m => m.IdCiclo === d.Id) // Filtra solo los módulos que pertenecen al grado
-  }));
-  difusions: Difusion[] = [ new Difusion(1,1,"Insta", "oiejfierwngwwiñetjnbtrinjb"), new Difusion(1,1,"Insta", "oiejfierwngwwiñetjnbtrinjb"), new Difusion(1,1,"Insta", "oiejfierwngwwiñetjnbtrinjb"), new Difusion(1,1,"Insta", "oiejfierwngwwiñetjnbtrinjb"), new Difusion(1,1,"Insta", "oiejfierwngwwiñetjnbtrinjb")];
-
-
-  ngOnInit() {
+    //visualización
+    this.degrees = [];
+    this.idDegrees = [];
     this.modules.forEach((m) => {
       if (!this.idDegrees.includes(m.IdCiclo)) {
         this.idDegrees.push(m.IdCiclo);
       }
-    }) //TODOIKER: HACER UNA PETICION A LA API PARA OBTENER LOS GRADOS DE IDS
+    });
+
+    this.degrees = this.degreeService.getDegrees().filter(d => this.idDegrees.includes(d.Id));
   }
 
-  generarColor(): string {
+  async ngOnInit() {
+    await this.modalService.idIniciative$.subscribe(id => {this.idIniciative = id
+      this.render(this.iniciativeService.getCompliteIniciativeById(this.idIniciative)!);
+    });
+  }
+
+  //gestión de detalles:
+
+
+  //gestión de 4vientos
+  //ciclos y módulos:
+
+  get degreeCards() { //pasa a un objeto combinadoe ntre ciclo y módulos
+    return this.degrees.map(d => ({
+      name: d.Name,
+      modulesD: this.modules.filter(m => m.IdCiclo === d.Id) // Filtra solo los módulos que pertenecen al grado
+    }));
+  }
+  
+  //gestión de ods y metas:
+
+  closeODS($event: MouseEvent) {
+    $event.preventDefault();
+    this.showDetailOds = false;
+  }
+
+  selectODS(idODS: number): void {
+    this.showDetailOds = true;
+    this.selectedODS = this.odsList.find(ods => ods.id === idODS) || null;
+    this.selectedGoals = this.goals.filter(goal => goal.idODS === idODS);
+    this.selectedImage = `odsIcons/${idODS}.png`;
+  }
+
+  //gestón de botones
+  //eliminar
+  deleteIniciative(event: MouseEvent) {
+    event.preventDefault();
+    if (!window.confirm(`¿Estas segur@ de que quieres eliminar esta iniciativa?`)){
+      return;
+    }
+    this.modalService.closeModal();
+    this.iniciativeService.deleteIniciative(this.idIniciative);
+  }
+  
+  //efectos de visualización
+ 
+  generateColor(): string {
     const base = 200; // Valor mínimo para colores claros
     const r = Math.floor(Math.random() * (255 - base) + base);
     const g = Math.floor(Math.random() * (255 - base) + base);
     const b = Math.floor(Math.random() * (255 - base) + base);
-
     return `rgb(${r}, ${g}, ${b})`;
   }
 
-  //gestión de profesores
-  
-
-  
-
-  
-
-  odsSeleccionado: Ods | null = null;
-  metasSeleccionadas: Goal[] = [];
-  imagenSeleccionada: string = '';
-  hover = false;
-
-  seleccionarODS(idODS: number): void {
-    this.odsSeleccionado = this.odsList.find(ods => ods.id === idODS) || null;
-    this.metasSeleccionadas = this.goals.filter(goal => goal.idODS === idODS);
-    this.imagenSeleccionada = "odsIcons/"+idODS+".png";
-  }
 }

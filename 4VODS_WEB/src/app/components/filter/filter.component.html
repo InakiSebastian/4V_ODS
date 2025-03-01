@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
+    <div class="container-fluid h-50">
+        <form class="d-flex w-100">
+            <input class="form-control me-2" type="search" placeholder="Buscar por nombre" [(ngModel)]="searchTerm" name="searchTerm" (input)="applyFilters()">
+            <select class="form-select me-2" [(ngModel)]="selectedType" name="selectedType" (change)="applyFilters()">
+                <option value="">Todos los tipos</option>
+                <option value="proyecto">Proyecto</option>
+                <option value="charla">Charla</option>
+                <option value="excursion">Excursión</option>
+            </select>
+            <button class="btn btn-outline-primary" type="button" (click)="toggleAdvancedFilters()">{{buttonText}}</button>
+        </form>
+    </div>
+</nav>
+
+<div *ngIf="showAdvancedFilters" class="container mt-3">
+    <div class="row">
+        <!-- ODS Checkboxes -->
+        <div class="col-md-4">
+            <h5>Filtrar por ODS</h5>
+            <div *ngFor="let ods of odsList">
+                <input type="checkbox" [value]="ods.id" [(ngModel)]="selectedOds" name="selectedOds" (change)="applyFilters()"> {{ ods.name }}
+            </div>
+        </div>
+
+        <!-- Cursos Checkboxes -->
+        <div class="col-md-4">
+            <h5>Filtrar por Curso</h5>
+            <div *ngFor="let curso of cursosList">
+                <input type="checkbox" [value]="curso.id" [(ngModel)]="selectedCursos" name="selectedCursos" (change)="applyFilters()"> {{ curso.name }}
+            </div>
+        </div>
+
+        <!-- Profesor ComboBox -->
+        <div class="col-md-4">
+            <h5>Seleccionar Profesor</h5>
+            <select class="form-select" [(ngModel)]="selectedProfesor" name="selectedProfesor" (change)="applyFilters()">
+                <option value="">Todos los profesores</option>
+                <option *ngFor="let profesor of profesoresList" [value]="profesor.id">{{ profesor.name }}</option>
+            </select>
+        </div>
+    </div>
+</div>

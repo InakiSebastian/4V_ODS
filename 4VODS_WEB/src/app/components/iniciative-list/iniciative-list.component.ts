@@ -2,30 +2,48 @@ import { Component } from '@angular/core';
 import { IniciativeCardComponent } from "../iniciative-card/iniciative-card.component";
 import { Iniciative } from '../../model/iniciative';
 import { IniciativeService } from '../../services/iniciative.service';
-import { IniciativeDetailComponent } from '../../components/iniciative-detail/iniciative-detail.component';
 import { ModalComponent } from "../modal/modal.component";
+import { ModalService } from '../../services/modal.service';
+import { FilterComponent } from '../filter/filter.component';
 
 @Component({
   selector: 'app-iniciative-list',
-  imports: [IniciativeCardComponent, ModalComponent],
+  imports: [IniciativeCardComponent, ModalComponent, FilterComponent],
   templateUrl: './iniciative-list.component.html',
   styleUrl: './iniciative-list.component.scss'
 })
 export class IniciativeListComponent {
 
+
   iniciativeList: Iniciative[] = [];
   idIniciativa!: number;
-  idSelected: number|null = 1;
+  idSelected!: number | null;
 
-  constructor(private iniciativeService: IniciativeService){}
+  showModal: boolean = true;
 
-  ngOnInit(){
+  constructor(
+    private iniciativeService: IniciativeService,
+    private modalService: ModalService
+  ) {
+    this.modalService.open$.subscribe(open => { this.showModal = open; this.showModal = true });
+
+  }
+
+  ngOnInit() {
     this.iniciativeList = this.iniciativeService.getIniciatives();
   }
 
   setIdIniciativa($event: MouseEvent, id: number) {
     $event.preventDefault();
-    this.idSelected = id; 
+    this.showModal = true;
+    this.modalService.changeIdIniciative(id);
+
+    this.modalService.openModal();
   }
-  
+
+  //filtrar iniiativas
+  onFilterChanged(filteredList: Iniciative[]) {
+    this.iniciativeList = filteredList;
+  }
+
 }
