@@ -170,7 +170,14 @@
                         <div class="col-md-4 mb-3" *ngFor="let dif of difusions">
                             <div class="card shadow-sm">
                                 <div class="card-header d-flex align-items-center">
-                                    <h5 class="mb-0">{{ dif.Type }}</h5>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <img [src]="getIcon(dif)" alt="" class="img-fluid">
+                                        </div>
+                                        <div class="col-9">
+                                            <h5 class="mb-0">{{ dif.Type }}</h5>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="card-body text-center">
                                     <a [href]="dif.Link" target="_blank" class="btn btn-primary w-100">

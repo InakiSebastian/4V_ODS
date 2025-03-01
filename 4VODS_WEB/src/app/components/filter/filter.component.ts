@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'; // Import the FormsModule
+import { FormsModule } from '@angular/forms';
 import { Iniciative } from '../../model/iniciative';
 import { IniciativeService } from '../../services/iniciative.service';
 import { ModalService } from '../../services/modal.service';
+import { OdsService } from '../../services/ods.service';
+import { Ods } from '../../model/ods';
 
 @Component({
   selector: 'app-filter',
@@ -13,13 +14,14 @@ import { ModalService } from '../../services/modal.service';
   styleUrl: './filter.component.scss'
 })
 export class FilterComponent {
+
   iniciativeList: Iniciative[] = [];
 
   searchTerm: string = '';
   selectedType: string = '';
-  selectedOds: number[] = [];
-  selectedCursos: number[] = [];
-  selectedProfesor: string = '';
+  selectedOds: OdsCheckbox[];
+  selectedDegrees: number[] = [];
+  selectedTeacher: string = '';
 
   showAdvancedFilters = false;
 
@@ -27,14 +29,20 @@ export class FilterComponent {
 
   @Output() filterChanged = new EventEmitter<Iniciative[]>();
 
-  odsList: any;
+  odsList: Ods[];
   cursosList: any;
   profesoresList: any;
+  now: boolean = false;
+  estrictoODS: boolean = false;
 
   constructor(
     private iniciativeService: IniciativeService,
-    private modalService: ModalService
-  ){}
+    private modalService: ModalService,
+    private odsService: OdsService
+  ){
+    this.odsList = this.odsService.getOds();
+    this.selectedOds = this.odsList.map(ods => new OdsCheckbox(ods.id, ods.Description, false));
+  }
   
   ngOnInit(){
     this.iniciativeList = this.iniciativeService.getIniciatives();
@@ -49,6 +57,8 @@ export class FilterComponent {
     else{
       this.buttonText = 'Más filtros';
     }
+    this.selectedOds.forEach(ods => ods.selected = false);
+    this.applyFilters();
   }
 
   applyFilters() {
@@ -63,11 +73,49 @@ export class FilterComponent {
       }
       return true;
     }).filter(iniciative => {
-      if (this.selectedOds.length > 0) {
-        return iniciative.Ods.some(ods => this.selectedOds.includes(ods.Id));
+      if (this.selectedOds.filter(ods => ods.selected).length > 0) {
+        if (this.estrictoODS) {
+          return !iniciative.Ods.some(ods=> !this.selectedOds.filter(ods => ods.selected).map(ods => ods.id).includes(ods.id));
+        }
+        else{
+          return iniciative.Ods.some(ods => this.selectedOds.filter(ods => ods.selected).map(ods => ods.id).includes(ods.Id));
+        }
+      }
+      return true;
+    }).filter(iniciative => {
+      if (this.now && iniciative.EndDate != null){
+        return iniciative.EndDate > new Date() && iniciative.StartDate < new Date();
       }
       return true;
     });
     this.filterChanged.emit(this.iniciativeList);
+  }
+
+  cleanFilters() {
+    this.searchTerm = '';
+    this.selectedType = '';
+    this.selectedDegrees = [];
+    this.selectedTeacher = '';
+    this.now = false;
+    this.selectedOds.forEach(ods => ods.selected = false);
+
+    this.applyFilters();
+  }
+
+  updateSelectedOds() {
+    this.applyFilters();
+  }
+
+}
+
+class OdsCheckbox {
+  id: number;
+  name: string;
+  selected: boolean;
+
+  constructor(id: number, name: string, selected: boolean) {
+    this.id = id;
+    this.name = name;
+    this.selected = selected;
   }
 }

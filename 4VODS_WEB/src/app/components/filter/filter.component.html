@@ -1,43 +1,85 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
+<nav class="navbar navbar-expand-lg navbar-light bg-light pt-4">
     <div class="container-fluid h-50">
-        <form class="d-flex w-100">
-            <input class="form-control me-2" type="search" placeholder="Buscar por nombre" [(ngModel)]="searchTerm" name="searchTerm" (input)="applyFilters()">
-            <select class="form-select me-2" [(ngModel)]="selectedType" name="selectedType" (change)="applyFilters()">
-                <option value="">Todos los tipos</option>
-                <option value="proyecto">Proyecto</option>
-                <option value="charla">Charla</option>
-                <option value="excursion">Excursión</option>
-            </select>
-            <button class="btn btn-outline-primary" type="button" (click)="toggleAdvancedFilters()">{{buttonText}}</button>
+        <form class="d-flex w-100 row ms-4">
+            <div class="col-3">
+                <input class="form-control me-2" type="search" placeholder="Buscar por nombre" [(ngModel)]="searchTerm" name="searchTerm" (input)="applyFilters()">
+            </div>
+            <div class="col-3">
+                <select class="form-select me-2" [(ngModel)]="selectedType" name="selectedType" (change)="applyFilters()">
+                    <option value="">Todos los tipos</option>
+                    <option value="proyecto">Proyecto</option>
+                    <option value="charla">Charla</option>
+                    <option value="excursion">Excursión</option>
+                </select>
+            </div>
+            <div class="col-2 d-flex justify-content-center">
+                <div class="m-2">
+                    <label for="now">Iniciativa actual</label>
+                    <input class="form-check-label m-2" for="flexSwitchCheckDefault" type="checkbox" [(ngModel)]="now" name="now" (change)="applyFilters()">
+                </div>
+            </div>
+            <div class="col-2 d-flex justify-content-end">
+                <button class="btn btn-outline-primary" type="button" (click)="toggleAdvancedFilters()">{{buttonText}}</button>
+            </div>
+            <div class="col-2 d-flex">
+                <button class="btn btn-danger" type="button" (click)="cleanFilters()">Borrar filtros</button>
+            </div>
         </form>
     </div>
 </nav>
 
-<div *ngIf="showAdvancedFilters" class="container mt-3">
-    <div class="row">
-        <!-- ODS Checkboxes -->
-        <div class="col-md-4">
-            <h5>Filtrar por ODS</h5>
-            <div *ngFor="let ods of odsList">
-                <input type="checkbox" [value]="ods.id" [(ngModel)]="selectedOds" name="selectedOds" (change)="applyFilters()"> {{ ods.name }}
+<div class="w-100">
+    <div *ngIf="showAdvancedFilters" class="container mt-3 w-100">
+        <div class="row">
+            <!-- ODS Checkboxes -->
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-8">
+                        <h5>Filtrar por ODS</h5>
+                    </div>
+                    <div class="col-4">
+                        <label for="now">Estricto</label>
+                        <input class="form-check-label m-2" for="flexSwitchCheckDefault" type="checkbox" [(ngModel)]="estrictoODS" name="strictOds" (change)="applyFilters()">
+                    </div>
+                </div>
+                <div class="scrollable-container">
+                    <div *ngFor="let ods of odsList">
+                        <div class="row">
+                            <div class="col-2">
+                                <img [src]="'odsIcons/' + ods.id + '.png'" alt="" class="img-fluid">
+                            </div>
+                            <div class="col-10 ">
+                                <input class="mt-3" 
+                                       type="checkbox" 
+                                       [(ngModel)]="this.selectedOds[ods.id-1].selected"  
+                                       name="ods{{ods.id}}"       
+                                       (change)="updateSelectedOds()"> 
+                                {{ ods.description }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <!-- Cursos Checkboxes -->
+            <div class="col-md-4">
+                <h5>Filtrar por Curso</h5>
+                <div *ngFor="let curso of cursosList">
+                    <input type="checkbox" [value]="curso.id" [(ngModel)]="selectedDegrees" name="selectedCursos" (change)="applyFilters()"> {{ curso.name }}
+                </div>
+            </div>
+    
+            <!-- Profesor ComboBox -->
+            <div class="col-md-4">
+                <h5>Seleccionar Profesor</h5>
+                <select class="form-select" [(ngModel)]="selectedTeacher" name="selectedProfesor" (change)="applyFilters()">
+                    <option value="">Todos los profesores</option>
+                    <option *ngFor="let profesor of profesoresList" [value]="profesor.id">{{ profesor.name }}</option>
+                </select>
             </div>
         </div>
-
-        <!-- Cursos Checkboxes -->
-        <div class="col-md-4">
-            <h5>Filtrar por Curso</h5>
-            <div *ngFor="let curso of cursosList">
-                <input type="checkbox" [value]="curso.id" [(ngModel)]="selectedCursos" name="selectedCursos" (change)="applyFilters()"> {{ curso.name }}
-            </div>
-        </div>
-
-        <!-- Profesor ComboBox -->
-        <div class="col-md-4">
-            <h5>Seleccionar Profesor</h5>
-            <select class="form-select" [(ngModel)]="selectedProfesor" name="selectedProfesor" (change)="applyFilters()">
-                <option value="">Todos los profesores</option>
-                <option *ngFor="let profesor of profesoresList" [value]="profesor.id">{{ profesor.name }}</option>
-            </select>
-        </div>
+        <hr>
     </div>
+    
 </div>

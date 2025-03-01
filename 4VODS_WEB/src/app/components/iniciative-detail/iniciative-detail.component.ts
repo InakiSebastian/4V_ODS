@@ -141,4 +141,27 @@ export class IniciativeDetailComponent {
     return `rgb(${r}, ${g}, ${b})`;
   }
 
+  getIcon(difusion: Difusion) {
+
+    if (difusion.Type.toLocaleLowerCase().includes('facebook')) {
+      return 'rrss/Facebook.png';
+    } 
+    if (difusion.Type.toLocaleLowerCase().includes('instagram')) {
+      return 'rrss/Instagram.png';
+    } 
+    if (difusion.Type.toLocaleLowerCase().includes('linkedin')) {
+      return 'rrss/linkedin.png';
+    } 
+    if (difusion.Type.toLocaleLowerCase().includes('youtube') ) {
+      return 'rrss/YouTube.png';
+    }
+    if (difusion.Type.toLocaleLowerCase().includes('tiktok') ) {
+      return 'rrss/tiktok.png';
+    }
+    if (difusion.Type.toLocaleLowerCase().includes('x')) {
+      return 'rrss/X.png';
+    } 
+    return 'rrss/rrss-generico.png';
+  }
+
 }
