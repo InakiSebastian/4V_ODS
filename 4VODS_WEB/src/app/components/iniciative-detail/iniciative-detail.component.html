@@ -35,9 +35,9 @@
                         <p class="m-2"><span class="fw-bold">Tipo de iniciativa:</span>
                             {{ iniciativeType }}</p>
                         <p class="m-2"><span class="fw-bold">Curso:</span>
-                            2020-2021</p>
+                            {{ this.academicYear }}</p>
                         <p class="m-2"><span class="fw-bold">Inicio-fin:</span>
-                            20/2/2020 - 20/2/2021</p>
+                            {{this.startD}} <span *ngIf="this.endDate != null"> - {{this.endD}}</span></p>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -34,6 +34,7 @@ export class IniciativeDetailComponent {
   hours: number = 0;
   iniciativeType: string = '';
   odsList: Ods[] = [];
+  academicYear: string = '';
 
   // Datos de la iniciativa completa
   modules: Module[] = [];
@@ -44,6 +45,8 @@ export class IniciativeDetailComponent {
   // Datos para la visualización
   idDegrees: number[] = [];
   degrees: Degree[] = [];
+  startD: string = '';
+  endD: string = '';
 
   //Auxiliares
   selectedODS: Ods | null = null;
@@ -74,6 +77,7 @@ export class IniciativeDetailComponent {
     this.goals = iniciative.Goals;
     this.difusions = iniciative.Difusions;
     this.odsList = iniciative.Ods;
+    this.academicYear = iniciative.AcademicYear;
 
     //visualización
     this.degrees = [];
@@ -83,6 +87,8 @@ export class IniciativeDetailComponent {
         this.idDegrees.push(m.IdCiclo);
       }
     });
+    this.startD = this.startDate.getDate() + '/' + this.startDate.getMonth() + '/' + this.startDate.getFullYear();
+    this.endD = this.endDate?.getDate() + '/' + this.endDate?.getMonth() + '/' + this.endDate?.getFullYear();
 
     this.degrees = this.degreeService.getDegrees().filter(d => this.idDegrees.includes(d.Id));
   }
@@ -127,8 +133,10 @@ export class IniciativeDetailComponent {
     if (!window.confirm(`¿Estas segur@ de que quieres eliminar esta iniciativa?`)){
       return;
     }
-    this.modalService.closeModal();
     this.iniciativeService.deleteIniciative(this.idIniciative);
+    this.modalService.rechargeList();
+    this.modalService.closeModal();
+    
   }
   
   //efectos de visualización

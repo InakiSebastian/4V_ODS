@@ -24,9 +24,9 @@ export class IniciativeListComponent {
   constructor(
     private iniciativeService: IniciativeService,
     private modalService: ModalService
-  ) {
-    this.modalService.open$.subscribe(open => { this.showModal = open; this.showModal = true });
-
+  ) 
+  {
+    this.modalService.open$.subscribe(open => { this.showModal = open; this.showModal = true; });
   }
 
   ngOnInit() {

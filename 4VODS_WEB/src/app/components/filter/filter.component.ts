@@ -42,6 +42,9 @@ export class FilterComponent {
   ){
     this.odsList = this.odsService.getOds();
     this.selectedOds = this.odsList.map(ods => new OdsCheckbox(ods.id, ods.Description, false));
+    this.modalService.recharge$.subscribe(() => {
+      this.applyFilters()
+    });
   }
   
   ngOnInit(){

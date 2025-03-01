@@ -32,4 +32,12 @@ export class ModalService {
   closeModal() {
     this.open.next(false);
   }
+
+  private recharge: ReplaySubject<boolean> = new ReplaySubject(1);
+  recharge$: Observable<boolean> = this.recharge.asObservable();
+
+
+  rechargeList() {
+    this.recharge.next(true);
+  }
 }
