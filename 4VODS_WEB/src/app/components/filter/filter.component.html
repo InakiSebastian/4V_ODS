@@ -14,7 +14,7 @@
             </div>
             <div class="col-2 d-flex justify-content-center">
                 <div class="m-2">
-                    <label for="now">Iniciativa actual</label>
+                    <label for="now">Iniciativas actuales</label>
                     <input class="form-check-label m-2" for="flexSwitchCheckDefault" type="checkbox" [(ngModel)]="now" name="now" (change)="applyFilters()">
                 </div>
             </div>
@@ -37,7 +37,7 @@
                     <div class="col-8">
                         <h5>Filtrar por ODS</h5>
                     </div>
-                    <div class="col-4">
+                    <div class="col-4" data-bs-toggle="tooltip" data-bs-placement="top" title="Solo los que contengan los marcados" data-bs-original-title="Solo los que contengan los marcados">
                         <label for="now">Estricto</label>
                         <input class="form-check-label m-2" for="flexSwitchCheckDefault" type="checkbox" [(ngModel)]="estrictoODS" name="strictOds" (change)="applyFilters()">
                     </div>
