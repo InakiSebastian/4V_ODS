@@ -41,7 +41,7 @@ export class IniciativeListComponent {
     this.modalService.openModal();
   }
 
-  //filtrar iniiativas
+  //filtrar iniciativas
   onFilterChanged(filteredList: Iniciative[]) {
     this.iniciativeList = filteredList;
   }

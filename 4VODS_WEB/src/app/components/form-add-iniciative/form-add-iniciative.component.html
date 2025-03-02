@@ -1,3 +1,134 @@
-<!-- <form [formGroup]="formAddIniciative" (ngSubmit)="onSubmit()">
+<div class="container my-5 p-5 rounded-4 background">
+    <form [formGroup]="formAddIniciative" (ngSubmit)="onSubmit()">
+        <div class="row gy-4">
+            <h1 class="display-4 m-0">Añade una iniciativa</h1>
+            <hr class="my-3 mx-2">
+            <div class="col-6">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" formControlName="name" placeholder="Nombre de la iniciativa">
+            </div>
 
-</form> -->
+            <div class="col-6">
+                <label for="description" class="form-label">Descripción</label>
+                <input type="text" class="form-control" formControlName="description" placeholder="Descripción de la iniciativa">
+            </div>
+            
+            <div class="col-6">
+                <label for="startDate" class="form-label">Fecha Inicio</label>
+                <input type="date" class="form-control" formControlName="startDate">
+            </div>
+
+            <div class="col-6">
+                <label for="endDate" class="form-label">Fecha Fin</label>
+                <input type="date" class="form-control" formControlName="endDate">
+            </div>
+
+            <div class="col-6">
+                <label for="hours" class="form-label">Horas</label>
+                <input type="number" class="form-control" formControlName="hours">
+            </div>
+
+            <div class="col-6">
+                <label for="type" class="form-label">Tipo</label>
+                <select class="form-select" formControlName="iniciativeType">
+                    <option value="proyecto">Proyecto</option>
+                    <option value="charla">Charla</option>
+                    <option value="excursion">Excursión</option>
+                </select>
+            </div>
+
+            <!-- AGREGAR ODS -->
+            <div class="col-6">
+                <label for="ods" class="form-label">ODS</label>
+                <div class="row">
+                    <div class="col">
+                        <select class="form-select" formControlName="ods">
+                            <option value="-1" disabled selected>Selecciona un Ods</option>
+                            @for (ods of odsList; track ods){
+                                <option value="{{ods.Id}}">{{ods.Id}}. {{ods.description}}</option>
+                            }
+                        </select>
+                    </div>
+
+                    @if(formAddIniciative.get('ods')?.value > 0){
+                        <div class="col-2">
+                            <button type="button" class="btn btn-primary" (click)="addOds()">Añadir</button>
+                        </div>
+                    }
+                    
+                </div>
+            </div>
+
+            <!-- AGREGAR META -->
+            <div class="col-6">
+                @if(selectedOds.length > 0){
+                    <label for="goals" class="form-label">Metas</label>
+                    <div class="row">
+                        <div class="col">
+                            <select class="form-select" formControlName="goals">
+                                <option value="-1" disabled selected>Selecciona una meta para '{{clickedOds}}'</option>
+                                @for (goal of goalList; track goal){
+                                    <option value="{{goal.IdGoal}}">{{goal.IdGoal}}. {{goal.Description}}</option>
+                                }
+                            </select>
+                        </div>
+
+                        @if(formAddIniciative.get('goals')?.value > 0){
+                            <div class="col-2">
+                                <button type="button" class="btn btn-primary" (click)="addGoal()">Añadir</button>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <!-- ODS SELECCIONADOS -->
+            <div class="col-6 py-3 rounded">
+                <div class="row gy-4">
+                    @for(ods of selectedOds; track ods){
+                        <div class="col-3">
+                            <button type="button" class="btn btn-outline-danger mb-1 w-100 p-0" (click)="removeOds(ods)">x</button>
+                           <img src="odsIcons/{{ods.Id}}.png" alt="" class="rounded img-fluid imgOds" (click)="setGoalList(ods)">
+                        </div>
+                    }
+                    
+                </div>
+
+                @if(selectedOds.length > 0){
+                    <div class="row mt-2">
+                        <div class="col"><button type="button" class="btn btn-outline-primary" (click)="clearOds()">Eliminar Ods</button></div>
+                    </div>
+                }
+            </div>
+            
+            <!-- METAS SELECCIONADAS -->
+            <div class="col-6">
+                @if(selectedOds.length > 0){
+                    @for(ods of selectedOds; track ods){
+                        <p class="fs-4">{{ods.Description}}</p>
+                        @for(goal of selectedGoals; track goal){
+                            @if(goal.IdODS === ods.Id){
+                                <div class="row">
+                                    <div class="col">
+                                       <p class="small">+ {{goal.Description}}</p>  
+                                    </div>
+                                    <div class="col-2">
+                                        <button type="button" class="btn btn-outline-danger mb-1 w-100 p-0" (click)="removeGoal(goal)">x</button>
+                                    </div>
+                                </div>
+                                
+                            }
+                            
+                        }
+                    }
+                    @if(selectedGoals.length > 0){
+                        <button type="button" class="btn btn-outline-primary" (click)="clearGoals()">Eliminar Metas</button>
+                    }
+                }
+                
+            </div>
+        </div>
+
+    </form>
+</div> 
+    
