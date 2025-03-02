@@ -47,6 +47,10 @@ export class IniciativeService {
   getCompliteIniciativas(){
     return this.iniciativeCompliteList;
   }
+
+  addCompliteIniciative(iniciative: CompliteIniciative){
+    this.iniciativeCompliteList.push(iniciative);
+  }
   
   deleteIniciative(id: number): void {
     this.iniciativeList = this.iniciativeList.filter(iniciative => iniciative.Id !== id);

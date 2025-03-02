@@ -127,8 +127,96 @@
                 }
                 
             </div>
+
         </div>
 
+        <!--Profesores-->
+        <div class="row">
+            <div class="col-12">
+                <p>Profesorado</p>
+                <hr>
+            </div>
+            
+            <div class="container" formArrayName="teachers">
+                @for(teacher of Teachers.controls; track teacher; let index = $index){
+                    <div class="row" formGroupName="{{index}}">
+                        <p>{{index+1}}.</p>
+                        <div class="col">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" placeholder="Miguel Godyena" formControlName="name">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-danger" (click)="removeTeacher(index)">Eliminar Profesor</button>
+                }
+                <button type="button" class="btn btn-primary" (click)="addTeacher()">Añadir Profesor</button>
+            </div>
+        </div>
+
+        <!--Módulos-->
+        <div class="row mt-5">
+            <div class="col-12">
+                <p>Módulos</p>
+                <hr>
+            </div>
+            
+            <div class="container" formArrayName="modules">
+                @for(module of Modules.controls; track module; let index = $index){
+                    <div class="row" formGroupName="{{index}}">
+                        <p>{{index+1}}.</p>
+                        <div class="col-6">
+                            <label class="form-label">Ciclo</label>
+                            <select class="form-select" formControlName="idCiclo">
+                                <option value="-1" disabled selected>Selecciona un ciclo</option>
+                                @for(degree of degreeList; track degree){
+                                    <option value="{{degree.Id}}">{{degree.Name}}</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-6">
+                            <label class="form-label">Nombre del módulo</label>
+                            <input type="text" class="form-control" placeholder="Acceso a Datos" formControlName="name">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-danger" (click)="removeModule(index)">Eliminar Módulo</button>
+                }
+                <button type="button" class="btn btn-primary" (click)="addModule()">Añadir Módulo</button>
+            </div>
+        </div>
+
+        <!--Difusión-->
+        <div class="row mt-5">
+            <div class="col-12">
+                <p>Difusión &#64;</p>
+                <hr>
+            </div>
+            
+            <div class="container" formArrayName="difusions">
+                @for(difusion of Difusions.controls; track difusion; let index = $index){
+                    <div class="row" formGroupName="{{index}}">
+                        <p>{{index+1}}.</p>
+                        <div class="col-6">
+                            <label class="form-label">Red Social</label>
+                            <select class="form-select" formControlName="type">
+                                <option value="-1" disabled selected>Selecciona una Red Social</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Twitter">Twitter</option>
+                                <option value="Facebook">Facebook</option>
+                            </select>
+                        </div>
+
+                        <div class="col-6">
+                            <label class="form-label">Link</label>
+                            <input type="text" class="form-control" placeholder="Inserta el link a la difusión" formControlName="link">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-danger" (click)="removeDifusion(index)">Eliminar Difusión</button>
+                }
+                <button type="button" class="btn btn-primary" (click)="addDifusion()">Añadir difusión</button>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-5">Guardar</button>
     </form>
 </div> 
     
