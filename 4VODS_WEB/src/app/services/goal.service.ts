@@ -12,13 +12,33 @@ export class GoalService {
     new Goal(1, 4, 'a')
   ]
 
+  selectedGoals: Goal[] = [];
+
   constructor() { }
 
+  //Goals
   getGoals(){
     return this.goals;
   }
 
   getGoalsByOds(idOds: number){
     return this.goals.filter(goal => goal.IdODS === Number(idOds));
+  }
+
+  //SelectedGoals
+  getSelectedGoals(): Goal[]{
+    return this.selectedGoals;
+  }
+
+  pushSelectedGoal(goal: Goal){
+    this.selectedGoals.push(goal);
+  }
+
+  removeSelectedGoal(id: number): Goal[]{
+    return this.selectedGoals = this.selectedGoals.filter(goal => goal.IdGoal !== id);
+  }
+
+  clearSelectedGoals(): Goal[]{
+    return this.selectedGoals = [];
   }
 }

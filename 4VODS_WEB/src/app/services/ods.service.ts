@@ -26,13 +26,33 @@ export class OdsService {
     new Ods(17, 'Alianzas para lograr los objetivos')
   ];
 
+  selectedOds: Ods[] = []
+
   constructor() { }
 
+  //Ods
   getOds(): Ods[] {
     return this.odsList;
   }
 
   getOdsById(id: number): number | undefined{
     return this.odsList.find(o => o.Id === id)?.Id;    
+  }
+
+
+  //SelectedOds
+  getSelectedOds(): Ods[]{
+    return this.selectedOds;
+  }
+  pushSelectedOds(ods: Ods){
+    this.selectedOds.push(ods);
+  }
+
+  removeSelectedOds(id: number): Ods[]{
+    return this.selectedOds = this.selectedOds.filter(ods => ods.Id !== id);
+  }
+
+  clearSelectedOds(): Ods[]{
+    return this.selectedOds = [];
   }
 }

@@ -1,0 +1,35 @@
+<div class="row gy-4" [formGroup]="detailsForm">
+    <div class="col-6">
+        <label for="name" class="form-label">Nombre</label>
+        <input type="text" class="form-control" formControlName="name" placeholder="Nombre de la iniciativa">
+    </div>
+
+    <div class="col-6">
+        <label for="description" class="form-label">Descripción</label>
+        <input type="text" class="form-control" formControlName="description" placeholder="Descripción de la iniciativa">
+    </div>
+    
+    <div class="col-6">
+        <label for="startDate" class="form-label">Fecha Inicio</label>
+        <input type="date" class="form-control" formControlName="startDate">
+    </div>
+
+    <div class="col-6">
+        <label for="endDate" class="form-label">Fecha Fin</label>
+        <input type="date" class="form-control" formControlName="endDate">
+    </div>
+
+    <div class="col-6">
+        <label for="hours" class="form-label">Horas</label>
+        <input type="number" class="form-control" formControlName="hours">
+    </div>
+
+    <div class="col-6">
+        <label for="type" class="form-label">Tipo</label>
+        <select class="form-select" formControlName="iniciativeType">
+            <option value="proyecto">Proyecto</option>
+            <option value="charla">Charla</option>
+            <option value="excursion">Excursión</option>
+        </select>
+    </div>
+</div>

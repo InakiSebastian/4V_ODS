@@ -1,258 +1,143 @@
 import { Component } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { OdsService } from '../../services/ods.service';
-import { Ods } from '../../model/ods';
-import { Goal } from '../../model/goal';
-import { GoalService } from '../../services/goal.service';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { IniciativeService } from '../../services/iniciative.service';
-import { CompliteIniciative } from '../../model/complite-iniciative';
-import { DegreeService } from '../../services/degree.service';
-import { Degree } from '../../model/degree';
 import { Teacher } from '../../model/teacher';
 import { Module } from '../../model/module';
 import { Difusion } from '../../model/difusion';
+import { FormDetailsComponent } from '../form-details/form-details.component';
+import { FormAcademicComponent } from '../form-academic/form-academic.component';
+import { FormOdsComponent } from '../form-ods/form-ods.component';
+import { FormDifusionComponent } from '../form-difusion/form-difusion.component';
+import { OdsService } from '../../services/ods.service';
+import { GoalService } from '../../services/goal.service';
+import { Ods } from '../../model/ods';
+import { Goal } from '../../model/goal';
+import { CompliteIniciative } from '../../model/complite-iniciative';
+import { Iniciative } from '../../model/iniciative';
 
 @Component({
   selector: 'app-form-add-iniciative',
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule, FormDetailsComponent, FormAcademicComponent, FormOdsComponent, FormDifusionComponent],
   templateUrl: './form-add-iniciative.component.html',
   styleUrl: './form-add-iniciative.component.scss'
 })
 export class FormAddIniciativeComponent {
-  formAddIniciative!: FormGroup;
-  
-  //ods
-  odsList: Ods[] = [];
-  selectedOds: Ods[] = [];
-  //metas
-  goalList: Goal[] = [];
-  selectedGoals: Goal[] = [];
-  clickedOds: string = '';
-  //profesores
-  //modulos
-  degreeList: Degree[] = []
-  //difusion
-  
+  sections = [
+    {id: 1, label: 'Datos Generales'}, 
+    {id: 2, label: '4Vientos'}, 
+    {id: 3, label: 'ODS'}, 
+    {id: 4, label: 'RRSS'}
+  ];
 
-  constructor(private formBuilder: FormBuilder, private odsService: OdsService, private goalService: GoalService, private degreeService: DegreeService, private iniciativeService: IniciativeService) { }
+  currentSection: number = 1;
+  
+  formAddIniciative!: FormGroup;  
+
+  selectedOds!: Ods[];
+  selectedGoals!: Goal[];
+
+  constructor(private fb: FormBuilder, private iniciativeService: IniciativeService, private odsService: OdsService, private goalService: GoalService) { }
 
   ngOnInit(): void {
-    this.formAddIniciative = this.formBuilder.group({
-      id: new FormControl('-1'),
-      name: new FormControl(''),
-      description: new FormControl(''),
-      startDate: new FormControl(''),
-      endDate: new FormControl(''),
-      hours: new FormControl(''),
-      academicYear: new FormControl(''),
-      ods: new FormControl('-1'),
-      iniciativeType: new FormControl(''),
-      teachers: new FormArray([]),
-      modules: new FormArray([]),
-      difusions: new FormArray([]),
-      goals: new FormControl('-1')
-    })
+    this.formAddIniciative = this.fb.group({
+      details: this.fb.group({}),
+      academic: this.fb.group({}),
+      ods: this.fb.group({}),
+      difusion: this.fb.group({}),
+    });
 
-    this.odsList = this.odsService.getOds();
-    this.degreeList = this.degreeService.getDegrees();
+    this.selectedOds = this.odsService.getSelectedOds();
+    this.selectedGoals = this.goalService.getSelectedGoals();
+
   }
 
-
-  // ODS
-  addOds(){
-    const odsToPush: Ods = this.odsList.find(ods => ods.Id === Number(this.formAddIniciative.get('ods')?.value))?? new Ods(-1, (''));
-    
-    // Elimino el ods de la lista
-    this.odsList = this.odsList.filter(ods => ods.Id !== Number(this.formAddIniciative.get('ods')?.value));
-
-    // 'Mando' el ods a la lista de seleccionados
-    this.selectedOds.push(odsToPush);
-
-    // Setteo el input a default(-1)
-    this.formAddIniciative.get('ods')?.setValue(-1);
-
-    // Setteo las metas
-    this.setGoalList(odsToPush);
+  chooseSection(id: number): void {
+    this.currentSection = id;
   }
 
-  removeOds(odsToPush: Ods){
-    // Quitamos el ods seleccionado
-    this.selectedOds = this.selectedOds.filter(ods => ods.Id !== Number(odsToPush.Id));
-
-    // Metemos el ods al final de la lista
-    this.odsList.push(odsToPush);
-
-    // Ordenamos la lista con .sort
-    this.odsList.sort((a, b) => a.Id - b.Id);
-
-    // Setteamos la lista de metas a 'default'
-    if(this.clickedOds === odsToPush.Description){
-      this.clickedOds = '';
-      this.goalList = [];
-    }
+  get Details(): FormGroup {
+    return this.formAddIniciative.get('details') as FormGroup;
   }
 
-  clearOds(){
-    this.selectedOds = [];
+  get Academic(): FormGroup {
+    return this.formAddIniciative.get('academic') as FormGroup;
   }
 
-
-  // METAS
-  setGoalList(ods: Ods){
-      this.goalList = this.goalService.getGoalsByOds(ods.Id);
-      
-      this.clickedOds = ods.Description;
+  get Ods(): FormGroup {
+    return this.formAddIniciative.get('ods') as FormGroup;
   }
 
-  addGoal(){
-    const goalToPush: Goal = this.goalList.find(goal => goal.IdGoal === Number(this.formAddIniciative.get('goals')?.value))?? new Goal(-1, -1, (''));
-
-    this.goalList = this.goalList.filter(goal => goal.IdGoal !== Number(this.formAddIniciative.get('goals')?.value));
-
-    this.selectedGoals.push(goalToPush);
-
-    this.formAddIniciative.get('goals')?.setValue(-1);
+  get Difusion(): FormGroup{
+    return this.formAddIniciative.get('difusion') as FormGroup;
   }
-
-  removeGoal(goalToPush: Goal){
-    this.selectedGoals = this.selectedGoals.filter(goal => goal.IdGoal !== Number(goalToPush.IdGoal));
-
-    this.goalList.push(goalToPush);
-
-    this.goalList.sort((a, b) => a.IdGoal - b.IdGoal);
-  }
-
-  clearGoals(){
-    this.selectedGoals = [];
-  }
-
 
   //INICIATIVA
   setId(){
-    this.formAddIniciative.get('id')?.setValue(this.iniciativeService.getCompliteIniciativas().length+1);
+    return this.iniciativeService.getCompliteIniciativas().length+1;
   }
 
   onSubmit(){
-    this.setId();
+    
+    const newId = this.setId();
+    const newName = this.setAtribute('details', 'name');
+    const newDescription = this.setAtribute('details', 'description');
+    const newStartDate = this.setAtribute('details', 'startDate');
+    const newEndDate = this.setAtribute('details', 'endDate');
+    const newHours = this.setAtribute('details', 'hours');
+    const newAcademicYear = this.setAtribute('details', 'academicYear');
+    const newIniciativeType = this.setAtribute('details', 'iniciativeType');
 
-    const newId = this.formAddIniciative.get('id')?.value;
-    const newName = this.formAddIniciative.get('name')?.value;
-    const newDescription = this.formAddIniciative.get('description')?.value;
-    const newStartDate = this.formAddIniciative.get('startDate')?.value;
-    const newEndDate = this.formAddIniciative.get('endDate')?.value;
-    const newHours = this.formAddIniciative.get('hurs')?.value;
-    const newAcademicYear = this.formAddIniciative.get('academicYear')?.value;
-
-    //Ods
-    const newOds: Ods[] = [];
-    this.selectedOds.forEach(ods => {
-      newOds.push(new Ods(ods.Id, ods.Description));
-    });
-
-    const newIniciativeType = this.formAddIniciative.get('ininciativeType')?.value;
-
-    //Profesores
+    // Profesores
     const newTeachers: Teacher[] = [];
-    this.Teachers.controls.forEach((teacher, index) => {
+    const teachers = this.Academic.get('teachers') as FormArray;
+    teachers.controls.forEach((teacher, index) => {
       const teacherName = teacher.get('name')?.value ?? '';
       
       newTeachers.push(new Teacher(index+1, teacherName));
     });
+    
 
-    //Módulos
+    // Módulos
     const newModules: Module[] = [];
-    this.Modules.controls.forEach((module, index) => {
+    const modules = this.Academic.get('modules') as FormArray;
+    modules.controls.forEach((module, index) => {
       const moduleDegreeId = Number(module.get('idCiclo')?.value) ?? -1;
       const moduleName = module.get('name')?.value ?? '';
       
       newModules.push(new Module(index+1, moduleDegreeId, moduleName));
     });
-    console.log(newModules);
+
+    // //Ods
+    const newOds: Ods[] = [];
+    this.selectedOds.forEach(ods => {
+      newOds.push(new Ods(ods.Id, ods.Description));
+    });
+
+    // //Metas
+    const newGoals: Goal[] = [];
+    this.selectedGoals.forEach((goal, index: number) => {
+      newGoals.push(new Goal(index+1, goal.IdODS, goal.Description));
+    });
 
     //Difusión
+    const difusions = this.Difusion.get('difusions') as FormArray;
     const newDifusions: Difusion[] = [];
-    this.Difusions.controls.forEach((difusion, index) => {
+    difusions.controls.forEach((difusion, index) => {
       const difusionType = difusion.get('type')?.value ?? '';
       const difusionLink = difusion.get('link')?.value ?? -1;
       
       newDifusions.push(new Difusion(index+1, newId,  difusionType, difusionLink));
     });
 
-    //Metas
-    const newGoals: Goal[] = [];
-    this.selectedGoals.forEach((goal, index: number) => {
-      newGoals.push(new Goal(index+1, goal.IdODS, goal.Description));
-    });
 
-
+    this.iniciativeService.addIniciative(new Iniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, newOds, newIniciativeType));
     this.iniciativeService.addCompliteIniciative(new CompliteIniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, newOds, newIniciativeType, newTeachers, newModules, newDifusions, newGoals));
     console.log(this.iniciativeService.getCompliteIniciativas());
   }
 
-
-
-
-
-
-  //TEACHERS
-  get Teachers(): FormArray {
-    return this.formAddIniciative.get('teachers') as FormArray;
-  }
-
-  createTeacherInput() {
-    return this.formBuilder.group({
-      name: new FormControl('')
-    });
-  }
-
-  addTeacher() {
-    this.Teachers.push(this.createTeacherInput());
-  }
-
-  removeTeacher(index: number) {
-    this.Teachers.removeAt(index);
+  setAtribute(formGroup: string, formControl: string){
+    return this.formAddIniciative.get(formGroup)?.get(formControl)?.value;
   }
 
 
-  //MÓDULOS
-  get Modules(): FormArray {
-    return this.formAddIniciative.get('modules') as FormArray;
-  }
-
-  createModuleInput() {
-    return this.formBuilder.group({
-      idCiclo: new FormControl('-1'),
-      name: new FormControl('')
-    });
-  }
-
-  addModule() {
-    this.Modules.push(this.createModuleInput());
-    console.log(this.degreeList);
-  }
-
-  removeModule(index: number) {
-    this.Modules.removeAt(index);
-  }
-
-
-  //DIFUSIÓN
-  get Difusions(): FormArray {
-    return this.formAddIniciative.get('difusions') as FormArray;
-  }
-
-  createDifusionInput() {
-    return this.formBuilder.group({
-      type: new FormControl(''),
-      link: new FormControl('')
-    });
-  }
-
-  addDifusion() {
-    this.Difusions.push(this.createDifusionInput());
-  }
-
-  removeDifusion(index: number) {
-    this.Difusions.removeAt(index);
-  }
 }

@@ -48,6 +48,10 @@ export class IniciativeService {
     return this.iniciativeCompliteList;
   }
 
+  addIniciative(iniciative: Iniciative){
+    this.iniciativeList.push(iniciative);
+  }
+
   addCompliteIniciative(iniciative: CompliteIniciative){
     this.iniciativeCompliteList.push(iniciative);
   }

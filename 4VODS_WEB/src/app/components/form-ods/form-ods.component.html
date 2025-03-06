@@ -1,0 +1,92 @@
+<div class="row" [formGroup]="odsForm">
+    <!-- AGREGAR ODS -->
+    <div class="col-6">
+        <label for="ods" class="form-label">ODS</label>
+        <div class="row">
+            <div class="col">
+                <select class="form-select" formControlName="ods">
+                    <option value="-1" disabled selected>Selecciona un Ods</option>
+                    @for (ods of odsList; track ods){
+                        <option value="{{ods.Id}}">{{ods.Id}}. {{ods.description}}</option>
+                    }
+                </select>
+            </div>
+
+            @if(odsForm.get('ods')?.value > 0){
+                <div class="col-2">
+                    <button type="button" class="btn btn-primary" (click)="addOds()">Añadir</button>
+                </div>
+            }
+            
+        </div>
+    </div>
+
+    <!-- AGREGAR META -->
+    <div class="col-6">
+        @if(selectedOds.length > 0){
+            <label for="goals" class="form-label">Metas</label>
+            <div class="row">
+                <div class="col">
+                    <select class="form-select" formControlName="goals">
+                        <option value="-1" disabled selected>Selecciona una meta para '{{clickedOds}}'</option>
+                        @for (goal of goalList; track goal){
+                            <option value="{{goal.IdGoal}}">{{goal.IdGoal}}. {{goal.Description}}</option>
+                        }
+                    </select>
+                </div>
+
+                @if(odsForm.get('goals')?.value > 0){
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" (click)="addGoal()">Añadir</button>
+                    </div>
+                }
+            </div>
+        }
+    </div> 
+
+    <!-- ODS SELECCIONADOS -->
+    <div class="col-6 py-3 rounded">
+        <div class="row gy-4">
+            @for(ods of selectedOds; track ods){
+                <div class="col-3">
+                    <button type="button" class="btn btn-outline-danger mb-1 w-100 p-0" (click)="removeOds(ods)">x</button>
+                    <img src="odsIcons/{{ods.Id}}.png" alt="" class="rounded img-fluid imgOds" (click)="setGoalList(ods)">
+                </div>
+            }
+            
+        </div>
+
+        @if(selectedOds.length > 0){
+            <div class="row mt-2">
+                <div class="col"><button type="button" class="btn btn-outline-primary" (click)="clearOds()">Eliminar Ods</button></div>
+            </div>
+        }
+    </div> 
+    
+    <!-- METAS SELECCIONADAS -->
+    <div class="col-6">
+        @if(selectedOds.length > 0){
+            @for(ods of selectedOds; track ods){
+                <p class="fs-4">{{ods.Description}}</p>
+                @for(goal of selectedGoals; track goal){
+                    @if(goal.IdODS === ods.Id){
+                        <div class="row">
+                            <div class="col">
+                                <p class="small">+ {{goal.Description}}</p>  
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-outline-danger mb-1 w-100 p-0" (click)="removeGoal(goal)">x</button>
+                            </div>
+                        </div>
+                        
+                    }
+                    
+                }
+            }
+            @if(selectedGoals.length > 0){
+                <button type="button" class="btn btn-outline-primary" (click)="clearGoals()">Eliminar Metas</button>
+            }
+        }
+        
+    </div>
+</div>
