@@ -102,7 +102,7 @@ export class FormAddIniciativeComponent {
     // Profesores
     const newTeachers: Teacher[] = [];
     const teachers = this.Academic.get('teachers') as FormArray;
-    teachers.controls.forEach((teacher, index) => {
+    teachers?.controls.forEach((teacher, index) => {
       const teacherName = teacher.get('name')?.value ?? '';
       
       newTeachers.push(new Teacher(index+1, teacherName));
@@ -112,7 +112,7 @@ export class FormAddIniciativeComponent {
     // Módulos
     const newModules: Module[] = [];
     const modules = this.Academic.get('modules') as FormArray;
-    modules.controls.forEach((module, index) => {
+    modules?.controls.forEach((module, index) => {
       const moduleDegreeId = Number(module.get('idCiclo')?.value) ?? -1;
       const moduleName = module.get('name')?.value ?? '';
       
@@ -121,20 +121,20 @@ export class FormAddIniciativeComponent {
 
     // //Ods
     const newOds: Ods[] = [];
-    this.selectedOds.forEach(ods => {
+    this.selectedOds?.forEach(ods => {
       newOds.push(new Ods(ods.Id, ods.Description));
     });
 
     // //Metas
     const newGoals: Goal[] = [];
-    this.selectedGoals.forEach((goal, index: number) => {
+    this.selectedGoals?.forEach((goal, index: number) => {
       newGoals.push(new Goal(index+1, goal.IdODS, goal.Description));
     });
 
     //Difusión
     const difusions = this.Difusion.get('difusions') as FormArray;
     const newDifusions: Difusion[] = [];
-    difusions.controls.forEach((difusion, index) => {
+    difusions?.controls.forEach((difusion, index) => {
       const difusionType = difusion.get('type')?.value ?? '';
       const difusionLink = difusion.get('link')?.value ?? -1;
       
@@ -145,6 +145,9 @@ export class FormAddIniciativeComponent {
     this.iniciativeService.addIniciative(new Iniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, newOds, newIniciativeType));
     this.iniciativeService.addCompliteIniciative(new CompliteIniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, newOds, newIniciativeType, newTeachers, newModules, newDifusions, newGoals));
     console.log(this.iniciativeService.getCompliteIniciativas());
+
+    //TODOResetear correctamente el formulario
+    this.formAddIniciative.reset();
   }
 
   setAtribute(formGroup: string, formControl: string){
