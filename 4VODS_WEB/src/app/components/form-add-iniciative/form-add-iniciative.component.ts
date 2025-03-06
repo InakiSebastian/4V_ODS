@@ -55,6 +55,18 @@ export class FormAddIniciativeComponent {
     this.currentSection = id;
   }
 
+  next(){
+    if(this.currentSection < 4){
+      this.currentSection += 1;
+    }
+  }
+
+  prev(){
+    if(this.currentSection > 1){
+      this.currentSection -= 1;
+    }
+  }
+
   get Details(): FormGroup {
     return this.formAddIniciative.get('details') as FormGroup;
   }
