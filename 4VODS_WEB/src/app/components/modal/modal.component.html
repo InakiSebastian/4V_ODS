@@ -4,6 +4,9 @@
             @if (contentType === 'detail'){
                 <app-iniciative-detail/>
             }
+            @if(contentType === 'form'){
+                <app-form-add-iniciative [iniciative]="iniciative"/>
+            }
         </div>
     </div>
 </div>

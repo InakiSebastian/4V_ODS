@@ -10,6 +10,7 @@ import { DegreeService } from '../../services/degree.service';
   styleUrl: './form-academic.component.scss'
 })
 export class FormAcademicComponent {
+
   @Input() academicForm!: FormGroup;
 
   degreeList: Degree[] = []

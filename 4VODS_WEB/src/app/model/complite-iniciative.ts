@@ -38,4 +38,21 @@ export class CompliteIniciative extends Iniciative{
     get Goals(){
         return this.goals;
     }
+
+    set Teachers(teachers: Teacher[]){
+        this.teachers = teachers;
+    }
+
+    set Modules(modules: Module[]){
+        this.modules = modules;
+    }
+
+    set Difusions(difusions: Difusion[]){
+        this.difusions = difusions;
+    }
+
+    set Goals(goals: Goal[]){
+        this.goals = goals;
+    }
+
 }

@@ -41,4 +41,8 @@ export class GoalService {
   clearSelectedGoals(): Goal[]{
     return this.selectedGoals = [];
   }
+
+  setSelectedGoals(goals: Goal[]){
+    this.selectedGoals = goals;
+  }
 }

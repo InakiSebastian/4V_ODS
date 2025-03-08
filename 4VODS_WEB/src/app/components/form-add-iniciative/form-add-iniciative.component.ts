@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { IniciativeService } from '../../services/iniciative.service';
 import { Teacher } from '../../model/teacher';
@@ -14,6 +14,7 @@ import { Ods } from '../../model/ods';
 import { Goal } from '../../model/goal';
 import { CompliteIniciative } from '../../model/complite-iniciative';
 import { Iniciative } from '../../model/iniciative';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-form-add-iniciative',
@@ -22,6 +23,9 @@ import { Iniciative } from '../../model/iniciative';
   styleUrl: './form-add-iniciative.component.scss'
 })
 export class FormAddIniciativeComponent {
+
+  @Input() iniciative: CompliteIniciative | null = null;
+
   sections = [
     {id: 1, label: 'Datos Generales'}, 
     {id: 2, label: '4Vientos'}, 
@@ -36,7 +40,7 @@ export class FormAddIniciativeComponent {
   selectedOds!: Ods[];
   selectedGoals!: Goal[];
 
-  constructor(private fb: FormBuilder, private iniciativeService: IniciativeService, private odsService: OdsService, private goalService: GoalService) { }
+  constructor(private fb: FormBuilder, private iniciativeService: IniciativeService, private odsService: OdsService, private goalService: GoalService, private modalService: ModalService) { }
 
   ngOnInit(): void {
     this.formAddIniciative = this.fb.group({
@@ -45,6 +49,11 @@ export class FormAddIniciativeComponent {
       ods: this.fb.group({}),
       difusion: this.fb.group({}),
     });
+
+    if(this.iniciative != null){
+      this.odsService.setOdsselected(this.iniciative.Ods);
+      this.goalService.setSelectedGoals(this.iniciative.Goals);
+    }
 
     this.selectedOds = this.odsService.getSelectedOds();
     this.selectedGoals = this.goalService.getSelectedGoals();
@@ -89,7 +98,6 @@ export class FormAddIniciativeComponent {
   }
 
   onSubmit(){
-    
     const newId = this.setId();
     const newName = this.setAtribute('details', 'name');
     const newDescription = this.setAtribute('details', 'description');
@@ -141,10 +149,23 @@ export class FormAddIniciativeComponent {
       newDifusions.push(new Difusion(index+1, newId,  difusionType, difusionLink));
     });
 
-
-    this.iniciativeService.addIniciative(new Iniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, newOds, newIniciativeType));
-    this.iniciativeService.addCompliteIniciative(new CompliteIniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, newOds, newIniciativeType, newTeachers, newModules, newDifusions, newGoals));
-    console.log(this.iniciativeService.getCompliteIniciativas());
+    const iniciativeNew = new Iniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, newOds, newIniciativeType)
+    const compliteIniciative = new CompliteIniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, newOds, newIniciativeType, newTeachers, newModules, newDifusions, newGoals)
+    
+    if (this.iniciative != null) {
+      iniciativeNew.Id = this.iniciative.Id;
+      compliteIniciative.Id = this.iniciative.Id;
+      this.iniciativeService.updateSimpleIniciative(iniciativeNew);
+      this.iniciativeService.updateCompliteIniciative(compliteIniciative);
+      this.iniciative = null;
+      this.modalService.closeModal();
+    }
+    else{
+      this.iniciativeService.addIniciative(iniciativeNew);
+      this.iniciativeService.addCompliteIniciative(compliteIniciative);
+      console.log(this.iniciativeService.getCompliteIniciativas());
+    }
+    
 
     //TODOResetear correctamente el formulario
     this.formAddIniciative.reset();

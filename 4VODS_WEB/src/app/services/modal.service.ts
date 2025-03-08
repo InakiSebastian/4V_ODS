@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import {  Observable, ReplaySubject } from 'rxjs';
+import { CompliteIniciative } from '../model/complite-iniciative';
+import { IModalInformation } from '../model/modal-information.interface';
+import { OdsService } from './ods.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
 
-  constructor() { }
+  constructor(private odsService: OdsService, private goalService: OdsService) { }
 
   private idIniciative: ReplaySubject<number> = new ReplaySubject(1);
   idIniciative$: Observable<number> = this.idIniciative.asObservable();
@@ -21,16 +24,20 @@ export class ModalService {
     this.idIniciative.next(-1);
   }
 
-  private open: ReplaySubject<boolean> = new ReplaySubject(1);
-  open$: Observable<boolean> = this.open.asObservable();
+  private open: ReplaySubject<IModalInformation | null> = new ReplaySubject(1);
+  open$: Observable<IModalInformation | null> = this.open.asObservable();
 
 
-  openModal() {
-    this.open.next(true);
+  openModal(modalType: string, idIniciative: CompliteIniciative | null) {
+    this.odsService.setOdsselected([]);
+    this.goalService.setOdsselected([]);
+
+    const mI : IModalInformation = { modalType: modalType, iniciative: idIniciative };
+    this.open.next(mI);
   }
 
   closeModal() {
-    this.open.next(false);
+    this.open.next(null);
   }
 
   private recharge: ReplaySubject<boolean> = new ReplaySubject(1);

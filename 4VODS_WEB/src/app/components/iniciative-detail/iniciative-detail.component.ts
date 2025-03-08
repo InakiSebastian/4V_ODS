@@ -24,6 +24,7 @@ import { DegreeService } from '../../services/degree.service';
 })
 export class IniciativeDetailComponent {
 
+  iniciative!: CompliteIniciative;
   idIniciative: number = 0;
 
   // Datos de la iniciativa
@@ -64,6 +65,14 @@ export class IniciativeDetailComponent {
    
   }
 
+  async ngOnInit() {
+    await this.modalService.idIniciative$.subscribe(id => {
+      this.idIniciative = id;
+      this.iniciative = this.iniciativeService.getCompliteIniciativeById(this.idIniciative)!;
+      this.render(this.iniciative);
+    });
+  }
+
   render(iniciative: CompliteIniciative) { //datos de la iniciativa separados
     this.showDetailOds = false;
     this.name = iniciative.Name;
@@ -93,11 +102,7 @@ export class IniciativeDetailComponent {
     this.degrees = this.degreeService.getDegrees().filter(d => this.idDegrees.includes(d.Id));
   }
 
-  async ngOnInit() {
-    await this.modalService.idIniciative$.subscribe(id => {this.idIniciative = id
-      this.render(this.iniciativeService.getCompliteIniciativeById(this.idIniciative)!);
-    });
-  }
+
 
   //gestión de detalles:
 
@@ -137,6 +142,12 @@ export class IniciativeDetailComponent {
     this.modalService.rechargeList();
     this.modalService.closeModal();
     
+  }
+
+  //editar
+  editIniciative($event: MouseEvent) {
+    $event.preventDefault();
+    this.modalService.openModal("form", this.iniciative);
   }
   
   //efectos de visualización

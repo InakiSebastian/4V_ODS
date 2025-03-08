@@ -55,4 +55,8 @@ export class OdsService {
   clearSelectedOds(): Ods[]{
     return this.selectedOds = [];
   }
+
+  setOdsselected(ods: Ods[]){
+    this.selectedOds = ods;
+  }
 }

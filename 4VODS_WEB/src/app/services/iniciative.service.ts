@@ -64,6 +64,35 @@ export class IniciativeService {
     return this.iniciativeCompliteList.find(iniciative => iniciative.Id === id);
   }
 
+  updateCompliteIniciative(iniciative: CompliteIniciative): void {
+    const inici = this.iniciativeCompliteList.find(i => i.Id === iniciative.Id);
+    inici!.Name = iniciative.Name;
+    inici!.Description = iniciative.Description;
+    inici!.StartDate = iniciative.StartDate;
+    inici!.EndDate = iniciative.EndDate;
+    inici!.Hours = iniciative.Hours;
+    inici!.AcademicYear = iniciative.AcademicYear;
+    inici!.Ods = iniciative.Ods;
+    inici!.IniciativeType = iniciative.IniciativeType;
+    inici!.Teachers = iniciative.Teachers;
+    inici!.Modules = iniciative.Modules;
+    inici!.Difusions = iniciative.Difusions;
+    inici!.Goals = iniciative.Goals;
+  }
+
+  updateSimpleIniciative(iniciative: Iniciative): void {
+    const inici = this.iniciativeList.find(i => {
+      return i.Id === iniciative.Id
+    });
+    if (inici!=null) {
+      inici!.Name = iniciative.Name;
+      inici!.Description = iniciative.Description;
+      inici!.StartDate = iniciative.StartDate;
+      inici!.EndDate = iniciative.EndDate;
+      inici!.Hours = iniciative.Hours;
+    }
+  }
+
  
   
   

@@ -14,19 +14,17 @@ import { FilterComponent } from '../filter/filter.component';
 })
 export class IniciativeListComponent {
 
-
   iniciativeList: Iniciative[] = [];
-  idIniciativa!: number;
+  idIniciative!: number;
   idSelected!: number | null;
 
-  showModal: boolean = true;
+  //showModal: boolean = true;
 
   constructor(
     private iniciativeService: IniciativeService,
     private modalService: ModalService
   ) 
   {
-    this.modalService.open$.subscribe(open => { this.showModal = open; this.showModal = true; });
   }
 
   ngOnInit() {
@@ -35,10 +33,9 @@ export class IniciativeListComponent {
 
   setIdIniciativa($event: MouseEvent, id: number) {
     $event.preventDefault();
-    this.showModal = true;
     this.modalService.changeIdIniciative(id);
 
-    this.modalService.openModal();
+    this.modalService.openModal("detail", null);
   }
 
   //filtrar iniciativas
