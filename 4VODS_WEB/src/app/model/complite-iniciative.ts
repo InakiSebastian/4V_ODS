@@ -13,7 +13,7 @@ export class CompliteIniciative extends Iniciative{
     private difusions: Difusion[];
     private goals: Goal[]
 
-    constructor(id: number, name: string, description: string, startDate: Date, endDate: Date, hours: number, academicYear: string, ods: Ods[], iniciativeType: IniciativeType,
+    constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, academicYear: string, ods: Ods[], iniciativeType: IniciativeType,
         techers: Teacher[], modules: Module[], difusions: Difusion[], goals: Goal[]
     ){
         super(id,name, description, startDate, endDate, hours, academicYear, ods, iniciativeType)

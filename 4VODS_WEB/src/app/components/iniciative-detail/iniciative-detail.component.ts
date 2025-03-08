@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Modelos
@@ -13,7 +13,6 @@ import { CompliteIniciative } from '../../model/complite-iniciative';
 // Servicios
 import { IniciativeService } from '../../services/iniciative.service';
 import { ModalService } from '../../services/modal.service';
-import { OdsService } from '../../services/ods.service';
 import { DegreeService } from '../../services/degree.service';
 
 @Component({
@@ -56,13 +55,13 @@ export class IniciativeDetailComponent {
   showDetailOds: boolean = false;
 
   hover = false;
-  
+
   constructor(
     private iniciativeService: IniciativeService,
     private modalService: ModalService,
     private degreeService: DegreeService
   ) {
-   
+
   }
 
   async ngOnInit() {
@@ -96,8 +95,23 @@ export class IniciativeDetailComponent {
         this.idDegrees.push(m.IdCiclo);
       }
     });
-    this.startD = this.startDate.getDate() + '/' + this.startDate.getMonth() + '/' + this.startDate.getFullYear();
-    this.endD = this.endDate?.getDate() + '/' + this.endDate?.getMonth() + '/' + this.endDate?.getFullYear();
+    const parsedStartDate = new Date(this.startDate);
+    this.startD =
+      parsedStartDate.getDate() +
+      '/' +
+      (parsedStartDate.getMonth() + 1) + // +1 porque los meses van de 0 a 11
+      '/' +
+      parsedStartDate.getFullYear();
+
+    const parsedEndDate = this.endDate ? new Date(this.endDate) : null;
+    this.endD = parsedEndDate
+      ? parsedEndDate.getDate() +
+      '/' +
+      (parsedEndDate.getMonth() + 1) +
+      '/' +
+      parsedEndDate.getFullYear()
+      : '';
+
 
     this.degrees = this.degreeService.getDegrees().filter(d => this.idDegrees.includes(d.Id));
   }
@@ -116,7 +130,7 @@ export class IniciativeDetailComponent {
       modulesD: this.modules.filter(m => m.IdCiclo === d.Id) // Filtra solo los módulos que pertenecen al grado
     }));
   }
-  
+
   //gestión de ods y metas:
 
   closeODS($event: MouseEvent) {
@@ -135,13 +149,13 @@ export class IniciativeDetailComponent {
   //eliminar
   deleteIniciative(event: MouseEvent) {
     event.preventDefault();
-    if (!window.confirm(`¿Estas segur@ de que quieres eliminar esta iniciativa?`)){
+    if (!window.confirm(`¿Estas segur@ de que quieres eliminar esta iniciativa?`)) {
       return;
     }
     this.iniciativeService.deleteIniciative(this.idIniciative);
     this.modalService.rechargeList();
     this.modalService.closeModal();
-    
+
   }
 
   //editar
@@ -149,9 +163,9 @@ export class IniciativeDetailComponent {
     $event.preventDefault();
     this.modalService.openModal("form", this.iniciative);
   }
-  
+
   //efectos de visualización
- 
+
   generateColor(): string {
     const base = 200; // Valor mínimo para colores claros
     const r = Math.floor(Math.random() * (255 - base) + base);
@@ -164,22 +178,22 @@ export class IniciativeDetailComponent {
 
     if (difusion.Type.toLocaleLowerCase().includes('facebook')) {
       return 'rrss/Facebook.png';
-    } 
+    }
     if (difusion.Type.toLocaleLowerCase().includes('instagram')) {
       return 'rrss/Instagram.png';
-    } 
+    }
     if (difusion.Type.toLocaleLowerCase().includes('linkedin')) {
       return 'rrss/linkedin.png';
-    } 
-    if (difusion.Type.toLocaleLowerCase().includes('youtube') ) {
+    }
+    if (difusion.Type.toLocaleLowerCase().includes('youtube')) {
       return 'rrss/YouTube.png';
     }
-    if (difusion.Type.toLocaleLowerCase().includes('tiktok') ) {
+    if (difusion.Type.toLocaleLowerCase().includes('tiktok')) {
       return 'rrss/tiktok.png';
     }
     if (difusion.Type.toLocaleLowerCase().includes('x')) {
       return 'rrss/X.png';
-    } 
+    }
     return 'rrss/rrss-generico.png';
   }
 

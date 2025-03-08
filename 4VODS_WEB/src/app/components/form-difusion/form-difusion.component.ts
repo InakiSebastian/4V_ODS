@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { IRrss } from '../form-add-iniciative/interfaces/rrss.interface';
+import { Difusion } from '../../model/difusion';
 
 @Component({
   selector: 'app-form-difusion',
@@ -10,10 +12,18 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } f
 export class FormDifusionComponent {
   @Input() difusionForm!: FormGroup;
 
+  @Input() difusionR: IRrss | null = null
+
   constructor(private fb: FormBuilder){}
 
   ngOnInit(){
     this.difusionForm.addControl('difusions', new FormArray([]))
+
+    if (this.difusionR != null) {
+      this.difusionR.rrss.forEach(difusion => {
+        this.addDifusion(difusion)
+      })
+    }
   }
 
   //DIFUSIÓN
@@ -21,15 +31,15 @@ export class FormDifusionComponent {
     return this.difusionForm.get('difusions') as FormArray;
   }
 
-  createDifusionInput() {
+  createDifusionInput(difusion: Difusion | null): FormGroup {
     return this.fb.group({
-      type: new FormControl(''),
-      link: new FormControl('')
+      type: new FormControl(difusion==null?'':difusion.Type),
+      link: new FormControl(difusion==null?'':difusion.Link),
     });
   }
 
-  addDifusion() {
-    this.Difusions.push(this.createDifusionInput());
+  addDifusion(difusion: Difusion | null = null) {
+    this.Difusions.push(this.createDifusionInput(difusion));
   }
 
   removeDifusion(index: number) {
