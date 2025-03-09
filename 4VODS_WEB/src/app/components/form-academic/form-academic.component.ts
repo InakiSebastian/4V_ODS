@@ -58,7 +58,6 @@ export class FormAcademicComponent {
   
     addModule() {
       this.Modules.push(this.createModuleInput());
-      console.log(this.degreeList);
     }
   
     removeModule(index: number) {

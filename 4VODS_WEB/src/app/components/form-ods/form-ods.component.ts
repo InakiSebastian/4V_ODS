@@ -14,24 +14,23 @@ import { GoalService } from '../../services/goal.service';
 export class FormOdsComponent {
   @Input() odsForm!: FormGroup;
 
-  // TODOGestionar estas listas en un servicio
   //ods
-    odsList: Ods[] = [];
-    selectedOds!: Ods[];
-    //metas
-    goalList: Goal[] = [];
-    selectedGoals: Goal[] = [];
-    clickedOds: string = '';
+  odsList: Ods[] = [];
+  selectedOds!: Ods[];
+  //metas
+  goalList: Goal[] = [];
+  selectedGoals: Goal[] = [];
+  clickedOds: string = '';
 
-    odsSelected: Ods | null = null;
+  odsSelected: Ods | null = null;
 
   constructor(private odsService: OdsService, private goalService: GoalService){
 
   }
 
   ngOnInit(){
-      this.odsForm.addControl('ods', new FormControl('-1'));
-      this.odsForm.addControl('goals', new FormControl('-1'));
+    this.odsForm.addControl('ods', new FormControl('-1'));
+    this.odsForm.addControl('goals', new FormControl('-1'));
 
     this.selectedOds = this.odsService.getSelectedOds();
     this.selectedGoals = this.goalService.getSelectedGoals();
@@ -104,9 +103,10 @@ export class FormOdsComponent {
   // METAS
   setGoalList(ods: Ods){
     this.odsSelected = ods;
-      this.goalList = this.goalService.getGoalsByOds(ods.Id).filter(goal => !this.selectedGoals.map(goal => goal.IdGoal).includes(goal.IdGoal));
-      
-      this.clickedOds = ods.Description;
+    // Filtra las metas que no estén seleccionadas
+    this.goalList = this.goalService.getGoalsByOds(ods.Id).filter(goal => !this.selectedGoals.map(goal => goal.IdGoal).includes(goal.IdGoal));
+    
+    this.clickedOds = ods.Description;
   }
 
   addGoal(){

@@ -114,8 +114,8 @@ export class FormAddIniciativeComponent {
       const teacherName = teacher.get('name')?.value ?? '';
       
       newTeachers.push(new Teacher(index+1, teacherName));
-    });
-    
+      
+    });    
 
     // Módulos
     const newModules: Module[] = [];
@@ -123,9 +123,12 @@ export class FormAddIniciativeComponent {
     modules?.controls.forEach((module, index) => {
       const moduleDegreeId = Number(module.get('idCiclo')?.value) ?? -1;
       const moduleName = module.get('name')?.value ?? '';
+      console.log(moduleDegreeId);
+      console.log(moduleName);
       
       newModules.push(new Module(index+1, moduleDegreeId, moduleName));
-    });
+      
+    });    
 
     // //Ods
     const newOds: Ods[] = [];
@@ -166,7 +169,6 @@ export class FormAddIniciativeComponent {
       console.log(this.iniciativeService.getCompliteIniciativas());
     }
     
-
     //TODOResetear correctamente el formulario
     this.formAddIniciative.reset();
   }
