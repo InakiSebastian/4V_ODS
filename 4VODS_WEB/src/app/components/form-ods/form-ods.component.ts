@@ -103,10 +103,9 @@ export class FormOdsComponent {
   // METAS
   setGoalList(ods: Ods){
     this.odsSelected = ods;
-    // Filtra las metas que no estén seleccionadas
-    this.goalList = this.goalService.getGoalsByOds(ods.Id).filter(goal => !this.selectedGoals.map(goal => goal.IdGoal).includes(goal.IdGoal));
-    
-    this.clickedOds = ods.Description;
+      this.goalList = this.goalService.getGoalsByOds(ods.Id).filter(goal => !this.selectedGoals.filter(goal => goal.IdODS === ods.Id).map(goal => goal.IdGoal).includes(goal.IdGoal));
+      
+      this.clickedOds = ods.Description;
   }
 
   addGoal(){

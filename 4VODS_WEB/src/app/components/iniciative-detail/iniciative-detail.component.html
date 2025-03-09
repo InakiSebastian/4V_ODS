@@ -37,12 +37,15 @@
                         <p class="m-2"><span class="fw-bold">Curso:</span>
                             {{ this.academicYear }}</p>
                         <p class="m-2"><span class="fw-bold">Inicio-fin:</span>
-                            {{this.startD}} <span *ngIf="this.endDate != null"> - {{this.endD}}</span></p>
+                            {{this.startD}} - {{this.endD != null && "" != this.endD? this.endD : 'fecha final no
+                            deifinida'}}
+                        </p>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" (click)="editIniciative($event)">Editar</button>
-                    <button type="button" class="btn btn-danger ms-2" data-bs-dismiss="modal" (click)="deleteIniciative($event)">Borrar</button>
+                    <button type="button" class="btn btn-danger ms-2" data-bs-dismiss="modal"
+                        (click)="deleteIniciative($event)">Borrar</button>
                 </div>
             </div>
 
@@ -162,6 +165,8 @@
             <!--REDES SOCIALES PÁGINA-->
             <div class="tab-pane fade" id="rrss" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="container mt-4">
+                    @if(this.difusions.length != 0){
+
                     <h5 class="modal-title d-flex justify-content-center">
                         Links en las Redes Sociales:
                     </h5>
@@ -187,7 +192,14 @@
                             </div>
                         </div>
                     </div>
+                    }
+                    @else {
+                    <p class="modal-title d-flex justify-content-center mb-5">
+                        No esta siendo difundida 
+                    </p>
+                    }
                 </div>
+
 
             </div>
 

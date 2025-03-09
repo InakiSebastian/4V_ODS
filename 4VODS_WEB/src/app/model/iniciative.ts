@@ -6,14 +6,14 @@ export class Iniciative {
     private name: string;
     private description: string;
     private startDate: Date;
-    private endDate: Date;
+    private endDate: Date | null;
     private hours: number;
     private academicYear: string;
     private ods: Ods[];
     private iniciativeType: IniciativeType; 
 
 
-    constructor(id: number, name: string, description: string, startDate: Date, endDate: Date, hours: number, academicYear: string, ods: Ods[], iniciativeType: IniciativeType){
+    constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, academicYear: string, ods: Ods[], iniciativeType: IniciativeType){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -42,7 +42,7 @@ export class Iniciative {
         return this.startDate;
     }
 
-    get EndDate(): Date{
+    get EndDate(): Date|null{
         return this.endDate;
     }
 

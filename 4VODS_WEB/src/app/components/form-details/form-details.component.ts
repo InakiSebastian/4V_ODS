@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { IDetails } from '../form-add-iniciative/interfaces/details.interface';
 
 @Component({
   selector: 'app-form-details',
@@ -10,18 +11,17 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class FormDetailsComponent {
   @Input() detailsForm!: FormGroup;
 
-  constructor(){}
+  @Input() details: IDetails | null = null;
 
-  ngOnInit(){
+  constructor() { }
+
+  ngOnInit() {
     this.detailsForm?.addControl('name', new FormControl(''));
     this.detailsForm?.addControl('description', new FormControl(''));
     this.detailsForm?.addControl('startDate', new FormControl(''));
-    this.detailsForm?.addControl('endDate', new FormControl(''));
+    this.detailsForm?.addControl('endDate', new FormControl(null));
     this.detailsForm?.addControl('hours', new FormControl(''));
     this.detailsForm?.addControl('academicYear', new FormControl(''));
     this.detailsForm?.addControl('iniciativeType', new FormControl(''));
-
   }
-
-
 }
