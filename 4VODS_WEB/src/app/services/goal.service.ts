@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Goal } from '../model/goal';
+import { OdsService } from './ods.service';
+import { Ods } from '../model/ods';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,11 @@ export class GoalService {
 
   selectedGoals: Goal[] = [];
 
-  constructor() { }
+  odsList: Ods[] = [];
+
+  constructor(private odsService: OdsService) {
+    this.odsList = this.odsService.getSelectedOds();
+  }
 
   //Goals
   getGoals(){
@@ -34,8 +40,16 @@ export class GoalService {
     this.selectedGoals.push(goal);
   }
 
-  removeSelectedGoal(id: number): Goal[]{
-    return this.selectedGoals = this.selectedGoals.filter(goal => goal.IdGoal !== id);
+  removeSelectedGoal(idGoal: number, idOds: number): Goal[]{
+    let odsId: number = -1;
+    
+    this.odsList.forEach(ods => {
+      if(ods.Id === idOds){
+        odsId = idOds;
+      }
+    });
+
+    return this.selectedGoals = this.selectedGoals.filter(goal => goal.IdGoal !== idGoal || goal.IdODS !== odsId);
   }
 
   clearSelectedGoals(): Goal[]{

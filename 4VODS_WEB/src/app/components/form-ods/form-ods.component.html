@@ -46,7 +46,7 @@
 
     <!-- ODS SELECCIONADOS -->
     <div class="col-6 py-3 rounded">
-        <div class="row gy-4">
+        <div class="row mt-2">
             @for(ods of selectedOds; track ods){
                 <div class="col-3">
                     <button type="button" class="btn btn-outline-danger mb-1 w-100 p-0" (click)="removeOds(ods)">x</button>
@@ -58,7 +58,7 @@
 
         @if(selectedOds.length > 0){
             <div class="row mt-2">
-                <div class="col"><button type="button" class="btn btn-outline-primary" (click)="clearOds()">Eliminar Ods</button></div>
+                <div class="col"><button type="button" class="btn btn-outline-primary mt-4" (click)="clearOds()">Eliminar Ods</button></div>
             </div>
         }
     </div> 
@@ -67,24 +67,24 @@
     <div class="col-6">
         @if(selectedOds.length > 0){
             @for(ods of selectedOds; track ods){
-                <p class="fs-4">{{ods.Description}}</p>
-                @for(goal of selectedGoals; track goal){
-                    @if(goal.IdODS === ods.Id){
-                        <div class="row">
-                            <div class="col">
-                                <p class="small">+ {{goal.Description}}</p>  
+                <div class="row m-0 mt-4 p-2 border shadow rounded-3">
+                    <p class="fs-4">{{ods.Description}}</p>
+                    @for(goal of selectedGoals; track goal){
+                        @if(goal.IdODS === ods.Id){
+                            <div class="row m-0">
+                                <div class="col">
+                                    <p class="small">+ {{goal.Description}}</p>  
+                                </div>
+                                <div class="col-2">
+                                    <button type="button" class="btn btn-outline-danger mb-1 w-100 p-0" (click)="removeGoal(goal, ods)">x</button>
+                                </div>
                             </div>
-                            <div class="col-2">
-                                <button type="button" class="btn btn-outline-danger mb-1 w-100 p-0" (click)="removeGoal(goal)">x</button>
-                            </div>
-                        </div>
-                        
+                        }
                     }
-                    
-                }
+                </div>
             }
             @if(selectedGoals.length > 0){
-                <button type="button" class="btn btn-outline-primary" (click)="clearGoals()">Eliminar Metas</button>
+                <button type="button" class="btn btn-outline-primary mt-4" (click)="clearGoals()">Eliminar Metas</button>
             }
         }
         

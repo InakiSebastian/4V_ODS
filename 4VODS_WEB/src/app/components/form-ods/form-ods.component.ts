@@ -97,15 +97,17 @@ export class FormOdsComponent {
   //TODODevolver todos los ods eliminados al combobox
   clearOds(){
     this.selectedOds = this.odsService.clearSelectedOds();
+    this.odsList = this.odsService.getOds();
+    this.goalService.clearSelectedGoals();
   }
 
 
   // METAS
   setGoalList(ods: Ods){
     this.odsSelected = ods;
-      this.goalList = this.goalService.getGoalsByOds(ods.Id).filter(goal => !this.selectedGoals.filter(goal => goal.IdODS === ods.Id).map(goal => goal.IdGoal).includes(goal.IdGoal));
-      
-      this.clickedOds = ods.Description;
+    this.goalList = this.goalService.getGoalsByOds(ods.Id).filter(goal => !this.selectedGoals.filter(goal => goal.IdODS === ods.Id).map(goal => goal.IdGoal).includes(goal.IdGoal));
+    
+    this.clickedOds = ods.Description;
   }
 
   addGoal(){
@@ -118,19 +120,22 @@ export class FormOdsComponent {
     this.odsForm.get('goals')?.setValue(-1);
   }
 
-  removeGoal(goalToPush: Goal){
-    this.selectedGoals = this.goalService.removeSelectedGoal(Number(goalToPush.IdGoal));
+  removeGoal(goalToPush: Goal, ods: Ods){
+    this.selectedGoals = this.goalService.removeSelectedGoal(Number(goalToPush.IdGoal), Number(ods.Id));
 
-    this.goalList.push(goalToPush);
+    this.setGoalList(ods);
 
     this.goalList.sort((a, b) => a.IdGoal - b.IdGoal);
   }
 
   //TODODevolver todas las metas eliminadas al combobox
   clearGoals(){
-    this.goalService.clearSelectedGoals();
-    this.selectedGoals = [];
-    this.setGoalList(this.odsSelected!);
+    this.selectedGoals = this.goalService.clearSelectedGoals();
+    
+    if(this.odsSelected){
+      this.setGoalList(this.odsSelected);
+    }
+    
   }
 
 }
