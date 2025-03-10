@@ -41,17 +41,16 @@ export class GoalService {
   }
 
   removeSelectedGoal(idGoal: number, idOds: number): Goal[]{
-    let odsId: number = -1;
-    
-    this.odsList.forEach(ods => {
-      if(ods.Id === idOds){
-        odsId = idOds;
-      }
-    });
+    let odsId: number = this.odsService.getOdsById(idOds)?? -1;
 
     return this.selectedGoals = this.selectedGoals.filter(goal => goal.IdGoal !== idGoal || goal.IdODS !== odsId);
   }
 
+  clearSelectedGoalsByOds(idOds: number): Goal[]{
+    let odsId: number = this.odsService.getOdsById(idOds)?? -1;
+
+    return this.selectedGoals = this.selectedGoals.filter(goal => goal.IdODS !== odsId);
+  }
   clearSelectedGoals(): Goal[]{
     return this.selectedGoals = [];
   }

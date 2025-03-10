@@ -66,8 +66,11 @@ export class FormOdsComponent {
 
     // Ordenamos la lista con .sort
     this.odsList.sort((a, b) => a.Id - b.Id);
-
-    // Setteamos la lista de metas a 'default'
+  
+    // Limpiamos las metas seleccionadas para ese ods
+    this.selectedGoals = this.goalService.clearSelectedGoals();
+    
+    // Setteamos el combo de metas a 'default'
     if(this.clickedOds === odsToPush.Description){
       this.clickedOds = '';
       this.goalList = [];
@@ -98,7 +101,7 @@ export class FormOdsComponent {
   clearOds(){
     this.selectedOds = this.odsService.clearSelectedOds();
     this.odsList = this.odsService.getOds();
-    this.goalService.clearSelectedGoals();
+    this.selectedGoals = this.goalService.clearSelectedGoals();
   }
 
 

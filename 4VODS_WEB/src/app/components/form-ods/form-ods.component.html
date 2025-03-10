@@ -48,9 +48,9 @@
     <div class="col-6 py-3 rounded">
         <div class="row mt-2">
             @for(ods of selectedOds; track ods){
-                <div class="col-3">
+                <div class="col-3 mb-4">
                     <button type="button" class="btn btn-outline-danger mb-1 w-100 p-0" (click)="removeOds(ods)">x</button>
-                    <img src="odsIcons/{{ods.Id}}.png" alt="" class="rounded img-fluid imgOds" (click)="setGoalList(ods)">
+                    <img src="odsIcons/{{ods.Id}}.png" alt="" class="rounded img-fluid imgOds" style="cursor: pointer;" (click)="setGoalList(ods)">
                 </div>
             }
             
@@ -58,7 +58,9 @@
 
         @if(selectedOds.length > 0){
             <div class="row mt-2">
-                <div class="col"><button type="button" class="btn btn-outline-primary mt-4" (click)="clearOds()">Eliminar Ods</button></div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-primary m-0" (click)="clearOds()">Eliminar Ods</button>
+                </div>
             </div>
         }
     </div> 
@@ -67,7 +69,7 @@
     <div class="col-6">
         @if(selectedOds.length > 0){
             @for(ods of selectedOds; track ods){
-                <div class="row m-0 mt-4 p-2 border shadow rounded-3">
+                <div class="row m-0 mt-4 p-2 border  rounded-3">
                     <p class="fs-4">{{ods.Description}}</p>
                     @for(goal of selectedGoals; track goal){
                         @if(goal.IdODS === ods.Id){
