@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Module } from '../model/module';
+import { FormControl } from '@angular/forms';
+import { Degree } from '../model/degree';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,8 @@ export class ModuleService {
     new Module(12,3,"Desarrollo de  Multiplataforma"),
   ]
 
+  degree_modules: (DegreeModules[]|null) = null;
+
   constructor() { }
 
   getModules(): Module[] {
@@ -31,4 +35,25 @@ export class ModuleService {
     return this.modules.filter(module => module.IdCiclo == Id);
   }
   
+  
+}
+
+export class DegreeModules extends Degree {
+  modules: ModuleCheck[];
+
+  constructor(degree: Degree, modules: ModuleCheck[]) {
+    super(degree.Id, degree.Name);
+    this.modules = modules;
+  }
+}
+
+export class ModuleCheck extends Module {
+  checked: FormControl;
+  controlName: string;
+
+  constructor(module: Module) {
+    super(module.Id, module.IdCiclo, module.Name);
+    this.controlName = `${module.Id}${module.IdCiclo}`;
+    this.checked = new FormControl(false);
+  }
 }

@@ -5,10 +5,9 @@ import { DegreeService } from '../../services/degree.service';
 import { IFourWinds } from '../form-add-iniciative/interfaces/4winds.inteface';
 import { Module } from '../../model/module';
 import { Teacher } from '../../model/teacher';
-import { ModuleService } from '../../services/module.service';
+import { DegreeModules, ModuleCheck, ModuleService } from '../../services/module.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form-academic',
@@ -18,17 +17,15 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class FormAcademicComponent {
   
+  // Formulario de datos académicos
   @Input() academicForm!: FormGroup;
   @Input() academic: IFourWinds | null = null;
 
-  degreeList: Degree[] = [];
-  selectDegreeList: Degree[] = [];
-  selectableDegrees: Degree[] = [];
-  selectedDegrees: Degree[] = [];
-
-  degreeSelectId: number | null = null;
-  moduleCheckList: DegreeAggregate[] = [];
-  printCheckList: DegreeAggregate[] = [];
+  // Listas de títulos académicos (grados) y módulos
+  allDegrees: Degree[] = [];                // Todos los grados disponibles
+  availableDegrees: Degree[] = [];          // Grados disponibles para selección
+  selectedDegreeModules: DegreeModules[] = []; // Grados seleccionados con módulos
+  displayedModules: DegreeModules[] = [];   // Módulos que se muestran en la interfaz
 
   constructor(
     private fb: FormBuilder, 
@@ -37,115 +34,118 @@ export class FormAcademicComponent {
   ) {}
 
   ngOnInit() {
+    // Inicializa el formulario con listas vacías para profesores y grados
     this.academicForm.addControl('teachers', new FormArray([]));
     this.academicForm.addControl('degrees', new FormControl('-1'));
-    this.academicForm.addControl('modules', new FormArray([]));
 
-    this.degreeList = this.degreeService.getDegrees();
-    this.updateSelectableDegrees();
+    if (this.moduleService.degree_modules) this.selectedDegreeModules = this.moduleService.degree_modules;
+
+    // Carga todos los grados disponibles desde el servicio
+    this.allDegrees = this.degreeService.getDegrees();
+    this.updateAvailableDegrees();
   }
 
-  //  GETTERS
+  // Getter para obtener la lista de profesores dentro del formulario
   get Teachers(): FormArray {
     return this.academicForm.get('teachers') as FormArray;
   }
 
-  //  TEACHERS METHODS
+  // Crea un nuevo grupo de formulario para un profesor
   createTeacherInput(teacher: Teacher | null) {
     return this.fb.group({
       name: new FormControl(teacher ? teacher.Name : ''),
     });
   }
 
+  // Agrega un nuevo profesor al formulario
   addTeacher(teacher: Teacher | null = null) {
     this.Teachers.push(this.createTeacherInput(teacher));
   }
 
+  // Elimina un profesor del formulario
   removeTeacher(index: number) {
     this.Teachers.removeAt(index);
   }
 
-  //  DEGREES & MODULES METHODS
+  // Agrega un nuevo grado al formulario
   addDegree() {
     const degreeId = this.academicForm.get('degrees')?.value;
-    if (degreeId === '-1' || this.selectableDegrees.some(d => d.Id === degreeId)) return;
+
+    // Evita agregar un grado inválido o ya seleccionado
+    if (degreeId === '-1' || this.availableDegrees.some(d => d.Id === degreeId)) return;
 
     const selectedDegree = this.degreeService.getDegreeById(degreeId);
     if (!selectedDegree) return;
 
-    this.selectableDegrees.push(selectedDegree);
+    // Agrega el grado a la lista de disponibles y carga sus módulos
+    this.availableDegrees.push(selectedDegree);
     
     const modules = this.moduleService.getModulesByDegree(degreeId);
-    const checkModules = modules.map(m => new ModuleCheck(m));
+    const moduleChecks = modules.map(m => new ModuleCheck(m));
 
-    this.moduleCheckList.push(new DegreeAggregate(selectedDegree, checkModules));
+    this.selectedDegreeModules.push(new DegreeModules(selectedDegree, moduleChecks));
 
+    // Agrega un control para seleccionar todos los módulos del grado
     this.academicForm.addControl(`all${selectedDegree.Id}`, new FormControl(false));
 
-    checkModules.forEach(module => {
+    // Agrega controles individuales para cada módulo
+    moduleChecks.forEach(module => {
       this.academicForm.addControl(module.controlName, module.checked);
     });
 
-    this.updateSelectableDegrees();
+    // Actualiza los grados disponibles para selección
+    this.updateAvailableDegrees();
     this.academicForm.get('degrees')?.setValue('-1');
   }
 
-  isCycleSelected(cycleId: number): boolean {
-    return this.degreeSelectId === cycleId;
-  }
-
-  updateSelectableDegrees() {
-    this.selectDegreeList = this.degreeList.filter(degree => 
-      !this.selectableDegrees.some(selected => selected.Id === degree.Id)
+  // Filtra los grados disponibles que aún no han sido seleccionados
+  updateAvailableDegrees() {
+    this.availableDegrees = this.allDegrees.filter(degree => 
+      !this.selectedDegreeModules.some(selected => selected.Id === degree.Id)
     );
   }
 
+  // Marca o desmarca todos los módulos de un grado
   checkAllModules(degreeId: number) {
     const isChecked = this.academicForm.get(`all${degreeId}`)?.value;
-    const degree = this.moduleCheckList.find(d => d.Id === degreeId);
+    const degree = this.selectedDegreeModules.find(d => d.Id === degreeId);
 
     if (!degree) return;
 
+    // Cambia el estado de todos los módulos del grado
     degree.modules.forEach(module => {
       this.academicForm.get(module.controlName)?.setValue(isChecked);
     });
-    this.updateModuleSelection();
+
+    // Actualiza la lista de módulos mostrados
+    this.updateDisplayedModules();
   }
 
+  // Verifica si todos los módulos de un grado están seleccionados
   isAllChecked(degreeId: number): boolean {
-    const degree = this.moduleCheckList.find(d => d.Id === degreeId);
+    const degree = this.selectedDegreeModules.find(d => d.Id === degreeId);
     return degree?.modules.every(m => this.academicForm.get(m.controlName)?.value) || false;
   }
 
-  updateModuleSelection() {
-    this.printCheckList = this.moduleCheckList.map(d=>{
+  // Actualiza la lista de módulos seleccionados para mostrar en la interfaz
+  updateDisplayedModules() {
+    this.displayedModules = this.selectedDegreeModules.map(d => {
       const checkedModules = d.modules.filter(m => this.academicForm.get(m.controlName)?.value);
-      return new DegreeAggregate(d, checkedModules);
-    })
-    console.log(this.printCheckList);
-    
-    //TODOJAVI: PINTA TODOS LOS MODULOS SELECCIONADOS EN EL FORMULARIO A LA DERECHA POR CARD/CICLO
-    //en check this.printCheckList tienes todos los ciclos con todos sus módulos que tienes que pintar ;)
+      return new DegreeModules(d, checkedModules);
+    });
+
+    console.log(this.displayedModules);
   }
-}
 
-//  MODELOS
-class DegreeAggregate extends Degree {
-  modules: ModuleCheck[];
-
-  constructor(degree: Degree, modules: ModuleCheck[]) {
-    super(degree.Id, degree.Name);
-    this.modules = modules;
+  // Elimina un grado de la selección y actualiza las listas
+  removeDegree(id: number) {
+    this.selectedDegreeModules = this.selectedDegreeModules.filter(d => d.Id !== id);
+    this.updateAvailableDegrees();
+    this.updateDisplayedModules();
   }
-}
 
-class ModuleCheck extends Module {
-  checked: FormControl;
-  controlName: string;
-
-  constructor(module: Module) {
-    super(module.Id, module.IdCiclo, module.Name);
-    this.controlName = `${module.Id}${module.IdCiclo}`;
-    this.checked = new FormControl(false);
+  // Hook de ciclo de vida: Guarda los módulos seleccionados antes de que el componente se destruya
+  ngOnDestroy(){
+    this.moduleService.degree_modules = this.selectedDegreeModules;
   }
 }
