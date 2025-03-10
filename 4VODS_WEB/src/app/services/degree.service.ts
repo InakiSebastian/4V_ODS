@@ -19,4 +19,8 @@ export class DegreeService {
     return this.dgrees;
   }
 
+  getDegreeById(degreeSelect: number) {
+    return this.dgrees.filter(degree => degree.Id == degreeSelect)[0];
+  }
+
 }

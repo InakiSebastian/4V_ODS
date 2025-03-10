@@ -95,23 +95,8 @@ export class IniciativeDetailComponent {
         this.idDegrees.push(m.IdCiclo);
       }
     });
-    const parsedStartDate = new Date(this.startDate);
-    this.startD =
-      parsedStartDate.getDate() +
-      '/' +
-      (parsedStartDate.getMonth() + 1) + // +1 porque los meses van de 0 a 11
-      '/' +
-      parsedStartDate.getFullYear();
-
-    const parsedEndDate = this.endDate ? new Date(this.endDate) : null;
-    this.endD = parsedEndDate
-      ? parsedEndDate.getDate() +
-      '/' +
-      (parsedEndDate.getMonth() + 1) +
-      '/' +
-      parsedEndDate.getFullYear()
-      : '';
-
+    //alert(this.startDate + ' editando ' + this.endDate);
+    
 
     this.degrees = this.degreeService.getDegrees().filter(d => this.idDegrees.includes(d.Id));
   }

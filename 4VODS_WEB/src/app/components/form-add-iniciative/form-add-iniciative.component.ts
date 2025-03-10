@@ -186,8 +186,8 @@ export class FormAddIniciativeComponent {
       newDifusions.push(new Difusion(index+1, newId,  difusionType, difusionLink));
     });
 
-    const iniciativeNew = new Iniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, newOds, newIniciativeType)
-    const compliteIniciative = new CompliteIniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, newOds, newIniciativeType, newTeachers, newModules, newDifusions, newGoals)
+    const iniciativeNew = new Iniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, this.odsService.selectedOds, newIniciativeType)
+    const compliteIniciative = new CompliteIniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, this.odsService.selectedOds, newIniciativeType, newTeachers, newModules, newDifusions, this.goalService.selectedGoals)
     
     if (this.iniciative != null) {
       iniciativeNew.Id = this.iniciative.Id;

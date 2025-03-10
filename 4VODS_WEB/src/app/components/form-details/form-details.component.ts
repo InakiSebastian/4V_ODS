@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IDetails } from '../form-add-iniciative/interfaces/details.interface';
+import { FormatDatePipe } from '../../pipes/format-date.pipe';
 
 @Component({
   selector: 'app-form-details',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormatDatePipe],
   templateUrl: './form-details.component.html',
   styleUrl: './form-details.component.scss'
 })
@@ -23,5 +24,7 @@ export class FormDetailsComponent {
     this.detailsForm?.addControl('hours', new FormControl(''));
     this.detailsForm?.addControl('academicYear', new FormControl(''));
     this.detailsForm?.addControl('iniciativeType', new FormControl(''));
+
+    //alert(this.details!.startDate + ' editando ' + this.details!.endDate);
   }
 }

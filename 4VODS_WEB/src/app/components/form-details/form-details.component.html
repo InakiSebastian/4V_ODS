@@ -11,7 +11,7 @@
     
     <div class="col-6">
         <label for="startDate" class="form-label">Fecha Inicio</label>
-        <input type="date" class="form-control" formControlName="startDate" [(ngModel)]="this.details!.startDate">
+        <input type="date" class="form-control" formControlName="startDate" [value]="this.details!.startDate | formatDate:'yyyy-MM-dd'" [(ngModel)]="this.details!.startDate">
     </div>
 
     <div class="col-6">

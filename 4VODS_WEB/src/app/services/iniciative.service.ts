@@ -90,6 +90,9 @@ export class IniciativeService {
       inici!.StartDate = iniciative.StartDate;
       inici!.EndDate = iniciative.EndDate!;
       inici!.Hours = iniciative.Hours;
+      inici!.AcademicYear = iniciative.AcademicYear;
+      inici!.Ods = iniciative.Ods;
+      inici!.IniciativeType = iniciative.IniciativeType;
     }
   }
 
