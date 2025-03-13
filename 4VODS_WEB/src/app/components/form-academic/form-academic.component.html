@@ -30,7 +30,7 @@
         <label for="ods" class="form-label">Ciclos</label>
         <div class="row">
             <div class="col">
-                <select class="form-select" formControlName="degrees">
+                <select class="form-select" formControlName="degrees" *ngIf="availableDegrees.length > 0">
                     <option value="-1" disabled selected>Selecciona un Ciclo</option>
                     @for (degree of availableDegrees; track degree){
                     <option value="{{degree.Id}}">{{degree.Name}}</option>

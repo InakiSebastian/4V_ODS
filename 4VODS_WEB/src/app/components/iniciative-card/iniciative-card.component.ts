@@ -11,9 +11,13 @@ import { IniciativeService } from '../../services/iniciative.service';
 export class IniciativeCardComponent {
   @Input() iniciative?: Iniciative;
 
+  description1Line!: string;
+
   constructor(private iniciativeService: IniciativeService){}
 
   ngOnInit(){
+    if (this.iniciative!.Description.length > 100) this.description1Line = this.iniciative!.Description.substring(0, 100) + "...";
+    else this.description1Line = this.iniciative!.Description;
   }
 
   onDelete(){

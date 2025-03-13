@@ -18,6 +18,8 @@ import { ModalService } from '../../services/modal.service';
 import { IDetails } from './interfaces/details.interface';
 import { IFourWinds } from './interfaces/4winds.inteface';
 import { IRrss } from './interfaces/rrss.interface';
+import { ModuleService } from '../../services/module.service';
+import { IniciativeType } from '../../model/iniciativeType';
 
 @Component({
   selector: 'app-form-add-iniciative',
@@ -48,7 +50,7 @@ export class FormAddIniciativeComponent {
   academicI: (IFourWinds | null) = null;
   difusionI: (IRrss | null) = null;
 
-  constructor(private fb: FormBuilder, private iniciativeService: IniciativeService, private odsService: OdsService, private goalService: GoalService, private modalService: ModalService) { }
+  constructor(private fb: FormBuilder, private iniciativeService: IniciativeService, private odsService: OdsService, private goalService: GoalService, private modalService: ModalService, private moduleService: ModuleService) { }
 
   ngOnInit(): void {
     this.formAddIniciative = this.fb.group({
@@ -58,6 +60,8 @@ export class FormAddIniciativeComponent {
       difusion: this.fb.group({}),
     });
 
+    this.moduleService.degree_modules = null;
+    
     if(this.iniciative != null){
       this.detailsI = {
         name: this.iniciative.Name,
@@ -128,18 +132,18 @@ export class FormAddIniciativeComponent {
   }
 
   onSubmit(){
-    let newEndDate = this.setAtribute('details', 'endDate')
-    if (this.setAtribute('details', 'endDate')==""){
-      newEndDate = null;
-    }
+    let newEndDate = this.detailsI!.endDate
+    //if (newEndDate ==""){
+    //  newEndDate = null;
+    //}
     const newId = this.setId();
-    const newName = this.setAtribute('details', 'name');
-    const newDescription = this.setAtribute('details', 'description');
-    const newStartDate = this.setAtribute('details', 'startDate');
-    
-    const newHours = this.setAtribute('details', 'hours');
-    const newAcademicYear = this.setAtribute('details', 'academicYear');
-    const newIniciativeType = this.setAtribute('details', 'iniciativeType');
+    const newName = this.detailsI!.name
+    const newDescription = this.detailsI!.description
+    const newStartDate = this.detailsI!.startDate
+
+    const newHours = this.detailsI!.hours
+    const newAcademicYear = this.detailsI!.academicYear
+    const newIniciativeType = this.detailsI!.iniciativeType
 
     // Profesores
     const newTeachers: Teacher[] = [];
@@ -152,18 +156,8 @@ export class FormAddIniciativeComponent {
     });    
 
     // Módulos
-    const newModules: Module[] = [];
-    const modules = this.Academic.get('modules') as FormArray;
-    modules?.controls.forEach((module, index) => {
-      const moduleDegreeId = Number(module.get('idCiclo')?.value) ?? -1;
-      const moduleName = module.get('name')?.value ?? '';
-      console.log(moduleDegreeId);
-      console.log(moduleName);
-      
-      newModules.push(new Module(index+1, moduleDegreeId, moduleName));
-      
-    });    
-
+    const newModules: Module[] = (this.moduleService.getCheckedModules() || []);
+    
     // //Ods
     const newOds: Ods[] = [];
     this.selectedOds?.forEach(ods => {
@@ -186,8 +180,8 @@ export class FormAddIniciativeComponent {
       newDifusions.push(new Difusion(index+1, newId,  difusionType, difusionLink));
     });
 
-    const iniciativeNew = new Iniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, this.odsService.selectedOds, newIniciativeType)
-    const compliteIniciative = new CompliteIniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, this.odsService.selectedOds, newIniciativeType, newTeachers, newModules, newDifusions, this.goalService.selectedGoals)
+    const iniciativeNew = new Iniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType));
+    const compliteIniciative = new CompliteIniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType), newTeachers, newModules, newDifusions, this.goalService.selectedGoals)
     
     if (this.iniciative != null) {
       iniciativeNew.Id = this.iniciative.Id;
@@ -205,6 +199,19 @@ export class FormAddIniciativeComponent {
     
     //TODOResetear correctamente el formulario
     this.formAddIniciative.reset();
+  }
+
+  setIniciativeType(iniciativeType: string){
+    switch (iniciativeType) {
+      case 'charla':
+        return IniciativeType.Charla;
+      case 'taller':
+        return IniciativeType.Taller;
+      case 'proyecto':
+        return IniciativeType.Proyecto;
+      default:
+        return IniciativeType.Otros;
+    }
   }
 
   setAtribute(formGroup: string, formControl: string){

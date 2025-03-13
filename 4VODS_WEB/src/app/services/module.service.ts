@@ -35,7 +35,19 @@ export class ModuleService {
     return this.modules.filter(module => module.IdCiclo == Id);
   }
   
-  
+  getCheckedModules(): Module[] | null{
+    var modules: ModuleCheck[] = [];
+    if (this.degree_modules == null) return null;
+     this.degree_modules!.forEach(degree => { 
+      //recoge todos los módulos que hayan sido seleccionados entre los ciclos seleccionados
+       degree.modules.forEach(module => {
+         if (module.checked.value) {
+           modules.push(module);
+         }
+       });
+    })
+    return modules.map(module => new Module(module.Id, module.IdCiclo, module.Name));
+  }
 }
 
 export class DegreeModules extends Degree {
@@ -51,9 +63,9 @@ export class ModuleCheck extends Module {
   checked: FormControl;
   controlName: string;
 
-  constructor(module: Module) {
+  constructor(module: Module, checked: boolean = false) {
     super(module.Id, module.IdCiclo, module.Name);
     this.controlName = `${module.Id}${module.IdCiclo}`;
-    this.checked = new FormControl(false);
+    this.checked = new FormControl(checked);
   }
 }
