@@ -1,5 +1,7 @@
 package com.javierprado.android_4vods.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,15 +13,16 @@ public class Iniciative implements Serializable {
     private String endDate;
     private int hours;
     private String schoolYear;
-    private String type;
+    @SerializedName("type")
+    private String initiativeType;
     private List<Teacher> teachers;
     private List<Company> companies;
     private List<Module> modules;
     private List<Goal> goals;
 
     // Getters y setters
-
-    public Iniciative(int id, String name, String description, String startDate, String endDate, int hours, String schoolYear, String type, List<Teacher> teachers, List<Company> companies, List<Module> modules, List<Goal> goals) {
+    public Iniciative() {}
+    public Iniciative(int id, String name, String description, String startDate, String endDate, int hours, String schoolYear, String initiativeType, List<Teacher> teachers, List<Company> companies, List<Module> modules, List<Goal> goals) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -27,7 +30,7 @@ public class Iniciative implements Serializable {
         this.endDate = endDate;
         this.hours = hours;
         this.schoolYear = schoolYear;
-        this.type = type;
+        this.initiativeType = initiativeType;
         this.teachers = teachers;
         this.companies = companies;
         this.modules = modules;
@@ -75,11 +78,11 @@ public class Iniciative implements Serializable {
     }
 
     public String getType() {
-        return type;
+        return initiativeType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setType(String initiativeType) {
+        this.initiativeType = initiativeType;
     }
 
     public int getHours() {

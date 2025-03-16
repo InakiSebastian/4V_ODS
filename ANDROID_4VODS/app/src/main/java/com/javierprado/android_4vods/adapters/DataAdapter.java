@@ -93,7 +93,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.onItemClick(iniciative.getId() );
+                    onItemClickListener.onItemClick(iniciative.getId());
                 }
             });
         }

@@ -1,6 +1,7 @@
 package com.javierprado.android_4vods.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
+import com.javierprado.android_4vods.API.ApiClient;
 import com.javierprado.android_4vods.R;
 import com.javierprado.android_4vods.adapters.MyPagerAdapter;
 import com.javierprado.android_4vods.fragments.DetailsFragment;
@@ -20,13 +22,19 @@ import com.javierprado.android_4vods.models.Goal;
 import com.javierprado.android_4vods.models.Iniciative;
 import com.javierprado.android_4vods.models.Module;
 import com.javierprado.android_4vods.models.Teacher;
+import com.javierprado.android_4vods.API.Api4VService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class SecondActivity extends AppCompatActivity  {
     TabLayout tabLayout;
     ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,101 +45,49 @@ public class SecondActivity extends AppCompatActivity  {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Bundle bundle = getIntent().getExtras();
 
+        Bundle bundle = getIntent().getExtras();
         int id = bundle.getInt("id");
 
-        // Crear los objetos necesarios para el constructor de Iniciative
+        Api4VService apiService = ApiClient.getApi4VService();
+        Call<Iniciative> call = apiService.getIniciative(id);
 
-        Teacher teacher = new Teacher(1, "Alice Smith");
-        Teacher teacher2 = new Teacher(2, "Alice Smith2");
-        Teacher teacher3 = new Teacher(3, "Alice Smith3");
-        Teacher teacher4 = new Teacher(4, "Alice Smith4");
-        Teacher teacher5 = new Teacher(5, "Alice Smith5");
-        Teacher teacher6 = new Teacher(6, "Alice Smith6");
-        List<Teacher> teachers = new ArrayList<>();
-        teachers.add(teacher);
-        teachers.add(teacher2);
-        teachers.add(teacher3);
-        teachers.add(teacher4);
-        teachers.add(teacher5);
-        teachers.add(teacher6);
+        // Fetch the data asynchronously
+        call.enqueue(new Callback<Iniciative>() {
+            @Override
+            public void onResponse(Call<Iniciative> call, Response<Iniciative> response) {
+                if (response.isSuccessful()) {
+                    Iniciative iniciative = response.body();
+                    if (iniciative != null) {
+                        setupViewPager(iniciative);
+                    }
+                } else {
+                    Log.e("4VApi", "Error en la respuesta: " + response.code());
+                }
+            }
 
-        Company company = new Company("Green Energy Co.",1);
-        List<Company> companies = new ArrayList<>();
-        companies.add(company);
+            @Override
+            public void onFailure(Call<Iniciative> call, Throwable t) {
+                Log.e("4VApi", "Error en la llamada", t);
+            }
+        });
+    }
 
-        Degree degree = new Degree(1, "Business Administration");
-        Module module = new Module(1, "Business Strategy", degree);
-        Degree degree2 = new Degree(1, "Business");
-        Module module2 = new Module(1, "Strategy", degree2);
-        Module module3 = new Module(1, "Strategy2", degree2);
-        Module module4 = new Module(1, "Strategy2", degree);
-        Module module5 = new Module(1, "Strategy2", degree);
-        Module module6 = new Module(1, "Strategy2", degree);
-        Module module7 = new Module(1, "Strategy2", degree);
-        List<Module> modules = new ArrayList<>();
-        modules.add(module);
-        modules.add(module2);
-        modules.add(module3);
-        modules.add(module4);
-        modules.add(module5);
-        modules.add(module6);
-        modules.add(module7);
-
-        Goal goal = new Goal(1, "Reduce poverty levels by 20%", 4);
-        Goal goal2 = new Goal(1, "Reduce poverty levels by 20%", 2);
-        Goal goal3 = new Goal(1, "Reduce poverty levels by 20%", 5);
-        Goal goal4 = new Goal(1, "Reduce poverty levels by 20%", 6);
-        Goal goal5 = new Goal(1, "Reduce poverty levels by 20%", 7);
-        Goal goal6 = new Goal(1, "Reduce poverty levels by 20%", 8);
-        Goal goal7 = new Goal(1, "Reduce poverty levels by 20%", 9);
-        Goal goal8 = new Goal(1, "Reduce poverty levels by 20%", 10);
-        Goal goal9 = new Goal(1, "Reduce poverty levels by 20%", 11);
-        Goal goal0= new Goal(1, "Reduce poverty levels by 20%", 12);
-
-        List<Goal> goals = new ArrayList<>();
-        goals.add(goal);
-        goals.add(goal2);
-        goals.add(goal3);
-        goals.add(goal4);
-        goals.add(goal5);
-        goals.add(goal6);
-        goals.add(goal7);
-        goals.add(goal8);
-        goals.add(goal9);
-        goals.add(goal0);
-
-        Iniciative iniciative = new Iniciative(
-                1, // id
-                "Business Growth", // name
-                "Help startups with strategy strategy strategy strategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategystrategystrategystrategystrategystrategyvv strategystrategystrategystrategystrategystrategystrategystrategystrategy strategystrategystrategystrategystrategystrategy", // description
-                "2025-02-01T00:00:00+01:00", // startDate
-                "2025-12-31T00:00:00+01:00", // endDate
-                200, // hours
-                "2024-2025", // schoolYear
-                "Taller", //Type
-                teachers, // teachers
-                companies, // companies
-                modules, // modules
-                goals // goals
-        );
-
-
-
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+    private void setupViewPager(Iniciative iniciative) {
+        viewPager = findViewById(R.id.viewPager);
+        tabLayout = findViewById(R.id.tabLayout);
 
         tabLayout.addTab(tabLayout.newTab().setText("Detalles"));
         tabLayout.addTab(tabLayout.newTab().setText("4Vientos"));
         tabLayout.addTab(tabLayout.newTab().setText("ODS"));
         tabLayout.addTab(tabLayout.newTab().setText("RRSS"));
 
-        MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount(),iniciative);
+        // Create the adapter and pass the data to the view pager
+        MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), iniciative);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
@@ -140,19 +96,11 @@ public class SecondActivity extends AppCompatActivity  {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
-
-
     }
-
-
-
-
 }

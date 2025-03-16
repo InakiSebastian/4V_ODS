@@ -77,6 +77,7 @@ class IniciativeService {
             'endDate' => $iniciative->getEndDate(),
             'hours' => $iniciative->getHours(),
             'schoolYear' => $iniciative->getSchoolYear(),
+            'type' => $iniciative->getType(),
             'teachers' => [],
             'companies' => [],
             'modules' => [],
@@ -101,7 +102,10 @@ class IniciativeService {
             $iniciativeDTO['modules'][] = [
                 'id' => $module->getIdModule()->getId(),
                 'name' => $module->getIdModule()->getName(),
-                'degree' =>  $module->getIdModule()->getIdDegree()->getId(),
+                'degree' =>  [
+                    'id' => $module->getIdModule()->getIdDegree()->getId(),
+                    'name' => $module->getIdModule()->getIdDegree()->getName(),                    
+                ]
             ];
         }
 

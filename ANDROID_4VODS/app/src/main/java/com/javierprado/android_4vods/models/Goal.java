@@ -4,12 +4,12 @@ package com.javierprado.android_4vods.models;
 public class Goal {
     private int id;
     private String description;
-    private int idOds;
+    private int ods;
 
-    public Goal(int id, String description, int idOds) {
+    public Goal(int id, String description, int ods) {
         this.id = id;
         this.description = description;
-        this.idOds = idOds;
+        this.ods = ods;
     }
 
     public int getId() {
@@ -29,11 +29,11 @@ public class Goal {
     }
 
     public int getIdOds() {
-        return idOds;
+        return ods;
     }
 
-    public void setIdOds(int idOds) {
-        this.idOds = idOds;
+    public void setIdOds(int ods) {
+        this.ods = ods;
     }
 // Getters y setters
 }
