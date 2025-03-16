@@ -12,14 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
         app:flexWrap="wrap"
         app:justifyContent="flex_start">
     </com.google.android.flexbox.FlexboxLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="40dp"
         android:id="@+id/recyclerOds"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
 
+        />
 </LinearLayout>

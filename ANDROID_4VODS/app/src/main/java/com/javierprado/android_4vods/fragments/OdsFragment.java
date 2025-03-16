@@ -1,8 +1,11 @@
 package com.javierprado.android_4vods.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.Gravity;
@@ -15,6 +18,10 @@ import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
 import com.javierprado.android_4vods.R;
+import com.javierprado.android_4vods.activities.MainActivity;
+import com.javierprado.android_4vods.activities.SecondActivity;
+import com.javierprado.android_4vods.adapters.DataAdapter;
+import com.javierprado.android_4vods.adapters.DataAdapterODS;
 import com.javierprado.android_4vods.models.Goal;
 import com.javierprado.android_4vods.models.Iniciative;
 
@@ -32,6 +39,8 @@ import java.util.Set;
  */
 public class OdsFragment extends Fragment {
     FlexboxLayout odsContainer;
+    RecyclerView recyclerView;
+    DataAdapterODS dataAdapter;
     private Iniciative receivedIniciative;
 
 
@@ -48,6 +57,14 @@ public class OdsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ods, container, false);
         odsContainer = (FlexboxLayout) view.findViewById(R.id.odsContainer);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerOds);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+
+
+
+
+
         if (getArguments() != null) {
             receivedIniciative = (Iniciative) getArguments().getSerializable("iniciative");
         }
@@ -78,7 +95,15 @@ public class OdsFragment extends Fragment {
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        List<String> listGoals = new ArrayList<>();
+                        for (Goal goal : receivedIniciative.getGoals()) {
+                            if (goal.getIdOds() == id) {
+                                listGoals.add(goal.getDescription());
+                            }
+                        }
 
+                        dataAdapter = new DataAdapterODS(listGoals);
+                        recyclerView.setAdapter(dataAdapter);
                     }
                 });
             }

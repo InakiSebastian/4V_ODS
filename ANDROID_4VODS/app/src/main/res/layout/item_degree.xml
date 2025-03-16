@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="@color/Details_4Vientos_Dropdown_Title">
 
     <TextView
         android:id="@+id/txtDegreeName"
@@ -12,12 +12,14 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black"/>
+        android:layout_marginEnd="20dp"
+        android:textColor="@android:color/white"
+        />
 
 
     <ImageView
         android:id="@+id/expandCollapseIndicator"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@drawable/ic_arrow_down" />
+        android:src="@drawable/svgviewer_output" />
 </LinearLayout>

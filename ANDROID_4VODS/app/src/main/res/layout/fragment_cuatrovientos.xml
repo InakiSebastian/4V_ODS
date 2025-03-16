@@ -8,9 +8,10 @@
     tools:context=".fragments.CuatrovientosFragment"
     android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/txtDegrees"
@@ -32,9 +33,14 @@
             android:layout_marginEnd="28dp"
             android:layout_marginBottom="20dp"
             android:scrollbars="vertical"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtDegrees"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:background="@color/white"
+
+       />
 
         <TextView
             android:id="@+id/txtTeachers"
@@ -45,20 +51,23 @@
             android:text="Profesores"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerViewModules" />
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewModules"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewTeachers"
-            android:layout_width="345dp"
-            android:layout_height="wrap_content"
+            android:layout_width="341dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="28dp"
             android:layout_marginTop="24dp"
             android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.157"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtTeachers" />
+            app:layout_constraintTop_toBottomOf="@+id/txtTeachers"
+            android:background="@color/Details_4Vientos_Dropdown_Title"
+            />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </ScrollView>

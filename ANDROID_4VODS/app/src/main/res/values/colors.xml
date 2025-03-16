@@ -2,4 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="Details_4Vientos_Dropdown_Title">#54656e</color>
+    <color name="Details_4Vientos_Dropdown_Content">#709fcf</color>
+    <color name="Details_4Vientos_Primary">#4a90e2</color>
+    <color name="Details_4Vientos_Secondary">#d1d8e0</color>
+    <color name="Details_4Vientos_Background">#f4f6f9</color>
+    <color name="Details_4Vientos_Accent">#ff7b7b</color>
+    <color name="Details_4Vientos_Border">#c1c1c1</color>
+    <color name="Details_4Vientos_ActiveItem">#00796b</color>
+    <color name="Details_4Vientos_Highlight">#ffd700</color>
+    <color name="Details_4Vientos_HeadingText">#2f3b3d</color>
 </resources>
