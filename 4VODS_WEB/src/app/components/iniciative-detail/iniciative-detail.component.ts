@@ -46,7 +46,7 @@ export class IniciativeDetailComponent {
   idDegrees: number[] = [];
   degrees: Degree[] = [];
   startD: string = '';
-  endD: string = '';
+  endD: string| null = '' ;
 
   //Auxiliares
   selectedODS: Ods | null = null;
@@ -95,7 +95,8 @@ export class IniciativeDetailComponent {
         this.idDegrees.push(m.IdCiclo);
       }
     });
-    //alert(this.startDate + ' editando ' + this.endDate);
+    this.endD = this.endDate?.toDateString() || null;
+    this.startD = this.startDate.toDateString();
     
 
     this.degrees = this.degreeService.getDegrees().filter(d => this.idDegrees.includes(d.Id));

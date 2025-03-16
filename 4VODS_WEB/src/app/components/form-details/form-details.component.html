@@ -14,12 +14,12 @@
     
     <div class="col-6">
         <label for="startDate" class="form-label">Fecha Inicio</label>
-        <input type="date" class="form-control" name="startDate" [(ngModel)]="this.details!.startDate" [(ngModel)]="this.details!.startDate">
+        <input type="date" class="form-control" name="startDate" [(ngModel)]="startDateStr" (input)="this.updateDate($event, 'start')">
     </div>
 
     <div class="col-6">
         <label for="endDate" class="form-label">Fecha Fin</label>
-        <input type="date" class="form-control" name="endDate" [(ngModel)]="this.details!.endDate">
+        <input type="date" class="form-control" name="endDate" [(ngModel)]="this.endDateStr" (input)="this.updateDate($event, 'end')">
     </div>
 
     <div class="col-6">
