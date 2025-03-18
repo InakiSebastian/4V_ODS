@@ -80,7 +80,7 @@
             }
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-6" *ngIf="displayedModules.length > 0">
         <label for="ods" class="form-label">Ciclos y módulos seleccionados:</label>
         <div class="card mb-3" *ngFor="let degree of displayedModules">
             <div class="card-header">
