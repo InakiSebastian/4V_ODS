@@ -80,4 +80,19 @@
             }
         </div>
     </div>
+    <div class="col-6">
+        <label for="ods" class="form-label">Ciclos y módulos seleccionados:</label>
+        <div class="card mb-3" *ngFor="let degree of displayedModules">
+            <div class="card-header">
+                {{degree.Name}}
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let module of degree.modules">
+                        {{module.Name}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>

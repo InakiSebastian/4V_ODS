@@ -91,6 +91,7 @@ export class FormAcademicComponent {
 
     }
     this.updateAvailableDegrees();
+    this.updateDisplayedModules();
   }
 
   // Getter para obtener la lista de profesores dentro del formulario
@@ -143,6 +144,7 @@ export class FormAcademicComponent {
 
     // Actualiza los grados disponibles para selección
     this.updateAvailableDegrees();
+    this.updateDisplayedModules();
     this.academicForm.get('degrees')?.setValue('-1');
   }
 
