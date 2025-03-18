@@ -1,0 +1,33 @@
+<div class="row" [formGroup]="difusionForm">
+    <!--Difusión-->
+    <div class="row">
+        <div class="col-12">
+            <p>Difusión &#64;</p>
+            <hr>
+        </div>
+        
+        <div class="container" formArrayName="difusions">
+            @for(difusion of Difusions.controls; track difusion; let index = $index){
+                <div class="row" formGroupName="{{index}}">
+                    <p>{{index+1}}.</p>
+                    <div class="col-6">
+                        <label class="form-label">Red Social</label>
+                        <select class="form-select" formControlName="type">
+                            <option value="-1" disabled selected>Selecciona una Red Social</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="Twitter">Twitter</option>
+                            <option value="Facebook">Facebook</option>
+                        </select>
+                    </div>
+
+                    <div class="col-6">
+                        <label class="form-label">Link</label>
+                        <input type="text" class="form-control" placeholder="Inserta el link a la difusión" formControlName="link">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger" (click)="removeDifusion(index)">Eliminar Difusión</button>
+            }
+            <button type="button" class="btn btn-primary" (click)="addDifusion()">Añadir difusión</button>
+        </div>
+    </div> 
+</div>

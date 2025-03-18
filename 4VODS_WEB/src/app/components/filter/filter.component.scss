@@ -1,0 +1,28 @@
+.scrollable-container {
+    max-height: 200px;
+    overflow-y: auto; /* Agrega scroll solo si es necesario */
+    overflow-x: hidden; 
+}
+
+.scrollable-container::-webkit-scrollbar {
+    width: 8px;
+    /* Ancho de la barra */
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+    background: #00000013;
+    /* Color del fondo de la barra */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+    background: #888;
+    /* Color del "pulgar" (la parte que se mueve) */
+    border-radius: 5px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    /* Color cuando pasas el mouse */
+}

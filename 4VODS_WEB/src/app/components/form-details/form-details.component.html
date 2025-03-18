@@ -1,0 +1,43 @@
+<div class="row gy-4">
+    <div class="col-6">
+        <label for="name" class="form-label">Nombre</label>
+        <input type="text" class="form-control" name="name" placeholder="Nombre de la iniciativa" [(ngModel)]="this.details!.name">
+    </div>
+
+    <div class="col-12">
+        <label for="description" class="form-label">Descripción</label>
+        <div class="form-floating">
+            <textarea class="form-control"  id="description" name="description" placeholder="Descripción de la iniciativa" [(ngModel)]="this.details!.description" style="height: 100px"></textarea>
+            <label for="description">Descripción de la iniciativa</label>
+        </div>
+    </div>
+    
+    <div class="col-6">
+        <label for="startDate" class="form-label">Fecha Inicio</label>
+        <input type="date" class="form-control" name="startDate" [(ngModel)]="startDateStr" (input)="this.updateDate($event, 'start')">
+    </div>
+
+    <div class="col-6">
+        <label for="endDate" class="form-label">Fecha Fin</label>
+        <input type="date" class="form-control" name="endDate" [(ngModel)]="this.endDateStr" (input)="this.updateDate($event, 'end')">
+    </div>
+
+    <div class="col-6">
+        <label for="hours" class="form-label">Horas</label>
+        <input type="number" class="form-control" name="hours" min="1" [(ngModel)]="this.details!.hours">
+    </div>
+
+    <div class="col-6">
+        <label for="type" class="form-label">Tipo</label>
+        <select class="form-select" name="iniciativeType" [(ngModel)]="this.details!.iniciativeType">
+            <option value="proyecto">Proyecto</option>
+            <option value="charla">Charla</option>
+            <option value="excursion">Excursión</option>
+        </select>
+    </div>
+
+    <div class="col-6">
+        <label for="academicYear" class="form-label">Curso</label>
+        <input type="text" class="form-control" name="academicYear" [(ngModel)]="this.details!.academicYear">
+    </div>
+</div>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IniciativeComponent } from './iniciative.component';
+import { FormDifusionComponent } from './form-difusion.component';
 
-describe('IniciativeComponent', () => {
-  let component: IniciativeComponent;
-  let fixture: ComponentFixture<IniciativeComponent>;
+describe('FormDifusionComponent', () => {
+  let component: FormDifusionComponent;
+  let fixture: ComponentFixture<FormDifusionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IniciativeComponent]
+      imports: [FormDifusionComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(IniciativeComponent);
+    fixture = TestBed.createComponent(FormDifusionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,1 +1,31 @@
-<p>iniciative-list works!</p>
+<app-filter (filterChanged)="onFilterChanged($event)"/>
+
+
+
+    @if(this.iniciativeList.length != 0){
+        
+        <div class="row m-4 gy-4">
+            @for(iniciative of iniciativeList; track $index){
+            <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12" (click)="setIdIniciativa($event, iniciative.Id)" data-bs-toggle="modal"
+                data-bs-target="#customModal" [style]="{'cursor': 'pointer'}">
+                <app-iniciative-card [iniciative]="iniciative"></app-iniciative-card>
+            </div>
+            }
+        </div>
+
+    }@else {
+        
+        <div class="row row-cols-2 gy-4 d-flex justify-content-center">
+            <div class="row d-flex justify-content-center text-secondary  mt-5">
+                <div class="col-4">
+                    <img src="generic-icons/no-hay.png" alt="" class="img-fluid">
+                </div>
+                <div class="col-8 d-flex align-items-center">
+                    <h1>No se han encontrado iniciativas</h1>
+                </div>
+            </div>
+        </div>
+    }
+
+
+<app-modal />

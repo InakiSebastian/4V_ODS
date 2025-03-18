@@ -1,0 +1,46 @@
+<div class="container rounded-4 bg-primary-subtle shadow h-100">
+    <div class="row rounded-4 h-100 border overflow-hidden">
+        <div class="col-10 rounded-4 bg-light p-4 h-100">
+           <!--Titulo--> 
+           <div class="row">
+                <div class="col">
+                    <p class="fs-4">
+                        {{iniciative?.Name}}
+                    </p>
+                </div>
+                <div class="col p-0 d-flex justify-content-end align-items-center">
+                    <p class="small">{{iniciative?.AcademicYear}}</p>
+                </div>
+            </div>
+
+            <!--Descripción-->
+            <div class="row">
+                <div class="col">
+                    <p>
+                        {{description1Line}}
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <p>Duración: {{iniciative?.Hours}} horas</p>
+                </div>
+                <div class="col">
+                    <p>Tipo: {{iniciative?.IniciativeType}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-2 justify-content-center py-4 px-0 scrollable-container mt-1 mb-1">
+            <div class="row m-0 text-center">
+                    @for(ods of this.iniciative?.Ods; track $index){
+                        <div class="col mb-2 p-0 px-2">
+                            <img src="odsIcons/{{ods?.Id}}.png" alt="foto ods {{ods.Id}}" style="width: 50px; height: 50px" class="rounded">
+                        </div>
+                    }
+            </div>
+            
+        </div>
+    </div>
+</div>

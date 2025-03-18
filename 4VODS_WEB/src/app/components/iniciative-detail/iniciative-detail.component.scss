@@ -1,0 +1,51 @@
+.scrollable-container {
+    display: flex;
+    flex-wrap: nowrap;  /* Evita que los elementos se acomoden en varias filas */
+    overflow-x: auto;   /* Agrega desplazamiento horizontal si hay desbordamiento */
+    gap: 10px;          /* Espacio entre las tarjetas */
+    scrollbar-width: thin; /* Para navegadores como Firefox */
+    scrollbar-color: #ccc transparent; /* Color de la barra de desplazamiento */
+}
+
+.scrollable-container::-webkit-scrollbar {
+    height: 8px; /* Altura de la barra de desplazamiento */
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+    background: #888; /* Color de la barra de desplazamiento */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+.card {
+    flex: 0 0 auto;  /* Permite que cada card tenga su propio tamaño */
+    width: auto;      /* Ocupa solo el ancho del contenido */
+    min-width: 150px; /* Tamaño mínimo para evitar que se vean demasiado pequeñas */
+}
+#disabled{
+    img {
+        border-radius: 10px;
+    }
+    .scrollable-container{
+        img {
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        img:hover {
+            transform: scale(1.15);
+        }
+    }
+    
+}
+
+#rrss{
+    .card {
+        border-radius: 10px;
+        transition: transform 0.2s ease-in-out;
+    }
+    
+    .card:hover {
+        transform: scale(1.05);
+    }
+    
+
+}

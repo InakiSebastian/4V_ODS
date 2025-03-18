@@ -1,0 +1,83 @@
+<div class="row" [formGroup]="academicForm">
+    <!--Profesores-->
+    <div class="row">
+        <div class="col-12">
+            <p>Profesorado</p>
+            <hr>
+        </div>
+
+        <div class="container" formArrayName="teachers">
+            @for(teacher of Teachers.controls; track teacher; let index = $index){
+            <div class="row" formGroupName="{{index}}">
+                <p>{{index+1}}.</p>
+                <div class="col">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" placeholder="Miguel Godyena" formControlName="name">
+                </div>
+            </div>
+            <button type="button" class="btn btn-danger" (click)="removeTeacher(index)">Eliminar Profesor</button>
+            }
+            <button type="button" class="btn btn-primary" (click)="addTeacher()">Añadir Profesor</button>
+        </div>
+    </div>
+
+    <!-- AGREGAR MÓDULOS -->
+    <div class="col-12 mt-3">
+        <p>Módulos</p>
+        <hr>
+    </div>
+    <div class="col-6">
+        <label for="ods" class="form-label">Ciclos</label>
+        <div class="row">
+            <div class="col">
+                <select class="form-select" formControlName="degrees" *ngIf="availableDegrees.length > 0">
+                    <option value="-1" disabled selected>Selecciona un Ciclo</option>
+                    @for (degree of availableDegrees; track degree){
+                    <option value="{{degree.Id}}">{{degree.Name}}</option>
+                    }
+                </select>
+            </div>
+
+            @if(academicForm.get('degrees')?.value > 0){
+            <div class="col-2">
+                <button type="button" class="btn btn-primary" (click)="addDegree()">Añadir</button>
+            </div>
+            }
+
+        </div>
+        <!-- component.html -->
+        <div class="mt-3">
+            @for (degree of selectedDegreeModules; track degree){
+            <div class="card mb-3">
+                <div class="card-header"
+                    data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + degree.Id" role="button"
+                    aria-expanded="false" [attr.aria-controls]="'collapse' + degree.Id">
+                    {{ degree.Name }}
+                    <button type="button" class="btn-close d-play float-end" aria-label="Close" (click)="removeDegree(degree.Id)"></button>
+                </div>
+
+                <div [id]="'collapse' + degree.Id" class="collapse">
+                    <div class="card-body">
+                        <h5>Módulos:</h5>
+                        <div class="list-group">
+                            <!-- Checkbox "Seleccionar todos" -->
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" (change)="checkAllModules(degree.Id)"
+                                    [checked]="isAllChecked(degree.Id)" formControlName="all{{degree.Id}}">
+                                <label class="form-check-label">Seleccionar todos</label>
+                            </div>
+
+                            <!-- Checkboxes de módulos -->
+                            <div *ngFor="let module of degree.modules" class="form-check" (change)="updateDisplayedModules()">
+                                <input type="checkbox" class="form-check-input"
+                                    formControlName="{{module.controlName}}">
+                                <label class="form-check-label">{{module.Name}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
