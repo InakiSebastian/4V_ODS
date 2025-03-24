@@ -35,11 +35,24 @@
 <div class="w-100">
     <div *ngIf="showAdvancedFilters" class="container mt-3 w-100">
         <div class="row">
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-12">
+                        <h5>Dimensiones</h5>
+                    </div>
+                    <div class="col-12">
+                        <button type="button" class="btn btn-outline-primary mb-2" data-bs-toggle="button" autocomplete="off" style="width: 100%;">Social</button>
+                        <button type="button" class="btn btn-outline-primary mb-2" data-bs-toggle="button" autocomplete="off" style="width: 100%;">Económica</button>
+                        <button type="button" class="btn btn-outline-primary mb-2" data-bs-toggle="button" autocomplete="off" style="width: 100%;">Medioambiental</button>
+                    
+                    </div>
+                </div>
+            </div>
             <!-- ODS Checkboxes -->
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-8">
-                        <h5>Filtrar por ODS</h5>
+                        <h5>ODS</h5>
                     </div>
                     <div class="col-4" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Solo los que contengan los marcados"
@@ -67,7 +80,7 @@
             </div>
 
             <!-- Cursos Checkboxes -->
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <h5>Filtrar por Curso</h5>
                 <div class="scrollable-container">
                     <div class="row">
