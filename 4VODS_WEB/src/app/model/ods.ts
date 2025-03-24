@@ -3,7 +3,7 @@ export class Ods{
     idDimension: number;
     description: string;
 
-    constructor(id: number, description: string, idDimension: number) {
+    constructor(id: number,idDimension: number, description: string) {
         this.id = id;
         this.description = description;
         this.idDimension = idDimension;
@@ -17,5 +17,7 @@ export class Ods{
         return this.description;
     }
 
-    get idDimension
+    get IdDimension(): number{
+        return this.idDimension;
+    }
 }

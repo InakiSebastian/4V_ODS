@@ -39,7 +39,7 @@ export class FormOdsComponent {
 
   // ODS
   addOds(){
-    const odsToPush: Ods = this.odsList.find(ods => ods.Id === Number(this.odsForm.get('ods')?.value))?? new Ods(-1, (''));
+    const odsToPush: Ods = this.odsList.find(ods => ods.Id === Number(this.odsForm.get('ods')?.value))?? new Ods(-1, -1 ,(''));
     
     // Elimino el ods de la lista
     this.odsList = this.odsList.filter(ods => ods.Id !== odsToPush.Id);
