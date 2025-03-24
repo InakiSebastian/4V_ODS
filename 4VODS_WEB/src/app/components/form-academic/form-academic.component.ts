@@ -3,7 +3,6 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } f
 import { Degree } from '../../model/degree';
 import { DegreeService } from '../../services/degree.service';
 import { IFourWinds } from '../form-add-iniciative/interfaces/4winds.inteface';
-import { Module } from '../../model/module';
 import { Teacher } from '../../model/teacher';
 import { DegreeModules, ModuleCheck, ModuleService } from '../../services/module.service';
 import { CommonModule } from '@angular/common';
@@ -69,8 +68,6 @@ export class FormAcademicComponent {
 
       const allModules = this.moduleService.getModules(); //recoge todos los módulos
       selectedDegrees.forEach(degree => { //por cada ciclo crea un DegreeModules
-
-        console.log(this.academic!.modules);
         
         const modules = allModules.filter(m => m.IdCiclo === degree.Id); //filtra los módulos que pertenecen al ciclo
         //por cada módulo crea un ModuleCheck poniendo a true si estaba en la lista de la iniciativa que se este editando
@@ -78,11 +75,8 @@ export class FormAcademicComponent {
 
         //mete los módulos en el ciclo parseados y lo metes en la lista
         this.selectedDegreeModules.push(new DegreeModules(degree, moduleChecks));
-
         this.academicForm.addControl(`all${degree.Id}`, new FormControl(this.isAllChecked(degree.Id)));
-        console.log("estos son ya los controlers");
         moduleChecks.forEach(m => {
-          console.log(m.checked);
           this.academicForm.addControl(m.controlName, m.checked);
         });
       })
@@ -90,8 +84,14 @@ export class FormAcademicComponent {
       this.moduleService.degree_modules = this.selectedDegreeModules;
 
     }
+    else{
+      this.selectedDegreeModules.forEach(degree => {
+        this.academicForm.get('all'+degree.Id)?.setValue(this.isAllChecked(degree.Id));
+      })
+    }
     this.updateAvailableDegrees();
     this.updateDisplayedModules();
+    
   }
 
   // Getter para obtener la lista de profesores dentro del formulario
@@ -188,8 +188,6 @@ export class FormAcademicComponent {
       const checkedModules = d.modules.filter(m => this.academicForm.get(m.controlName)?.value);
       return new DegreeModules(d, checkedModules);
     });
-
-    console.log(this.displayedModules);
   }
 
   // Elimina un grado de la selección y actualiza las listas
@@ -210,6 +208,7 @@ export class FormAcademicComponent {
   save(){
     this.moduleService.degree_modules = this.selectedDegreeModules;
   }
+
   // Hook de ciclo de vida: Guarda los módulos seleccionados antes de que el componente se destruya
   ngOnDestroy(){
     this.save();
