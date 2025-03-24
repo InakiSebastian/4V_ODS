@@ -26,3 +26,25 @@
     background: #555;
     /* Color cuando pasas el mouse */
 }
+
+
+#dimension1{
+    &:hover{
+        background-color: #9cdbff !important;
+        color: rgb(0, 14, 62) !important;
+    }
+}
+
+#dimension2{
+    &:hover{
+        background-color: #aaff9c !important;
+        color: rgb(0, 14, 62) !important;
+    }
+}
+
+#dimension3{
+    &:hover{
+        background-color: #ff9c9c !important;
+        color: rgb(0, 14, 62) !important;
+    }
+}
