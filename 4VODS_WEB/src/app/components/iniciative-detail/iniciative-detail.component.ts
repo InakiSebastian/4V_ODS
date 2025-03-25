@@ -161,7 +161,7 @@ export class IniciativeDetailComponent {
   }
 
   getIcon(difusion: Difusion) {
-
+    
     if (difusion.Type.toLocaleLowerCase().includes('facebook')) {
       return 'rrss/Facebook.png';
     }

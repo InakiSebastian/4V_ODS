@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IniciativeCardComponent } from "../iniciative-card/iniciative-card.component";
 import { Iniciative } from '../../model/iniciative';
 import { IniciativeService } from '../../services/iniciative.service';
-import { ModalComponent } from "../modal/modal.component";
+import { ModalComponent } from "../modals/modal/modal.component";
 import { ModalService } from '../../services/modal.service';
 import { FilterComponent } from '../filter/filter.component';
 

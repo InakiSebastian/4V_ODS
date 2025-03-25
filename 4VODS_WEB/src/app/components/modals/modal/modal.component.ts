@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { IniciativeDetailComponent } from '../iniciative-detail/iniciative-detail.component';
-import { FormAddIniciativeComponent } from '../form-add-iniciative/form-add-iniciative.component';
-import { Iniciative } from '../../model/iniciative';
-import { CompliteIniciative } from '../../model/complite-iniciative';
-import { ModalService } from '../../services/modal.service';
+import { IniciativeDetailComponent } from '../../iniciative-detail/iniciative-detail.component';
+import { FormAddIniciativeComponent } from '../../form-add-iniciative/form-add-iniciative.component';
+import { Iniciative } from '../../../model/iniciative';
+import { CompliteIniciative } from '../../../model/complite-iniciative';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-modal',
