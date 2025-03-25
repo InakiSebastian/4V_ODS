@@ -1,12 +1,13 @@
 <div class="modal fade" id="customModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog custom-modal-width">
+    <div class="modal-dialog modal-dialog-scrollable custom-modal-width">
         <div class="modal-content">
+            <!-- <div class="modal-body p-0"> -->
             @if (contentType === 'detail'){
                 <app-iniciative-detail/>
             }
             @if(contentType === 'form'){
                 <app-form-add-iniciative [iniciative]="iniciative"/>
-            }
+            }<!-- </div> -->
         </div>
     </div>
 </div>
