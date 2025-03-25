@@ -1,5 +1,3 @@
-
-
 .imgOds{
     cursor: pointer;
     transition: transform .1s ease-in-out;
@@ -7,4 +5,8 @@
     &:hover{
         transform: scale(1.1);
     }
+}
+
+.list-group-item:hover{
+    background-color: rgb(224, 235, 255) !important;
 }
