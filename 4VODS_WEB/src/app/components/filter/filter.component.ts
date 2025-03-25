@@ -94,7 +94,11 @@ export class FilterComponent {
       this.filtredOds = this.odsList.filter(ods =>
         this.dimensions.some(dim => dim.value && dim.id === ods.IdDimension)
       );
+      this.filtredOds.sort((a, b) => a.IdDimension - b.IdDimension);
     }
+    
+    
+
     this.parseToCheckObject(this.filtredOds);
   }
 
