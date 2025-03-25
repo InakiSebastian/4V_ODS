@@ -6,22 +6,27 @@ import { IniciativeService } from '../../services/iniciative.service';
   selector: 'app-iniciative-card',
   imports: [],
   templateUrl: './iniciative-card.component.html',
-  styleUrl: './iniciative-card.component.scss'
+  styleUrl: './iniciative-card.component.scss',
 })
 export class IniciativeCardComponent {
-  @Input() iniciative?: Iniciative;
+  @Input() iniciative!: Iniciative;
 
   description1Line!: string;
 
-  constructor(private iniciativeService: IniciativeService){}
-
-  ngOnInit(){
-    if (this.iniciative!.Description.length > 100) this.description1Line = this.iniciative!.Description.substring(0, 100) + "...";
-    else this.description1Line = this.iniciative!.Description;
+  constructor(private iniciativeService: IniciativeService) {
+     
+    
   }
 
-  onDelete(){
+  ngOnInit() {
+    
+    if (this.iniciative!.description.length > 100)
+      this.description1Line =
+        this.iniciative!.description.substring(0, 100) + '...';
+    else this.description1Line = this.iniciative!.description;
+  }
+
+  onDelete() {
     this.iniciativeService.deleteIniciative(this.iniciative?.Id || -1);
   }
-
 }

@@ -64,8 +64,11 @@ export class FilterComponent {
   }
 
   ngOnInit() {
-    this.iniciativeList = this.iniciativeService.getCompliteIniciativas();
     this.filtredOds = this.odsList;
+    this.iniciativeService.getIniciatives().subscribe((res) => {
+      this.iniciativeList = res.body as CompliteIniciative[];
+    });
+
     this.filterChanged.emit(this.iniciativeList);
   }
 
@@ -126,7 +129,7 @@ export class FilterComponent {
 
   getSimpleIniciativesFromComplite(filteredIniciatives: CompliteIniciative[]): Iniciative[] {
     const compliteIds = filteredIniciatives.map(iniciative => iniciative.Id);
-    return this.iniciativeService.getIniciatives().filter(iniciative => compliteIds.includes(iniciative.Id));
+    return this.iniciativeService.iniciativeList.filter(iniciative => compliteIds.includes(iniciative.Id));
   }
 
   checkAllOdsOfDimension(dimension: number) {
@@ -151,6 +154,9 @@ export class FilterComponent {
     this.dimensions.forEach(dim => dim.value = false);
 
     this.filterOds();
+    this.selectedOds.forEach((ods) => (ods.selected = false));
+    this.degreeList.forEach((degree) => (degree.selected = false));
+    this.selectedTeacher = -1;
     this.applyFilters();
   }
 

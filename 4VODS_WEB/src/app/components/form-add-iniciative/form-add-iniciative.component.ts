@@ -194,7 +194,6 @@ export class FormAddIniciativeComponent {
     else{
       this.iniciativeService.addIniciative(iniciativeNew);
       this.iniciativeService.addCompliteIniciative(compliteIniciative);
-      console.log(this.iniciativeService.getCompliteIniciativas());
     }
     
     //TODOResetear correctamente el formulario

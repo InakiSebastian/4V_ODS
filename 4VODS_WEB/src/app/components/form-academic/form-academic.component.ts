@@ -68,6 +68,7 @@ export class FormAcademicComponent {
 
       const allModules = this.moduleService.getModules(); //recoge todos los módulos
       selectedDegrees.forEach(degree => { //por cada ciclo crea un DegreeModules
+
         
         const modules = allModules.filter(m => m.IdCiclo === degree.Id); //filtra los módulos que pertenecen al ciclo
         //por cada módulo crea un ModuleCheck poniendo a true si estaba en la lista de la iniciativa que se este editando
@@ -188,6 +189,7 @@ export class FormAcademicComponent {
       const checkedModules = d.modules.filter(m => this.academicForm.get(m.controlName)?.value);
       return new DegreeModules(d, checkedModules);
     });
+
   }
 
   // Elimina un grado de la selección y actualiza las listas
