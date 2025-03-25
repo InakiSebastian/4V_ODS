@@ -1,11 +1,11 @@
 export class Goal {
-    idGoal: number;
-    idODS: number;
-    description: string;
+    public idGoal: number;
+    public ods: number;
+    public description: string;
 
     constructor(idGoal: number, idODS: number, description: string) {
         this.idGoal = idGoal;
-        this.idODS = idODS;
+        this.ods = idODS;
         this.description = description;
     }
 
@@ -14,7 +14,7 @@ export class Goal {
     }
 
     get IdODS(): number {
-        return this.idODS;
+        return this.ods;
     }
 
     get Description(): string {

@@ -74,8 +74,8 @@ export class FormAddIniciativeComponent {
         startDate: this.iniciative.StartDate,
         endDate: this.iniciative.EndDate!,
         hours: this.iniciative.Hours,
-        academicYear: this.iniciative.AcademicYear,
-        iniciativeType: this.iniciative.IniciativeType
+        academicYear: this.iniciative.schoolYear,
+        iniciativeType: this.iniciative.type
       }
 
       this.academicI = {
@@ -176,7 +176,7 @@ export class FormAddIniciativeComponent {
     const newStartDate = this.detailsI!.startDate
 
     const newHours = this.detailsI!.hours
-    const newAcademicYear = this.detailsI!.academicYear
+    const newschoolYear = this.detailsI!.academicYear
     const newIniciativeType = this.detailsI!.iniciativeType
 
     // Profesores
@@ -214,9 +214,9 @@ export class FormAddIniciativeComponent {
       newDifusions.push(new Difusion(index+1, newId,  difusionType, difusionLink));
     });
 
-    const iniciativeNew = new Iniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType));
-    const compliteIniciative = new CompliteIniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newAcademicYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType), newTeachers, newModules, newDifusions, this.goalService.selectedGoals)    
-
+    const iniciativeNew = new Iniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType));
+    const compliteIniciative = new CompliteIniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType), newTeachers, newModules, newDifusions, this.goalService.selectedGoals)
+    
     if (this.iniciative != null) {
       iniciativeNew.Id = this.iniciative.Id;
       compliteIniciative.Id = this.iniciative.Id;

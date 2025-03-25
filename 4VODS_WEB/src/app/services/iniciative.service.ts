@@ -235,10 +235,14 @@ export class IniciativeService {
     );
   }
 
-  getCompliteIniciativeById(id: number): Promise<CompliteIniciative | undefined> {
-    var a = this.iniciativeCompliteList.find(iniciative => iniciative.Id === id);
-    if(a != undefined && a != null) return Promise.resolve(a);
-    return Promise.resolve(new CompliteIniciative(id, "ewijfeqwìg", "eqwknfqeufrenev", new Date(), new Date(), 0, "", [], IniciativeType.Proyecto, [], [], [], []));
+  getCompliteIniciativeById(id: number) {
+    return this.http.get<CompliteIniciative>(
+      'http://127.0.0.1:8000/iniciatives/'+id,
+      {
+        headers: this.headers,
+        observe: 'response',
+      }
+    );
   }
 
   updateCompliteIniciative(iniciative: CompliteIniciative): void {
@@ -250,9 +254,9 @@ export class IniciativeService {
     inici!.StartDate = iniciative.StartDate;
     inici!.EndDate = iniciative.EndDate!;
     inici!.Hours = iniciative.Hours;
-    inici!.AcademicYear = iniciative.AcademicYear;
+    inici!.schoolYear = iniciative.schoolYear;
     inici!.Ods = iniciative.Ods;
-    inici!.IniciativeType = iniciative.IniciativeType;
+    inici!.Type = iniciative.type;
     inici!.Teachers = iniciative.Teachers;
     inici!.Modules = iniciative.Modules;
     inici!.Difusions = iniciative.Difusions;
@@ -269,9 +273,9 @@ export class IniciativeService {
       inici!.StartDate = iniciative.StartDate;
       inici!.EndDate = iniciative.EndDate!;
       inici!.Hours = iniciative.Hours;
-      inici!.AcademicYear = iniciative.AcademicYear;
+      inici!.schoolYear = iniciative.schoolYear;
       inici!.Ods = iniciative.Ods;
-      inici!.IniciativeType = iniciative.IniciativeType;
+      inici!.Type = iniciative.type;
     }
   }
 

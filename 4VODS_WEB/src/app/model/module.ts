@@ -1,8 +1,8 @@
 export class Module {
-    private id: number
-    private idCiclo: number
-    private name: string
-
+    public id: number
+    public name: string
+    public idCiclo: number
+    
     constructor(id: number, idCiclo: number, name: string) {
         this.id = id;    
         this.idCiclo = idCiclo;

@@ -4,7 +4,7 @@
         
         <div class="row m-4 gy-4">
             @for(iniciative of iniciativeList; track $index){
-            <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12" (click)="setIdIniciativa($event, iniciative.Id)" data-bs-toggle="modal"
+            <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12" (click)="setIdIniciativa($event, iniciative.id)" data-bs-toggle="modal"
                 data-bs-target="#customModal" [style]="{'cursor': 'pointer'}">
                 <app-iniciative-card [iniciative]="iniciative"></app-iniciative-card>
             </div>

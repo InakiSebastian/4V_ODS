@@ -10,6 +10,7 @@ use App\Entity\Module;
 use App\Entity\Goal;
 use App\Entity\TeacherIniciative;
 use App\Entity\CompanyIniciative;
+use App\Entity\Diffusion;
 use App\Entity\ModuleIniciative;
 use App\Entity\IniciativeGoal;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,20 +20,21 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class IniciativeService {
+class IniciativeService
+{
 
     public function __construct(private EntityManagerInterface $entityManager, private ValidatorInterface $validator)
     {
         $this->entityManager = $entityManager;
         $this->validator = $validator;
     }
-   
+
     public function getAllIniciatives(): array
     {
         $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
-    
+
         $iniciativeDTOs = [];
-    
+
         foreach ($iniciatives as $iniciative) {
             $iniciativeDTO = [
                 'id' => $iniciative->getId(),
@@ -44,27 +46,27 @@ class IniciativeService {
                 'schoolYear' => $iniciative->getSchoolYear(),
                 'type' => $iniciative->getType(),
                 'ods' => []
-            ];   
-    
+            ];
+
             foreach ($iniciative->getIniciativeGoals() as $goal) {
                 $ods = $goal->getIdGoal()->getIdOds();
                 if ($ods) {
-                    $iniciativeDTO['ods'][] = $ods->getId(); 
+                    $iniciativeDTO['ods'][] = $ods->getId();
                 }
             }
-    
+
             $iniciativeDTOs[] = $iniciativeDTO;
         }
-    
-        return $iniciativeDTOs;      
+
+        return $iniciativeDTOs;
     }
-    
-    
-    
+
+
+
     public function getIniciative(int $id): ?array
     {
         $iniciative = $this->entityManager->getRepository(Iniciative::class)->find($id);
-
+        $diffusions = $this->entityManager->getRepository(Diffusion::class)->findBy(['iniciative' => $iniciative]);
         if (!$iniciative) {
             return null;
         }
@@ -102,18 +104,36 @@ class IniciativeService {
             $iniciativeDTO['modules'][] = [
                 'id' => $module->getIdModule()->getId(),
                 'name' => $module->getIdModule()->getName(),
-                'degree' =>  [
-                    'id' => $module->getIdModule()->getIdDegree()->getId(),
-                    'name' => $module->getIdModule()->getIdDegree()->getName(),                    
-                ]
+                'idCiclo' => $module->getIdModule()->getIdDegree()->getId(),
             ];
         }
 
         foreach ($iniciative->getIniciativeGoals() as $goal) {
-                $iniciativeDTO['goals'][] = [
+
+            $ods = $goal->getIdGoal()->getIdOds();
+
+            if ($ods) {
+                $iniciativeDTO['ods'][] = [
+                    "id" => $ods->getId(),
+                    "description" => $ods->getDescription()
+                ];
+            }
+
+            $iniciativeDTO['goals'][] = [
                 'id' => $goal->getId(),
                 'description' => $goal->getIdGoal()->getDescription(),
                 'ods' => $goal->getIdGoal()->getIdOds()->getId()
+            ];
+        }
+
+
+
+
+        foreach ($diffusions as $diffusion) {
+            $iniciativeDTO['difusions'][] = [
+                'idDifusion' => $diffusion->getId(),
+                'type' => $diffusion->getType(),
+                'link' => $diffusion->getLink()
             ];
         }
 
@@ -127,15 +147,15 @@ class IniciativeService {
         if (count($errors) > 0) {
             throw new BadRequestHttpException(implode(', ', array_map(fn($e) => $e->getMessage(), iterator_to_array($errors))));
         }
-    
+
         if ($dto->getEndDate() && $dto->getEndDate() < $dto->getStartDate()) {
             throw new BadRequestHttpException('La fecha de fin debe ser posterior a la fecha de inicio.');
         }
-    
+
         if ($dto->getHours() <= 0) {
             throw new BadRequestHttpException('La duración de la iniciativa debe ser mayor a 0.');
         }
-        
+
         if (strtolower($dto->getType()) != "proyecto" && strtolower($dto->getType()) != "taller" && strtolower($dto->getType()) != "charla" && strtolower($dto->getType()) != "otros") {
             throw new BadRequestException('El tipo de iniciativa debe ser proyecto, taller, charla u otros');
         }
@@ -149,9 +169,9 @@ class IniciativeService {
         $iniciative->setSchoolYear($dto->getSchoolYear());
         $iniciative->setInnovative($dto->getInnovative());
         $iniciative->setType($dto->getType());
-    
+
         $this->entityManager->persist($iniciative);
-    
+
         $teachers = [];
         foreach ($dto->getTeachers() as $teacherId) {
             $teacher = $this->entityManager->getRepository(Teacher::class)->find($teacherId);
@@ -164,7 +184,7 @@ class IniciativeService {
                 $teachers[] = ['id' => $teacher->getId(), 'name' => $teacher->getName()];
             }
         }
-    
+
         $companies = [];
         foreach ($dto->getCompanies() as $companyId) {
             $company = $this->entityManager->getRepository(Company::class)->find($companyId);
@@ -177,7 +197,7 @@ class IniciativeService {
                 $companies[] = ['id' => $company->getId(), 'name' => $company->getName()];
             }
         }
-    
+
         $modules = [];
         foreach ($dto->getModules() as $moduleId) {
             $module = $this->entityManager->getRepository(Module::class)->find($moduleId);
@@ -190,11 +210,11 @@ class IniciativeService {
                 $modules[] = [
                     'id' => $module->getId(),
                     'name' => $module->getName(),
-                    'degree' => $module->getIdDegree()->getId(),    
+                    'degree' => $module->getIdDegree()->getId(),
                 ];
             }
         }
-    
+
         $goals = [];
         foreach ($dto->getGoals() as $goalId) {
             $goal = $this->entityManager->getRepository(Goal::class)->find($goalId);
@@ -207,9 +227,9 @@ class IniciativeService {
                 $goals[] = ['id' => $goal->getId(), 'description' => $goal->getDescription()];
             }
         }
-    
+
         $this->entityManager->flush();
-    
+
         return [
             'id' => $iniciative->getId(),
             'name' => $iniciative->getName(),
@@ -226,7 +246,7 @@ class IniciativeService {
             'goals' => $goals
         ];
     }
-    
+
 
     public function updateIniciative(int $id, NewIniciativeDTO $dto): array
     {
@@ -271,7 +291,7 @@ class IniciativeService {
         foreach ($iniciative->getIniciativeGoals() as $goalIniciative) {
             $this->entityManager->remove($goalIniciative);
         }
-        
+
         $this->entityManager->flush();
 
         $teachers = [];
@@ -342,16 +362,14 @@ class IniciativeService {
     public function deleteIniciative(int $id): bool
     {
         $iniciative = $this->entityManager->getRepository(Iniciative::class)->find($id);
-    
+
         if (!$iniciative) {
             return false;
         }
-    
+
         $this->entityManager->remove($iniciative);
         $this->entityManager->flush();
-    
-        return true; 
-    }
-    
 
+        return true;
+    }
 }
