@@ -5,11 +5,11 @@
            <div class="row">
                 <div class="col">
                     <p class="fs-4">
-                        {{iniciative?.name}}
+                        {{iniciative.name}}
                     </p>
                 </div>
                 <div class="col p-0 d-flex justify-content-end align-items-center">
-                    <p class="small">{{iniciative?.academicYear}}</p>
+                    <p class="small">{{iniciative.schoolYear}}</p>
                 </div>
             </div>
 
@@ -24,19 +24,19 @@
 
             <div class="row">
                 <div class="col">
-                    <p>Duración: {{iniciative?.hours}} horas</p>
+                    <p>Duración: {{iniciative.hours}} horas</p>
                 </div>
                 <div class="col">
-                    <p>Tipo: {{iniciative?.iniciativeType}}</p>
+                    <p>Tipo: {{iniciative.type}}</p>
                 </div>
             </div>
         </div>
 
         <div class="col-2 justify-content-center py-4 px-0 scrollable-container mt-1 mb-1">
             <div class="row m-0 text-center">
-                    @for(ods of this.iniciative?.Ods; track $index){
+                    @for(ods of this.iniciative.ods; track $index){
                         <div class="col mb-2 p-0 px-2">
-                            <img src="odsIcons/{{ods?.Id}}.png" alt="foto ods {{ods.Id}}" style="width: 50px; height: 50px" class="rounded">
+                            <img src="odsIcons/{{ods}}.png" alt="foto ods {{ods.Id}}" style="width: 50px; height: 50px" class="rounded">
                         </div>
                     }
             </div>

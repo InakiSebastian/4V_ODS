@@ -104,7 +104,7 @@ export class FilterComponent {
   applyFilters() {
     const filteredIniciatives = this.iniciativeService.getCompliteIniciativas()
       .filter(iniciative => this.searchTerm ? iniciative.Name.toLowerCase().includes(this.searchTerm.toLowerCase()) : true)
-      .filter(iniciative => this.selectedType ? iniciative.IniciativeType === this.selectedType : true)
+      .filter(iniciative => this.selectedType ? iniciative.type === this.selectedType : true)
       .filter(iniciative => {
         if (this.selectedOds.some(ods => ods.selected)) {
           const selectedIds = this.selectedOds.filter(ods => ods.selected).map(ods => ods.id);

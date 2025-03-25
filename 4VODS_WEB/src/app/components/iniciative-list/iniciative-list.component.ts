@@ -30,7 +30,6 @@ export class IniciativeListComponent {
     this.iniciativeService.getIniciatives().subscribe((res) => {
       this.iniciativeList = res.body as CompliteIniciative[];
 
-      console.log(this.iniciativeList)
 
     });
   }

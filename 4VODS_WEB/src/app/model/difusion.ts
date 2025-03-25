@@ -1,8 +1,8 @@
 export class Difusion{
-    private idDifusion: number;
-    private idIniciative: number;
-    private type: string;
-    private link: string;
+    public idDifusion: number;
+    public idIniciative: number;
+    public type: string;
+    public link: string;
 
     constructor(idDifusion: number, idIniciative: number, type: string, link: string){
         this.idDifusion = idDifusion;    

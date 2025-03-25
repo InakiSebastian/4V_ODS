@@ -8,10 +8,10 @@ import { Teacher } from "./teacher";
 
 export class CompliteIniciative extends Iniciative{
     
-    private teachers: Teacher[];
-    private modules: Module[];
-    private difusions: Difusion[];
-    private goals: Goal[]
+    public teachers: Teacher[];
+    public modules: Module[];
+    public difusions: Difusion[];
+    public goals: Goal[]
 
     constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, academicYear: string, ods: Ods[], iniciativeType: IniciativeType,
         techers: Teacher[], modules: Module[], difusions: Difusion[], goals: Goal[]

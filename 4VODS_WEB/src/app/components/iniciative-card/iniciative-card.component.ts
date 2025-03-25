@@ -24,6 +24,7 @@ export class IniciativeCardComponent {
       this.description1Line =
         this.iniciative!.description.substring(0, 100) + '...';
     else this.description1Line = this.iniciative!.description;
+
   }
 
   onDelete() {

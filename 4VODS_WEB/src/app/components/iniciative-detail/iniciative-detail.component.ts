@@ -19,10 +19,9 @@ import { DegreeService } from '../../services/degree.service';
   selector: 'app-iniciative-detail',
   imports: [CommonModule],
   templateUrl: './iniciative-detail.component.html',
-  styleUrl: './iniciative-detail.component.scss'
+  styleUrl: './iniciative-detail.component.scss',
 })
 export class IniciativeDetailComponent {
-
   iniciative!: CompliteIniciative;
   idIniciative: number = 0;
 
@@ -46,7 +45,7 @@ export class IniciativeDetailComponent {
   idDegrees: number[] = [];
   degrees: Degree[] = [];
   startD: string = '';
-  endD: string| null = '' ;
+  endD: string | null = '';
 
   //Auxiliares
   selectedODS: Ods | null = null;
@@ -60,61 +59,72 @@ export class IniciativeDetailComponent {
     private iniciativeService: IniciativeService,
     private modalService: ModalService,
     private degreeService: DegreeService
-  ) {
-
-  }
+  ) {}
 
   async ngOnInit() {
-    await this.modalService.idIniciative$.subscribe(id => {
+    await this.modalService.idIniciative$.subscribe((id) => {
       this.idIniciative = id;
-      this.iniciative = this.iniciativeService.getCompliteIniciativeById(this.idIniciative)!;
-      this.render(this.iniciative);
+
+      this.iniciativeService
+        .getCompliteIniciativeById(this.idIniciative)
+        .subscribe((res) => {
+          this.iniciative = res.body as CompliteIniciative;
+          this.render(this.iniciative);
+        });
     });
   }
 
-  render(iniciative: CompliteIniciative) { //datos de la iniciativa separados
+  render(iniciative: CompliteIniciative) {
+    //datos de la iniciativa separados
     this.showDetailOds = false;
-    this.name = iniciative.Name;
-    this.description = iniciative.Description;
-    this.startDate = iniciative.StartDate;
-    this.endDate = iniciative.EndDate;
-    this.hours = iniciative.Hours;
-    this.iniciativeType = iniciative.IniciativeType;
-    this.modules = iniciative.Modules;
-    this.teachers = iniciative.Teachers;
-    this.goals = iniciative.Goals;
-    this.difusions = iniciative.Difusions;
-    this.odsList = iniciative.Ods;
-    this.academicYear = iniciative.AcademicYear;
+    this.name = iniciative.name;
+    this.description = iniciative.description;
+    this.startDate = iniciative.startDate;
+    this.endDate = iniciative.endDate;
+    this.hours = iniciative.hours;
+    this.iniciativeType = iniciative.type;
+    this.modules = iniciative.modules;
+    this.teachers = iniciative.teachers;
+    
+    this.goals = iniciative.goals;
+    this.difusions = iniciative.difusions;
+    this.odsList = iniciative.ods;
+    this.academicYear = iniciative.schoolYear;
 
     //visualización
+    
     this.degrees = [];
     this.idDegrees = [];
+
     this.modules.forEach((m) => {
-      if (!this.idDegrees.includes(m.IdCiclo)) {
-        this.idDegrees.push(m.IdCiclo);
+      if (!this.idDegrees.includes(m.idCiclo)) {
+        this.idDegrees.push(m.idCiclo);
       }
     });
-    this.endD = this.endDate?.toDateString() || null;
-    this.startD = this.startDate.toDateString();
-    
 
-    this.degrees = this.degreeService.getDegrees().filter(d => this.idDegrees.includes(d.Id));
+
+    this.degrees = this.degreeService
+      .getDegrees()
+      .filter((d) => this.idDegrees.includes(d.Id));
+
+
+
   }
 
-
-
   //gestión de detalles:
-
 
   //gestión de 4vientos
   //ciclos y módulos:
 
-  get degreeCards() { //pasa a un objeto combinadoe ntre ciclo y módulos
-    return this.degrees.map(d => ({
-      name: d.Name,
-      modulesD: this.modules.filter(m => m.IdCiclo === d.Id) // Filtra solo los módulos que pertenecen al grado
+  get degreeCards() {
+    //pasa a un objeto combinadoe ntre ciclo y módulos
+    var a = this.degrees.map((d) => ({
+      name: d.name,
+      modulesD: this.modules.filter((m) => m.idCiclo === d.id), // Filtra solo los módulos que pertenecen al grado
     }));
+
+    return a;
+
   }
 
   //gestión de ods y metas:
@@ -126,8 +136,8 @@ export class IniciativeDetailComponent {
 
   selectODS(idODS: number): void {
     this.showDetailOds = true;
-    this.selectedODS = this.odsList.find(ods => ods.id === idODS) || null;
-    this.selectedGoals = this.goals.filter(goal => goal.idODS === idODS);
+    this.selectedODS = this.odsList.find((ods) => ods.id === idODS) || null;
+    this.selectedGoals = this.goals.filter((goal) => goal.ods === idODS);
     this.selectedImage = `odsIcons/${idODS}.png`;
   }
 
@@ -135,19 +145,20 @@ export class IniciativeDetailComponent {
   //eliminar
   deleteIniciative(event: MouseEvent) {
     event.preventDefault();
-    if (!window.confirm(`¿Estas segur@ de que quieres eliminar esta iniciativa?`)) {
+    if (
+      !window.confirm(`¿Estas segur@ de que quieres eliminar esta iniciativa?`)
+    ) {
       return;
     }
     this.iniciativeService.deleteIniciative(this.idIniciative);
     this.modalService.rechargeList();
     this.modalService.closeModal();
-
   }
 
   //editar
   editIniciative($event: MouseEvent) {
     $event.preventDefault();
-    this.modalService.openModal("form", this.iniciative);
+    this.modalService.openModal('form', this.iniciative);
   }
 
   //efectos de visualización
@@ -161,26 +172,24 @@ export class IniciativeDetailComponent {
   }
 
   getIcon(difusion: Difusion) {
-    
-    if (difusion.Type.toLocaleLowerCase().includes('facebook')) {
+    if (difusion.type.toLocaleLowerCase().includes('facebook')) {
       return 'rrss/Facebook.png';
     }
-    if (difusion.Type.toLocaleLowerCase().includes('instagram')) {
+    if (difusion.type.toLocaleLowerCase().includes('instagram')) {
       return 'rrss/Instagram.png';
     }
-    if (difusion.Type.toLocaleLowerCase().includes('linkedin')) {
+    if (difusion.type.toLocaleLowerCase().includes('linkedin')) {
       return 'rrss/linkedin.png';
     }
-    if (difusion.Type.toLocaleLowerCase().includes('youtube')) {
+    if (difusion.type.toLocaleLowerCase().includes('youtube')) {
       return 'rrss/YouTube.png';
     }
-    if (difusion.Type.toLocaleLowerCase().includes('tiktok')) {
+    if (difusion.type.toLocaleLowerCase().includes('tiktok')) {
       return 'rrss/tiktok.png';
     }
-    if (difusion.Type.toLocaleLowerCase().includes('x')) {
+    if (difusion.type.toLocaleLowerCase().includes('x')) {
       return 'rrss/X.png';
     }
     return 'rrss/rrss-generico.png';
   }
-
 }

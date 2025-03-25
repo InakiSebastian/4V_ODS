@@ -8,12 +8,13 @@ export class Iniciative {
     public startDate: Date;
     public endDate: Date | null;
     public hours: number;
-    public academicYear: string;
+    public schoolYear: string;
     public ods: Ods[];
-    public iniciativeType: IniciativeType; 
+    public type: IniciativeType; 
+    
 
 
-    constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, academicYear: string, ods: Ods[], iniciativeType: IniciativeType){
+    constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, schoolYear: string, ods: Ods[], iniciativeType: IniciativeType){
         
         this.id = id;
         this.name = name;
@@ -21,10 +22,9 @@ export class Iniciative {
         this.startDate = startDate;
         this.endDate = endDate;
         this.hours = hours;
-        this.academicYear = academicYear;
+        this.schoolYear = schoolYear;
         this.ods = ods;
-
-        this.iniciativeType = iniciativeType;
+        this.type = iniciativeType;
     }
 
 //     get Id(): number{
@@ -51,7 +51,7 @@ export class Iniciative {
 //         return this.hours;
 //     }
 
-//     get AcademicYear(): string{
+//     get schoolYear(): string{
 //         return this.academicYear;
 //     }
 
@@ -91,15 +91,15 @@ export class Iniciative {
         this.hours = hours;
     }
 
-    set AcademicYear(academicYear: string){
-        this.academicYear = academicYear;
+    set SchoolYear(academicYear: string){
+        this.schoolYear = academicYear;
     }
 
     set Ods(ods: Ods[] ){
         this.ods = ods;
     }
 
-    set IniciativeType(type: IniciativeType){
-        this.iniciativeType = type;
+    set Type(type: IniciativeType){
+        this.type = type;
     }
 }
