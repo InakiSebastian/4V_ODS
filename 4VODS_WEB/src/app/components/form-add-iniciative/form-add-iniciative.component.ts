@@ -186,13 +186,11 @@ export class FormAddIniciativeComponent {
     if (this.iniciative != null) {
       iniciativeNew.Id = this.iniciative.Id;
       compliteIniciative.Id = this.iniciative.Id;
-      this.iniciativeService.updateSimpleIniciative(iniciativeNew);
       this.iniciativeService.updateCompliteIniciative(compliteIniciative);
       this.iniciative = null;
       this.modalService.closeModal();
     }
     else{
-      this.iniciativeService.addIniciative(iniciativeNew);
       this.iniciativeService.addCompliteIniciative(compliteIniciative);
     }
     
