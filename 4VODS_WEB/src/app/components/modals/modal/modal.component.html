@@ -1,14 +1,14 @@
-<div class="modal fade" id="customModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="customModal" tabindex="-1" aria-labelledby="modalLabel">
     <div class="modal-dialog modal-dialog-scrollable custom-modal-width">
         <div class="modal-content">
             @if (contentType === 'detail'){
-                <app-iniciative-detail/>
+                <app-iniciative-detail (delete)="delete()"/>
             }
             @if(contentType === 'form'){
-                <app-form-add-iniciative [iniciative]="iniciative" (delete)="this.contentType='delete'"/>
+                <app-form-add-iniciative [iniciative]="iniciative"/>
             }
             @if(contentType=='delete'){
-                <app-confirm-modal [id]="iniciative!.Id" [nameIni]="iniciative!.Name"/>
+                <app-confirm-modal />
             }
         </div>
     </div>

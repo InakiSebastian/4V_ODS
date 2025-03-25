@@ -62,7 +62,9 @@ export class IniciativeService {
   }
 
   getCompliteIniciativeById(id: number): Promise<CompliteIniciative | undefined> {
-    return Promise.resolve(this.iniciativeCompliteList.find(iniciative => iniciative.Id === id))
+    var a = this.iniciativeCompliteList.find(iniciative => iniciative.Id === id);
+    if(a != undefined && a != null) return Promise.resolve(a);
+    return Promise.resolve(new CompliteIniciative(id, "ewijfeqwìg", "eqwknfqeufrenev", new Date(), new Date(), 0, "", [], IniciativeType.Proyecto, [], [], [], []));
   }
 
   updateCompliteIniciative(iniciative: CompliteIniciative): void {

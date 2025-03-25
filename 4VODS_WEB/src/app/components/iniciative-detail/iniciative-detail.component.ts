@@ -121,7 +121,11 @@ export class IniciativeDetailComponent {
   get degreeCards() { //pasa a un objeto combinadoe ntre ciclo y módulos
     return this.degrees.map(d => ({
       name: d.Name,
-      modulesD: this.modules.filter(m => m.IdCiclo === d.Id) // Filtra solo los módulos que pertenecen al grado
+      modulesD: this.modules.filter(m => m.IdCiclo === d.Id).map(m => {return{
+        module: m,
+        color: this.generateColor()
+      }}) // Filtra solo los módulos que pertenecen al grado
+      
     }));
   }
 
@@ -143,12 +147,7 @@ export class IniciativeDetailComponent {
   //eliminar
   deleteIniciative(event: MouseEvent) {
     event.preventDefault();
-    // if (!window.confirm(`¿Estas segur@ de que quieres eliminar esta iniciativa?`)) {
-    //   return;
-    // }
-    // this.iniciativeService.deleteIniciative(this.idIniciative);
-    //this.modalService.rechargeList();
-    this.delete.emit();
+    this.modalService.openModal("delete", this.iniciative);
 
   }
 
