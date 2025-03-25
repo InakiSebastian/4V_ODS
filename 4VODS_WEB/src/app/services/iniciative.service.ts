@@ -61,8 +61,8 @@ export class IniciativeService {
     this.iniciativeList = this.iniciativeList.filter(iniciative => iniciative.Id !== id);
   }
 
-  getCompliteIniciativeById(id: number): CompliteIniciative | undefined {
-    return this.iniciativeCompliteList.find(iniciative => iniciative.Id === id);
+  getCompliteIniciativeById(id: number): Promise<CompliteIniciative | undefined> {
+    return Promise.resolve(this.iniciativeCompliteList.find(iniciative => iniciative.Id === id))
   }
 
   updateCompliteIniciative(iniciative: CompliteIniciative): void {

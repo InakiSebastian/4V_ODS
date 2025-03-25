@@ -67,7 +67,7 @@ export class IniciativeDetailComponent {
   async ngOnInit() {
     await this.modalService.idIniciative$.subscribe(id => {
       this.idIniciative = id;
-      this.iniciative = this.iniciativeService.getCompliteIniciativeById(this.idIniciative)!;
+      this.iniciativeService.getCompliteIniciativeById(this.idIniciative)!;
       this.render(this.iniciative);
     });
   }
