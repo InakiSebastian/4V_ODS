@@ -167,19 +167,6 @@ export class FilterComponent {
   updateSelectedOds() {
     this.applyFilters();
   }
-
-  setDimensionColor(dimension: number) {
-    switch (dimension) {
-      case 1:
-        return "#9cdbff";
-      case 2:
-        return "#aaff9c";
-      case 3:
-        return "#ff9c9c";
-      default:
-        return "#ff9c9c";
-    }
-  }
 }
 
 // Clases auxiliares
