@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="scrollable-container">
-                    <div *ngFor="let ods of filtredOds; let i = index" [ngStyle]="{'background-color': this.setDimensionColor(ods.IdDimension)}">
+                    <div *ngFor="let ods of filtredOds; let i = index">
                         <div class="row">
                             <div class="col-2">
                                 <img [src]="'odsIcons/' + ods.id + '.png'" alt="" class="img-fluid">
