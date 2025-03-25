@@ -1,181 +1,179 @@
-<div class="row p-5 m-0">
-    <div class="form p-0 rounded-3 shadow overflow-hidden">
-        @if(currentSection === 1){
-            <div class="row m-0">
-                <div class="col-3 p-0">
-                    <div class="row m-0 h-100 flex-column">
-                        <div class="px-3 py-2 pointer pointer">
-                            Datos Generales
-                        </div>
-                        
-                        <div class="col p-0">
-                            <div class="list-group rounded-start-0 rounded-bottom-0 bg-primary-subtle h-100">
-                                <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(2)">
-                                    4Vientos
-                                </div>
-                                <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(3)">
-                                    ODS
-                                </div>
-                                <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(4)">
-                                    RRSS
-                                </div>
-                                <div class="px-3 pb-3 border-0 bg-primary-subtle h-100 d-flex flex-column justify-content-end mt-5">
-                                    <div class="d-flex justify-content-end">
-                                        <button type="button" class="btn btn-outline-dark" (click)="next()">></button>
-                                    </div>
+<div class="form p-0 rounded-3 shadow overflow-hidden">
+    @if(currentSection === 1){
+        <div class="row m-0">
+            <div class="col-3 p-0">
+                <div class="row m-0 h-100 flex-column">
+                    <div class="px-3 py-2 pointer pointer">
+                        Datos Generales
+                    </div>
+                    
+                    <div class="col p-0">
+                        <div class="list-group rounded-start-0 rounded-bottom-0 bg-primary-subtle h-100">
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(2)">
+                                4Vientos
+                            </div>
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(3)">
+                                ODS
+                            </div>
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(4)">
+                                RRSS
+                            </div>
+                            <div class="px-3 pb-3 border-0 bg-primary-subtle h-100 d-flex flex-column justify-content-end mt-5">
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn btn-outline-dark" (click)="next()">></button>
                                 </div>
                             </div>
-                        </div>                        
-                    </div>                
-                </div>
+                        </div>
+                    </div>                        
+                </div>                
+            </div>
 
-                <div class="col-9 p-4">
-                    <div class="row p-2 g-4">
-                        <h1 class="display-6">Rellena los Datos Generales</h1>
-                        <app-form-details [details]="detailsI"></app-form-details>
+            <div class="col-9 p-4">
+                <div class="row p-2 g-4">
+                    <h1 class="display-6">Rellena los Datos Generales</h1>
+                    <app-form-details [details]="detailsI"></app-form-details>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if(currentSection === 2){
+        <div class="row m-0">
+            <div class="col-3 p-0 d-flex flex-column">
+                <div class="row m-0">            
+                    <div class="col p-0">
+                        <div class="list-group rounded-start-0 rounded-top-0 bg-primary-subtle h-100">
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(1)">
+                                Datos Generales
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="px-3 py-2 pointer">
+                        4Vientos
+                    </div>
+                </div> 
+
+                <div class="row row m-0 flex-grow-1">
+                    <div class="col p-0 h-100">
+                        <div class="list-group rounded-start-0 rounded-bottom-0 bg-primary-subtle h-100">
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(3)">
+                                ODS
+                            </div>
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(4)">
+                                RRSS
+                            </div>
+                            <div class="px-3 pb-3 border-0 bg-primary-subtle h-100 d-flex flex-column justify-content-end mt-5">
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-dark" (click)="prev()"><</button>
+                                    <button type="button" class="btn btn-outline-dark" (click)="next()">></button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        }
 
-        @if(currentSection === 2){
-            <div class="row m-0">
-                <div class="col-3 p-0 d-flex flex-column">
-                    <div class="row m-0">            
-                        <div class="col p-0">
-                            <div class="list-group rounded-start-0 rounded-top-0 bg-primary-subtle h-100">
-                                <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(1)">
-                                    Datos Generales
-                                </div>
+            <div class="col-9 p-4">
+                <div class="row p-2 g-4">
+                    <h1 class="display-6">Inserta un Profesor</h1>
+                    <app-form-academic [academicForm]="Academic" [academic]="academicI"/>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if(currentSection === 3){
+        <div class="row m-0">
+            <div class="col-3 p-0 d-flex flex-column">
+                <div class="row m-0 ">            
+                    <div class="col p-0">
+                        <div class="list-group rounded-start-0 rounded-top-0 bg-primary-subtle h-100">
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(1)">
+                                Datos Generales
                             </div>
-                        </div>
-                        
-                        <div class="px-3 py-2 pointer">
-                            4Vientos
-                        </div>
-                    </div> 
-
-                    <div class="row row m-0 flex-grow-1">
-                        <div class="col p-0 h-100">
-                            <div class="list-group rounded-start-0 rounded-bottom-0 bg-primary-subtle h-100">
-                                <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(3)">
-                                    ODS
-                                </div>
-                                <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(4)">
-                                    RRSS
-                                </div>
-                                <div class="px-3 pb-3 border-0 bg-primary-subtle h-100 d-flex flex-column justify-content-end mt-5">
-                                    <div class="d-flex justify-content-between">
-                                        <button type="button" class="btn btn-outline-dark" (click)="prev()"><</button>
-                                        <button type="button" class="btn btn-outline-dark" (click)="next()">></button>
-                                    </div>
-                                </div>
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(2)">
+                                4Vientos
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-9 p-4">
-                    <div class="row p-2 g-4">
-                        <h1 class="display-6">Inserta un Profesor</h1>
-                        <app-form-academic [academicForm]="Academic" [academic]="academicI"/>
+                    <div class="px-3 py-2 pointer">
+                        ODS
+                    </div>
+                </div> 
+                <div class="row m-0 flex-grow-1">  
+                    <div class="col p-0">
+                        <div class="list-group rounded-3 rounded-start-0 rounded-bottom-0 bg-primary-subtle h-100">
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(4)">
+                                RRSS
+                            </div>
+                            <div class="px-3 pb-3 border-0 bg-primary-subtle h-100 d-flex flex-column justify-content-end mt-5">
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-dark" (click)="prev()"><</button>
+                                    <button type="button" class="btn btn-outline-dark" (click)="next()">></button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        }
 
-        @if(currentSection === 3){
-            <div class="row m-0">
-                <div class="col-3 p-0 d-flex flex-column">
-                    <div class="row m-0 ">            
-                        <div class="col p-0">
-                            <div class="list-group rounded-start-0 rounded-top-0 bg-primary-subtle h-100">
-                                <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(1)">
-                                    Datos Generales
-                                </div>
-                                <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(2)">
-                                    4Vientos
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="px-3 py-2 pointer">
-                            ODS
-                        </div>
-                    </div> 
-                    <div class="row m-0 flex-grow-1">  
-                        <div class="col p-0">
-                            <div class="list-group rounded-3 rounded-start-0 rounded-bottom-0 bg-primary-subtle h-100">
-                                <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(4)">
-                                    RRSS
-                                </div>
-                                <div class="px-3 pb-3 border-0 bg-primary-subtle h-100 d-flex flex-column justify-content-end mt-5">
-                                    <div class="d-flex justify-content-between">
-                                        <button type="button" class="btn btn-outline-dark" (click)="prev()"><</button>
-                                        <button type="button" class="btn btn-outline-dark" (click)="next()">></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="col-9 p-4">
-                    <div class="row p-2 g-4">
-                        <h1 class="display-6">Añade un ODS</h1>
-                        <app-form-ods [odsForm]="Ods"></app-form-ods>
-                    </div>
+            
+            <div class="col-9 p-4">
+                <div class="row p-2 g-4">
+                    <h1 class="display-6">Añade un ODS</h1>
+                    <app-form-ods [odsForm]="Ods"></app-form-ods>
                 </div>
             </div>
-        }
+        </div>
+    }
 
-        @if(currentSection === 4){
-            <div class="row m-0">
-                <div class="col-3 p-0 d-flex flex-column">
-                    <div class="row m-0">            
-                        <div class="col p-0">
-                            <div class="list-group rounded-3 rounded-start-0 rounded-top-0 bg-primary-subtle h-100">
-                                <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(1)">
-                                    Datos Generales
-                                </div>
-                                <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(2)">
-                                    4Vientos
-                                </div>
-                                <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(3)">
-                                    ODS
+    @if(currentSection === 4){
+        <div class="row m-0">
+            <div class="col-3 p-0 d-flex flex-column">
+                <div class="row m-0">            
+                    <div class="col p-0">
+                        <div class="list-group rounded-3 rounded-start-0 rounded-top-0 bg-primary-subtle h-100">
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(1)">
+                                Datos Generales
+                            </div>
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(2)">
+                                4Vientos
+                            </div>
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(3)">
+                                ODS
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="px-3 py-2 pointer">
+                        RRSS
+                    </div>
+                </div>    
+                <div class="row m-0 flex-grow-1">
+                    <div class="col p-0">
+                        <div class="list-group rounded-3 rounded-start-0 rounded-bottom-0 bg-primary-subtle h-100">
+                            <div class="px-3 pb-3 border-0 bg-primary-subtle h-100 d-flex flex-column justify-content-end mt-5">
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-dark" (click)="prev()"><</button>
+                                    <button type="button" class="btn btn-outline-dark w-75">Guardar</button>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="px-3 py-2 pointer">
-                            RRSS
-                        </div>
-                    </div>    
-                    <div class="row m-0 flex-grow-1">
-                        <div class="col p-0">
-                            <div class="list-group rounded-3 rounded-start-0 rounded-bottom-0 bg-primary-subtle h-100">
-                                <div class="px-3 pb-3 border-0 bg-primary-subtle h-100 d-flex flex-column justify-content-end mt-5">
-                                    <div class="d-flex justify-content-between">
-                                        <button type="button" class="btn btn-outline-dark" (click)="prev()"><</button>
-                                        <button type="button" class="btn btn-outline-dark w-75">Guardar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
                     </div>
-                </div>
-
-                <div class="col-9 p-4">
-                    <div class="row p-2 g-4">
-                        <h1 class="display-6">Lugar de Difusión</h1>
-                        <app-form-difusion [difusionForm]="Difusion" [difusionR]="difusionI"></app-form-difusion>
-                    </div>
+                    
                 </div>
             </div>
-        }
-    </div>
+
+            <div class="col-9 p-4">
+                <div class="row p-2 g-4">
+                    <h1 class="display-6">Lugar de Difusión</h1>
+                    <app-form-difusion [difusionForm]="Difusion" [difusionR]="difusionI"></app-form-difusion>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 
