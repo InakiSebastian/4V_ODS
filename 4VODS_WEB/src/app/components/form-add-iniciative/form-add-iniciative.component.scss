@@ -10,3 +10,9 @@
 .list-group-item:hover{
     background-color: rgb(224, 235, 255) !important;
 }
+
+.form{
+    overflow: auto;
+    overflow-y: scroll;
+    height: 81vh;
+}
