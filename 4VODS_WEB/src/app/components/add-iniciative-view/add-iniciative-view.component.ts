@@ -4,7 +4,7 @@ import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.com
 
 @Component({
   selector: 'app-add-iniciative-view',
-  imports: [FormAddIniciativeComponent, ConfirmModalComponent],
+  imports: [FormAddIniciativeComponent],
   templateUrl: './add-iniciative-view.component.html',
   styleUrl: './add-iniciative-view.component.scss'
 })

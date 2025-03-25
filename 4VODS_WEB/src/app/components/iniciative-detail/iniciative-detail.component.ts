@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Modelos
@@ -22,6 +22,8 @@ import { DegreeService } from '../../services/degree.service';
   styleUrl: './iniciative-detail.component.scss'
 })
 export class IniciativeDetailComponent {
+
+  @Output() delete: EventEmitter<void>;
 
   iniciative!: CompliteIniciative;
   idIniciative: number = 0;
@@ -61,14 +63,20 @@ export class IniciativeDetailComponent {
     private modalService: ModalService,
     private degreeService: DegreeService
   ) {
-
+    this.delete = new EventEmitter<void>();
   }
 
   async ngOnInit() {
     await this.modalService.idIniciative$.subscribe(id => {
       this.idIniciative = id;
-      this.iniciativeService.getCompliteIniciativeById(this.idIniciative)!;
-      this.render(this.iniciative);
+      this.iniciativeService.getCompliteIniciativeById(this.idIniciative).then((iniciative) => {
+        if(iniciative==undefined) alert("No se ha encontrado ninguna iniciativa con el Id: " + this.idIniciative);
+        else {
+          this.render(iniciative);
+          this.iniciative = iniciative;
+        }
+      })
+      
     });
   }
 
@@ -135,12 +143,12 @@ export class IniciativeDetailComponent {
   //eliminar
   deleteIniciative(event: MouseEvent) {
     event.preventDefault();
-    if (!window.confirm(`¿Estas segur@ de que quieres eliminar esta iniciativa?`)) {
-      return;
-    }
-    this.iniciativeService.deleteIniciative(this.idIniciative);
-    this.modalService.rechargeList();
-    this.modalService.closeModal();
+    // if (!window.confirm(`¿Estas segur@ de que quieres eliminar esta iniciativa?`)) {
+    //   return;
+    // }
+    // this.iniciativeService.deleteIniciative(this.idIniciative);
+    //this.modalService.rechargeList();
+    this.delete.emit();
 
   }
 

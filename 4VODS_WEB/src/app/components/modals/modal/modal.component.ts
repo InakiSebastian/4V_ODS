@@ -4,10 +4,11 @@ import { FormAddIniciativeComponent } from '../../form-add-iniciative/form-add-i
 import { Iniciative } from '../../../model/iniciative';
 import { CompliteIniciative } from '../../../model/complite-iniciative';
 import { ModalService } from '../../../services/modal.service';
+import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-modal',
-  imports: [IniciativeDetailComponent, FormAddIniciativeComponent],
+  imports: [IniciativeDetailComponent, FormAddIniciativeComponent, ConfirmModalComponent],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })

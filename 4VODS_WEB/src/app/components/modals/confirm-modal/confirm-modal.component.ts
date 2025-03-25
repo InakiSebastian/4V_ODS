@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ModalService } from '../../../services/modal.service';
 import { CompliteIniciative } from '../../../model/complite-iniciative';
 import { IniciativeService } from '../../../services/iniciative.service';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-confirm-modal',
@@ -10,6 +11,9 @@ import { IniciativeService } from '../../../services/iniciative.service';
   styleUrl: './confirm-modal.component.scss'
 })
 export class ConfirmModalComponent {
+  @Input() id: number|null = null;
+  @Input() nameIni: string|null = null;
+
   //varaibles de visualización
   title: string = " la eliminación de la Iniciativa: "
 
@@ -17,22 +21,13 @@ export class ConfirmModalComponent {
     
   }
 
-  async ngOnInit(){
-    var iniciativeId: number = 0;
-    await this.modalService.idIniciative$.subscribe((inici)=>{
-      iniciativeId = inici;
-    });
-    var iniciative: CompliteIniciative | undefined;
-    this.iniciativeService.getCompliteIniciativeById(iniciativeId).then((inici)=>{
-      iniciative = inici
-    });
-    if(iniciative== undefined){
-      alert("No se ha encontrado ningúna iniciativa con el Id: " + iniciativeId);
+  async ngOnInit(){ 
+    if(this.id== undefined){
+      alert("No se ha encontrado ningúna iniciativa con el Id: " + this.id);
     }
     else{
-      this.title+=iniciative.Name
+      this.title+=this.nameIni
     }
-    
   }
   
 }
