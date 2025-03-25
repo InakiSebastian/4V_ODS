@@ -2,18 +2,19 @@ import { IniciativeType } from "./iniciativeType";
 import { Ods } from './ods';
 
 export class Iniciative {
-    private id: number;
-    private name: string;
-    private description: string;
-    private startDate: Date;
-    private endDate: Date | null;
-    private hours: number;
-    private academicYear: string;
-    private ods: Ods[];
-    private iniciativeType: IniciativeType; 
+    public id: number;
+    public name: string;
+    public description: string;
+    public startDate: Date;
+    public endDate: Date | null;
+    public hours: number;
+    public academicYear: string;
+    public ods: Ods[];
+    public iniciativeType: IniciativeType; 
 
 
     constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, academicYear: string, ods: Ods[], iniciativeType: IniciativeType){
+        
         this.id = id;
         this.name = name;
         this.description = description;
@@ -26,44 +27,44 @@ export class Iniciative {
         this.iniciativeType = iniciativeType;
     }
 
-    get Id(): number{
-        return this.id;
-    }
+//     get Id(): number{
+//         return this.id;
+//     }
 
-    get Name(): string{
-        return this.name;
-    }
+//     get Name(): string{
+//         return this.name;
+//     }
 
-    get Description(): string{
-        return this.description;
-    }
+//     get Description(): string{
+//         return this.description;
+//     }
 
-    get StartDate(): Date{
-        return this.startDate;
-    }
+//     get StartDate(): Date{
+//         return this.startDate;
+//     }
 
-    get EndDate(): Date|null{
-        return this.endDate;
-    }
+//     get EndDate(): Date|null{
+//         return this.endDate;
+//     }
 
-    get Hours(): number{
-        return this.hours;
-    }
+//     get Hours(): number{
+//         return this.hours;
+//     }
 
-    get AcademicYear(): string{
-        return this.academicYear;
-    }
+//     get AcademicYear(): string{
+//         return this.academicYear;
+//     }
 
     
-    get Ods() : Ods[] {
-        return this.ods;
-    }
+//     get Ods() : Ods[] {
+//         return this.ods;
+//     }
     
     
-    get IniciativeType(): IniciativeType
-    {
-        return this.iniciativeType;
-    }
+//     get IniciativeType(): IniciativeType
+//     {
+//         return this.iniciativeType;
+//     }
 
     set Id(id: number){
         this.id = id;
@@ -74,6 +75,7 @@ export class Iniciative {
     }
 
     set Description(description: string){
+        
         this.description = description;
     }
 
