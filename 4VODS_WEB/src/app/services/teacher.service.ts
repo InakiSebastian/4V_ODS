@@ -21,7 +21,14 @@ export class TeacherService {
     new Teacher(10, 'Silvia Biwiudha'),
   ];
 
+  private selectedTeachers: Teacher [] = [];
+
   get Teachers(): Teacher[] {
     return this.teachers;
   }
+
+  getTeacherById(teacherId: number){
+    return this.Teachers.find(t => t.Id === teacherId);
+  }
+
 }
