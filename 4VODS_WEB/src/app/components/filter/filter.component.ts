@@ -17,15 +17,13 @@ import { TeacherService } from '../../services/teacher.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss'] // Corregido aquí
+  styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent {
   iniciativeList: CompliteIniciative[] = [];
-
   searchTerm: string = '';
   selectedType: string = '';
   selectedOds: OdsCheckbox[] = [];
-
   showAdvancedFilters = false;
   buttonText: string = 'Más filtros';
 
@@ -38,7 +36,6 @@ export class FilterComponent {
 
   now: boolean = false;
   estrictoODS: boolean = false;
-
   filtredOds: Ods[] = [];
   dimensions = [
     { id: 1, value: false },
@@ -53,41 +50,32 @@ export class FilterComponent {
     private degreeService: DegreeService,
     private teacherService: TeacherService
   ) {
-    this.teachersList = this.teacherService.Teachers;
-    this.odsList = this.odsService.getOds();
-    this.degreeList = this.degreeService.getDegrees().map(degree => new DegreeCheckbox(degree.Id, degree.Name));
     this.parseToCheckObject();
-    
+
     this.modalService.recharge$.subscribe(() => {
       this.applyFilters();
     });
   }
 
-  ngOnInit() {
-    this.filtredOds = this.odsList;
-    this.iniciativeService.getIniciatives().subscribe((res) => {
-      this.iniciativeList = res.body as CompliteIniciative[];
-    });
+  async ngOnInit() {
+    this.odsList = await this.odsService.getOds();
+    this.teachersList = await this.teacherService.getTeachers();
+    this.degreeList = (await this.degreeService.getDegrees()).map(degree => new DegreeCheckbox(degree.id, degree.name));
 
-    this.filterChanged.emit(this.iniciativeList);
+    this.filtredOds = this.odsList;
+    this.iniciativeList = await this.iniciativeService.getIniciatives()
+    this.applyFilters();
   }
 
   parseToCheckObject(ods: Ods[] = this.odsList) {
-    this.selectedOds = ods.map(ods => new OdsCheckbox(ods.id, ods.IdDimension, ods.Description, false));
+    this.selectedOds = ods.map(ods => new OdsCheckbox(ods.id, ods.idDimension, ods.Description, false));
   }
 
   toggleAdvancedFilters() {
     this.showAdvancedFilters = !this.showAdvancedFilters;
     this.buttonText = this.showAdvancedFilters ? 'Menos filtros' : 'Más filtros';
     
-    // Reiniciar filtros avanzados
-    this.selectedOds.forEach(ods => ods.selected = false);
-    this.degreeList.forEach(degree => degree.selected = false);
-    this.selectedTeacher = -1;
-    this.dimensions.forEach(dim => dim.value = false);
-
-    this.filterOds();
-    this.applyFilters();
+    this.cleanFilters();
   }
 
   filterOds() {
@@ -95,7 +83,7 @@ export class FilterComponent {
       this.filtredOds = this.odsList;
     } else {
       this.filtredOds = this.odsList.filter(ods =>
-        this.dimensions.some(dim => dim.value && dim.id === ods.IdDimension)
+        this.dimensions.some(dim => dim.value && dim.id === ods.idDimension)
       );
       this.filtredOds.sort((a, b) => a.IdDimension - b.IdDimension);
     }
@@ -105,20 +93,21 @@ export class FilterComponent {
     this.parseToCheckObject(this.filtredOds);
   }
 
-  applyFilters() {
-    const filteredIniciatives = this.iniciativeService.getCompliteIniciativas()
-      .filter(iniciative => this.searchTerm ? iniciative.Name.toLowerCase().includes(this.searchTerm.toLowerCase()) : true)
+  async applyFilters() {
+    console.log(this.iniciativeList)
+    const filteredIniciatives = this.iniciativeList
+      .filter(iniciative => this.searchTerm ? iniciative.name.toLowerCase().includes(this.searchTerm.toLowerCase()) : true)
       .filter(iniciative => this.selectedType ? iniciative.type === this.selectedType : true)
       .filter(iniciative => {
         if (this.selectedOds.some(ods => ods.selected)) {
           const selectedIds = this.selectedOds.filter(ods => ods.selected).map(ods => ods.id);
-          return this.estrictoODS 
-            ? iniciative.Ods.every(ods => selectedIds.includes(ods.id)) 
-            : iniciative.Ods.some(ods => selectedIds.includes(ods.Id));
+          return this.estrictoODS
+            ? iniciative.ods.every(ods => selectedIds.includes(ods.id))
+            : iniciative.ods.some(ods => selectedIds.includes(ods.id));
         }
         return true;
       })
-      .filter(iniciative => this.now ? (iniciative.EndDate && iniciative.EndDate > new Date() && iniciative.StartDate < new Date()) : true)
+      .filter(iniciative => this.now ? (iniciative.endDate && iniciative.endDate > new Date() && iniciative.startDate < new Date()) : true)
       .filter(iniciative => {
         if (this.degreeList.some(degree => degree.selected)) {
           const selectedDegrees = this.degreeList.filter(degree => degree.selected).map(degree => degree.id);
@@ -126,23 +115,14 @@ export class FilterComponent {
         }
         return true;
       })
-      .filter(iniciative => this.selectedTeacher !== -1 ? iniciative.Teachers.some(teacher => teacher.Id === this.selectedTeacher) : true);
-
-    this.filterChanged.emit(this.getSimpleIniciativesFromComplite(filteredIniciatives));
+      .filter(iniciative => this.selectedTeacher !== -1 ? iniciative.Teachers.some(teacher => teacher.id === this.selectedTeacher) : true);
+      console.log(filteredIniciatives)
+    this.filterChanged.emit(await this.getSimpleIniciativesFromComplite(filteredIniciatives));
   }
 
-  getSimpleIniciativesFromComplite(filteredIniciatives: CompliteIniciative[]): Iniciative[] {
-    const compliteIds = filteredIniciatives.map(iniciative => iniciative.Id);
-    return this.iniciativeService.iniciativeList.filter(iniciative => compliteIds.includes(iniciative.Id));
-  }
-
-  checkAllOdsOfDimension(dimension: number) {
-    this.selectedOds.forEach(ods => {
-      if (ods.idDim === dimension) {
-        ods.selected = !ods.selected;
-      }
-    });
-    this.dimensions[dimension - 1].value = !this.dimensions[dimension - 1].value;
+  async getSimpleIniciativesFromComplite(filteredIniciatives: CompliteIniciative[]): Promise<Iniciative[]> {
+    const compliteIds = filteredIniciatives.map(iniciative => iniciative.id);
+    return (await this.iniciativeService.getIniciatives()).filter(iniciative => compliteIds.includes(iniciative.id));
   }
 
   cleanFilters() {
@@ -152,24 +132,15 @@ export class FilterComponent {
     this.estrictoODS = false;
     this.selectedTeacher = -1;
 
-    // Resetear los checkboxes y dimensiones
     this.selectedOds.forEach(ods => ods.selected = false);
     this.degreeList.forEach(degree => degree.selected = false);
     this.dimensions.forEach(dim => dim.value = false);
 
     this.filterOds();
-    this.selectedOds.forEach((ods) => (ods.selected = false));
-    this.degreeList.forEach((degree) => (degree.selected = false));
-    this.selectedTeacher = -1;
-    this.applyFilters();
-  }
-
-  updateSelectedOds() {
     this.applyFilters();
   }
 }
 
-// Clases auxiliares
 class OdsCheckbox {
   constructor(
     public id: number,
