@@ -5,12 +5,13 @@ import { Iniciative } from '../model/iniciative';
 import { Ods } from '../model/ods';
 import { ModuleService } from './module.service';
 import { OdsService } from './ods.service';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IniciativeService {
-  odsList: Ods[];
+  odsList!: Ods[];
   iniciativeList: Iniciative[] = [];
 
   headers = new HttpHeaders({
@@ -21,20 +22,37 @@ export class IniciativeService {
 
   constructor(
     private http: HttpClient,
-    private odsService: OdsService,
-    private moduleService: ModuleService
+    private odsService: OdsService
   ) {
-    this.odsList = this.odsService.getOds();
+    
   }
 
-  getIniciatives() {
-    return this.http.get<CompliteIniciative[]>(
-      'http://127.0.0.1:8000/iniciatives',
-      {
-        headers: this.headers,
-        observe: 'response', // Esto te permite ver la respuesta completa
-      }
-    );
+  async ngOnInit(){
+    this.odsList = await this.odsService.getOds();
+  }
+
+  async getIniciatives(): Promise<CompliteIniciative[]> {
+    // return firstValueFrom(
+    //   this.http.get<CompliteIniciative[]>(
+    //     'http://127.0.0.1:8000/iniciatives',
+    //     {
+    //       headers: this.headers,
+    //       observe: 'response',
+    //     }
+    //   )
+    // ).then(response => response.body as CompliteIniciative[]);
+    var a = firstValueFrom(
+      this.http.get<CompliteIniciative[]>(
+        'http://127.0.0.1:8000/iniciatives',
+        {
+          headers: this.headers,
+          observe: 'response',
+        }
+      )
+    ).then(response => response.body as CompliteIniciative[]);
+    console.log("se están pintando")
+    console.log(await a)
+    return a 
   }
 
   getCompliteIniciativas() {
@@ -47,7 +65,7 @@ export class IniciativeService {
 
   deleteIniciative(id: number): void {
     this.iniciativeList = this.iniciativeList.filter(
-      (iniciative) => iniciative.Id !== id
+      (iniciative) => iniciative.id !== id
     );
   }
 
@@ -61,18 +79,22 @@ export class IniciativeService {
     );
   }
 
+  getSimpleIniciatives(){
+
+  }
+
   updateCompliteIniciative(iniciative: CompliteIniciative): void {
     const inici = this.iniciativeCompliteList.find(
-      (i) => i.Id === iniciative.Id
+      (i) => i.id === iniciative.id
     );
-    inici!.Name = iniciative.Name;
-    inici!.Description = iniciative.Description;
-    inici!.StartDate = iniciative.StartDate;
-    inici!.EndDate = iniciative.EndDate!;
-    inici!.Hours = iniciative.Hours;
+    inici!.name = iniciative.name;
+    inici!.description = iniciative.description;
+    inici!.startDate = iniciative.startDate;
+    inici!.endDate = iniciative.endDate!;
+    inici!.hours = iniciative.hours;
     inici!.schoolYear = iniciative.schoolYear;
-    inici!.Ods = iniciative.Ods;
-    inici!.Type = iniciative.type;
+    inici!.ods = iniciative.ods;
+    inici!.type = iniciative.type;
     inici!.Teachers = iniciative.Teachers;
     inici!.Modules = iniciative.Modules;
     inici!.Difusions = iniciative.Difusions;

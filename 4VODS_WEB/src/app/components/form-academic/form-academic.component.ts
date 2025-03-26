@@ -40,10 +40,11 @@ export class FormAcademicComponent {
     private moduleService: ModuleService,
     private teachersService: TeacherService
   ) {
-    this.teacherList = this.teachersService.Teachers;
+    
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.teacherList = await this.teachersService.getTeachers();
     // Inicializa el formulario con listas vacías para profesores y grados
     this.academicForm.addControl('teachers', new FormArray([]));
     this.academicForm.addControl('degrees', new FormControl('-1'));
@@ -51,7 +52,7 @@ export class FormAcademicComponent {
     if (this.moduleService.degree_modules) this.selectedDegreeModules = this.moduleService.degree_modules;
 
     // Carga todos los grados disponibles desde el servicio
-    this.allDegrees = this.degreeService.getDegrees();
+    this.allDegrees = await this.degreeService.getDegrees()
     
 
     //pintar y cargar datos de la iniciativa que se quiere editar
@@ -103,7 +104,7 @@ export class FormAcademicComponent {
   // Crea un nuevo grupo de formulario para un profesor
   createTeacherInput(teacher: Teacher | null) {
     return this.fb.group({
-      name: new FormControl(teacher ? teacher.Name : ''),
+      name: new FormControl(teacher ? teacher.name : ''),
     });
   }
 
@@ -118,13 +119,13 @@ export class FormAcademicComponent {
   }
 
   // Agrega un nuevo grado al formulario
-  addDegree() {
+  async addDegree() {
     const degreeId = this.academicForm.get('degrees')?.value;
 
     // Evita agregar un grado inválido o ya seleccionado
     if (degreeId === '-1' || this.availableDegrees.some(d => d.Id === degreeId)) return;
 
-    const selectedDegree = this.degreeService.getDegreeById(degreeId);
+    const selectedDegree = await this.degreeService.getDegreeById(degreeId);
     if (!selectedDegree) return;
 
     // Agrega el grado a la lista de disponibles y carga sus módulos
@@ -136,7 +137,7 @@ export class FormAcademicComponent {
     this.selectedDegreeModules.push(new DegreeModules(selectedDegree, moduleChecks));
 
     // Agrega un control para seleccionar todos los módulos del grado
-    this.academicForm.addControl(`all${selectedDegree.Id}`, new FormControl(false));
+    this.academicForm.addControl(`all${selectedDegree.id}`, new FormControl(false));
 
     // Agrega controles individuales para cada módulo
     moduleChecks.forEach(module => {

@@ -1,34 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Teacher } from '../model/teacher';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { Degree } from '../model/degree';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeacherService {
 
-  constructor() { }
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json', // O cualquier otro tipo según el backend
+  });
 
-  private teachers: Teacher[] = [
-    new Teacher(1, 'Miguel Godyena'),
-    new Teacher(2, 'Unai Godyena'),
-    new Teacher(3, 'Miguel Goñi'),
-    new Teacher(4, 'Mikel Goñi'),
-    new Teacher(5, 'Silvia Biwiudha'),
-    new Teacher(6, 'Miguel Godyena'),
-    new Teacher(7, 'Unai Godyena'),
-    new Teacher(8, 'Miguel Goñi'),
-    new Teacher(9, 'Mikel Goñi'),
-    new Teacher(10, 'Silvia Biwiudha'),
-  ];
+  constructor(private http: HttpClient) { }
 
-  private selectedTeachers: Teacher [] = [];
 
-  get Teachers(): Teacher[] {
-    return this.teachers;
+
+  getTeachers() {
+    return firstValueFrom(
+      this.http.get<Teacher[]>(
+        'http://127.0.0.1:8000/teacher/',
+        {
+          headers: this.headers,
+          observe: 'response',
+        }
+      )).then(response => response.body as Teacher[]);
   }
-
-  getTeacherById(teacherId: number){
-    return this.Teachers.find(t => t.Id === teacherId);
-  }
-
 }
