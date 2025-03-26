@@ -86,7 +86,15 @@ export class FormAddIniciativeComponent {
       this.goalService.setSelectedGoals(this.iniciative.Goals);
     }
     else{
-      this.detailsI = null;
+      this.detailsI = {
+        name: '',
+        description: '',
+        startDate: new Date(),
+        endDate: null,
+        hours: 10,
+        academicYear: '',
+        iniciativeType: ''
+      };
     }
 
     this.selectedOds = this.odsService.getSelectedOds();

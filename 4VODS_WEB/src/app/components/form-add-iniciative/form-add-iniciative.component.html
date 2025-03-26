@@ -1,4 +1,4 @@
-<div class="form p-0 rounded-3 shadow overflow-hidden">
+<form class="form p-0 rounded-3 shadow overflow-hidden" (ngSubmit)="onSubmit()" [formGroup]="formAddIniciative">
     @if(currentSection === 1){
         <div class="row m-0 h-100">
             <div class="col-3 p-0 h-100">
@@ -157,7 +157,7 @@
                             <div class="px-3 pb-3 border-0 bg-primary-subtle h-100 d-flex flex-column justify-content-end mt-5">
                                 <div class="d-flex justify-content-between">
                                     <button type="button" class="btn btn-outline-dark" (click)="prev()"><</button>
-                                    <button type="button" class="btn btn-outline-dark w-75">Guardar</button>
+                                    <button type="submit" class="btn btn-outline-dark w-75">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +174,7 @@
             </div>
         </div>
     }
-</div>
+</form>
 
 
 <!--TODOHacer un Componente para este modal-->
