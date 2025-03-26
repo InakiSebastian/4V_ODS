@@ -4,7 +4,7 @@
         <label for="ods" class="form-label">ODS</label>
         <div class="row">
             <div class="col">
-                <select class="form-select" formControlName="ods">
+                <select class="form-select" id="ods" formControlName="ods">
                     <option value="-1" disabled selected>Selecciona un Ods</option>
                     @for (ods of odsList; track ods){
                         <option value="{{ods.Id}}">{{ods.Id}}. {{ods.description}}</option>
@@ -27,7 +27,7 @@
             <label for="goals" class="form-label">Metas</label>
             <div class="row">
                 <div class="col">
-                    <select class="form-select" formControlName="goals">
+                    <select class="form-select" id="goals" formControlName="goals">
                         <option value="-1" disabled selected>Selecciona una meta para '{{clickedOds}}'</option>
                         @for (goal of goalList; track goal){
                             <option value="{{goal.IdGoal}}">{{goal.IdGoal}}. {{goal.Description}}</option>
