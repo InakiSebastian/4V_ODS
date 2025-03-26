@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { FormAddIniciativeComponent } from './components/form-add-iniciative/form-add-iniciative.component';
 import { IniciativeListComponent } from './components/iniciative-list/iniciative-list.component';
+import { AddIniciativeViewComponent } from './components/add-iniciative-view/add-iniciative-view.component';
 
 export const routes: Routes = [
     { path: 'iniciatives', component: IniciativeListComponent },
-    { path: 'addIniciatives', component: FormAddIniciativeComponent },
+    { path: 'addIniciatives', component: AddIniciativeViewComponent },
     { path: '', redirectTo: 'iniciatives', pathMatch: 'full' }
 ];
