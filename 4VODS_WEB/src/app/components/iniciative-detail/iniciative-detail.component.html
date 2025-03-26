@@ -1,169 +1,101 @@
 <div class="card">
-  <div class="card-header">
-    <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-      <li class="nav-item" role="presentation">
-        <a
-          class="nav-link active"
-          id="home-tab"
-          data-bs-toggle="tab"
-          href="#home"
-          role="tab"
-          aria-controls="home"
-          aria-selected="true"
-          >Detalles</a
-        >
-      </li>
-      <li class="nav-item" role="presentation">
-        <a
-          class="nav-link"
-          id="profile-tab"
-          data-bs-toggle="tab"
-          href="#profile"
-          role="tab"
-          aria-controls="profile"
-          aria-selected="false"
-          >4Vientos</a
-        >
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          id="disabled-tab"
-          data-bs-toggle="tab"
-          href="#disabled"
-          role="tab"
-          aria-controls="disabled"
-          aria-selected="false"
-          >2030</a
-        >
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          id="disabled-tab"
-          data-bs-toggle="tab"
-          href="#rrss"
-          role="tab"
-          aria-controls="disabled"
-          aria-selected="false"
-          >RRSS</a
-        >
-      </li>
-    </ul>
-  </div>
-  <div class="card-body">
-    <div class="tab-content" id="myTabContent">
-      <!--DETALLES EN GENERAL PÁGINA-->
-      <div
-        class="tab-pane fade show active"
-        id="home"
-        role="tabpanel"
-        aria-labelledby="home-tab"
-      >
-        <h5 class="modal-title">{{ name }}</h5>
-        <hr />
-        <div class="row">
-          <div class="col-7">
-            <p class="m-2">{{ description }}</p>
-          </div>
-          <div class="col-5">
-            <p class="m-2">
-              <span class="fw-bold">Horas totales:</span> {{ hours }}
-            </p>
-            <p class="m-2">
-              <span class="fw-bold">Tipo de iniciativa:</span>
-              {{ iniciativeType }}
-            </p>
-            <p class="m-2">
-              <span class="fw-bold">Curso:</span> {{ this.academicYear }}
-            </p>
-            <p class="m-2">
-              <span class="fw-bold">Inicio-fin:</span>
-              {{ this.startDate }} -
-              {{
-                this.endDate != null
-                  ? this.endDate
-                  : "fecha final no
-                            deifinida"
-              }}
-            </p>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary"
-            (click)="editIniciative($event)"
-          >
-            Editar
-          </button>
-          <button
-            type="button"
-            class="btn btn-danger ms-2"
-            data-bs-target="#exampleModalToggle2"
-            data-bs-toggle="modal"
-            (click)="deleteIniciative($event)"
-          >
-            Borrar
-          </button>
-        </div>
-      </div>
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab"
+                    aria-controls="home" aria-selected="true">Detalles</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab"
+                    aria-controls="profile" aria-selected="false">4Vientos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="disabled-tab" data-bs-toggle="tab" href="#disabled" role="tab"
+                    aria-controls="disabled" aria-selected="false">2030</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="disabled-tab" data-bs-toggle="tab" href="#rrss" role="tab"
+                    aria-controls="disabled" aria-selected="false">RRSS</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="myTabContent">
 
-      <!--CUATROVIENTOS PÁGINA-->
-      <div
-        class="tab-pane fade"
-        id="profile"
-        role="tabpanel"
-        aria-labelledby="profile-tab"
-      >
-        @if (this.degrees.length != 0){
-        <h5 class="modal-title d-flex justify-content-center">
-          Ciclos y módulos participantes:
-        </h5>
-        <hr />
-        <div class="row scrollable-container m-3">
-          <div class="card p-0" *ngFor="let dgree of degreeCards">
-            <div class="card-header">
-              {{ dgree.name }}
-            </div>
-            <div class="card-body">
-              <div class="card mt-2" *ngFor="let module of dgree.modulesD">
-                <div
-                  class="card-header"
-                  [style]="{ 'background-color': this.generateColor() }"
-                >
-                  {{ module.name }}
+            <!--DETALLES EN GENERAL PÁGINA-->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <h5 class="modal-title">{{ name }}</h5>
+                <hr>
+                <div class="row">
+                    <div class="col-7">
+                        <p class="m-2">{{ description }}</p>
+                    </div>
+                    <div class="col-5">
+                        <p class="m-2"><span class="fw-bold">Horas totales:</span> {{ hours }}</p>
+                        <p class="m-2"><span class="fw-bold">Tipo de iniciativa:</span>
+                            {{ iniciativeType }}</p>
+                        <p class="m-2"><span class="fw-bold">Curso:</span>
+                            {{ this.academicYear }}</p>
+                        <p class="m-2"><span class="fw-bold">Inicio-fin:</span>
+                            {{this.startD}} - {{this.endD != null? this.endD : 'fecha final no
+                            deifinida'}}
+                        </p>
+                    </div>
                 </div>
-              </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="editIniciative($event)">Editar</button>
+                    <button type="button" class="btn btn-danger ms-2" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"
+                        (click)="deleteIniciative($event)">Borrar</button>
+                </div>
             </div>
-          </div>
-        </div>
-        } @else {
-        <p class="modal-title d-flex justify-content-center mb-5">
-          No participa ningún módulo
-        </p>
-        }
 
-        @if(teachers.length != 0){
-        <h5 class="modal-title d-flex justify-content-center mt-3">
-          Profesores participantes:
-        </h5>
-        <hr />
-        <div class="row scrollable-container ms-3 mb-5">
-       
-          <div class="card p-0 m-2" *ngFor="let teacher of teachers">
-            <div class="m-3 text-center d-flex justify-content-center">
-              {{ teacher.name }}
+            <!--CUATROVIENTOS PÁGINA-->
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                @if (this.degrees.length != 0){
+                <h5 class="modal-title d-flex justify-content-center">
+                    Ciclos y módulos participantes:
+                </h5>
+                <hr>
+                <div class="row scrollable-container m-3">
+                    <div class="card p-0" *ngFor="let dgree of degreeCards">
+                        <div class="card-header">
+                            {{ dgree.name }}
+                        </div>
+                        <div class="card-body">
+                            <div class="card mt-2" *ngFor="let module of dgree.modulesD">
+                                <div class="card-header" [style]="{'background-color': this.generateColor()}">
+                                    {{ module.Name }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+                @else {
+                <p class="modal-title d-flex justify-content-center mb-5">
+                    No participa ningún módulo
+                </p>
+                }
+                @if(this.teachers.length != 0){
+                <h5 class="modal-title d-flex justify-content-center mt-3">
+                    Profesores participantes:
+                </h5>
+                <hr>
+                <div class="row scrollable-container ms-3 mb-5">
+                    <div class="card p-0 m-2" *ngFor="let teacher of teachers">
+                        <div class="m-3 text-center d-flex justify-content-center">
+                            {{ teacher.name }}
+                        </div>
+                    </div>
+                </div>
+                }
+                @else {
+                <p class="modal-title d-flex justify-content-center mb-5">
+                    No participa ningún profesor
+                </p>
+                }
             </div>
-          </div>
-        </div>
 
-        } @else {
-        <p class="modal-title d-flex justify-content-center mb-5">
-          No participa ningún profesor
-        </p>
-        }
-      </div>
 
       <!-- 2030 PÁGINA -->
       <div

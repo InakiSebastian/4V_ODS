@@ -15,8 +15,6 @@ export class TeacherService {
 
   constructor(private http: HttpClient) { }
 
-
-
   getTeachers() {
     return firstValueFrom(
       this.http.get<Teacher[]>(
@@ -27,4 +25,9 @@ export class TeacherService {
         }
       )).then(response => response.body as Teacher[]);
   }
+
+  async getTeacherById(teacherId: number){
+    return (await this.getTeachers()).find(t => t.id === teacherId);
+  }
+
 }
