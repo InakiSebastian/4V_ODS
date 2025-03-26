@@ -69,11 +69,11 @@ export class FormAddIniciativeComponent {
     
     if(this.iniciative != null){
       this.detailsI = {
-        name: this.iniciative.name,
-        description: this.iniciative.description,
-        startDate: this.iniciative.startDate,
-        endDate: this.iniciative.endDate!,
-        hours: this.iniciative.hours,
+        name: this.iniciative.Name,
+        description: this.iniciative.Description,
+        startDate: this.iniciative.StartDate,
+        endDate: this.iniciative.EndDate!,
+        hours: this.iniciative.Hours,
         academicYear: this.iniciative.schoolYear,
         iniciativeType: this.iniciative.type
       }
@@ -87,7 +87,7 @@ export class FormAddIniciativeComponent {
         rrss: this.iniciative.Difusions
       }
 
-      this.odsService.setOdsselected(this.iniciative.ods);
+      this.odsService.setOdsselected(this.iniciative.Ods);
       this.goalService.setSelectedGoals(this.iniciative.Goals);
     }
     else{
@@ -161,7 +161,7 @@ export class FormAddIniciativeComponent {
   }
 
   //INICIATIVA
-  setid(){
+  setId(){
     return this.iniciativeService.getCompliteIniciativas().length+1;
   }
 
@@ -170,7 +170,7 @@ export class FormAddIniciativeComponent {
     //if (newEndDate ==""){
     //  newEndDate = null;
     //}
-    const newid = this.setid();
+    const newId = this.setId();
     const newName = this.detailsI!.name
     const newDescription = this.detailsI!.description
     const newStartDate = this.detailsI!.startDate
@@ -195,13 +195,13 @@ export class FormAddIniciativeComponent {
     // //Ods
     const newOds: Ods[] = [];
     this.selectedOds?.forEach(ods => {
-      newOds.push(new Ods(ods.id,1, ods.Description));
+      newOds.push(new Ods(ods.Id,1, ods.Description));
     });
 
     // //Metas
     const newGoals: Goal[] = [];
     this.selectedGoals?.forEach((goal, index: number) => {
-      newGoals.push(new Goal(index+1, goal.ods, goal.description));
+      newGoals.push(new Goal(index+1, goal.IdODS, goal.Description));
     });
 
     //Difusión
@@ -211,15 +211,15 @@ export class FormAddIniciativeComponent {
       const difusionType = difusion.get('type')?.value ?? '';
       const difusionLink = difusion.get('link')?.value ?? -1;
       
-      newDifusions.push(new Difusion(index+1, newid,  difusionType, difusionLink));
+      newDifusions.push(new Difusion(index+1, newId,  difusionType, difusionLink));
     });
 
-    const iniciativeNew = new Iniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType));
-    const compliteIniciative = new CompliteIniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType), newTeachers, newModules, newDifusions, this.goalService.selectedGoals)
+    const iniciativeNew = new Iniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType));
+    const compliteIniciative = new CompliteIniciative(newId, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType), newTeachers, newModules, newDifusions, this.goalService.selectedGoals)
     
     if (this.iniciative != null) {
-      iniciativeNew.id = this.iniciative.id;
-      compliteIniciative.id = this.iniciative.id;
+      iniciativeNew.Id = this.iniciative.Id;
+      compliteIniciative.Id = this.iniciative.Id;
       this.iniciativeService.updateCompliteIniciative(compliteIniciative);
       this.iniciative = null;
       this.modalService.closeModal();

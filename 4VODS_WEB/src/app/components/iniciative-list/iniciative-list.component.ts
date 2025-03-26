@@ -26,8 +26,12 @@ export class IniciativeListComponent {
     private modalService: ModalService
   ) {}
 
-  async ngOnInit() {
-    this.iniciativeList = await this.iniciativeService.getIniciatives()
+  ngOnInit() {
+    this.iniciativeService.getIniciatives().subscribe((res) => {
+      this.iniciativeList = res.body as CompliteIniciative[];
+
+
+    });
   }
 
   setIdIniciativa($event: MouseEvent, id: number) {
