@@ -63,9 +63,11 @@ export class FilterComponent {
     });
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.filtredOds = this.odsList;
-    this.iniciativeList = await this.iniciativeService.getIniciatives()
+    this.iniciativeService.getIniciatives().subscribe((res) => {
+      this.iniciativeList = res.body as CompliteIniciative[];
+    });
 
     this.filterChanged.emit(this.iniciativeList);
   }
