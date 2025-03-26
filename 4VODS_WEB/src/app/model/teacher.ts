@@ -7,11 +7,5 @@ export class Teacher {
         this.name = name;
     }   
 
-    get Id(): number {
-        return this.id;
-    }
 
-    get Name(): string {
-        return this.name;
-    }
 }
