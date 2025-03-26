@@ -1,35 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Degree } from '../model/degree';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DegreeService {
 
+  dgrees: Degree[] = [
+    new Degree(1, 'DAM'),
+    new Degree(2, 'ASIR'),
+    new Degree(3, 'DAW'),
+    new Degree(4, 'CINJUSTO')
+  ];
 
-  headers = new HttpHeaders({
-      'Content-Type': 'application/json', // O cualquier otro tipo según el backend
-    });
+  constructor() { }
 
-  constructor(private http: HttpClient) { }
+  getDegrees(): Degree[] {
+    return this.dgrees;
+  }
 
-  getDegrees(): Promise<Degree[]> {
-      return firstValueFrom(
-        this.http.get<Degree[]>(
-        'http://127.0.0.1:8000/degree/',
-        {
-          headers: this.headers,
-          observe: 'response',
-        }
-      )).then(response => response.body as Degree[]);
-    }
-
-
-
-  async getDegreeById(degreeSelect: number) {
-    return (await this.getDegrees()).filter(degree => degree.Id == degreeSelect)[0];
+  getDegreeById(degreeSelect: number) {
+    return this.dgrees.filter(degree => degree.Id == degreeSelect)[0];
   }
 
 }

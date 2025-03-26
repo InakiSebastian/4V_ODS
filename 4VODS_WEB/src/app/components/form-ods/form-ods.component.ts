@@ -28,13 +28,13 @@ export class FormOdsComponent {
 
   }
 
-  async ngOnInit(){
+  ngOnInit(){
     this.odsForm.addControl('ods', new FormControl('-1'));
     this.odsForm.addControl('goals', new FormControl('-1'));
 
     this.selectedOds = this.odsService.getSelectedOds();
     this.selectedGoals = this.goalService.getSelectedGoals();
-    this.odsList = (await this.odsService.getOds()).filter(ods => !this.selectedOds.map(ods => ods.Id).includes(ods.id));
+    this.odsList = this.odsService.getOds().filter(ods => !this.selectedOds.map(ods => ods.Id).includes(ods.id));
   }
 
   // ODS
@@ -98,38 +98,37 @@ export class FormOdsComponent {
   }
 
   //TODODevolver todos los ods eliminados al combobox
-  async clearOds(){
+  clearOds(){
     this.selectedOds = this.odsService.clearSelectedOds();
-    this.odsList = await this.odsService.getOds();
+    this.odsList = this.odsService.getOds();
     this.selectedGoals = this.goalService.clearSelectedGoals();
   }
 
 
   // METAS
-
-  async setGoalList(ods: Ods){
+  setGoalList(ods: Ods){
     this.odsSelected = ods;
-    this.goalList = (await this.goalService.getGoalsByOds(ods.Id)).filter(goal => !this.selectedGoals.filter(goal => goal.ods === ods.Id).map(goal => goal.idGoal).includes(goal.idGoal));
+    this.goalList = this.goalService.getGoalsByOds(ods.Id).filter(goal => !this.selectedGoals.filter(goal => goal.IdODS === ods.Id).map(goal => goal.IdGoal).includes(goal.IdGoal));
     
     this.clickedOds = ods.Description;
   }
 
   addGoal(){
-    const goalToPush: Goal = this.goalList.find(goal => goal.ods === Number(this.odsForm.get('goals')?.value))?? new Goal(-1, -1, (''));
+    const goalToPush: Goal = this.goalList.find(goal => goal.IdGoal === Number(this.odsForm.get('goals')?.value))?? new Goal(-1, -1, (''));
 
-    this.goalList = this.goalList.filter(goal => goal.ods !== Number(this.odsForm.get('goals')?.value));
+    this.goalList = this.goalList.filter(goal => goal.IdGoal !== Number(this.odsForm.get('goals')?.value));
 
     this.goalService.pushSelectedGoal(goalToPush);
 
     this.odsForm.get('goals')?.setValue(-1);
   }
 
-  async removeGoal(goalToPush: Goal, ods: Ods){
-    this.selectedGoals = await this.goalService.removeSelectedGoal(Number(goalToPush.idGoal), Number(ods.Id));
+  removeGoal(goalToPush: Goal, ods: Ods){
+    this.selectedGoals = this.goalService.removeSelectedGoal(Number(goalToPush.IdGoal), Number(ods.Id));
 
     this.setGoalList(ods);
 
-    this.goalList.sort((a, b) => a.idGoal - b.idGoal);
+    this.goalList.sort((a, b) => a.IdGoal - b.IdGoal);
   }
 
   //TODODevolver todas las metas eliminadas al combobox
