@@ -19,6 +19,7 @@ export class IniciativeCardComponent {
   }
 
   ngOnInit() {
+    console.log(this.iniciative.ods)
     
     if (this.iniciative!.description.length > 100)
       this.description1Line =
@@ -28,6 +29,6 @@ export class IniciativeCardComponent {
   }
 
   onDelete() {
-    this.iniciativeService.deleteIniciative(this.iniciative?.Id || -1);
+    this.iniciativeService.deleteIniciative(this.iniciative?.id || -1);
   }
 }

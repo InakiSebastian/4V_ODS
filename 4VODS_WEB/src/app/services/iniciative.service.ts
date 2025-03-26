@@ -11,7 +11,7 @@ import { firstValueFrom } from 'rxjs';
   providedIn: 'root',
 })
 export class IniciativeService {
-  odsList: Ods[];
+  odsList!: Ods[];
   iniciativeList: Iniciative[] = [];
 
   headers = new HttpHeaders({
@@ -22,10 +22,9 @@ export class IniciativeService {
 
   constructor(
     private http: HttpClient,
-    private odsService: OdsService,
-    private moduleService: ModuleService
+    private odsService: OdsService
   ) {
-    this.odsList = this.odsService.getOds();
+    
   }
 
   async ngOnInit(){
@@ -54,7 +53,7 @@ export class IniciativeService {
 
   deleteIniciative(id: number): void {
     this.iniciativeList = this.iniciativeList.filter(
-      (iniciative) => iniciative.Id !== id
+      (iniciative) => iniciative.id !== id
     );
   }
 
@@ -68,18 +67,22 @@ export class IniciativeService {
     );
   }
 
+  getSimpleIniciatives(){
+
+  }
+
   updateCompliteIniciative(iniciative: CompliteIniciative): void {
     const inici = this.iniciativeCompliteList.find(
-      (i) => i.Id === iniciative.Id
+      (i) => i.id === iniciative.id
     );
-    inici!.Name = iniciative.Name;
-    inici!.Description = iniciative.Description;
-    inici!.StartDate = iniciative.StartDate;
-    inici!.EndDate = iniciative.EndDate!;
-    inici!.Hours = iniciative.Hours;
+    inici!.name = iniciative.name;
+    inici!.description = iniciative.description;
+    inici!.startDate = iniciative.startDate;
+    inici!.endDate = iniciative.endDate!;
+    inici!.hours = iniciative.hours;
     inici!.schoolYear = iniciative.schoolYear;
-    inici!.Ods = iniciative.Ods;
-    inici!.Type = iniciative.type;
+    inici!.ods = iniciative.ods;
+    inici!.type = iniciative.type;
     inici!.Teachers = iniciative.Teachers;
     inici!.Modules = iniciative.Modules;
     inici!.Difusions = iniciative.Difusions;

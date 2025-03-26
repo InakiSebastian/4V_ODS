@@ -70,7 +70,7 @@
                             </div>
                             <div class="col-10 ">
                                 <input class="mt-3" type="checkbox" [(ngModel)]="this.selectedOds[i].selected"
-                                    name="ods{{ods.id}}" (change)="updateSelectedOds()">
+                                    name="ods{{ods.id}}" (change)="applyFilters()">
                                 {{ ods.description }}
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                     [(ngModel)]="selectedTeacher"
                     (change)="applyFilters()">
                     <option value="-1">Todos los profesores</option>
-                    <option *ngFor="let teacher of teachersList" [value]="teacher.Id">{{ teacher.Name }}</option>
+                    <option *ngFor="let teacher of teachersList" [value]="teacher.id">{{ teacher.name }}</option>
                 </select>
             </div>
         </div>

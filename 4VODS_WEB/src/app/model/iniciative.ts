@@ -15,7 +15,6 @@ export class Iniciative {
 
 
     constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, schoolYear: string, ods: Ods[], iniciativeType: IniciativeType){
-        
         this.id = id;
         this.name = name;
         this.description = description;
@@ -66,40 +65,40 @@ export class Iniciative {
 //         return this.iniciativeType;
 //     }
 
-    set Id(id: number){
-        this.id = id;
-    }
+    // set Id(id: number){
+    //     this.id = id;
+    // }
 
-    set Name(name: string){
-        this.name = name;
-    }
+    // set Name(name: string){
+    //     this.name = name;
+    // }
 
-    set Description(description: string){
+    // set Description(description: string){
         
-        this.description = description;
-    }
+    //     this.description = description;
+    // }
 
-    set StartDate(startDate: Date){
-        this.startDate = startDate;
-    }
+    // set StartDate(startDate: Date){
+    //     this.startDate = startDate;
+    // }
 
-    set EndDate(endDate: Date){
-        this.endDate = endDate;
-    }
+    // set EndDate(endDate: Date){
+    //     this.endDate = endDate;
+    // }
 
-    set Hours(hours: number){
-        this.hours = hours;
-    }
+    // set Hours(hours: number){
+    //     this.hours = hours;
+    // }
 
-    set SchoolYear(academicYear: string){
-        this.schoolYear = academicYear;
-    }
+    // set SchoolYear(academicYear: string){
+    //     this.schoolYear = academicYear;
+    // }
 
-    set Ods(ods: Ods[] ){
-        this.ods = ods;
-    }
+    // set Ods(ods: Ods[] ){
+    //     this.ods = ods;
+    // }
 
-    set Type(type: IniciativeType){
-        this.type = type;
-    }
+    // set Type(type: IniciativeType){
+    //     this.type = type;
+    // }
 }

@@ -59,7 +59,7 @@ export class IniciativeDetailComponent {
     private iniciativeService: IniciativeService,
     private modalService: ModalService,
     private degreeService: DegreeService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     await this.modalService.idIniciative$.subscribe((id) => {
@@ -68,13 +68,15 @@ export class IniciativeDetailComponent {
       this.iniciativeService
         .getCompliteIniciativeById(this.idIniciative)
         .subscribe((res) => {
+          console.log(res.body) //TODO: LA API NO DEVUELVE BIEN EL TIPO
           this.iniciative = res.body as CompliteIniciative;
+          console.log(this.iniciative)
           this.render(this.iniciative);
         });
     });
   }
 
-  render(iniciative: CompliteIniciative) {
+  async render(iniciative: CompliteIniciative) {
     //datos de la iniciativa separados
     this.showDetailOds = false;
     this.name = iniciative.name;
@@ -85,14 +87,14 @@ export class IniciativeDetailComponent {
     this.iniciativeType = iniciative.type;
     this.modules = iniciative.modules;
     this.teachers = iniciative.teachers;
-    
+
     this.goals = iniciative.goals;
     this.difusions = iniciative.difusions;
     this.odsList = iniciative.ods;
     this.academicYear = iniciative.schoolYear;
 
     //visualización
-    
+
     this.degrees = [];
     this.idDegrees = [];
 
@@ -102,11 +104,7 @@ export class IniciativeDetailComponent {
       }
     });
 
-
-    this.degrees = this.degreeService
-      .getDegrees()
-      .filter((d) => this.idDegrees.includes(d.Id));
-
+    this.degrees = (await this.degreeService.getDegrees()).filter((d) => this.idDegrees.includes(d.Id));
 
 
   }

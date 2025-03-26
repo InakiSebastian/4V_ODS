@@ -30,7 +30,7 @@
                     <select class="form-select" formControlName="goals">
                         <option value="-1" disabled selected>Selecciona una meta para '{{clickedOds}}'</option>
                         @for (goal of goalList; track goal){
-                            <option value="{{goal.IdGoal}}">{{goal.IdGoal}}. {{goal.Description}}</option>
+                            <option value="{{goal.idGoal}}">{{goal.description}}</option>
                         }
                     </select>
                 </div>
@@ -72,10 +72,10 @@
                 <div class="row m-0 mt-4 p-2 border  rounded-3">
                     <p class="fs-4">{{ods.Description}}</p>
                     @for(goal of selectedGoals; track goal){
-                        @if(goal.IdODS === ods.Id){
+                        @if(goal.ods === ods.Id){
                             <div class="row m-0">
                                 <div class="col">
-                                    <p class="small">+ {{goal.Description}}</p>  
+                                    <p class="small">+ {{goal.description}}</p>  
                                 </div>
                                 <div class="col-2">
                                     <button type="button" class="btn btn-outline-danger mb-1 w-100 p-0" (click)="removeGoal(goal, ods)">x</button>

@@ -9,15 +9,4 @@ export class Goal {
         this.description = description;
     }
 
-    get IdGoal(): number {
-        return this.idGoal;
-    }
-
-    get IdODS(): number {
-        return this.ods;
-    }
-
-    get Description(): string {
-        return this.description;
-    }
 }
