@@ -6,6 +6,7 @@
 .scrollable-container-form{
     max-height: 60vh; /* Ajusta según el diseño */
     overflow-y: auto;
+    overflow-x: hidden;
     padding-right: 10px; /* Para evitar que el scroll tape el contenido */
 }
 

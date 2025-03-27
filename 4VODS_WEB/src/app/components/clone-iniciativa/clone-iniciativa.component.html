@@ -1,0 +1,98 @@
+<div class="form p-0 rounded-3 shadow overflow-hidden p-4">
+    <h2 class="mb-4">Registro de Curso</h2>
+    <form class="scrollable-container-form">
+        <div class="row m-4">
+            <div class="col-5">
+                <label for="iniciative" class="iniciative-label">Nombre del Curso</label>
+                <select class="form-select mt-2" aria-label="Default select" name="iniciative" [(ngModel)]="this.selectedIniciativeId" (change)="selectIniciative()">
+                    <option value="-1" selected disabled>Seleccione una iniciativa</option>
+                    <option value="{{iniciative.id}}" *ngFor="let iniciative of this.iniciatives">{{iniciative.name}}</option>
+                </select>
+            </div>
+            <div class="col-7">
+                <div class="row mb-3">
+                    <div class="col-12 mb-3">
+                        <label for="curso" class="form-label">Nombre del Curso</label>
+                        <input name="curso" type="text" class="form-control" id="curso" placeholder="Ingrese el nombre del curso" [(ngModel)]="this.schoolYear" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
+                        <input name="fechaInicio" type="date" class="form-control" id="fechaInicio" [(ngModel)]="this.startDate" required>       
+                    </div>
+                    <div class="col-6">
+                        <label for="fechaFin" class="form-label">Fecha de Fin</label>
+                        <input name="fechaFin" type="date" class="form-control" id="fechaFin" [(ngModel)]="this.endDate" required>       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="this.selectedIniciativeId != -1 && this.selectedIniciative != null">
+            <hr class="mb-3">
+            <div class="row">
+                <h3 class="text-center mb-4">
+                    Vista previa de la inciativa a seleccionada
+                </h3>
+            </div>
+            <div class="row mt-4">
+                <div class="col-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5>
+                                <span class="fw-bold">Título: </span>{{this.selectedIniciative.name}}
+                            </h5>
+                        </div>
+                        <div class="col-12 scrollable-container-form">
+                            {{this.selectedIniciative.description}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <span class="fw-bold">Tipo:</span> {{this.selectedIniciative.type}}
+                            </p>
+                        </div>
+                        <div class="col-12">
+                            <p>
+                                <span class="fw-bold">Horas:</span> {{this.selectedIniciative.hours}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="row mt-1">
+                        <div class="col-12">
+                            <p class="fw-bold">
+                                Ciclos:
+                            </p>
+                        </div>
+                        <div class="col-11 ms-2  mb-3">
+                            <div class="scrollable-container">
+                                <div class="card m-2" *ngFor="let degree of degrees" > <!--*ngFor="let teacher of this.selectedIniciative.degrees"-->
+                                    <p>
+                                        {{degree.name}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <p class="fw-bold">
+                                ODS:
+                            </p>
+                        </div>
+                        <div class="col-11 ms-2">
+                            <div class="scrollable-container">
+                                <img src="odsIcons/{{ods}}.png" alt="" *ngFor="let ods of this.selectedIniciative.ods">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" (click)="create()">Guardar</button>
+    </form>
+</div>

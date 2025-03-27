@@ -64,6 +64,7 @@ export class FilterComponent {
 
     this.filtredOds = this.odsList;
     this.iniciativeList = await this.iniciativeService.getIniciatives()
+    console.log(this.iniciativeList);
     this.applyFilters();
   }
 

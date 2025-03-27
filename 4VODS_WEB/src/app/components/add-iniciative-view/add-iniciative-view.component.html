@@ -1,5 +1,23 @@
-<div class="row p-5 m-0">
-    <app-form-add-iniciative></app-form-add-iniciative>
+<div class="d-flex justify-content-center align-items-center vh-100" *ngIf="section == 'select'">
+    <div class="container text-center">
+        <h1 class="mb-4">Seleccione una opción</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6 mb-3">
+                <button class="btn btn-primary btn-lg w-100" (click)="section = 'clone'">Clonar una iniciativa existente para otro curso</button>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button class="btn btn-success btn-lg w-100" (click)="section = 'new'">Crear una iniciativa desde 0</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row p-5 m-0" *ngIf="section == 'new'">
+    <app-form-add-iniciative/>
+</div>
+
+<div class="row p-5 m-0" *ngIf="section == 'clone'">
+    <app-clone-iniciativa/>
 </div>
 
 
