@@ -142,16 +142,8 @@ export class IniciativeDetailComponent {
   //eliminar
   deleteIniciative(event: MouseEvent) {
     event.preventDefault();
-    this.modalService.openModal('delete', this.iniciative);
-
-    if (
-      !window.confirm(`¿Estas segur@ de que quieres eliminar esta iniciativa?`)
-    ) {
-      return;
-    }
-    this.iniciativeService.deleteIniciative(this.idIniciative);
-    this.modalService.rechargeList();
     this.modalService.closeModal();
+    this.modalService.openModal('delete', this.iniciative);
   }
 
   //editar
