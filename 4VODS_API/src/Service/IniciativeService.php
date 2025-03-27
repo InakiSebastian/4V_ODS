@@ -113,7 +113,7 @@ class IniciativeService
             $iniciativeDTO['modules'][] = [
                 'id' => $module->getIdModule()->getId(),
                 'name' => $module->getIdModule()->getName(),
-                'idCiclo' => $module->getIdModule()->getIdDegree()->getId(),
+                'idDegree' => $module->getIdModule()->getIdDegree()->getId(),
             ];
         }
 
@@ -208,7 +208,7 @@ class IniciativeService
                 $iniciativeDTO['modules'][] = [
                     'id' => $module->getIdModule()->getId(),
                     'name' => $module->getIdModule()->getName(),
-                    'idCiclo' => $module->getIdModule()->getIdDegree()->getId(),
+                    'idDegree' => $module->getIdModule()->getIdDegree()->getId(),
                 ];
             }
 

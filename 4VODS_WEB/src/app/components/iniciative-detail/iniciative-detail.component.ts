@@ -101,8 +101,8 @@ export class IniciativeDetailComponent {
     this.idDegrees = [];
 
     this.modules.forEach((m) => {
-      if (!this.idDegrees.includes(m.idCiclo)) {
-        this.idDegrees.push(m.idCiclo);
+      if (!this.idDegrees.includes(m.idDegree)) {
+        this.idDegrees.push(m.idDegree);
       }
     });
     var allDegrees = await this.degreeService.getDegrees();
@@ -118,7 +118,7 @@ export class IniciativeDetailComponent {
     //pasa a un objeto combinadoe ntre ciclo y módulos
     var a = this.degrees.map((d) => ({
       name: d.name,
-      modulesD: this.modules.filter((m) => m.idCiclo === d.id), // Filtra solo los módulos que pertenecen al grado
+      modulesD: this.modules.filter((m) => m.idDegree === d.id), // Filtra solo los módulos que pertenecen al grado
     }));
 
     return a;

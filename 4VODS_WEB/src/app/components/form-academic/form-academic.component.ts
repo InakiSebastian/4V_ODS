@@ -61,7 +61,7 @@ export class FormAcademicComponent {
 
       var selectedDegreesIds: number[] = [];
 
-      this.academic.modules.map(m => m.idCiclo).forEach(degreeId => {
+      this.academic.modules.map(m => m.idDegree).forEach(degreeId => {
         if (!selectedDegreesIds.includes(degreeId)) selectedDegreesIds.push(degreeId);
       })
 
@@ -71,7 +71,7 @@ export class FormAcademicComponent {
       selectedDegrees.forEach(degree => { //por cada ciclo crea un DegreeModules
 
         
-        const modules = allModules.filter(m => m.idCiclo === degree.Id); //filtra los módulos que pertenecen al ciclo
+        const modules = allModules.filter(m => m.idDegree === degree.Id); //filtra los módulos que pertenecen al ciclo
         //por cada módulo crea un ModuleCheck poniendo a true si estaba en la lista de la iniciativa que se este editando
         const moduleChecks = modules.map(m => new ModuleCheck(m, this.academic!.modules.some(m2 => m2.id === m.id))); 
 

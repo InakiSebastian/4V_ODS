@@ -27,7 +27,7 @@ export class ModuleService {
   }
 
   async getModulesByDegree(Id: number) {
-    return (await this.getModules()).filter((module) => module.idCiclo == Id);
+    return (await this.getModules()).filter((module) => module.idDegree == Id);
   }
 
   getCheckedModules(): Module[] | null {
@@ -42,7 +42,7 @@ export class ModuleService {
       });
     });
     return modules.map(
-      (module) => new Module(module.id, module.idCiclo, module.name)
+      (module) => new Module(module.id, module.idDegree, module.name)
     );
   }
 }
@@ -61,8 +61,8 @@ export class ModuleCheck extends Module {
   controlName: string;
 
   constructor(module: Module, checked: boolean = false) {
-    super(module.id, module.idCiclo, module.name);
-    this.controlName = `${module.id}${module.idCiclo}`;
+    super(module.id, module.idDegree, module.name);
+    this.controlName = `${module.id}${module.idDegree}`;
     this.checked = new FormControl(checked);
   }
 }

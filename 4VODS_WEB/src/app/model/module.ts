@@ -1,11 +1,11 @@
 export class Module {
     public id: number
     public name: string
-    public idCiclo: number
+    public idDegree: number
     
-    constructor(id: number, idCiclo: number, name: string) {
+    constructor(id: number, idDegree: number, name: string) {
         this.id = id;    
-        this.idCiclo = idCiclo;
+        this.idDegree = idDegree;
         this.name = name;
     }
 
