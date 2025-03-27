@@ -9,15 +9,5 @@ export class Module {
         this.name = name;
     }
 
-    get Id(): number {
-        return this.id;
-    }
 
-    get IdCiclo(): number {
-        return this.idCiclo;
-    }
-
-    get Name(): string {
-        return this.name;
-    }
 }

@@ -2,51 +2,48 @@ import { Injectable } from '@angular/core';
 import { Module } from '../model/module';
 import { FormControl } from '@angular/forms';
 import { Degree } from '../model/degree';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ModuleService {
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json', // O cualquier otro tipo según el backend
+  });
 
-  private modules=[
-    new Module(1,1,"Acceso a Datos"),
-    new Module(2,2,"Programación"),
-    new Module(3,3,"Desarrollo de Aplicaciones Web"),
-    new Module(4,1,"Desarrollo Multiplataforma"),
-    new Module(5,2," de Aplicaciones"),
-    new Module(6,3,"Desarrollo de  "),
-    new Module(7,1,"Desarrollo  Multiplataforma"),
-    new Module(8,2,"Desarrollo de Aplicaciones Multiplataforma"),
-    new Module(9,3," de Aplicaciones Multiplataforma"),
-    new Module(10,1,"Desarrollo Aplicaciones "),
-    new Module(11,2,"Desarrollo de Aplicaciones Multiplataforma"),
-    new Module(12,3,"Desarrollo de  Multiplataforma"),
-  ]
+  degree_modules: DegreeModules[] | null = null;
 
-  degree_modules: (DegreeModules[]|null) = null;
+  constructor(private http: HttpClient) {}
 
-  constructor() { }
-
-  getModules(): Module[] {
-    return this.modules;
+  getModules(): Promise<Module[]> {
+    return firstValueFrom(
+      this.http.get<Module[]>('http://127.0.0.1:8000/module', {
+        headers: this.headers,
+        observe: 'response',
+      })
+    ).then((response) => response.body as Module[]);
   }
 
-  getModulesByDegree(Id: number) {
-    return this.modules.filter(module => module.IdCiclo == Id);
+  async getModulesByDegree(Id: number) {
+    return (await this.getModules()).filter((module) => module.idCiclo == Id);
   }
-  
-  getCheckedModules(): Module[] | null{
+
+  getCheckedModules(): Module[] | null {
     var modules: ModuleCheck[] = [];
     if (this.degree_modules == null) return null;
-     this.degree_modules!.forEach(degree => { 
+    this.degree_modules!.forEach((degree) => {
       //recoge todos los módulos que hayan sido seleccionados entre los ciclos seleccionados
-       degree.modules.forEach(module => {
-         if (module.checked.value) {
-           modules.push(module);
-         }
-       });
-    })
-    return modules.map(module => new Module(module.Id, module.IdCiclo, module.Name));
+      degree.modules.forEach((module) => {
+        if (module.checked.value) {
+          modules.push(module);
+        }
+      });
+    });
+    return modules.map(
+      (module) => new Module(module.id, module.idCiclo, module.name)
+    );
   }
 }
 
@@ -64,8 +61,8 @@ export class ModuleCheck extends Module {
   controlName: string;
 
   constructor(module: Module, checked: boolean = false) {
-    super(module.Id, module.IdCiclo, module.Name);
-    this.controlName = `${module.Id}${module.IdCiclo}`;
+    super(module.id, module.idCiclo, module.name);
+    this.controlName = `${module.id}${module.idCiclo}`;
     this.checked = new FormControl(checked);
   }
 }

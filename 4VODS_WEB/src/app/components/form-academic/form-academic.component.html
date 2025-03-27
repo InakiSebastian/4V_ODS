@@ -71,7 +71,7 @@
                             <div *ngFor="let module of degree.modules" class="form-check" (change)="updateDisplayedModules()">
                                 <input type="checkbox" class="form-check-input"
                                     formControlName="{{module.controlName}}">
-                                <label class="form-check-label">{{module.Name}}</label>
+                                <label class="form-check-label">{{module.name}}</label>
                             </div>
                         </div>
                     </div>
@@ -84,12 +84,12 @@
         <label class="form-label mb-3">Ciclos y módulos seleccionados:</label>
         <div class="card mb-3" *ngFor="let degree of displayedModules">
             <div class="card-header">
-                {{degree.Name}}
+                {{degree.name}}
             </div>
             <div class="card-body">
                 <ul class="list-group">
                     <li class="list-group-item" *ngFor="let module of degree.modules">
-                        {{module.Name}}
+                        {{module.name}}
                     </li>
                 </ul>
             </div>

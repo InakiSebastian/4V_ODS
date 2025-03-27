@@ -94,7 +94,6 @@ export class FilterComponent {
   }
 
   async applyFilters() {
-    console.log(this.iniciativeList)
     const filteredIniciatives = this.iniciativeList
       .filter(iniciative => this.searchTerm ? iniciative.name.toLowerCase().includes(this.searchTerm.toLowerCase()) : true)
       .filter(iniciative => this.selectedType ? iniciative.type === this.selectedType : true)
@@ -111,12 +110,11 @@ export class FilterComponent {
       .filter(iniciative => {
         if (this.degreeList.some(degree => degree.selected)) {
           const selectedDegrees = this.degreeList.filter(degree => degree.selected).map(degree => degree.id);
-          return iniciative.Modules.some(module => selectedDegrees.includes(module.IdCiclo));
+          return iniciative.Modules.some(module => selectedDegrees.includes(module.idCiclo));
         }
         return true;
       })
       .filter(iniciative => this.selectedTeacher !== -1 ? iniciative.Teachers.some(teacher => teacher.id === this.selectedTeacher) : true);
-      console.log(filteredIniciatives)
     this.filterChanged.emit(await this.getSimpleIniciativesFromComplite(filteredIniciatives));
   }
 

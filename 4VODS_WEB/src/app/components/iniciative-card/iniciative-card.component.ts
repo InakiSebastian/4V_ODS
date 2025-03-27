@@ -19,7 +19,6 @@ export class IniciativeCardComponent {
   }
 
   ngOnInit() {
-    console.log(this.iniciative.ods)
     
     if (this.iniciative!.description.length > 100)
       this.description1Line =

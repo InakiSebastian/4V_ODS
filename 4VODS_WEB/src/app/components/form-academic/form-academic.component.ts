@@ -61,19 +61,19 @@ export class FormAcademicComponent {
 
       var selectedDegreesIds: number[] = [];
 
-      this.academic.modules.map(m => m.IdCiclo).forEach(degreeId => {
+      this.academic.modules.map(m => m.idCiclo).forEach(degreeId => {
         if (!selectedDegreesIds.includes(degreeId)) selectedDegreesIds.push(degreeId);
       })
 
-      const selectedDegrees = this.allDegrees.filter(degree => selectedDegreesIds.includes(degree.Id));
+      const selectedDegrees = this.allDegrees.filter(degree => selectedDegreesIds.includes(degree.id));
 
-      const allModules = this.moduleService.getModules(); //recoge todos los módulos
+      const allModules = await this.moduleService.getModules(); //recoge todos los módulos
       selectedDegrees.forEach(degree => { //por cada ciclo crea un DegreeModules
 
         
-        const modules = allModules.filter(m => m.IdCiclo === degree.Id); //filtra los módulos que pertenecen al ciclo
+        const modules = allModules.filter(m => m.idCiclo === degree.Id); //filtra los módulos que pertenecen al ciclo
         //por cada módulo crea un ModuleCheck poniendo a true si estaba en la lista de la iniciativa que se este editando
-        const moduleChecks = modules.map(m => new ModuleCheck(m, this.academic!.modules.some(m2 => m2.Id === m.Id))); 
+        const moduleChecks = modules.map(m => new ModuleCheck(m, this.academic!.modules.some(m2 => m2.id === m.id))); 
 
         //mete los módulos en el ciclo parseados y lo metes en la lista
         this.selectedDegreeModules.push(new DegreeModules(degree, moduleChecks));
@@ -131,7 +131,7 @@ export class FormAcademicComponent {
     // Agrega el grado a la lista de disponibles y carga sus módulos
     this.availableDegrees.push(selectedDegree);
     
-    const modules = this.moduleService.getModulesByDegree(degreeId);
+    const modules = (await this.moduleService.getModulesByDegree(degreeId));
     const moduleChecks = modules.map(m => new ModuleCheck(m));
 
     this.selectedDegreeModules.push(new DegreeModules(selectedDegree, moduleChecks));

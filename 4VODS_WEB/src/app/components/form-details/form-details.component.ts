@@ -7,21 +7,22 @@ import { FormatDatePipe } from '../../pipes/format-date.pipe';
   selector: 'app-form-details',
   imports: [ReactiveFormsModule, FormsModule],
   templateUrl: './form-details.component.html',
-  styleUrl: './form-details.component.scss'
+  styleUrl: './form-details.component.scss',
 })
 export class FormDetailsComponent {
-
   @Input() details: IDetails | null = null;
 
   startDateStr: string = '';
   endDateStr: string = '';
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     if (this.details) {
-      this.startDateStr = this.formatDate(this.details.startDate);
-      this.endDateStr = this.details.endDate ? this.formatDate(this.details.endDate) : '';
+      this.startDateStr = new Date(this.details.startDate).toISOString().split('T')[0];
+      this.endDateStr = this.details.endDate
+        ? new Date(this.details.endDate).toISOString().split('T')[0]
+        : '';
     }
   }
 

@@ -50,8 +50,6 @@ export class IniciativeService {
         }
       )
     ).then(response => response.body as CompliteIniciative[]);
-    console.log("se están pintando")
-    console.log(await a)
     return a 
   }
 

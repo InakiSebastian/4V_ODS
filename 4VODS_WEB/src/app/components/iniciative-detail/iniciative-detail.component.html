@@ -37,8 +37,7 @@
                         <p class="m-2"><span class="fw-bold">Curso:</span>
                             {{ this.academicYear }}</p>
                         <p class="m-2"><span class="fw-bold">Inicio-fin:</span>
-                            {{this.startD}} - {{this.endD != null? this.endD : 'fecha final no
-                            deifinida'}}
+                            {{this.startD}} - {{this.endD }}
                         </p>
                     </div>
                 </div>
@@ -62,8 +61,8 @@
                         </div>
                         <div class="card-body">
                             <div class="card mt-2" *ngFor="let module of dgree.modulesD">
-                                <div class="card-header" [style]="{'background-color': module.color}">
-                                    {{ module.module.Name }}
+                                <div class="card-header" [style]="{'background-color': this.generateColor()}">
+                                    {{ module.name }}
                                 </div>
                             </div>
                         </div>
@@ -83,7 +82,7 @@
                 <div class="row scrollable-container ms-3 mb-5">
                     <div class="card p-0 m-2" *ngFor="let teacher of teachers">
                         <div class="m-3 text-center d-flex justify-content-center">
-                            {{ teacher.Name }}
+                            {{ teacher.name }}
                         </div>
                     </div>
                 </div>

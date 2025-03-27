@@ -50,7 +50,7 @@ class IniciativeService
 
             foreach ($iniciative->getIniciativeGoals() as $goal) {
                 $ods = $goal->getIdGoal()->getIdOds();
-                if ($ods) {
+                if ($ods && !in_array($ods->getId(), $iniciativeDTO['ods'])) {
                     $iniciativeDTO['ods'][] = $ods->getId();
                 }
             }
@@ -85,6 +85,14 @@ class IniciativeService
             'modules' => [],
             'goals' => [],
         ];
+
+        
+        $iniciativeDTO['teachers'] = [];
+        $iniciativeDTO['companies'] = [];
+        $iniciativeDTO['modules'] = [];
+        $iniciativeDTO['ods'] = [];
+        $iniciativeDTO['goals'] = [];
+        $iniciativeDTO['difusions'] = [];
 
         foreach ($iniciative->getTeacherIniciatives() as $teacher) {
             $iniciativeDTO['teachers'][] = [

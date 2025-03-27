@@ -68,9 +68,7 @@ export class IniciativeDetailComponent {
       this.iniciativeService
         .getCompliteIniciativeById(this.idIniciative)
         .subscribe((res) => {
-          console.log(res.body) //TODO: LA API NO DEVUELVE BIEN EL TIPO
           this.iniciative = res.body as CompliteIniciative;
-          console.log(this.iniciative)
           this.render(this.iniciative);
         });
     });
@@ -95,6 +93,9 @@ export class IniciativeDetailComponent {
 
     //visualización
 
+    this.startD = new Date(this.startDate).toLocaleDateString();
+    this.endD = this.endDate ?  new Date(this.endDate).toLocaleDateString(): "Fecha no definida";
+
     this.degrees = [];
     this.idDegrees = [];
 
@@ -103,9 +104,8 @@ export class IniciativeDetailComponent {
         this.idDegrees.push(m.idCiclo);
       }
     });
-
-    this.degrees = (await this.degreeService.getDegrees()).filter((d) => this.idDegrees.includes(d.Id));
-
+    var allDegrees = (await this.degreeService.getDegrees());
+    this.degrees = allDegrees.filter((d) => this.idDegrees.includes(d.id));
 
   }
 
