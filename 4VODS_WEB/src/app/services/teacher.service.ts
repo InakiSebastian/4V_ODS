@@ -3,6 +3,9 @@ import { Teacher } from '../model/teacher';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { Degree } from '../model/degree';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { Degree } from '../model/degree';
 
 @Injectable({
   providedIn: 'root'
@@ -27,9 +30,4 @@ export class TeacherService {
         }
       )).then(response => response.body as Teacher[]);
   }
-
-  getTeacherById(teacherId: number){
-    return this.Teachers.find(t => t.Id === teacherId);
-  }
-
 }
