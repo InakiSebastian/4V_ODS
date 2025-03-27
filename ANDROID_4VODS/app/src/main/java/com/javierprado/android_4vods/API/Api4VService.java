@@ -14,6 +14,8 @@ public interface Api4VService {
     Call<List<IniciativeCard>> getIniciatives();
     @GET("iniciatives/{id}")
     Call<Iniciative> getIniciative(@Path("id") int id);
+    @GET("iniciatives/count")
+    Call<Integer> getIniciativesCount();
     @GET("diffusion")
     Call<List<Diffusion>> getDiffusions();
 }

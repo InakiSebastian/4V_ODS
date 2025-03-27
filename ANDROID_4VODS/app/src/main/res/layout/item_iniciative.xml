@@ -38,6 +38,24 @@
                     android:layout_weight="1"/>
 
                 <TextView
+                    android:id="@+id/titleInnovative"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:text="Innovador" />
+
+                <ImageView
+                    android:id="@+id/imageInnovative"
+                    android:layout_width="80dp"
+                    android:layout_height="19dp"
+                    android:layout_weight="1"
+                    android:paddingRight="75dp"
+                    app:srcCompat="@drawable/check" />
+
+                <TextView
                     android:id="@+id/txtSchoolYear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

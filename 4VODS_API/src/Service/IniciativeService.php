@@ -45,6 +45,7 @@ class IniciativeService
                 'hours' => $iniciative->getHours(),
                 'schoolYear' => $iniciative->getSchoolYear(),
                 'type' => $iniciative->getType(),
+                'innovative' => $iniciative->getInnovative(),
                 'ods' => []
             ];
 
@@ -378,6 +379,11 @@ class IniciativeService
         $this->entityManager->remove($iniciative);
         $this->entityManager->flush();
 
-        return true;
+        return true; 
+    }
+    
+    public function countIniciatives(): int
+    {
+        return $this->entityManager->getRepository(Iniciative::class)->count();
     }
 }

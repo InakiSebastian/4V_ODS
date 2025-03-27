@@ -11,15 +11,17 @@ public class IniciativeCard {
     private int hours;
     private String schoolYear;
     private String type;
+    private boolean innovative;
     private List<Integer> ods = new ArrayList<Integer>();
 
-    public IniciativeCard(int id, String name, String description, int hours, String schoolYear, String type, List<Integer> ods) {
+    public IniciativeCard(int id, String name, String description, int hours, String schoolYear, String type, boolean innovative, List<Integer> ods) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.hours = hours;
         this.schoolYear = schoolYear;
         this.type = type;
+        this.innovative = innovative;
         this.ods = ods;
     }
 
@@ -70,6 +72,14 @@ public class IniciativeCard {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean getInnovative() {
+        return innovative;
+    }
+
+    public void setInnovative(boolean innovative) {
+        this.innovative = innovative;
     }
 
     public List<Integer> getOds() {

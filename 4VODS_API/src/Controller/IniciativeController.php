@@ -21,6 +21,13 @@ class IniciativeController extends AbstractController
         return $this->json($iniciatives);
     }
 
+    #[Route('/count', name: 'count', methods: ['GET'])]
+    public function countIniciatives(): JsonResponse
+    {
+        $count = $this->iniciativeService->countIniciatives();
+        return $this->json($count);
+    }
+
     #[Route('/{id}', name: 'get_one', methods: ['GET'])]
     public function getIniciativeById(int $id): JsonResponse
     {

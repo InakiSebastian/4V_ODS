@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -46,6 +47,10 @@ public class SecondActivity extends AppCompatActivity  {
             return insets;
         });
 
+        Toolbar toolbar = findViewById(R.id.topAppBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Iniciativas");
+
         Bundle bundle = getIntent().getExtras();
         int id = bundle.getInt("id");
 
@@ -61,6 +66,8 @@ public class SecondActivity extends AppCompatActivity  {
                     if (iniciative != null) {
                         setupViewPager(iniciative);
                     }
+
+                    getSupportActionBar().setTitle(iniciative.getName());
                 } else {
                     Log.e("4VApi", "Error en la respuesta: " + response.code());
                 }
@@ -102,5 +109,14 @@ public class SecondActivity extends AppCompatActivity  {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            getOnBackPressedDispatcher().onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

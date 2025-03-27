@@ -20,6 +20,9 @@
             android:name=".activities.SecondActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.IndicatorsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
