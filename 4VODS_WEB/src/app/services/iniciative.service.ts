@@ -85,9 +85,9 @@ export class IniciativeService {
     inici!.schoolYear = iniciative.schoolYear;
     inici!.ods = iniciative.ods;
     inici!.type = iniciative.type;
-    inici!.Teachers = iniciative.Teachers;
-    inici!.Modules = iniciative.Modules;
-    inici!.Difusions = iniciative.Difusions;
-    inici!.Goals = iniciative.Goals;
+    inici!.teachers = iniciative.teachers;
+    inici!.modules = iniciative.modules;
+    inici!.diffusions = iniciative.diffusions;
+    inici!.goals = iniciative.goals;
   }
 }

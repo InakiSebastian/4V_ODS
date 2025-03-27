@@ -93,7 +93,7 @@ class IniciativeService
         $iniciativeDTO['modules'] = [];
         $iniciativeDTO['ods'] = [];
         $iniciativeDTO['goals'] = [];
-        $iniciativeDTO['difusions'] = [];
+        $iniciativeDTO['diffusions'] = [];
 
         foreach ($iniciative->getTeacherIniciatives() as $teacher) {
             $iniciativeDTO['teachers'][] = [
@@ -143,8 +143,8 @@ class IniciativeService
 
 
         foreach ($diffusions as $diffusion) {
-            $iniciativeDTO['difusions'][] = [
-                'idDifusion' => $diffusion->getId(),
+            $iniciativeDTO['diffusions'][] = [
+                'idDiffusion' => $diffusion->getId(),
                 'type' => $diffusion->getType(),
                 'link' => $diffusion->getLink()
             ];
@@ -188,7 +188,7 @@ class IniciativeService
             $iniciativeDTO['modules'] = [];
             $iniciativeDTO['ods'] = [];
             $iniciativeDTO['goals'] = [];
-            $iniciativeDTO['difusions'] = [];
+            $iniciativeDTO['diffusions'] = [];
 
             foreach ($iniciative->getTeacherIniciatives() as $teacher) {
                 $iniciativeDTO['teachers'][] = [
@@ -238,8 +238,8 @@ class IniciativeService
 
 
             foreach ($diffusions as $diffusion) {
-                $iniciativeDTO['difusions'][] = [
-                    'idDifusion' => $diffusion->getId(),
+                $iniciativeDTO['diffusions'][] = [
+                    'idDiffusion' => $diffusion->getId(),
                     'type' => $diffusion->getType(),
                     'link' => $diffusion->getLink()
                 ];

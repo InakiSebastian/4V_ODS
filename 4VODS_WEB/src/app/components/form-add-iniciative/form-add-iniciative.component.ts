@@ -79,16 +79,16 @@ export class FormAddIniciativeComponent {
       }
 
       this.academicI = {
-        teachers: this.iniciative.Teachers,
-        modules: this.iniciative.Modules
+        teachers: this.iniciative.teachers,
+        modules: this.iniciative.modules
       }
 
       this.difusionI = {
-        rrss: this.iniciative.Difusions
+        rrss: this.iniciative.diffusions
       }
 
       this.odsService.setOdsselected(this.iniciative.ods);
-      this.goalService.setSelectedGoals(this.iniciative.Goals);
+      this.goalService.setSelectedGoals(this.iniciative.goals);
     }
     else{
       this.setDeatailsI();

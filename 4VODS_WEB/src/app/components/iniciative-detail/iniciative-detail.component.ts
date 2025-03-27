@@ -85,7 +85,7 @@ export class IniciativeDetailComponent {
     this.teachers = iniciative.teachers;
 
     this.goals = iniciative.goals;
-    this.difusions = iniciative.difusions;
+    this.difusions = iniciative.diffusions;
     this.odsList = iniciative.ods;
     this.academicYear = iniciative.schoolYear;
 

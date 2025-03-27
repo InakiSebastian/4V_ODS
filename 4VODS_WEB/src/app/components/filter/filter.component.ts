@@ -110,11 +110,11 @@ export class FilterComponent {
       .filter(iniciative => {
         if (this.degreeList.some(degree => degree.selected)) {
           const selectedDegrees = this.degreeList.filter(degree => degree.selected).map(degree => degree.id);
-          return iniciative.Modules.some(module => selectedDegrees.includes(module.idDegree));
+          return iniciative.modules.some(module => selectedDegrees.includes(module.idDegree));
         }
         return true;
       })
-      .filter(iniciative => this.selectedTeacher !== -1 ? iniciative.Teachers.some(teacher => teacher.id === this.selectedTeacher) : true);
+      .filter(iniciative => this.selectedTeacher !== -1 ? iniciative.teachers.some(teacher => teacher.id === this.selectedTeacher) : true);
     this.filterChanged.emit(await this.getSimpleIniciativesFromComplite(filteredIniciatives));
   }
 
