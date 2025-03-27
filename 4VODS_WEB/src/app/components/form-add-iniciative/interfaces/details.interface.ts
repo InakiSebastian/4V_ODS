@@ -1,5 +1,5 @@
 export interface IDetails {
-    name: string
+    name: string 
     description: string
     startDate: Date
     endDate: Date | null

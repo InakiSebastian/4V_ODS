@@ -6,14 +6,14 @@
 }
 
 .scrollable-container::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
     transition: width 0.5s ease;
     /* Ancho de la barra */
 }
 
-// .scrollable-container:hover::-webkit-scrollbar {
-//     width: 8px;
-// }
+.scrollable-container:hover::-webkit-scrollbar {
+    width: 8px;
+}
 
 .scrollable-container::-webkit-scrollbar-track {
     background: #00000013;

@@ -20,13 +20,10 @@ import { IFourWinds } from './interfaces/4winds.inteface';
 import { IRrss } from './interfaces/rrss.interface';
 import { ModuleService } from '../../services/module.service';
 import { IniciativeType } from '../../model/iniciativeType';
-import { IniciativeCreatedModalComponent } from "../modals/iniciative-created-modal/iniciative-created-modal.component";
-import { ValidatorService } from '../../services/validator.service';
-
 
 @Component({
   selector: 'app-form-add-iniciative',
-  imports: [ReactiveFormsModule, FormsModule, FormDetailsComponent, FormAcademicComponent, FormOdsComponent, FormDifusionComponent, IniciativeCreatedModalComponent],
+  imports: [ReactiveFormsModule, FormsModule, FormDetailsComponent, FormAcademicComponent, FormOdsComponent, FormDifusionComponent],
   templateUrl: './form-add-iniciative.component.html',
   styleUrl: './form-add-iniciative.component.scss'
 })
@@ -53,9 +50,7 @@ export class FormAddIniciativeComponent {
   academicI: (IFourWinds | null) = null;
   difusionI: (IRrss | null) = null;
 
-  isFormValid = false;
-
-  constructor(private fb: FormBuilder, private iniciativeService: IniciativeService, private odsService: OdsService, private goalService: GoalService, private modalService: ModalService, private moduleService: ModuleService, private validatorService: ValidatorService) { }
+  constructor(private fb: FormBuilder, private iniciativeService: IniciativeService, private odsService: OdsService, private goalService: GoalService, private modalService: ModalService, private moduleService: ModuleService) { }
 
   ngOnInit(): void {
     this.formAddIniciative = this.fb.group({
@@ -91,7 +86,7 @@ export class FormAddIniciativeComponent {
       this.goalService.setSelectedGoals(this.iniciative.Goals);
     }
     else{
-      this.setDeatailsI();
+      this.detailsI = null;
     }
 
     this.selectedOds = this.odsService.getSelectedOds();
@@ -100,39 +95,10 @@ export class FormAddIniciativeComponent {
   }
 
   chooseSection(id: number): void {
-    if(this.currentSection > id){
-      this.currentSection = id;
-    }
-    
-    if(this.currentSection === 1 && !this.validatorService.validateDetails(this.detailsI)){
-      return;
-    }
-
-    
-    if(this.currentSection === 2 && !this.validatorService.validateAcademic(this.Academic.get('teachers') as FormArray, this.moduleService)){
-      return;
-    }
-
-    if(this.currentSection === 3 && !this.validatorService.validateOds(this.selectedOds, this.selectedGoals)){
-      return;
-    }
-    
     this.currentSection = id;
   }
 
   next(){
-    if(this.currentSection === 1 && !this.validatorService.validateDetails(this.detailsI)){
-      return;
-    }
-
-    if(this.currentSection === 2 && !this.validatorService.validateAcademic(this.Academic.get('teachers') as FormArray, this.moduleService)){
-      return;
-    }
-
-    if(this.currentSection === 3 && !this.validatorService.validateOds(this.selectedOds, this.selectedGoals)){
-      return;
-    }
-    
     if(this.currentSection < 4){
       this.currentSection += 1;
     }
@@ -227,10 +193,9 @@ export class FormAddIniciativeComponent {
     else{
       this.iniciativeService.addCompliteIniciative(compliteIniciative);
     }
-
-    //TODOResetear correctamente el formulario    
+    
+    //TODOResetear correctamente el formulario
     this.formAddIniciative.reset();
-    this.setDeatailsI();
   }
 
   setIniciativeType(iniciativeType: string){
@@ -248,27 +213,6 @@ export class FormAddIniciativeComponent {
 
   setAtribute(formGroup: string, formControl: string){
     return this.formAddIniciative.get(formGroup)?.get(formControl)?.value;
-  }
-
-  setForm(){
-    this.formAddIniciative = this.fb.group({
-      details: this.fb.group({}),
-      academic: this.fb.group({}),
-      ods: this.fb.group({}),
-      difusion: this.fb.group({}),
-    });
-  }
-
-  setDeatailsI(){
-    this.detailsI = {
-      name: '',
-      description: '',
-      startDate: new Date(),
-      endDate: null,
-      hours: 10,
-      academicYear: '',
-      iniciativeType: ''
-    };
   }
 
 }

@@ -49,36 +49,3 @@
     
 
 }
-
-
-
-
-.scrollable-container-y {
-    max-height: 250px;
-    overflow-y: auto; /* Agrega scroll solo si es necesario */
-    overflow-x: hidden; 
-}
-
-.scrollable-container-y::-webkit-scrollbar {
-    width: 8px;
-    transition: width 0.5s ease;
-    /* Ancho de la barra */
-}
-
-.scrollable-container-y::-webkit-scrollbar-track {
-    background: #00000013;
-    /* Color del fondo de la barra */
-    border-radius: 5px;
-    /* Bordes redondeados */
-}
-
-.scrollable-container-y::-webkit-scrollbar-thumb {
-    background: #888;
-    /* Color del "pulgar" (la parte que se mueve) */
-    border-radius: 5px;
-}
-
-.scrollable-container-y::-webkit-scrollbar-thumb:hover {
-    background: #555;
-    /* Color cuando pasas el mouse */
-}

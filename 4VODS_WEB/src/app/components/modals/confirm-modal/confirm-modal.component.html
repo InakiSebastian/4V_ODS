@@ -1,16 +1,3 @@
-<div class="modal-header bg-danger">
-    <h5 class="modal-title" id="modalFullscreenSizeLabel">Confrimar {{title}}</h5>
-    <button type="button" class="btn-close" aria-label="Close"></button>
-</div>
-<div class="modal-body">
-    <p>
-        Para confirmar la eliminación de la iniciativa <span class="fw-bold">{{name}}</span>, inserte extactamente el nombre de la iniciativa y presione el botón Confirmar:
-    </p>
-
-    <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-    <input type="text" class="form-control" [(ngModel)]="inputName">
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
-    <button type="button" class="btn btn-danger" [disabled]="inputName !== name" (click)="delete()">Confirmar</button>
+<div class="modal">
+    
 </div>
