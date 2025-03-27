@@ -37,9 +37,9 @@ export class ConfirmModalComponent {
       if (!iniciative) {
         alert("No se ha encontrado ninguna iniciativa con el Id: " + iniciativeId);
       } else {
-        this.id = iniciative.Id;
-        this.title += iniciative.Name;
-        this.name = iniciative.Name;
+        this.id = iniciative.id;
+        this.title += iniciative.name;
+        this.name = iniciative.name;
       }
     } catch (error) {
       console.error("Error obteniendo la iniciativa:", error);

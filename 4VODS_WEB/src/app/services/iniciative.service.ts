@@ -20,14 +20,9 @@ export class IniciativeService {
 
   iniciativeCompliteList: CompliteIniciative[] = [];
 
-  constructor(
-    private http: HttpClient,
-    private odsService: OdsService
-  ) {
-    
-  }
+  constructor(private http: HttpClient, private odsService: OdsService) {}
 
-  async ngOnInit(){
+  async ngOnInit() {
     this.odsList = await this.odsService.getOds();
   }
 
@@ -42,15 +37,12 @@ export class IniciativeService {
     //   )
     // ).then(response => response.body as CompliteIniciative[]);
     var a = firstValueFrom(
-      this.http.get<CompliteIniciative[]>(
-        'http://127.0.0.1:8000/iniciatives',
-        {
-          headers: this.headers,
-          observe: 'response',
-        }
-      )
-    ).then(response => response.body as CompliteIniciative[]);
-    return a 
+      this.http.get<CompliteIniciative[]>('http://127.0.0.1:8000/iniciatives', {
+        headers: this.headers,
+        observe: 'response',
+      })
+    ).then((response) => response.body as CompliteIniciative[]);
+    return a;
   }
 
   getCompliteIniciativas() {
@@ -68,18 +60,18 @@ export class IniciativeService {
   }
 
   getCompliteIniciativeById(id: number) {
-    return this.http.get<CompliteIniciative>(
-      'http://127.0.0.1:8000/iniciatives/' + id,
-      {
-        headers: this.headers,
-        observe: 'response',
-      }
-    );
+    return firstValueFrom(
+      this.http.get<CompliteIniciative>(
+        'http://127.0.0.1:8000/iniciatives/' + id,
+        {
+          headers: this.headers,
+          observe: 'response',
+        }
+      )
+    ).then((response) => response.body as CompliteIniciative);
   }
 
-  getSimpleIniciatives(){
-
-  }
+  getSimpleIniciatives() {}
 
   updateCompliteIniciative(iniciative: CompliteIniciative): void {
     const inici = this.iniciativeCompliteList.find(

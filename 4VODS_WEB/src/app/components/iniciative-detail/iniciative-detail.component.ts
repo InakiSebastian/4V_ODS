@@ -59,18 +59,16 @@ export class IniciativeDetailComponent {
     private iniciativeService: IniciativeService,
     private modalService: ModalService,
     private degreeService: DegreeService
-  ) { }
+  ) {}
 
   async ngOnInit() {
-    await this.modalService.idIniciative$.subscribe((id) => {
+    this.modalService.idIniciative$.subscribe(async (id) =>  {
       this.idIniciative = id;
 
-      this.iniciativeService
-        .getCompliteIniciativeById(this.idIniciative)
-        .subscribe((res) => {
-          this.iniciative = res.body as CompliteIniciative;
-          this.render(this.iniciative);
-        });
+      this.iniciative = await this.iniciativeService.getCompliteIniciativeById(
+        this.idIniciative
+      );
+      this.render(this.iniciative);
     });
   }
 
@@ -91,10 +89,13 @@ export class IniciativeDetailComponent {
     this.odsList = iniciative.ods;
     this.academicYear = iniciative.schoolYear;
 
+
     //visualización
 
     this.startD = new Date(this.startDate).toLocaleDateString();
-    this.endD = this.endDate ?  new Date(this.endDate).toLocaleDateString(): "Fecha no definida";
+    this.endD = this.endDate
+      ? new Date(this.endDate).toLocaleDateString()
+      : 'Fecha no definida';
 
     this.degrees = [];
     this.idDegrees = [];
@@ -104,9 +105,8 @@ export class IniciativeDetailComponent {
         this.idDegrees.push(m.idCiclo);
       }
     });
-    var allDegrees = (await this.degreeService.getDegrees());
+    var allDegrees = await this.degreeService.getDegrees();
     this.degrees = allDegrees.filter((d) => this.idDegrees.includes(d.id));
-
   }
 
   //gestión de detalles:
@@ -122,7 +122,6 @@ export class IniciativeDetailComponent {
     }));
 
     return a;
-
   }
 
   //gestión de ods y metas:
@@ -143,7 +142,7 @@ export class IniciativeDetailComponent {
   //eliminar
   deleteIniciative(event: MouseEvent) {
     event.preventDefault();
-    this.modalService.openModal("delete", this.iniciative);
+    this.modalService.openModal('delete', this.iniciative);
 
     if (
       !window.confirm(`¿Estas segur@ de que quieres eliminar esta iniciativa?`)
