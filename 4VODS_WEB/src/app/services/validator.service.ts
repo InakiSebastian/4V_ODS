@@ -9,7 +9,7 @@ export class ValidatorService {
 
   constructor() { }
 
-  validateDetails(detailsI: any){
+  validateDetails(detailsI: any) {
     if (!detailsI?.name || detailsI.name.trim() === '') {
       alert('El nombre de la iniciativa es obligatorio.');
       return false;
@@ -45,15 +45,18 @@ export class ValidatorService {
       return false;
     }
 
-    if (!detailsI?.academicYear || isNaN(detailsI.academicYear) || detailsI.academicYear <= 0) {
-      alert('El año académico debe ser un número válido.');
+    const sanitizedYear = detailsI.academicYear.toString().replace(/[-\s]/g, '');
+
+    
+    if (isNaN(sanitizedYear) || sanitizedYear <= 0) {
+      alert('El año académico debe ser un número válido convinado con "-" y espacios.');
       return false;
     }
 
     return true;
   }
 
-  validateAcademic(teachers: FormArray, moduleService: any){
+  validateAcademic(teachers: FormArray, moduleService: any) {
     // Validar profesores
     if (!teachers || teachers.length === 0) {
       alert('Debe haber al menos un profesor asignado.');
@@ -69,7 +72,7 @@ export class ValidatorService {
     return true;
   }
 
-  validateOds(selectedOds: any[], selectedGoals: any[]){
+  validateOds(selectedOds: any[], selectedGoals: any[]) {
     // Validar ODS
     if (!selectedOds || selectedOds.length === 0) {
       alert('Debe seleccionar al menos un ODS.');

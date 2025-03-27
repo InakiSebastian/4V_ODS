@@ -33,7 +33,7 @@
                 <select class="form-select" id="ods" formControlName="degrees" *ngIf="availableDegrees.length > 0">
                     <option value="-1" disabled selected>Selecciona un Ciclo</option>
                     @for (degree of availableDegrees; track degree){
-                    <option value="{{degree.Id}}">{{degree.Name}}</option>
+                    <option value="{{degree.Id}}">{{degree.name}}</option>
                     }
                 </select>
             </div>
@@ -52,7 +52,7 @@
                 <div class="card-header pointer"
                     data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + degree.Id" role="button"
                     aria-expanded="true" [attr.aria-controls]="'collapse' + degree.Id">
-                    {{ degree.Name }}
+                    {{ degree.name }}
                     <button type="button" class="btn-close d-play float-end" aria-label="Open" (click)="removeDegree(degree.Id)"></button>
                 </div>
 

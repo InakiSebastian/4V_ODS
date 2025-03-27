@@ -51,7 +51,7 @@ export class DegreeModules extends Degree {
   modules: ModuleCheck[];
 
   constructor(degree: Degree, modules: ModuleCheck[]) {
-    super(degree.Id, degree.Name);
+    super(degree.id, degree.name);
     this.modules = modules;
   }
 }

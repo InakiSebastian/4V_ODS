@@ -118,7 +118,11 @@ export class IniciativeDetailComponent {
     //pasa a un objeto combinadoe ntre ciclo y módulos
     var a = this.degrees.map((d) => ({
       name: d.name,
-      modulesD: this.modules.filter((m) => m.idDegree === d.id), // Filtra solo los módulos que pertenecen al grado
+      modulesD: this.modules.filter((m) => m.idDegree === d.id).map((m)=>  
+      {return {
+        name: m.name,
+        color: this.generateColor()
+      }}), // Filtra solo los módulos que pertenecen al grado
     }));
 
     return a;

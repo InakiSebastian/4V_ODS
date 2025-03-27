@@ -19,8 +19,6 @@ export class IniciativeListComponent {
   idIniciative!: number;
   idSelected!: number | null;
 
-  //showModal: boolean = true;
-
   constructor(
     private iniciativeService: IniciativeService,
     private modalService: ModalService
