@@ -4,20 +4,23 @@ import { FormAddIniciativeComponent } from '../../form-add-iniciative/form-add-i
 import { Iniciative } from '../../../model/iniciative';
 import { CompliteIniciative } from '../../../model/complite-iniciative';
 import { ModalService } from '../../../services/modal.service';
+import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-modal',
-  imports: [IniciativeDetailComponent, FormAddIniciativeComponent],
+  imports: [IniciativeDetailComponent, FormAddIniciativeComponent, ConfirmModalComponent],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
 
-  @Input() contentType: string = "null"; //'detail' | 'form'
+  @Input() contentType: string = "null"; //'detail' | 'form' | 'delete'
 
   iniciative: CompliteIniciative | null = null;
 
-  constructor(private modalService: ModalService) {
+  constructor(private modalService: ModalService) {}
+
+   ngOnInit() {
     this.modalService.open$.subscribe(modInf => {
       if (modInf == null) {
         this.contentType = "null";
@@ -30,4 +33,7 @@ export class ModalComponent {
     })
    }
 
+   delete(){
+    this.contentType = "delete"
+  }
 }

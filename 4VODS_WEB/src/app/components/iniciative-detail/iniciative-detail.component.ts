@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Modelos
@@ -19,7 +19,6 @@ import { DegreeService } from '../../services/degree.service';
   selector: 'app-iniciative-detail',
   imports: [CommonModule],
   templateUrl: './iniciative-detail.component.html',
-  styleUrl: './iniciative-detail.component.scss',
   styleUrl: './iniciative-detail.component.scss',
 })
 export class IniciativeDetailComponent {
@@ -47,7 +46,6 @@ export class IniciativeDetailComponent {
   degrees: Degree[] = [];
   startD: string = '';
   endD: string | null = '';
-  endD: string | null = '';
 
   //Auxiliares
   selectedODS: Ods | null = null;
@@ -62,21 +60,10 @@ export class IniciativeDetailComponent {
     private modalService: ModalService,
     private degreeService: DegreeService
   ) { }
-  ) { }
 
   async ngOnInit() {
     await this.modalService.idIniciative$.subscribe((id) => {
-    await this.modalService.idIniciative$.subscribe((id) => {
       this.idIniciative = id;
-
-      this.iniciativeService
-        .getCompliteIniciativeById(this.idIniciative)
-        .subscribe((res) => {
-          console.log(res.body) //TODO: LA API NO DEVUELVE BIEN EL TIPO
-          this.iniciative = res.body as CompliteIniciative;
-          console.log(this.iniciative)
-          this.render(this.iniciative);
-        });
 
       this.iniciativeService
         .getCompliteIniciativeById(this.idIniciative)
@@ -89,8 +76,6 @@ export class IniciativeDetailComponent {
     });
   }
 
-  async render(iniciative: CompliteIniciative) {
-    //datos de la iniciativa separados
   async render(iniciative: CompliteIniciative) {
     //datos de la iniciativa separados
     this.showDetailOds = false;
@@ -107,37 +92,17 @@ export class IniciativeDetailComponent {
     this.difusions = iniciative.difusions;
     this.odsList = iniciative.ods;
     this.academicYear = iniciative.schoolYear;
-    this.name = iniciative.name;
-    this.description = iniciative.description;
-    this.startDate = iniciative.startDate;
-    this.endDate = iniciative.endDate;
-    this.hours = iniciative.hours;
-    this.iniciativeType = iniciative.type;
-    this.modules = iniciative.modules;
-    this.teachers = iniciative.teachers;
-
-    this.goals = iniciative.goals;
-    this.difusions = iniciative.difusions;
-    this.odsList = iniciative.ods;
-    this.academicYear = iniciative.schoolYear;
 
     //visualización
-
 
     this.degrees = [];
     this.idDegrees = [];
 
-
     this.modules.forEach((m) => {
-      if (!this.idDegrees.includes(m.idCiclo)) {
-        this.idDegrees.push(m.idCiclo);
       if (!this.idDegrees.includes(m.idCiclo)) {
         this.idDegrees.push(m.idCiclo);
       }
     });
-
-    this.degrees = (await this.degreeService.getDegrees()).filter((d) => this.idDegrees.includes(d.Id));
-
 
     this.degrees = (await this.degreeService.getDegrees()).filter((d) => this.idDegrees.includes(d.Id));
 
@@ -148,15 +113,6 @@ export class IniciativeDetailComponent {
 
   //gestión de 4vientos
   //ciclos y módulos:
-
-  get degreeCards() {
-    //pasa a un objeto combinadoe ntre ciclo y módulos
-    var a = this.degrees.map((d) => ({
-      name: d.name,
-      modulesD: this.modules.filter((m) => m.idCiclo === d.id), // Filtra solo los módulos que pertenecen al grado
-    }));
-
-    return a;
 
   get degreeCards() {
     //pasa a un objeto combinadoe ntre ciclo y módulos
@@ -178,8 +134,6 @@ export class IniciativeDetailComponent {
 
   selectODS(idODS: number): void {
     this.showDetailOds = true;
-    this.selectedODS = this.odsList.find((ods) => ods.id === idODS) || null;
-    this.selectedGoals = this.goals.filter((goal) => goal.ods === idODS);
     this.selectedODS = this.odsList.find((ods) => ods.id === idODS) || null;
     this.selectedGoals = this.goals.filter((goal) => goal.ods === idODS);
     this.selectedImage = `odsIcons/${idODS}.png`;
@@ -205,7 +159,6 @@ export class IniciativeDetailComponent {
   editIniciative($event: MouseEvent) {
     $event.preventDefault();
     this.modalService.openModal('form', this.iniciative);
-    this.modalService.openModal('form', this.iniciative);
   }
 
   //efectos de visualización
@@ -220,30 +173,23 @@ export class IniciativeDetailComponent {
 
   getIcon(difusion: Difusion) {
     if (difusion.type.toLocaleLowerCase().includes('facebook')) {
-    if (difusion.type.toLocaleLowerCase().includes('facebook')) {
       return 'rrss/Facebook.png';
     }
-    if (difusion.type.toLocaleLowerCase().includes('instagram')) {
     if (difusion.type.toLocaleLowerCase().includes('instagram')) {
       return 'rrss/Instagram.png';
     }
     if (difusion.type.toLocaleLowerCase().includes('linkedin')) {
-    if (difusion.type.toLocaleLowerCase().includes('linkedin')) {
       return 'rrss/linkedin.png';
     }
-    if (difusion.type.toLocaleLowerCase().includes('youtube')) {
     if (difusion.type.toLocaleLowerCase().includes('youtube')) {
       return 'rrss/YouTube.png';
     }
     if (difusion.type.toLocaleLowerCase().includes('tiktok')) {
-    if (difusion.type.toLocaleLowerCase().includes('tiktok')) {
       return 'rrss/tiktok.png';
     }
-    if (difusion.type.toLocaleLowerCase().includes('x')) {
     if (difusion.type.toLocaleLowerCase().includes('x')) {
       return 'rrss/X.png';
     }
     return 'rrss/rrss-generico.png';
   }
 }
-

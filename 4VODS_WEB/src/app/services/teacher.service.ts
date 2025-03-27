@@ -3,9 +3,6 @@ import { Teacher } from '../model/teacher';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { Degree } from '../model/degree';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
-import { Degree } from '../model/degree';
 
 @Injectable({
   providedIn: 'root'

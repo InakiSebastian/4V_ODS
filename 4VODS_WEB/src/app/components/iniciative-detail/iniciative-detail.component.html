@@ -27,7 +27,7 @@
                 <h5 class="modal-title">{{ name }}</h5>
                 <hr>
                 <div class="row">
-                    <div class="col-7">
+                    <div class="col-7 scrollable-container-y">
                         <p class="m-2">{{ description }}</p>
                     </div>
                     <div class="col-5">
@@ -44,8 +44,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" (click)="editIniciative($event)">Editar</button>
-                    <button type="button" class="btn btn-danger ms-2" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"
-                        (click)="deleteIniciative($event)">Borrar</button>
+                    <button type="button" class="btn btn-danger ms-2" (click)="deleteIniciative($event)">Borrar</button>
                 </div>
             </div>
 
@@ -63,8 +62,8 @@
                         </div>
                         <div class="card-body">
                             <div class="card mt-2" *ngFor="let module of dgree.modulesD">
-                                <div class="card-header" [style]="{'background-color': this.generateColor()}">
-                                    {{ module.Name }}
+                                <div class="card-header" [style]="{'background-color': module.color}">
+                                    {{ module.module.Name }}
                                 </div>
                             </div>
                         </div>
@@ -84,7 +83,7 @@
                 <div class="row scrollable-container ms-3 mb-5">
                     <div class="card p-0 m-2" *ngFor="let teacher of teachers">
                         <div class="m-3 text-center d-flex justify-content-center">
-                            {{ teacher.name }}
+                            {{ teacher.Name }}
                         </div>
                     </div>
                 </div>
