@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,6 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.javierprado.android_4vods.API.Api4VService;
 import com.javierprado.android_4vods.API.ApiClient;
 import com.javierprado.android_4vods.R;
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     DataAdapter dataAdapter;
     ArrayList<IniciativeCard> originalList = new ArrayList<>();
     ArrayList<IniciativeCard> filteredList = new ArrayList<>();
+    int countIniciatives;
     String selectedFilter = "Título";
 
     @Override
@@ -53,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        MaterialToolbar toolbar = findViewById(R.id.topAppBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Iniciativas");
+
+        // Show the menu when clicking the navigation icon
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupMenu(v);
+            }
         });
 
         Api4VService apiService = ApiClient.getApi4VService();
@@ -76,6 +94,28 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<IniciativeCard>> call, Throwable t) {
+                Log.e("4VApi", "Error en la llamada", t);
+            }
+        });
+
+        Call<Integer> callCount = apiService.getIniciativesCount();
+
+        callCount.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> callCount, Response<Integer> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    countIniciatives = response.body();
+                    Log.d("4VApi", "Iniciatives count: " + countIniciatives);
+
+                    TextView txtCountIniciatives = findViewById(R.id.txtCountIniciatives);
+                    txtCountIniciatives.setText(String.valueOf(countIniciatives));
+                } else {
+                    Log.e("4VApi", "Error en la respuesta: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
                 Log.e("4VApi", "Error en la llamada", t);
             }
         });
@@ -181,5 +221,27 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
         recyclerView.setAdapter(dataAdapter);
+    }
+
+    private void showPopupMenu(View anchor) {
+        PopupMenu popupMenu = new PopupMenu(this, anchor);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_main, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.nav_home) {
+                    startActivity(new Intent(MainActivity.this, MainActivity.class));
+                    return true;
+                } else if (id == R.id.nav_indicators) {
+                    startActivity(new Intent(MainActivity.this, IndicatorsActivity.class));
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        popupMenu.show();
     }
 }
