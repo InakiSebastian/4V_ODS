@@ -28,4 +28,15 @@ class DegreeService {
         return $degreesDTO;
     }
 
+    public function getDegreeById($id)
+    {
+        $degree = $this->entityManager->getRepository(Degree::class)->find($id);
+        $degreeDTO = $this->toDTO($degree);
+        return $degreeDTO;
+    }
+
+
+
+    
+
 }

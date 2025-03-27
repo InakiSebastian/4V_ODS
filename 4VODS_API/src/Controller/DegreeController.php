@@ -18,4 +18,12 @@ class DegreeController extends AbstractController
         $degrees = $this->degreeService->getAllDegrees();
         return $this->json($degrees);
     }
+
+    #[Route('/{id}', name: 'get_byId', methods: ['GET'])]
+    public function getDegreeById(int $id): JsonResponse
+    {
+        $degree = $this->degreeService->getDegreeById($id);
+        return $this->json($degree);
+    }
 }
+
