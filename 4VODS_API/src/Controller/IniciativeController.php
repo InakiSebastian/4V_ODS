@@ -14,6 +14,14 @@ class IniciativeController extends AbstractController
 {
     public function __construct(private IniciativeService $iniciativeService) {}
 
+
+    #[Route('/complete', name: 'get_all_complete', methods: ['GET'])]
+    public function getCompleteListIniciatives(): JsonResponse
+    {
+        $iniciatives = $this->iniciativeService->getCompliteIniciatives();
+        return $this->json($iniciatives);
+    }
+
     #[Route('/', name: 'get_all', methods: ['GET'])]
     public function getListIniciatives(): JsonResponse
     {

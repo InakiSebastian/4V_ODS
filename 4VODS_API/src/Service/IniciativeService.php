@@ -87,7 +87,7 @@ class IniciativeService
             'goals' => [],
         ];
 
-        
+
         $iniciativeDTO['teachers'] = [];
         $iniciativeDTO['companies'] = [];
         $iniciativeDTO['modules'] = [];
@@ -122,11 +122,15 @@ class IniciativeService
             $ods = $goal->getIdGoal()->getIdOds();
 
             if ($ods) {
-                $iniciativeDTO['ods'][] = [
-                    "id" => $ods->getId(),
-                    "description" => $ods->getDescription()
-                ];
+                $existingOdsIds = array_column($iniciativeDTO['ods'], 'id');
+                if (!in_array($ods->getId(), $existingOdsIds)) {
+                    $iniciativeDTO['ods'][] = [
+                        "id" => $ods->getId(),
+                        "description" => $ods->getDescription()
+                    ];
+                }
             }
+
 
             $iniciativeDTO['goals'][] = [
                 'id' => $goal->getId(),
@@ -148,6 +152,106 @@ class IniciativeService
 
         return $iniciativeDTO;
     }
+
+
+    public function getCompliteIniciatives(): ?array
+    {
+        $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
+
+        $response = [];
+
+        foreach ($iniciatives as $iniciative) {
+
+            $diffusions = $this->entityManager->getRepository(Diffusion::class)->findBy(['iniciative' => $iniciative]);
+            if (!$iniciative) {
+                return null;
+            }
+
+            $iniciativeDTO = [
+                'id' => $iniciative->getId(),
+                'name' => $iniciative->getName(),
+                'description' => $iniciative->getDescription(),
+                'startDate' => $iniciative->getStartDate(),
+                'endDate' => $iniciative->getEndDate(),
+                'hours' => $iniciative->getHours(),
+                'schoolYear' => $iniciative->getSchoolYear(),
+                'type' => $iniciative->getType(),
+                'teachers' => [],
+                'companies' => [],
+                'modules' => [],
+                'goals' => [],
+            ];
+
+
+            $iniciativeDTO['teachers'] = [];
+            $iniciativeDTO['companies'] = [];
+            $iniciativeDTO['modules'] = [];
+            $iniciativeDTO['ods'] = [];
+            $iniciativeDTO['goals'] = [];
+            $iniciativeDTO['difusions'] = [];
+
+            foreach ($iniciative->getTeacherIniciatives() as $teacher) {
+                $iniciativeDTO['teachers'][] = [
+                    'id' => $teacher->getIdTeacher()->getId(),
+                    'name' => $teacher->getIdTeacher()->getName(),
+                ];
+            }
+
+            foreach ($iniciative->getCompanyIniciatives() as $company) {
+                $iniciativeDTO['companies'][] = [
+                    'id' => $company->getIdCompany()->getId(),
+                    'name' => $company->getIdCompany()->getName(),
+                ];
+            }
+
+            foreach ($iniciative->getModuleIniciatives() as $module) {
+                $iniciativeDTO['modules'][] = [
+                    'id' => $module->getIdModule()->getId(),
+                    'name' => $module->getIdModule()->getName(),
+                    'idCiclo' => $module->getIdModule()->getIdDegree()->getId(),
+                ];
+            }
+
+            foreach ($iniciative->getIniciativeGoals() as $goal) {
+
+                $ods = $goal->getIdGoal()->getIdOds();
+
+                if ($ods) {
+                    $existingOdsIds = array_column($iniciativeDTO['ods'], 'id');
+                    if (!in_array($ods->getId(), $existingOdsIds)) {
+                        $iniciativeDTO['ods'][] = [
+                            "id" => $ods->getId(),
+                            "description" => $ods->getDescription()
+                        ];
+                    }
+                }
+
+
+                $iniciativeDTO['goals'][] = [
+                    'id' => $goal->getId(),
+                    'description' => $goal->getIdGoal()->getDescription(),
+                    'ods' => $goal->getIdGoal()->getIdOds()->getId()
+                ];
+            }
+
+
+
+
+            foreach ($diffusions as $diffusion) {
+                $iniciativeDTO['difusions'][] = [
+                    'idDifusion' => $diffusion->getId(),
+                    'type' => $diffusion->getType(),
+                    'link' => $diffusion->getLink()
+                ];
+            }
+
+            array_push($response,$iniciativeDTO);
+        }
+
+
+        return $response;
+    }
+
 
 
     public function createIniciative(NewIniciativeDTO $dto): array
