@@ -115,7 +115,7 @@ export class FilterComponent {
         }
         return true;
       })
-      .filter(iniciative => this.selectedTeacher !== -1 ? iniciative.teachers.some(teacher => teacher.id === this.selectedTeacher) : true);
+      .filter(iniciative => this.selectedTeacher != -1 ? iniciative.teachers.some(teacher => teacher.id == this.selectedTeacher) : true);
     this.filterChanged.emit(await this.getSimpleIniciativesFromComplite(filteredIniciatives));
   }
 

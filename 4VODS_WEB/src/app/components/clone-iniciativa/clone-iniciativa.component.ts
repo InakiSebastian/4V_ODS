@@ -31,7 +31,7 @@ export class CloneIniciativaComponent {
   constructor(private iniciativeService: IniciativeService, private degreeService: DegreeService) {}
 
   async ngOnInit(){
-    this.iniciatives = await this.iniciativeService.getIniciatives();
+    this.iniciatives = await this.iniciativeService.getCompliteIniciativas();
   }
 
   create(){

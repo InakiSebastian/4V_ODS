@@ -25,7 +25,9 @@
                     </div>
                 </div>
             </div>
+            
         </div>
+        <button type="submit" class="btn btn-primary p-3 ps-5 pe-5" (click)="create()" style="margin-left: 46%;">Crear</button>
 
         <div *ngIf="this.selectedIniciativeId != -1 && this.selectedIniciative != null">
             <hr class="mb-3">
@@ -68,14 +70,19 @@
                                 Ciclos:
                             </p>
                         </div>
-                        <div class="col-11 ms-2  mb-3">
+                        <div class="col-11 ms-2  mb-3" *ngIf="degrees.length >0">
                             <div class="scrollable-container">
                                 <div class="card m-2" *ngFor="let degree of degrees">
-                                    <p>
+                                    <p class="m-2">
                                         {{degree.name}}
                                     </p>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-11 ms-2  mb-3" *ngIf="degrees.length == 0">
+                            <p>
+                              No participa ningún grado
+                            </p>
                         </div>
 
                         <div class="col-12">
@@ -93,6 +100,6 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" (click)="create()" style="margin-left: auto;">Guardar</button>
+        
     </form>
 </div>
