@@ -102,21 +102,22 @@ export class IniciativeService {
 
   getSimpleIniciatives() {}
 
-  updateCompliteIniciative(iniciative: CompliteIniciative): void {
-    const inici = this.iniciativeCompliteList.find(
-      (i) => i.id === iniciative.id
-    );
-    inici!.name = iniciative.name;
-    inici!.description = iniciative.description;
-    inici!.startDate = iniciative.startDate;
-    inici!.endDate = iniciative.endDate!;
-    inici!.hours = iniciative.hours;
-    inici!.schoolYear = iniciative.schoolYear;
-    inici!.ods = iniciative.ods;
-    inici!.type = iniciative.type;
-    inici!.teachers = iniciative.teachers;
-    inici!.modules = iniciative.modules;
-    inici!.diffusions = iniciative.diffusions;
-    inici!.goals = iniciative.goals;
+  async updateCompliteIniciative(iniciative: CompliteIniciative) {
+    try {
+      const response = await firstValueFrom(
+        this.http.put<{ message: string }>(
+          'http://127.0.0.1:8000/iniciatives/' + iniciative.id,
+          iniciative,
+          {
+            headers: this.headers,
+            observe: 'response',
+          }
+        )
+      );
+      return response.body?.message || 'Unknown response';
+    } catch (error) {
+      console.error('Error adding initiative:', error);
+      return '';
+    }
   }
 }
