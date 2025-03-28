@@ -27,22 +27,15 @@ export class IniciativeService {
   }
 
   async getIniciatives(): Promise<CompliteIniciative[]> {
-    // return firstValueFrom(
-    //   this.http.get<CompliteIniciative[]>(
-    //     'http://127.0.0.1:8000/iniciatives',
-    //     {
-    //       headers: this.headers,
-    //       observe: 'response',
-    //     }
-    //   )
-    // ).then(response => response.body as CompliteIniciative[]);
-    var a = firstValueFrom(
-      this.http.get<CompliteIniciative[]>('http://127.0.0.1:8000/iniciatives', {
-        headers: this.headers,
-        observe: 'response',
-      })
-    ).then((response) => response.body as CompliteIniciative[]);
-    return a;
+    return firstValueFrom(
+      this.http.get<CompliteIniciative[]>(
+        'http://127.0.0.1:8000/iniciatives',
+        {
+          headers: this.headers,
+          observe: 'response',
+        }
+      )
+    ).then(response => response.body as CompliteIniciative[]);
   }
 
   getCompliteIniciativas() {

@@ -7,7 +7,6 @@ import { ModalService } from '../../services/modal.service';
 import { OdsService } from '../../services/ods.service';
 import { Ods } from '../../model/ods';
 import { CompliteIniciative } from '../../model/complite-iniciative';
-import { Degree } from '../../model/degree';
 import { Teacher } from '../../model/teacher';
 import { DegreeService } from '../../services/degree.service';
 import { TeacherService } from '../../services/teacher.service';
@@ -64,7 +63,6 @@ export class FilterComponent {
 
     this.filtredOds = this.odsList;
     this.iniciativeList = await this.iniciativeService.getIniciatives()
-    console.log(this.iniciativeList);
     this.applyFilters();
   }
 
@@ -121,7 +119,7 @@ export class FilterComponent {
 
   async getSimpleIniciativesFromComplite(filteredIniciatives: CompliteIniciative[]): Promise<Iniciative[]> {
     const compliteIds = filteredIniciatives.map(iniciative => iniciative.id);
-    return (await this.iniciativeService.getIniciatives()).filter(iniciative => compliteIds.includes(iniciative.id));
+    return (this.iniciativeList).filter(iniciative => compliteIds.includes(iniciative.id));
   }
 
   cleanFilters() {
