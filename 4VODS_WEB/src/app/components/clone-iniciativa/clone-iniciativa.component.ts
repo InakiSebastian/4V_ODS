@@ -5,6 +5,7 @@ import { IniciativeService } from '../../services/iniciative.service';
 import { CommonModule } from '@angular/common';
 import { Teacher } from '../../model/teacher';
 import { Degree } from '../../model/degree';
+import { DegreeService } from '../../services/degree.service';
 
 @Component({
   selector: 'app-clone-iniciativa',
@@ -27,7 +28,7 @@ export class CloneIniciativaComponent {
   //temporal
   degrees: Degree[] = [];
 
-  constructor(private iniciativeService: IniciativeService) {}
+  constructor(private iniciativeService: IniciativeService, private degreeService: DegreeService) {}
 
   async ngOnInit(){
     this.iniciatives = await this.iniciativeService.getIniciatives();
@@ -54,10 +55,11 @@ export class CloneIniciativaComponent {
     alert("Creado correctamente")
   }
 
-  selectIniciative(){
+  async selectIniciative(){
     this.selectedIniciative = this.iniciatives.find(iniciative => iniciative.id == this.selectedIniciativeId) || null;
-    this.degrees = [new Degree(1, "Grado 1"), new Degree(2, "Grado 2"), new Degree(3, "Grado 3"), new Degree(1, "Grado 1"), new Degree(2, "Grado 2"), new Degree(3, "Grado 3")]//borrar
-    console.log(this.selectedIniciative!.ods)
+    const ids: number[] = this.selectedIniciative!.modules.map((m)=> m.id);
+    
+    this.degrees = (await this.degreeService.getDegrees()).filter((degree)=> ids.includes(degree.id))
   }
 
 }

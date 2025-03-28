@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-11 ms-2  mb-3">
                             <div class="scrollable-container">
-                                <div class="card m-2" *ngFor="let degree of degrees" > <!--*ngFor="let teacher of this.selectedIniciative.degrees"-->
+                                <div class="card m-2" *ngFor="let degree of degrees">
                                     <p>
                                         {{degree.name}}
                                     </p>
@@ -85,7 +85,7 @@
                         </div>
                         <div class="col-11 ms-2">
                             <div class="scrollable-container">
-                                <img src="odsIcons/{{ods}}.png" alt="" *ngFor="let ods of this.selectedIniciative.ods">
+                                <img src="odsIcons/{{ods.id}}.png" alt="" *ngFor="let ods of this.selectedIniciative.ods">
                             </div>
                         </div>
                     </div>
@@ -93,6 +93,6 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" (click)="create()">Guardar</button>
+        <button type="submit" class="btn btn-primary" (click)="create()" style="margin-left: auto;">Guardar</button>
     </form>
 </div>
