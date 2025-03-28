@@ -161,16 +161,16 @@ export class FormAddIniciativeComponent {
   }
 
   //INICIATIVA
-  setid(){
-    return this.iniciativeService.getCompliteIniciativas().length+1;
+  async setid(){
+    return (await this.iniciativeService.getCompliteIniciativas()).length+1;
   }
 
-  onSubmit(){
+  async onSubmit(){
     let newEndDate = this.detailsI!.endDate
     //if (newEndDate ==""){
     //  newEndDate = null;
     //}
-    const newid = this.setid();
+    const newid = await this.setid();
     const newName = this.detailsI!.name
     const newDescription = this.detailsI!.description
     const newStartDate = this.detailsI!.startDate

@@ -56,13 +56,15 @@ export class FilterComponent {
     });
   }
 
+
+
   async ngOnInit() {
     this.odsList = await this.odsService.getOds();
     this.teachersList = await this.teacherService.getTeachers();
     this.degreeList = (await this.degreeService.getDegrees()).map(degree => new DegreeCheckbox(degree.id, degree.name));
 
     this.filtredOds = this.odsList;
-    this.iniciativeList = await this.iniciativeService.getIniciatives()
+    this.iniciativeList = await this.iniciativeService.getCompliteIniciativas()
     this.applyFilters();
   }
 
