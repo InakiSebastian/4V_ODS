@@ -107,7 +107,18 @@ export class FilterComponent {
         }
         return true;
       })
-      .filter(iniciative => this.now ? (iniciative.endDate && iniciative.endDate > new Date() && iniciative.startDate < new Date()) : true)
+      .filter(iniciative => {
+        return this.now ? 
+          (iniciative.startDate ? 
+            (iniciative.endDate ? 
+              (new Date(iniciative.startDate) <= new Date() && new Date(iniciative.endDate) >= new Date()) : 
+              (new Date(iniciative.startDate) <= new Date())) : 
+            true) : 
+          true
+        
+      }
+        
+      )
       .filter(iniciative => {
         if (this.degreeList.some(degree => degree.selected)) {
           const selectedDegrees = this.degreeList.filter(degree => degree.selected).map(degree => degree.id);
@@ -117,7 +128,8 @@ export class FilterComponent {
       })
       .filter(iniciative => this.selectedTeacher != -1 ? iniciative.teachers.some(teacher => teacher.id == this.selectedTeacher) : true);
     this.filterChanged.emit(await this.getSimpleIniciativesFromComplite(filteredIniciatives));
-  }
+
+  } 
 
   async getSimpleIniciativesFromComplite(filteredIniciatives: CompliteIniciative[]): Promise<Iniciative[]> {
     const compliteIds = filteredIniciatives.map(iniciative => iniciative.id);
