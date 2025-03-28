@@ -11,4 +11,20 @@ import { CloneIniciativaComponent } from '../clone-iniciativa/clone-iniciativa.c
 })
 export class AddIniciativeViewComponent {
   section: string = 'select';
+
+  hoverInfo: string = "";
+
+  countSeconds: number = 0;
+
+  counter() {
+    let interval = setInterval(() => {
+      if (this.countSeconds > 0) {
+        this.countSeconds -= 1;
+      } else {
+        clearInterval(interval);
+        this.hoverInfo = "";
+      }
+    }, 1000);
+  }
+  
 }
