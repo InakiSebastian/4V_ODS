@@ -45,8 +45,17 @@ export class IniciativeService {
     return a;
   }
 
-  getCompliteIniciativas() {
-    return this.iniciativeCompliteList;
+  async getCompliteIniciativas() {
+    var a = firstValueFrom(
+      this.http.get<CompliteIniciative[]>(
+        'http://127.0.0.1:8000/iniciatives/complete',
+        {
+          headers: this.headers,
+          observe: 'response',
+        }
+      )
+    ).then((response) => response.body as CompliteIniciative[]);
+    return a;
   }
 
   addCompliteIniciative(iniciative: CompliteIniciative) {
