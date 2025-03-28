@@ -58,14 +58,41 @@ export class IniciativeService {
     return a;
   }
 
-  addCompliteIniciative(iniciative: CompliteIniciative) {
-    this.iniciativeCompliteList.push(iniciative);
+  async addCompliteIniciative(iniciative: CompliteIniciative) {
+    try {
+      const response = await firstValueFrom(
+        this.http.post<{ message: string }>(
+          'http://127.0.0.1:8000/iniciatives/',
+          iniciative,
+          {
+            headers: this.headers,
+            observe: 'response',
+          }
+        )
+      );
+      return response.body?.message || 'Unknown response';
+    } catch (error) {
+      console.error('Error adding initiative:', error);
+      return '';
+    }
   }
 
-  deleteIniciative(id: number): void {
-    this.iniciativeList = this.iniciativeList.filter(
-      (iniciative) => iniciative.id !== id
-    );
+  async deleteIniciative(id: number): Promise<string> {
+    try {
+      const response = await firstValueFrom(
+        this.http.delete<{ message: string }>(
+          'http://127.0.0.1:8000/iniciatives/' + id,
+          {
+            headers: this.headers,
+            observe: 'response',
+          }
+        )
+      );
+      return response.body?.message || 'Unknown response';
+    } catch (error) {
+      console.error('Error deleting initiative:', error);
+      return '';
+    }
   }
 
   getCompliteIniciativeById(id: number) {
