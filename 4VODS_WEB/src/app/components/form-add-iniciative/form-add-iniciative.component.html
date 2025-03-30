@@ -1,4 +1,4 @@
-<form class="form p-0 rounded-3 shadow overflow-hidden" (ngSubmit)="onSubmit()" [formGroup]="formAddIniciative">
+<form class="form p-0 rounded-3 shadow overflow-hidden bg-white" (ngSubmit)="onSubmit()" [formGroup]="formAddIniciative">
     @if(currentSection === 1){
         <div class="row m-0 h-100">
             <div class="col-3 p-0 h-100">
@@ -32,6 +32,7 @@
             <div class="col-9 p-4">
                 <div class="row p-2 g-4">
                     <h1 class="display-6">Rellena los Datos Generales</h1>
+                    <button type="button" class="btn-close close-btn" aria-label="Close" (click)="close()"></button>
                     <app-form-details [details]="detailsI"></app-form-details>
                 </div>
             </div>
@@ -78,6 +79,7 @@
             <div class="col-9 p-4">
                 <div class="row p-2 g-4">
                     <h1 class="display-6">Inserta un Profesor</h1>
+                    <button type="button" class="btn-close close-btn" aria-label="Close" (click)="close()"></button>
                     <app-form-academic [academicForm]="Academic" [academic]="academicI"/>
                 </div>
             </div>
@@ -124,6 +126,7 @@
             <div class="col-9 p-4">
                 <div class="row p-2 g-4">
                     <h1 class="display-6">Añade un ODS</h1>
+                    <button type="button" class="btn-close close-btn" aria-label="Close" (click)="close()"></button>
                     <app-form-ods [odsForm]="Ods"></app-form-ods>
                 </div>
             </div>
@@ -170,6 +173,7 @@
             <div class="col-9 p-4">
                 <div class="row p-2 g-4">
                     <h1 class="display-6">Lugar de Difusión</h1>
+                    <button type="button" class="btn-close close-btn" aria-label="Close" (click)="close()"></button>
                     <app-form-difusion [difusionForm]="Difusion" [difusionR]="difusionI"></app-form-difusion>
                 </div>
             </div>

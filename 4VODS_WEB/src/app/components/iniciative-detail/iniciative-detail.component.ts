@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Modelos
@@ -14,6 +14,7 @@ import { CompliteIniciative } from '../../model/complite-iniciative';
 import { IniciativeService } from '../../services/iniciative.service';
 import { ModalService } from '../../services/modal.service';
 import { DegreeService } from '../../services/degree.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-iniciative-detail',
@@ -54,17 +55,23 @@ export class IniciativeDetailComponent {
   showDetailOds: boolean = false;
 
   hover = false;
+  loaded: boolean = false;
+
+  private subscription!: Subscription;
+
 
   constructor(
     private iniciativeService: IniciativeService,
     private modalService: ModalService,
     private degreeService: DegreeService
-  ) {}
+  ) {
+    this.modalService.isLoading();
+  }
 
   async ngOnInit() {
-    this.modalService.idIniciative$.subscribe(async (id) =>  {
+    this.subscription = this.modalService.idIniciative$.subscribe(async (id) => {
       this.idIniciative = id;
-
+      console.log("onInit id iniciativa: " + this.idIniciative);
       this.iniciative = await this.iniciativeService.getCompliteIniciativeById(
         this.idIniciative
       );
@@ -107,6 +114,7 @@ export class IniciativeDetailComponent {
     });
     var allDegrees = await this.degreeService.getDegrees();
     this.degrees = allDegrees.filter((d) => this.idDegrees.includes(d.id));
+    this.modalService.stopLoading();
   }
 
   //gestión de detalles:
@@ -186,5 +194,17 @@ export class IniciativeDetailComponent {
       return 'rrss/X.png';
     }
     return 'rrss/rrss-generico.png';
+  }
+
+  close(){
+    this.modalService.closeModal();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe(); 
+    }
+    this.modalService.closeModal();
+    console.log("Cerrado y desuscrito");
   }
 }

@@ -33,7 +33,7 @@ export class ConfirmModalComponent {
   
       // Obtener los datos de la iniciativa
       const iniciative = await this.iniciativeService.getCompliteIniciativeById(iniciativeId);
-
+      alert("onInit id iniciativa confirmar: " + iniciative.id);
       if (!iniciative) {
         alert("No se ha encontrado ninguna iniciativa con el Id: " + iniciativeId);
       } else {

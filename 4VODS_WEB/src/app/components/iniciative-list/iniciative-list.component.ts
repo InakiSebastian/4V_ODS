@@ -5,12 +5,13 @@ import { IniciativeService } from '../../services/iniciative.service';
 import { ModalComponent } from "../modals/modal/modal.component";
 import { ModalService } from '../../services/modal.service';
 import { FilterComponent } from '../filter/filter.component';
-import { HttpResponse } from '@angular/common/http';
-import { CompliteIniciative } from '../../model/complite-iniciative';
+import { CommonModule } from '@angular/common';
+import { ModalLoadComponent } from '../modal-load/modal-load.component';
+
 
 @Component({
   selector: 'app-iniciative-list',
-  imports: [IniciativeCardComponent, ModalComponent, FilterComponent],
+  imports: [IniciativeCardComponent, ModalComponent, FilterComponent, CommonModule, ModalLoadComponent],
   templateUrl: './iniciative-list.component.html',
   styleUrl: './iniciative-list.component.scss',
 })
@@ -19,14 +20,27 @@ export class IniciativeListComponent {
   idIniciative!: number;
   idSelected!: number | null;
 
+  //loader
+  loading: boolean = false
+
   constructor(
     private iniciativeService: IniciativeService,
     private modalService: ModalService
-  ) {}
+  ) {
+    this.modalService.loading$.subscribe((loading) => {
+      console.log("Acabó del todo")
+      return this.loading = loading
+    }
+    );
+  }
 
   async ngOnInit() {
-    this.iniciativeList = await this.iniciativeService.getIniciatives()
+    this.loading = true
+    this.iniciativeList = await this.iniciativeService.getCompliteIniciativas();
+    this.loading = false
   }
+
+  //ngAfterViewInit() { this.loading = false}
 
   setIdIniciativa($event: MouseEvent, id: number) {
     $event.preventDefault();

@@ -271,4 +271,8 @@ export class FormAddIniciativeComponent {
     };
   }
 
+  close(){
+    this.modalService.closeModal();
+  }
+
 }

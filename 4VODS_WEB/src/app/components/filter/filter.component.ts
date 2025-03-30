@@ -76,7 +76,15 @@ export class FilterComponent {
     this.showAdvancedFilters = !this.showAdvancedFilters;
     this.buttonText = this.showAdvancedFilters ? 'Menos filtros' : 'Más filtros';
     
-    this.cleanFilters();
+    this.estrictoODS = false;
+    this.selectedTeacher = -1;
+
+    this.selectedOds.forEach(ods => ods.selected = false);
+    this.degreeList.forEach(degree => degree.selected = false);
+    this.dimensions.forEach(dim => dim.value = false);
+
+    this.filterOds();
+    this.applyFilters();
   }
 
   filterOds() {

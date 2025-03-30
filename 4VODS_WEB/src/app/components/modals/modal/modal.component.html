@@ -1,17 +1,14 @@
-<div class="modal fade" id="customModal" tabindex="-1" aria-labelledby="modalLabel">
-    <div class="modal-dialog modal-dialog-scrollable custom-modal-width">
-        <div class="modal-content">
-            @if (contentType === 'detail'){
-                <app-iniciative-detail (delete)="delete()"/>
-            }
-            @if(contentType === 'form'){
-                <app-form-add-iniciative [iniciative]="iniciative"/>
-            }
-            @if(contentType=='delete'){
-                <app-confirm-modal />
-            }
-        </div>
+<!-- Modal personalizado -->
+<div class="custom-modal-overlay " *ngIf="showModal">
+    <div class="modal-content custom-modal-width">
+        <ng-container *ngIf="contentType === 'detail'">
+            <app-iniciative-detail (delete)="delete()"></app-iniciative-detail>
+        </ng-container>
+        <ng-container *ngIf="contentType === 'form'">
+            <app-form-add-iniciative [iniciative]="iniciative"></app-form-add-iniciative>
+        </ng-container>
+        <ng-container *ngIf="contentType === 'delete'">
+            <app-confirm-modal></app-confirm-modal>
+        </ng-container>
     </div>
 </div>
-
-

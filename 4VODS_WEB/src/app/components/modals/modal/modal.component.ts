@@ -1,24 +1,28 @@
 import { Component, Input } from '@angular/core';
 import { IniciativeDetailComponent } from '../../iniciative-detail/iniciative-detail.component';
 import { FormAddIniciativeComponent } from '../../form-add-iniciative/form-add-iniciative.component';
-import { Iniciative } from '../../../model/iniciative';
 import { CompliteIniciative } from '../../../model/complite-iniciative';
 import { ModalService } from '../../../services/modal.service';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-modal',
-  imports: [IniciativeDetailComponent, FormAddIniciativeComponent, ConfirmModalComponent],
+  imports: [IniciativeDetailComponent, FormAddIniciativeComponent, ConfirmModalComponent, CommonModule],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
 
-  @Input() contentType: string = "null"; //'detail' | 'form' | 'delete'
+  @Input() contentType: string = "null"; //'detail' | 'form' | 'delete'| 'loader'
 
   iniciative: CompliteIniciative | null = null;
 
-  constructor(private modalService: ModalService) {}
+  showModal: boolean = false;
+
+  constructor(private modalService: ModalService) {
+    this.modalService.open$.subscribe((modInf) => this.showModal = modInf != null);
+  }
 
    ngOnInit() {
     this.modalService.open$.subscribe(modInf => {
@@ -35,5 +39,10 @@ export class ModalComponent {
 
    delete(){
     this.contentType = "delete"
+  }
+
+  closeModal(){
+    this.modalService.closeModal();
+    this.showModal = false;
   }
 }

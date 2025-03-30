@@ -47,4 +47,17 @@ export class ModalService {
   rechargeList() {
     this.recharge.next(true);
   }
+
+  private loading: ReplaySubject<boolean> = new ReplaySubject(1);
+  loading$: Observable<boolean> = this.loading.asObservable();
+
+
+
+  isLoading() {
+    this.loading.next(true);
+  }
+
+  stopLoading() {
+    this.loading.next(false);
+  }
 }
