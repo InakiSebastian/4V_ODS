@@ -10,11 +10,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TeacherService } from '../../services/teacher.service';
 import { Module } from '../../model/module';
+import { LoaderComponent } from '../loader/loader.component';
 
 @Component({
   selector: 'app-form-academic',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, LoaderComponent],
   templateUrl: './form-academic.component.html',
   styleUrl: './form-academic.component.scss'
 })
@@ -25,6 +26,7 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
 
   // Variables para almacenar datos
   allDegrees: Degree[] = [];          // Todos los grados disponibles
+  allModules: Module[] = [];          // Todos los módulos disponibles  
   availableDegrees: Degree[] = [];     // Grados no seleccionados
   selectedDegreeModules: DegreeModules[] = []; // Módulos de grados seleccionados
   displayedModules: DegreeModules[] = [];      // Módulos a mostrar
@@ -32,34 +34,40 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
   teacherList: Teacher[] = [];         // Lista completa de profesores
   selectedTeachers: Teacher[] = [];    // Profesores seleccionados
 
+  isLoading: boolean = false;
+
   constructor(
     private fb: FormBuilder, 
     private degreeService: DegreeService, 
     private moduleService: ModuleService,
     private teachersService: TeacherService
-  ) {}
+  ) {
+    this.isLoading = true;
+  }
 
   //-------------------------- LIFECYCLE HOOKS --------------------------
   async ngOnInit() {
     this.initializeFormControls();
     this.teacherList = await this.teachersService.getTeachers();
-    
-    // Carga inicial de módulos si existen en el servicio
-    if (this.moduleService.degree_modules) {
+    this.allModules = await this.moduleService.getModules();
+    // Inicializar desde servicio solo si está vacío
+    if (!this.moduleService.degree_modules) {
+      this.selectedDegreeModules = [];
+    } else {
       this.selectedDegreeModules = this.moduleService.degree_modules;
-      
     }
-
+  
     this.allDegrees = await this.degreeService.getDegrees();
-
-    // Modo edición: carga datos existentes
-    if (this.academic) {
+  
+    // Modo edición: cargar solo si no hay datos en el servicio
+    if (this.academic && !this.moduleService.degree_modules) {
       await this.handleEditMode();
     }
-
+  
     this.initializeFormValues();
     this.updateAvailableDegrees();
     this.updateDisplayedModules();
+    this.isLoading = false;
   }
 
   ngOnDestroy() {
@@ -85,45 +93,34 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
 
     // Procesa grados y módulos existentes
     const selectedDegreesIds = this.getUniqueDegreeIds();
-    console.log("IDs de grados seleccionados: " );
-    console.log(selectedDegreesIds);
+
     const selectedDegrees = this.allDegrees.filter(degree => 
       selectedDegreesIds.includes(degree.id)
     );
 
-    const allModules = await this.moduleService.getModules();
-    console.log("Todos los módulos: ");
-    console.log(allModules);
-    console.log("Grados seleccionados: ");
-    console.log(selectedDegrees);
     for (const degree of selectedDegrees) {
-      alert(degree.name)
-      await this.processDegreeModules(degree, allModules);
+      await this.processDegreeModules(degree, this.allModules);
     }
     this.moduleService.degree_modules = this.selectedDegreeModules;
   }
 
   // Obtiene IDs únicos de grados desde los módulos existentes
   private getUniqueDegreeIds(): number[] {
-    console.log("Grados existentes: ");
-    console.log(this.academic?.modules);
+
     return [...new Set(this.academic?.modules.map(m => m.idDegree) || [])];
   }
 
   // Procesa módulos para un grado específico
   private async processDegreeModules(degree: Degree, allModules: Module[]) {
     const modules = allModules.filter(m => {
-      console.log(m.idDegree)
+
       return m.idDegree === degree.id;
     });
-    console.log("Degree ID: " + degree.id);
-    console.log("Módulos del grado " + degree.name + ": ");
-    console.log(modules);
+
     const moduleChecks = modules.map(m => 
       new ModuleCheck(m, this.academic!.modules.some(m2 => m2.id === m.id))
     );
-    console.log("Módulos seleccionados: ");
-    console.log(moduleChecks);
+
 
     this.selectedDegreeModules.push(new DegreeModules(degree, moduleChecks));
     this.academicForm.addControl(`all${degree.id}`, new FormControl(this.isAllChecked(degree.id)));
@@ -158,6 +155,7 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
   //----------------------- MANEJO DE GRADOS Y MÓDULOS -----------------------
   // Añade un nuevo grado al formulario
   async addDegree() {
+    //debugger
     const degreeId = this.academicForm.get('degrees')?.value;
     if (degreeId === '-1' || this.selectedDegreeModules.some(d => d.id === degreeId)) return;
 
@@ -165,8 +163,12 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
     if (!selectedDegree) return;
 
     this.availableDegrees.push(selectedDegree);
-    const modules = await this.moduleService.getModulesByDegree(degreeId);
+    alert(selectedDegree.id)
+    console.log("Todos los módulos: ", this.allModules);
+    const modules = this.allModules.filter(m => m.idDegree === Number(degreeId));
+    console.log("Modulos:", modules);
     const moduleChecks = modules.map(m => new ModuleCheck(m));
+    console.log("Modulos con checks:", moduleChecks);
 
     this.selectedDegreeModules.push(new DegreeModules(selectedDegree, moduleChecks));
     this.academicForm.addControl(`all${selectedDegree.id}`, new FormControl(false));

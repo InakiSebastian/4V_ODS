@@ -24,7 +24,7 @@ export class DegreeService {
 
   async getDegreeById(degreeSelect: number) {
     return (await this.getDegrees()).filter(
-      (degree) => degree.Id == degreeSelect
+      (degree) => degree.id == degreeSelect
     )[0];
   }
 }

@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 })
 export class LoaderComponent {
   @Input() function: string = 'Cargando';
+  @Input() loader: number = 1;
   text: string = '';
   private estados: string[] = ['', '.', '..', '...'];
   private index: number = 0;

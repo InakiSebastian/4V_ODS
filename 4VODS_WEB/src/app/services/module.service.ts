@@ -26,8 +26,8 @@ export class ModuleService {
     ).then((response) => response.body as Module[]);
   }
 
-  async getModulesByDegree(Id: number) {
-    return (await this.getModules()).filter((module) => module.idDegree == Id);
+  async getModulesByDegree(id: number) {
+    return (await this.getModules()).filter((module) => module.idDegree == id);
   }
 
   getCheckedModules(): Module[] | null {

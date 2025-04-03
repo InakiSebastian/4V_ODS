@@ -1,5 +1,7 @@
 <div class="d-flex">
-    <img src="/animate/SVG-Loaders-master/svg-loaders/puff.svg" alt="Cargando...">
+    <img src="/animate/SVG-Loaders-master/svg-loaders/puff.svg" alt="Cargando..." *ngIf="this.loader == 1">
+    <img src="/animate/SVG-Loaders-master/svg-loaders/three-dots.svg" alt="Cargando..." *ngIf="this.loader == 2">
+    <img src="/animate/SVG-Loaders-master/svg-loaders/three-dots.svg" alt="Cargando..." *ngIf="this.loader == 3">
     <h4 class="m-3">
         {{function}}{{text}}
     </h4>
