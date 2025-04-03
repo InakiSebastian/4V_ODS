@@ -6,21 +6,69 @@
             <hr>
         </div>
 
-        <div class="container" formArrayName="teachers">
+        <div class="container row" formArrayName="teachers">
 
-            
-
-            @for(teacher of Teachers.controls; track teacher; let index = $index){
-            <div class="row" formGroupName="{{index}}">
-                <p>{{index+1}}.</p>
-                <div class="col">
-                    <label class="form-label" for="teacherName">Nombre</label>
-                    <input type="text" id="teacherName" class="form-control" placeholder="Miguel Godyena" formControlName="name">
+            <div class="col-6" *ngIf="this.getRestOdTeachers().length > 0">
+                <div class="card " id="scrollable-container">
+                    <!-- Header con búsqueda y toggle -->
+                    <div class="card-header d-flex justify-between items-center">
+                        <input type="text" class="form-control" (input)="filterTeachers($event)"
+                            placeholder="Buscar profesor..." />
+                        <button class="btn btn-primary ms-2" (click)="toggleShow($event)">
+                            {{ isExpanded ? 'Ocultar' : 'Mostrar' }}
+                        </button>
+                    </div>
+    
+                    <!-- Body con lista y scroll -->
+                    <div class="card-body scrollable-container-form" *ngIf="isExpanded">
+                        <ul class="list-group">
+                            <li class="list-group-item" *ngIf="filteredTeachers.length != 0">
+                                <div class="row">
+                                    <div class="col-10">
+                                        Seleccionar todos
+                                    </div>
+    
+                                    <div class="col-2">
+                                        <img src="generic-icons/plus-circle-fill.svg" alt="" style="height: 100%;"
+                                            (click)="addTeacher(null)">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item" *ngFor="let teacher of filteredTeachers">
+                                <div class="row">
+                                    <div class="col-10">
+                                        {{ teacher.name }}
+                                    </div>
+    
+                                    <div class="col-2">
+                                        <img src="generic-icons/plus-circle-fill.svg" alt="" style="height: 100%;"
+                                            (click)="addTeacher(teacher)">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <p *ngIf="filteredTeachers.length == 0">
+                            No hay profesores con el segmento de nombre buscado
+                        </p>
+                    </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-danger" (click)="removeTeacher(index)">Eliminar Profesor</button>
-            }
-            <button type="button" class="btn btn-primary" (click)="addTeacher()">Añadir Profesor</button>
+            <div class="col-6" *ngIf="getRestOdTeachers().length == 0"> <!--;-->
+                No hay más profesores
+            </div>
+            <div class="col-6">
+                <label class="form-label">Profesores seleccionados:</label>
+                <ul class="list-group">
+                    <li class="list-group-item" *ngIf="selectedTeachers.length > 0">
+                        Eliminar todos
+                        <button class="btn btn-close" (click)="removeTeacher($event, null)" style="margin-left: auto;"></button>
+                    </li>
+                    <li class="list-group-item" *ngFor="let teacher of selectedTeachers">
+                        {{ teacher.name }}
+                        <button class="btn btn-close" (click)="removeTeacher($event, teacher.id)" style="margin-left: auto;"></button>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -30,9 +78,10 @@
         <hr>
     </div>
     <div class="col-6">
-        <label for="ods" class="form-label">Ciclos</label>
+        <label class="form-label">Ciclos</label>
         <div class="row">
-            <div class="col" [ngClass]="{'col-9': academicForm.get('degrees')?.value > 0, 'col-12': academicForm.get('degrees')?.value <= 0}">
+            <div
+                [ngClass]="{'col-9': academicForm.get('degrees')?.value > 0, 'col-12': academicForm.get('degrees')?.value <= 0}">
                 <select class="form-select" id="ods" formControlName="degrees" *ngIf="availableDegrees.length > 0">
                     <option value="-1" disabled selected>Selecciona un Ciclo</option>
                     @for (degree of availableDegrees; track degree){
@@ -52,11 +101,12 @@
         <div class="mt-3">
             @for (degree of selectedDegreeModules; track degree){
             <div class="card mb-3">
-                <div class="card-header pointer"
-                    data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + degree.id" role="button"
-                    aria-expanded="true" [attr.aria-controls]="'collapse' + degree.id">
+                <div class="card-header pointer" data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#collapse' + degree.id" role="button" aria-expanded="true"
+                    [attr.aria-controls]="'collapse' + degree.id">
                     {{ degree.name }}
-                    <button type="button" class="btn-close d-play float-end" aria-label="Open" (click)="removeDegree(degree.id)"></button>
+                    <button type="button" class="btn-close d-play float-end" aria-label="Open"
+                        (click)="removeDegree(degree.id)"></button>
                 </div>
 
                 <div [id]="'collapse' + degree.id" class="collapse" [ngClass]="{'show': true}">
@@ -71,7 +121,8 @@
                             </div>
 
                             <!-- Checkboxes de módulos -->
-                            <div *ngFor="let module of degree.modules" class="form-check" (change)="updateDisplayedModules()">
+                            <div *ngFor="let module of degree.modules" class="form-check"
+                                (change)="updateDisplayedModules()">
                                 <input type="checkbox" class="form-check-input"
                                     formControlName="{{module.controlName}}">
                                 <label class="form-check-label">{{module.name}}</label>
@@ -101,5 +152,5 @@
 </div>
 
 <div class="d-flex justify-content-center align-items-center mt-5 pt-5">
-    <app-loader *ngIf="isLoading" [function]="'Cargando datos'" class="mt-5"/>
+    <app-loader *ngIf="isLoading" [function]="'Cargando datos'" class="mt-5" />
 </div>

@@ -1,20 +1,26 @@
 /* component.css */
 .card-header {
-    transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
+}
+
+.card-header:hover {
+  background-color: #f8f9fa;
+}
+
+.card-header.active {
+  background-color: #e9ecef;
+}
+
+.form-check-input {
+  margin-right: 8px;
+}
+
+.list-group {
+  margin-top: 10px;
+}
+
+#scrollable-container{
+  .scrollable-container-form{
+    max-height: 300px !important;
   }
-  
-  .card-header:hover {
-    background-color: #f8f9fa;
-  }
-  
-  .card-header.active {
-    background-color: #e9ecef;
-  }
-  
-  .form-check-input {
-    margin-right: 8px;
-  }
-  
-  .list-group {
-    margin-top: 10px;
-  }
+}

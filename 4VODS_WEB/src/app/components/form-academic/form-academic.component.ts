@@ -32,9 +32,13 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
   displayedModules: DegreeModules[] = [];      // Módulos a mostrar
 
   teacherList: Teacher[] = [];         // Lista completa de profesores
+  filteredTeachers: Teacher[] = [];    // Profesores filtrados
   selectedTeachers: Teacher[] = [];    // Profesores seleccionados
 
   isLoading: boolean = false;
+  isExpanded: boolean = true;
+
+  serched: string = '';
 
   constructor(
     private fb: FormBuilder, 
@@ -47,6 +51,7 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
 
   //-------------------------- LIFECYCLE HOOKS --------------------------
   async ngOnInit() {
+    this.selectedTeachers = this.teachersService.selectedTeachers;
     this.initializeFormControls();
     this.teacherList = await this.teachersService.getTeachers();
     this.allModules = await this.moduleService.getModules();
@@ -67,6 +72,7 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
     this.initializeFormValues();
     this.updateAvailableDegrees();
     this.updateDisplayedModules();
+    this.filterTeachers();
     this.isLoading = false;
   }
 
@@ -144,13 +150,50 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
   }
 
   // Añade/elimina profesores del formulario
-  addTeacher(teacher: Teacher | null = null) {
-    this.Teachers.push(this.createTeacherInput(teacher));
+  addTeacher(teacher: Teacher | null) {
+    if(!teacher) {
+      this.filteredTeachers.forEach(teacher => this.selectedTeachers.push(teacher));
+    }
+    else this.selectedTeachers.push(teacher!);
+    this.filterTeachers(this.serched);
   }
 
-  removeTeacher(index: number) {
-    this.Teachers.removeAt(index);
+  removeTeacher(event:Event, id: number | null) {
+    event.preventDefault();
+    if(!id) this.selectedTeachers = [];
+    else this.selectedTeachers = this.selectedTeachers.filter(t => t.id !== id);
+    this.filterTeachers(this.serched)
   }
+
+  getRestOdTeachers(){
+    return this.teacherList.filter(teacher => !this.selectedTeachers.map(t => t.id).includes(teacher.id));
+  }
+
+  filterTeachers(event: Event| string |null = null) {
+    const validTeachers = this.getRestOdTeachers();
+    if(!event) {
+      this.filteredTeachers = validTeachers;
+      return;
+    }
+    var filterValue = "";
+    if(!(event instanceof Event)) filterValue = event;
+    else filterValue = (event.target as HTMLInputElement).value;
+    
+    this.serched = filterValue;
+    if(filterValue==""){
+      this.filteredTeachers = validTeachers;
+      return;
+    }
+    this.filteredTeachers = validTeachers.filter(teacher => teacher.name.toLowerCase().includes(filterValue.toLowerCase()));
+    console.log(this.filteredTeachers)
+  }
+
+  // Mostrar/ocultar lista
+  toggleShow(event: Event) {
+    event.preventDefault();
+    this.isExpanded = !this.isExpanded;
+  }
+
 
   //----------------------- MANEJO DE GRADOS Y MÓDULOS -----------------------
   // Añade un nuevo grado al formulario
@@ -163,12 +206,9 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
     if (!selectedDegree) return;
 
     this.availableDegrees.push(selectedDegree);
-    alert(selectedDegree.id)
-    console.log("Todos los módulos: ", this.allModules);
+
     const modules = this.allModules.filter(m => m.idDegree === Number(degreeId));
-    console.log("Modulos:", modules);
     const moduleChecks = modules.map(m => new ModuleCheck(m));
-    console.log("Modulos con checks:", moduleChecks);
 
     this.selectedDegreeModules.push(new DegreeModules(selectedDegree, moduleChecks));
     this.academicForm.addControl(`all${selectedDegree.id}`, new FormControl(false));
@@ -243,5 +283,6 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
   // Guarda estado en el servicio
   private save() {
     this.moduleService.degree_modules = this.selectedDegreeModules;
+    this.teachersService.selectedTeachers = this.selectedTeachers;
   }
 }
