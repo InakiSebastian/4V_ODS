@@ -36,7 +36,7 @@
                 <select class="form-select" id="ods" formControlName="degrees" *ngIf="availableDegrees.length > 0">
                     <option value="-1" disabled selected>Selecciona un Ciclo</option>
                     @for (degree of availableDegrees; track degree){
-                    <option value="{{degree.Id}}">{{degree.name}}</option>
+                    <option value="{{degree.id}}">{{degree.name}}</option>
                     }
                 </select>
             </div>
@@ -53,20 +53,20 @@
             @for (degree of selectedDegreeModules; track degree){
             <div class="card mb-3">
                 <div class="card-header pointer"
-                    data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + degree.Id" role="button"
-                    aria-expanded="true" [attr.aria-controls]="'collapse' + degree.Id">
+                    data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + degree.id" role="button"
+                    aria-expanded="true" [attr.aria-controls]="'collapse' + degree.id">
                     {{ degree.name }}
-                    <button type="button" class="btn-close d-play float-end" aria-label="Open" (click)="removeDegree(degree.Id)"></button>
+                    <button type="button" class="btn-close d-play float-end" aria-label="Open" (click)="removeDegree(degree.id)"></button>
                 </div>
 
-                <div [id]="'collapse' + degree.Id" class="collapse" [ngClass]="{'show': true}">
+                <div [id]="'collapse' + degree.id" class="collapse" [ngClass]="{'show': true}">
                     <div class="card-body">
                         <h5>Módulos:</h5>
                         <div class="list-group">
                             <!-- Checkbox "Seleccionar todos" -->
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" (change)="checkAllModules(degree.Id)"
-                                    [checked]="isAllChecked(degree.Id)" formControlName="all{{degree.Id}}">
+                                <input type="checkbox" class="form-check-input" (change)="checkAllModules(degree.id)"
+                                    [checked]="isAllChecked(degree.id)" formControlName="all{{degree.id}}">
                                 <label class="form-check-label">Seleccionar todos</label>
                             </div>
 

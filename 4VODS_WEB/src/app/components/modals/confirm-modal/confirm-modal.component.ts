@@ -16,14 +16,13 @@ export class ConfirmModalComponent {
   title: string = " la eliminación de la Iniciativa: "
 
   id: number = 0;
-  name: string = "";
+  name: string = "ae";
 
   inputName: string = "";
 
   valid: boolean = false;
 
   constructor(private modalService: ModalService, private iniciativeService: IniciativeService){
-    
   }
 
   async ngOnInit() {
@@ -33,7 +32,6 @@ export class ConfirmModalComponent {
   
       // Obtener los datos de la iniciativa
       const iniciative = await this.iniciativeService.getCompliteIniciativeById(iniciativeId);
-      alert("onInit id iniciativa confirmar: " + iniciative.id);
       if (!iniciative) {
         alert("No se ha encontrado ninguna iniciativa con el Id: " + iniciativeId);
       } else {
@@ -53,6 +51,7 @@ export class ConfirmModalComponent {
   delete(){
     this.iniciativeService.deleteIniciative(this.id);
     this.modalService.rechargeList();
+    this.modalService.isLoading();
     this.modalService.closeModal();
   }
   

@@ -51,7 +51,8 @@ export class FilterComponent {
   ) {
     this.parseToCheckObject();
 
-    this.modalService.recharge$.subscribe(() => {
+    this.modalService.recharge$.subscribe(async () => {
+      this.iniciativeList = await this.iniciativeService.getCompliteIniciativas();
       this.applyFilters();
     });
   }
@@ -136,7 +137,7 @@ export class FilterComponent {
       })
       .filter(iniciative => this.selectedTeacher != -1 ? iniciative.teachers.some(teacher => teacher.id == this.selectedTeacher) : true);
     this.filterChanged.emit(await this.getSimpleIniciativesFromComplite(filteredIniciatives));
-
+      this.modalService.stopLoading();
   } 
 
   async getSimpleIniciativesFromComplite(filteredIniciatives: CompliteIniciative[]): Promise<Iniciative[]> {

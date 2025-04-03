@@ -5,6 +5,7 @@ import { CompliteIniciative } from '../../../model/complite-iniciative';
 import { ModalService } from '../../../services/modal.service';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-modal',
@@ -20,8 +21,10 @@ export class ModalComponent {
 
   showModal: boolean = false;
 
+  subscription!: Subscription
+
   constructor(private modalService: ModalService) {
-    this.modalService.open$.subscribe((modInf) => this.showModal = modInf != null);
+    this.subscription = this.modalService.open$.subscribe((modInf) => this.showModal = modInf != null);
   }
 
    ngOnInit() {
@@ -44,5 +47,11 @@ export class ModalComponent {
   closeModal(){
     this.modalService.closeModal();
     this.showModal = false;
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe(); 
+    }
   }
 }

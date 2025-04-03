@@ -55,7 +55,6 @@ export class IniciativeDetailComponent {
   showDetailOds: boolean = false;
 
   hover = false;
-  loaded: boolean = false;
 
   private subscription!: Subscription;
 
@@ -71,7 +70,6 @@ export class IniciativeDetailComponent {
   async ngOnInit() {
     this.subscription = this.modalService.idIniciative$.subscribe(async (id) => {
       this.idIniciative = id;
-      console.log("onInit id iniciativa: " + this.idIniciative);
       this.iniciative = await this.iniciativeService.getCompliteIniciativeById(
         this.idIniciative
       );
@@ -81,7 +79,6 @@ export class IniciativeDetailComponent {
 
   async render(iniciative: CompliteIniciative) {
     //datos de la iniciativa separados
-    this.showDetailOds = false;
     this.name = iniciative.name;
     this.description = iniciative.description;
     this.startDate = iniciative.startDate;
@@ -106,7 +103,7 @@ export class IniciativeDetailComponent {
 
     this.degrees = [];
     this.idDegrees = [];
-
+    
     this.modules.forEach((m) => {
       if (!this.idDegrees.includes(m.idDegree)) {
         this.idDegrees.push(m.idDegree);
@@ -122,9 +119,9 @@ export class IniciativeDetailComponent {
   //gestión de 4vientos
   //ciclos y módulos:
 
-  get degreeCards() {
+  getdegreeCards() {
     //pasa a un objeto combinadoe ntre ciclo y módulos
-    var a = this.degrees.map((d) => ({
+    return this.degrees.map((d) => ({
       name: d.name,
       modulesD: this.modules.filter((m) => m.idDegree === d.id).map((m)=>  
       {return {
@@ -132,8 +129,6 @@ export class IniciativeDetailComponent {
         color: this.generateColor()
       }}), // Filtra solo los módulos que pertenecen al grado
     }));
-
-    return a;
   }
 
   //gestión de ods y metas:
@@ -204,7 +199,5 @@ export class IniciativeDetailComponent {
     if (this.subscription) {
       this.subscription.unsubscribe(); 
     }
-    this.modalService.closeModal();
-    console.log("Cerrado y desuscrito");
   }
 }
