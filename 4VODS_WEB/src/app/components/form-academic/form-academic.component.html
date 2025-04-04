@@ -22,7 +22,7 @@
                     <!-- Body con lista y scroll -->
                     <div class="card-body scrollable-container-form" *ngIf="isExpanded">
                         <ul class="list-group">
-                            <li class="list-group-item" *ngIf="filteredTeachers.length != 0">
+                            <li class="list-group-item bg-success bg-opacity-25" *ngIf="filteredTeachers.length != 0">
                                 <div class="row">
                                     <div class="col-10">
                                         Seleccionar todos
@@ -57,17 +57,34 @@
                 No hay más profesores
             </div>
             <div class="col-6">
-                <label class="form-label">Profesores seleccionados:</label>
-                <ul class="list-group">
-                    <li class="list-group-item" *ngIf="selectedTeachers.length > 0">
-                        Eliminar todos
-                        <button class="btn btn-close" (click)="removeTeacher($event, null)" style="margin-left: auto;"></button>
+                <label class="form-label fs-5 fw-bold">Profesores seleccionados:</label>
+                <ul class="list-group w-100" style="width: 100%;">
+                    <li class="list-group-item bg-danger bg-opacity-25 w-100" *ngIf="selectedTeachers.length > 0" style="width: 100%;">
+                        <div class="row">
+                            <div class="col-10">
+                                Eliminar todos
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-close" (click)="removeTeacher($event, null)" style="margin-left: auto;"></button>
+                            </div>
+                        </div>
                     </li>
                     <li class="list-group-item" *ngFor="let teacher of selectedTeachers">
-                        {{ teacher.name }}
-                        <button class="btn btn-close" (click)="removeTeacher($event, teacher.id)" style="margin-left: auto;"></button>
+                        
+                        <div class="row">
+                            <div class="col-10">
+                                {{ teacher.name }}
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-close" (click)="removeTeacher($event, teacher.id)" style="margin-left: auto;"></button>
+                            </div>
+                        </div>
+                        
                     </li>
                 </ul>
+                <p *ngIf="selectedTeachers.length == 0">
+                    No hay profesores seleccionados
+                </p>
             </div>
         </div>
     </div>

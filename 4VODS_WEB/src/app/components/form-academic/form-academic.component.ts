@@ -59,6 +59,7 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
     if (!this.moduleService.degree_modules) {
       this.selectedDegreeModules = [];
     } else {
+      console.log("Modulos llegados: ", this.moduleService.degree_modules);
       this.selectedDegreeModules = this.moduleService.degree_modules;
     }
   
@@ -94,11 +95,13 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
   //----------------------- MANEJO DEL MODO EDICIÓN -----------------------
   private async handleEditMode() {
     // Carga profesores seleccionados
-    this.selectedTeachers = this.academic!.teachers || [];
-    this.selectedTeachers.forEach(teacher => this.addTeacher(teacher));
+    //alert(this.academic!.teachers.length);
+    const teachers = this.academic!.teachers || [];
+    teachers.forEach(teacher => this.addTeacher(teacher));
 
     // Procesa grados y módulos existentes
     const selectedDegreesIds = this.getUniqueDegreeIds();
+    console.log("Grados que se cargan: ",selectedDegreesIds);
 
     const selectedDegrees = this.allDegrees.filter(degree => 
       selectedDegreesIds.includes(degree.id)
@@ -118,14 +121,19 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
 
   // Procesa módulos para un grado específico
   private async processDegreeModules(degree: Degree, allModules: Module[]) {
+    //debugger
     const modules = allModules.filter(m => {
 
       return m.idDegree === degree.id;
     });
 
     const moduleChecks = modules.map(m => 
-      new ModuleCheck(m, this.academic!.modules.some(m2 => m2.id === m.id))
+      new ModuleCheck(m, this.academic!.modules.some(m2 => {
+        if(m2.id === m.id)console.log(m.id)
+        return m2.id === m.id
+      }))
     );
+    console.log("Módulos: ",moduleChecks)
 
 
     this.selectedDegreeModules.push(new DegreeModules(degree, moduleChecks));
@@ -133,21 +141,12 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
     
     // Añade controles para cada módulo
     moduleChecks.forEach(m => {
-      this.academicForm.addControl(m.controlName, new FormControl(m.checked));
+      this.academicForm.addControl(m.controlName, m.checked); // Usar el FormControl existente
     });
   }
 
   //----------------------- MANEJO DE PROFESORES -----------------------
-  get Teachers(): FormArray {
-    return this.academicForm.get('teachers') as FormArray;
-  }
 
-  // Crea grupo de formulario para un profesor
-  createTeacherInput(teacher: Teacher | null = null) {
-    return this.fb.group({
-      name: new FormControl(teacher ? teacher.name : ''),
-    });
-  }
 
   // Añade/elimina profesores del formulario
   addTeacher(teacher: Teacher | null) {

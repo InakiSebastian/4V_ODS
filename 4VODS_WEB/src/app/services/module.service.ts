@@ -64,5 +64,6 @@ export class ModuleCheck extends Module {
     super(module.id, module.idDegree, module.name);
     this.controlName = `${module.id}${module.idDegree}`;
     this.checked = new FormControl(checked);
+    this.checked.setValue(checked);
   }
 }
