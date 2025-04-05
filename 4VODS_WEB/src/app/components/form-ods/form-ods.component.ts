@@ -4,10 +4,12 @@ import { Ods } from '../../model/ods';
 import { Goal } from '../../model/goal';
 import { OdsService } from '../../services/ods.service';
 import { GoalService } from '../../services/goal.service';
+import { LoaderComponent } from '../loader/loader.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form-ods',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, LoaderComponent, CommonModule],
   templateUrl: './form-ods.component.html',
   styleUrl: './form-ods.component.scss'
 })
@@ -23,9 +25,10 @@ export class FormOdsComponent {
   clickedOds: string = '';
 
   odsSelected: Ods | null = null;
+  isLoading: boolean = false;
 
   constructor(private odsService: OdsService, private goalService: GoalService){
-
+    this.isLoading = true;
   }
 
   async ngOnInit(){
@@ -35,6 +38,7 @@ export class FormOdsComponent {
     this.selectedOds = this.odsService.getSelectedOds();
     this.selectedGoals = this.goalService.getSelectedGoals();
     this.odsList = (await this.odsService.getOds()).filter(ods => !this.selectedOds.map(ods => ods.Id).includes(ods.id));
+    this.isLoading = false;
   }
 
   // ODS

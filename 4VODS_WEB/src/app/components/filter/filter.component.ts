@@ -67,6 +67,7 @@ export class FilterComponent {
     this.filtredOds = this.odsList;
     this.iniciativeList = await this.iniciativeService.getCompliteIniciativas()
     this.applyFilters();
+    console.log(this.iniciativeList)
   }
 
   parseToCheckObject(ods: Ods[] = this.odsList) {

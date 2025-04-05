@@ -51,7 +51,7 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
 
   //-------------------------- LIFECYCLE HOOKS --------------------------
   async ngOnInit() {
-    this.selectedTeachers = this.teachersService.selectedTeachers;
+    this.selectedTeachers = this.teachersService.selectedTeachers || [];
     this.initializeFormControls();
     this.teacherList = await this.teachersService.getTeachers();
     this.allModules = await this.moduleService.getModules();
@@ -184,7 +184,7 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
       return;
     }
     this.filteredTeachers = validTeachers.filter(teacher => teacher.name.toLowerCase().includes(filterValue.toLowerCase()));
-    console.log(this.filteredTeachers)
+    this.save();
   }
 
   // Mostrar/ocultar lista
@@ -197,7 +197,6 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
   //----------------------- MANEJO DE GRADOS Y MÓDULOS -----------------------
   // Añade un nuevo grado al formulario
   async addDegree() {
-    //debugger
     const degreeId = this.academicForm.get('degrees')?.value;
     if (degreeId === '-1' || this.selectedDegreeModules.some(d => d.id === degreeId)) return;
 
@@ -214,7 +213,7 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
     
     // Añade controles para cada módulo
     moduleChecks.forEach(module => {
-      this.academicForm.addControl(module.controlName, new FormControl(module.checked));
+      this.academicForm.addControl(module.controlName, module.checked);
     });
 
     this.updateAvailableDegrees();
@@ -265,11 +264,12 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
 
   // Actualiza los módulos mostrados
   updateDisplayedModules() {
-    this.save();
+    
     this.displayedModules = this.selectedDegreeModules.map(d => {
       const checkedModules = d.modules.filter(m => this.academicForm.get(m.controlName)?.value);
       return new DegreeModules(d, checkedModules);
     });
+    this.save();
   }
 
   // Inicializa valores del formulario
@@ -281,7 +281,7 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
 
   // Guarda estado en el servicio
   private save() {
-    this.moduleService.degree_modules = this.selectedDegreeModules;
+    this.moduleService.degree_modules = this.displayedModules;
     this.teachersService.selectedTeachers = this.selectedTeachers;
   }
 }

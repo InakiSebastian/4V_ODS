@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { Teacher } from '../../model/teacher';
 import { Degree } from '../../model/degree';
 import { DegreeService } from '../../services/degree.service';
+import { Router } from '@angular/router';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-clone-iniciativa',
@@ -25,16 +27,20 @@ export class CloneIniciativaComponent {
 
   selectedIniciative: CompliteIniciative | null = null;
 
-  //temporal
   degrees: Degree[] = [];
 
-  constructor(private iniciativeService: IniciativeService, private degreeService: DegreeService) {}
+  constructor(private modalService: ModalService, private iniciativeService: IniciativeService, private degreeService: DegreeService, private router: Router) {}
 
   async ngOnInit(){
     this.iniciatives = await this.iniciativeService.getCompliteIniciativas();
   }
 
   create(){
+
+    if(this.selectedIniciativeId == -1 && this.selectedIniciative == null){
+      alert('Debe seleccionar una iniciativa.');
+      return
+    }
     const sanitizedYear: any = this.schoolYear.toString().replace(/[-\s]/g, '');
 
     if (isNaN(sanitizedYear) || sanitizedYear <= 0) {
@@ -52,14 +58,21 @@ export class CloneIniciativaComponent {
       return;
     }
 
-    alert("Creado correctamente")
+    this.iniciativeService.addCompliteIniciative(new CompliteIniciative(1, this.selectedIniciative!.name,this.selectedIniciative!.description, this.startDate, this.endDate, this.selectedIniciative!.hours, sanitizedYear, this.selectedIniciative!.ods, this.selectedIniciative!.type, this.selectedIniciative!.teachers, this.selectedIniciative!.modules, this.selectedIniciative!.diffusions, this.selectedIniciative!.goals, this.selectedIniciative!.innovative));
+    //TODO: recibir el ide con el que se crea
+    this.modalService.openModal('detail', this.selectedIniciative);
+    this.modalService.rechargeList();
+    this.router.navigate(['/iniciatives']);
   }
 
   async selectIniciative(){
     this.selectedIniciative = this.iniciatives.find(iniciative => iniciative.id == this.selectedIniciativeId) || null;
-    const ids: number[] = this.selectedIniciative!.modules.map((m)=> m.id);
+    const ids: number[] = this.selectedIniciative!.modules.map((m)=> m.idDegree);
     
-    this.degrees = (await this.degreeService.getDegrees()).filter((degree)=> ids.includes(degree.id))
+    this.degrees = (await this.degreeService.getDegrees()).filter((degree)=> {
+      return ids.includes(degree.id)
+    })
+    console.log("Ciclos seleccionados",await this.degreeService.getDegrees())
   }
 
 }

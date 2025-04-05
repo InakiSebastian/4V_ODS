@@ -48,6 +48,8 @@ export class IniciativeDetailComponent {
   startD: string = '';
   endD: string | null = '';
 
+  innovative: boolean = false;
+
   //Auxiliares
   selectedODS: Ods | null = null;
   selectedGoals: Goal[] = [];
@@ -84,6 +86,7 @@ export class IniciativeDetailComponent {
     this.startDate = iniciative.startDate;
     this.endDate = iniciative.endDate;
     this.hours = iniciative.hours;
+    this.innovative = iniciative.innovative == 1;
     this.iniciativeType = iniciative.type;
     this.modules = iniciative.modules;
     this.teachers = iniciative.teachers;

@@ -40,4 +40,11 @@
         <label for="academicYear" class="form-label">Curso</label>
         <input type="text" class="form-control" id="academicYear" name="academicYear" [(ngModel)]="this.details!.academicYear">
     </div>
+
+    <div class="col-6">
+        <div class="m-4 d-flex align-items-center">
+            <input type="checkbox" class="form-check-label" id="inovative" name="inovative" [(ngModel)]="this.details!.isInovative">
+            <label for="inovative" class="form-label ms-2">Es inovadora</label>
+        </div>
+    </div>
 </div>

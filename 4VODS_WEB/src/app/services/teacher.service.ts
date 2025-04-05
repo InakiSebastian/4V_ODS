@@ -9,7 +9,7 @@ import { Degree } from '../model/degree';
 })
 export class TeacherService {
 
-  selectedTeachers: Teacher[] = [];
+  selectedTeachers: Teacher[] | null = [];
   
   headers = new HttpHeaders({
     'Content-Type': 'application/json', // O cualquier otro tipo según el backend

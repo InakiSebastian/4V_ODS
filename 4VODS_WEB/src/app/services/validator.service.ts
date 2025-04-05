@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { IniciativeType } from '../model/iniciativeType';
+import { TeacherService } from './teacher.service';
+import { ModuleService } from './module.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ValidatorService {
 
-  constructor() { }
+  constructor(private teachersService: TeacherService, private moduleService: ModuleService) { }
 
   validateDetails(detailsI: any) {
     if (!detailsI?.name || detailsI.name.trim() === '') {
@@ -56,15 +58,26 @@ export class ValidatorService {
     return true;
   }
 
-  validateAcademic(teachers: FormArray, moduleService: any) {
+  validateAcademic() {
     // Validar profesores
+    const teachers = this.teachersService.selectedTeachers;
     if (!teachers || teachers.length === 0) {
-      alert('Debe haber al menos un profesor asignado.');
+      alert('Debe seleccionar al menos un profesor.');
       return false;
     }
 
     // Validar módulos
-    if (!moduleService.getCheckedModules()?.length) {
+    const degrees = this.moduleService.degree_modules;
+    if (!degrees || degrees.length === 0) {
+      alert('Debe seleccionar al menos un grado.');
+      return false;
+    }
+    if(degrees.some((d)=> d.modules.map((m) => m.checked).length === 0)){
+      alert('Debe seleccionar al menos un módulo por cada grado añadido.');
+      return false;
+    }
+
+    if (this.moduleService.getCheckedModules()?.length == 0) {
       alert('Debe seleccionar al menos un módulo.');
       return false;
     }

@@ -10,11 +10,12 @@ export class Iniciative {
     public hours: number;
     public schoolYear: string;
     public ods: Ods[];
-    public type: IniciativeType; 
+    public type: IniciativeType;
+    public innovative: number; 
     
 
 
-    constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, schoolYear: string, ods: Ods[], iniciativeType: IniciativeType){
+    constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, schoolYear: string, ods: Ods[], iniciativeType: IniciativeType, innovative: number) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -24,6 +25,7 @@ export class Iniciative {
         this.schoolYear = schoolYear;
         this.ods = ods;
         this.type = iniciativeType;
+        this.innovative = innovative
     }
 
 //     get Id(): number{

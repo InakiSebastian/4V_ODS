@@ -6,4 +6,5 @@ export interface IDetails {
     hours: number
     academicYear: string
     iniciativeType: string
+    isInovative: boolean
 }

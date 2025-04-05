@@ -22,6 +22,7 @@ import { ModuleService } from '../../services/module.service';
 import { IniciativeType } from '../../model/iniciativeType';
 import { IniciativeCreatedModalComponent } from "../modals/iniciative-created-modal/iniciative-created-modal.component";
 import { ValidatorService } from '../../services/validator.service';
+import { TeacherService } from '../../services/teacher.service';
 
 
 @Component({
@@ -55,7 +56,9 @@ export class FormAddIniciativeComponent {
 
   isFormValid = false;
 
-  constructor(private fb: FormBuilder, private iniciativeService: IniciativeService, private odsService: OdsService, private goalService: GoalService, private modalService: ModalService, private moduleService: ModuleService, private validatorService: ValidatorService) { }
+  constructor(private teacherService: TeacherService ,private fb: FormBuilder, private iniciativeService: IniciativeService, private odsService: OdsService, private goalService: GoalService, private modalService: ModalService, private moduleService: ModuleService, private validatorService: ValidatorService) {
+    this.teacherService.selectedTeachers = null;
+   }
 
   ngOnInit(): void {
     this.formAddIniciative = this.fb.group({
@@ -75,7 +78,8 @@ export class FormAddIniciativeComponent {
         endDate: this.iniciative.endDate!,
         hours: this.iniciative.hours,
         academicYear: this.iniciative.schoolYear,
-        iniciativeType: this.iniciative.type
+        iniciativeType: this.iniciative.type,
+        isInovative: this.iniciative.innovative==1
       }
 
       this.academicI = {
@@ -89,6 +93,8 @@ export class FormAddIniciativeComponent {
 
       this.odsService.setOdsselected(this.iniciative.ods);
       this.goalService.setSelectedGoals(this.iniciative.goals);
+      this.teacherService.selectedTeachers = this.iniciative.teachers;
+      this.moduleService.degree_modules
     }
     else{
       this.setDeatailsI();
@@ -109,7 +115,7 @@ export class FormAddIniciativeComponent {
     }
 
     
-    if(this.currentSection === 2 && !this.validatorService.validateAcademic(this.Academic.get('teachers') as FormArray, this.moduleService)){
+    if(this.currentSection === 2 && !this.validatorService.validateAcademic()){
       return;
     }
 
@@ -125,7 +131,7 @@ export class FormAddIniciativeComponent {
       return;
     }
 
-    if(this.currentSection === 2 && !this.validatorService.validateAcademic(this.Academic.get('teachers') as FormArray, this.moduleService)){
+    if(this.currentSection === 2 && !this.validatorService.validateAcademic()){
       return;
     }
 
@@ -179,18 +185,14 @@ export class FormAddIniciativeComponent {
     const newschoolYear = this.detailsI!.academicYear
     const newIniciativeType = this.detailsI!.iniciativeType
 
+    const newIsInovative: number = this.detailsI!.isInovative ? 1 : 0
+
     // Profesores
-    const newTeachers: Teacher[] = [];
-    const teachers = this.Academic.get('teachers') as FormArray;
-    teachers?.controls.forEach((teacher, index) => {
-      const teacherName = teacher.get('name')?.value ?? '';
-      
-      newTeachers.push(new Teacher(index+1, teacherName));
-      
-    });    
+    var newTeachers: Teacher[] = [];
+    newTeachers = this.teacherService.selectedTeachers || [];   
 
     // Módulos
-    const newModules: Module[] = (this.moduleService.getCheckedModules() || []);
+    const newModules: Module[] = this.moduleService.getCheckedModules() || [];
     
     // //Ods
     const newOds: Ods[] = [];
@@ -214,11 +216,11 @@ export class FormAddIniciativeComponent {
       newDifusions.push(new Difusion(index+1, newid,  difusionType, difusionLink));
     });
 
-    const iniciativeNew = new Iniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType));
-    const compliteIniciative = new CompliteIniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType), newTeachers, newModules, newDifusions, this.goalService.selectedGoals)
+    //const iniciativeNew = new Iniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType));
+    const compliteIniciative = new CompliteIniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType), newTeachers, newModules, newDifusions, this.goalService.selectedGoals,newIsInovative)
     
     if (this.iniciative != null) {
-      iniciativeNew.id = this.iniciative.id;
+      //iniciativeNew.id = this.iniciative.id;
       compliteIniciative.id = this.iniciative.id;
       this.iniciativeService.updateCompliteIniciative(compliteIniciative);
       this.iniciative = null;
@@ -267,7 +269,8 @@ export class FormAddIniciativeComponent {
       endDate: null,
       hours: 10,
       academicYear: '',
-      iniciativeType: ''
+      iniciativeType: '',
+      isInovative: false
     };
   }
 
