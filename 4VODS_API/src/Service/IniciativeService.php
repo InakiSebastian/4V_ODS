@@ -72,6 +72,7 @@ class IniciativeService
             return null;
         }
 
+        $innovative = $iniciative->getInnovative() ? 1 : 0;
         $iniciativeDTO = [
             'id' => $iniciative->getId(),
             'name' => $iniciative->getName(),
@@ -85,6 +86,7 @@ class IniciativeService
             'companies' => [],
             'modules' => [],
             'goals' => [],
+            'innovative' => $innovative
         ];
 
 
