@@ -58,7 +58,7 @@ export class CloneIniciativaComponent {
       return;
     }
 
-    this.iniciativeService.addCompliteIniciative(new CompliteIniciative(1, this.selectedIniciative!.name,this.selectedIniciative!.description, this.startDate, this.endDate, this.selectedIniciative!.hours, sanitizedYear, this.selectedIniciative!.ods, this.selectedIniciative!.type, this.selectedIniciative!.teachers, this.selectedIniciative!.modules, this.selectedIniciative!.diffusions, this.selectedIniciative!.goals, this.selectedIniciative!.innovative));
+    this.iniciativeService.addCompliteIniciative(new CompliteIniciative(1, this.selectedIniciative!.name,this.selectedIniciative!.description, this.startDate, this.endDate, this.selectedIniciative!.hours, sanitizedYear, this.selectedIniciative!.ods, this.selectedIniciative!.type, this.selectedIniciative!.teachers, this.selectedIniciative!.modules, this.selectedIniciative!.diffusions.map((d)=>d.idDiffusion), this.selectedIniciative!.goals, 0));
     //TODO: recibir el ide con el que se crea
     this.modalService.openModal('detail', this.selectedIniciative);
     this.modalService.rechargeList();
