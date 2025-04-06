@@ -51,7 +51,7 @@ export class GoalService {
   async removeSelectedGoal(idGoal: number, idOds: number): Promise<Goal[]> {
     let odsId: number = await this.odsService.getOdsById(idOds) ?? -1;
 
-    return this.selectedGoals = this.selectedGoals.filter(goal => goal.idGoal !== idGoal || goal.idGoal !== odsId);
+    return this.selectedGoals = this.selectedGoals.filter(goal => goal.id !== idGoal || goal.id !== odsId);
   }
 
   async clearSelectedGoalsByOds(idOds: number): Promise<Goal[]>  {
@@ -65,5 +65,6 @@ export class GoalService {
 
   setSelectedGoals(goals: Goal[]) {
     this.selectedGoals = goals;
+    console.log('Selected Goals: ', this.selectedGoals);
   }
 }

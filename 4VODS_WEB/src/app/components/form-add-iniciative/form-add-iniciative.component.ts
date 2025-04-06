@@ -92,7 +92,7 @@ export class FormAddIniciativeComponent {
         rrss: this.iniciative.diffusions
       }
 
-      this.odsService.setOdsselected(this.iniciative.ods);
+      this.odsService.setSelectedOds(this.iniciative.ods);
       this.goalService.setSelectedGoals(this.iniciative.goals);
       this.teacherService.selectedTeachers = this.iniciative.teachers;
       this.moduleService.degree_modules
@@ -107,22 +107,22 @@ export class FormAddIniciativeComponent {
   }
 
   chooseSection(id: number): void {
-    if(this.currentSection > id){
-      this.currentSection = id;
-    }
+    // if(this.currentSection > id){
+    //   this.currentSection = id;
+    // }
     
-    if(this.currentSection === 1 && !this.validatorService.validateDetails(this.detailsI)){
-      return;
-    }
+    // if(this.currentSection === 1 && !this.validatorService.validateDetails(this.detailsI)){
+    //   return;
+    // }
 
     
-    if(this.currentSection === 2 && !this.validatorService.validateAcademic()){
-      return;
-    }
+    // if(this.currentSection === 2 && !this.validatorService.validateAcademic()){
+    //   return;
+    // }
 
-    if(this.currentSection === 3 && !this.validatorService.validateOds(this.selectedOds, this.selectedGoals)){
-      return;
-    }
+    // if(this.currentSection === 3 && !this.validatorService.validateOds(this.selectedOds, this.selectedGoals)){
+    //   return;
+    // }
     
     this.currentSection = id;
   }
@@ -198,6 +198,7 @@ export class FormAddIniciativeComponent {
     // //Ods
     const newOds: Ods[] = [];
     this.selectedOds?.forEach(ods => {
+      console.log(ods.id + ' ' + ods.description);
       newOds.push(new Ods(ods.id,1, ods.Description));
     });
 

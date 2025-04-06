@@ -29,8 +29,8 @@ export class ModalService {
 
 
   openModal(modalType: string, idIniciative: CompliteIniciative | null) {
-    this.odsService.setOdsselected([]);
-    this.goalService.setOdsselected([]);
+    this.odsService.setSelectedOds([]);
+    this.goalService.setSelectedOds([]);
 
     const mI : IModalInformation = { modalType: modalType, iniciative: idIniciative };
     this.open.next(mI);

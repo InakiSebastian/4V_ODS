@@ -1,10 +1,10 @@
 export class Goal {
-    public idGoal: number;
+    public id: number;
     public ods: number;
     public description: string;
 
-    constructor(idGoal: number, idODS: number, description: string) {
-        this.idGoal = idGoal;
+    constructor(id: number, idODS: number, description: string) {
+        this.id = id;
         this.ods = idODS;
         this.description = description;
     }

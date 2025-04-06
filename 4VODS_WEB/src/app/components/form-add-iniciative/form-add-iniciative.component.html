@@ -32,7 +32,9 @@
             <div class="col-9 p-4">
                 <div class="row p-2 g-4">
                     <h1 class="display-6">Rellena los Datos Generales</h1>
-                    <button type="button" class="btn-close close-btn" aria-label="Close" (click)="close()"></button>
+                    @if(iniciative !== null){
+                        <button type="button" class="btn-close close-btn" aria-label="Close" (click)="close()"></button>
+                    }
                     <app-form-details [details]="detailsI"></app-form-details>
                 </div>
             </div>
@@ -79,7 +81,9 @@
             <div class="col-9 p-4">
                 <div class="row p-2 g-4">
                     <h1 class="display-6">Inserta un Profesor</h1>
-                    <button type="button" class="btn-close close-btn" aria-label="Close" (click)="close()"></button>
+                    @if(iniciative !== null){
+                        <button type="button" class="btn-close close-btn" aria-label="Close" (click)="close()"></button>
+                    }
                     <app-form-academic [academicForm]="Academic" [academic]="academicI"/>
                 </div>
             </div>
@@ -126,7 +130,9 @@
             <div class="col-9 p-4">
                 <div class="row p-2 g-4">
                     <h1 class="display-6">Añade un ODS</h1>
-                    <button type="button" class="btn-close close-btn" aria-label="Close" (click)="close()"></button>
+                    @if(iniciative !== null){
+                        <button type="button" class="btn-close close-btn" aria-label="Close" (click)="close()"></button>
+                    }
                     <app-form-ods [odsForm]="Ods"></app-form-ods>
                 </div>
             </div>
@@ -173,12 +179,16 @@
             <div class="col-9 p-4">
                 <div class="row p-2 g-4">
                     <h1 class="display-6">Lugar de Difusión</h1>
-                    <button type="button" class="btn-close close-btn" aria-label="Close" (click)="close()"></button>
+                    @if(iniciative !== null){
+                        <button type="button" class="btn-close close-btn" aria-label="Close" (click)="close()"></button>
+                    }
                     <app-form-difusion [difusionForm]="Difusion" [difusionR]="difusionI"></app-form-difusion>
                 </div>
             </div>
         </div>
     }
+
+
 </form>
 
 
