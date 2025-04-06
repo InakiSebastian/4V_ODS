@@ -86,6 +86,7 @@ export class IniciativeDetailComponent {
     this.startDate = iniciative.startDate;
     this.endDate = iniciative.endDate;
     this.hours = iniciative.hours;
+    alert(iniciative.innovative);
     this.innovative = iniciative.innovative == 1;
     this.iniciativeType = iniciative.type;
     this.modules = iniciative.modules;

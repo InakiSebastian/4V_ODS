@@ -23,6 +23,7 @@ import { IniciativeType } from '../../model/iniciativeType';
 import { IniciativeCreatedModalComponent } from "../modals/iniciative-created-modal/iniciative-created-modal.component";
 import { ValidatorService } from '../../services/validator.service';
 import { TeacherService } from '../../services/teacher.service';
+import { NewIniciative } from '../../model/new-iniciative';
 
 
 @Component({
@@ -185,7 +186,7 @@ export class FormAddIniciativeComponent {
     const newschoolYear = this.detailsI!.academicYear
     const newIniciativeType = this.detailsI!.iniciativeType
 
-    const newIsInovative: number = this.detailsI!.isInovative ? 1 : 0
+    const newIsInnovative: number = this.detailsI!.isInovative ? 1 : 0
 
     // Profesores
     var newTeachers: Teacher[] = [];
@@ -217,7 +218,7 @@ export class FormAddIniciativeComponent {
     });
 
     //const iniciativeNew = new Iniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType));
-    const compliteIniciative = new CompliteIniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType), newTeachers, newModules, newDifusions, this.goalService.selectedGoals,newIsInovative)
+    const compliteIniciative = new NewIniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds.map(ods => ods.id), this.setIniciativeType(newIniciativeType),newIsInnovative , newTeachers.map(teacher => teacher.id), newModules.map(module => module.id), newDifusions.map(difusion => difusion.idDiffusion), newGoals.map(goal => goal.idGoal));
     
     if (this.iniciative != null) {
       //iniciativeNew.id = this.iniciative.id;

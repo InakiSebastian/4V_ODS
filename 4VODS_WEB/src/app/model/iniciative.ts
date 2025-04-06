@@ -9,10 +9,9 @@ export class Iniciative {
     public endDate: Date | null;
     public hours: number;
     public schoolYear: string;
-    public ods: Ods[];
-    public type: IniciativeType;
     public innovative: number; 
-    
+    public type: IniciativeType;
+    public ods: Ods[];
 
 
     constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, schoolYear: string, ods: Ods[], iniciativeType: IniciativeType, innovative: number) {

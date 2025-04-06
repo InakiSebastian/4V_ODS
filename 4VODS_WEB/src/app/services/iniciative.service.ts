@@ -6,6 +6,7 @@ import { Ods } from '../model/ods';
 import { ModuleService } from './module.service';
 import { OdsService } from './ods.service';
 import { firstValueFrom } from 'rxjs';
+import { NewIniciative } from '../model/new-iniciative';
 
 @Injectable({
   providedIn: 'root',
@@ -51,7 +52,7 @@ export class IniciativeService {
     return a;
   }
 
-  async addCompliteIniciative(iniciative: CompliteIniciative) {
+  async addCompliteIniciative(iniciative: NewIniciative) {
     try {
       const response = await firstValueFrom(
         this.http.post<{ message: string }>(
@@ -102,7 +103,7 @@ export class IniciativeService {
 
   getSimpleIniciatives() {}
 
-  async updateCompliteIniciative(iniciative: CompliteIniciative) {
+  async updateCompliteIniciative(iniciative: NewIniciative) {
     try {
       const response = await firstValueFrom(
         this.http.put<{ message: string }>(
