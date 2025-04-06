@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Model\NewCompanyDTO;
 use App\Service\CompanyService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+
 
 #[Route('/company', name: 'company')]
 class CompanyController extends AbstractController
@@ -17,5 +20,30 @@ class CompanyController extends AbstractController
     {
         $companies = $this->companyService->getAllCompanies();
         return $this->json($companies);
+    }
+
+    #[Route('/', name: 'createCompany', methods: ['POST'])]
+    public function createCompany(#[MapRequestPayload] NewCompanyDTO $newCompany): JsonResponse
+    {
+        $company = $this->companyService->createCompany($newCompany);
+        return $this->json($company);
+    }
+
+    #[Route('/{id}', name: 'updateCompany', methods: ['PUT'])]
+    public function updateCompany(int $id,#[MapRequestPayload] NewCompanyDTO $newCompany): JsonResponse
+    {
+        $company = $this->companyService->updateCompany($id,$newCompany);
+        return $this->json($company);
+    }
+
+
+    #[Route('/{id}', name: 'deleteCompany', methods: ['DELETE'])]
+    public function delete(int $id): JsonResponse
+    {
+        $deleted = $this->companyService->deleteCompany($id);
+        if (!$deleted) {
+            return $this->json(['message' => 'Iniciative not found'], 404);
+        }
+        return $this->json(['message' => 'Iniciative deleted'], 200);
     }
 }
