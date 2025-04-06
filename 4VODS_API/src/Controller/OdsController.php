@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Model\NewOdsDTO;
 use App\Service\OdsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+
 
 #[Route('/ods', name: 'ods')]
 class OdsController extends AbstractController
@@ -18,4 +21,13 @@ class OdsController extends AbstractController
         $odss = $this->odsService->getAllOdss();
         return $this->json($odss);
     }
+
+
+    #[Route('/', name: 'createOds', methods: ['POST'])]
+    public function createCompany(#[MapRequestPayload] NewOdsDTO $newOds): JsonResponse
+    {
+        $company = $this->odsService->createODS($newOds);
+        return $this->json($company);
+    }
+
 }
