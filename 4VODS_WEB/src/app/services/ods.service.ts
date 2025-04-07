@@ -35,6 +35,7 @@ export class OdsService {
   getSelectedOds(): Ods[] {
     return this.selectedOds;
   }
+
   pushSelectedOds(ods: Ods) {
     this.selectedOds.push(ods);
   }
@@ -47,7 +48,8 @@ export class OdsService {
     return (this.selectedOds = []);
   }
 
-  setOdsselected(ods: Ods[]) {
+  setSelectedOds(ods: Ods[]) {
     this.selectedOds = ods;
+    
   }
 }

@@ -65,5 +65,6 @@ export class GoalService {
 
   setSelectedGoals(goals: Goal[]) {
     this.selectedGoals = goals;
+    console.log('Selected Goals: ', this.selectedGoals);
   }
 }
