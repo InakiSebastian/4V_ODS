@@ -120,43 +120,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            @if(isAnyChecked){
-                <div class="col-12 pb-1">
-                    <label for="goal" class="form-label">Metas</label>
-                    <div class="accordion bg-light rounded">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button bg-white border rounded " type="button" data-bs-toggle="collapse" data-bs-target="#collapseGoal" aria-expanded="true" aria-controls="collapseGoal">
-                                Lista de Metas
-                            </button>
-                        </h2>
-                        <div id="collapseGoal" class="accordion-collapse collapse show">
-                            <div class="accordion-body">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="allGoalsSelected" value="allGoalsSelected" formControlName="allGoalsSelected" (change)="checkAllGoals()">
-                                    <label for="allGoalsSelected" class="form-check-label"> Seleccionar Todas </label>
-                                </div>
-                                <div class="row m-0" formArrayName="goalList">
-                                    @for(ods of selectedOds; track ods){
-                                        <p class="my-3 fs-4 border-bottom">{{ods.description}}</p>
-                                        
-                                        @for(goal of goalList; track $index){
-                                            @if(goal.ods === ods.id){
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" value="{{goal.id}}" formControlName="{{$index}}">
-                                                    <label class="form-check-label" for="goal{{goal.id}}"> {{goal.description}} </label>
-                                                </div>  
-                                            }
-                                        }
-                                    }
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }   
+            </div> 
         </div>
         
         @if(isAnyChecked){
@@ -167,6 +131,46 @@
                         <img src="odsIcons/{{ods.id}}.png" alt="" class="img-fluid rounded-4 shadow" style="cursor: pointer;">
                     </div>
                 }
+                </div>
+            </div>
+
+            <div class="col-12 pb-1">
+                <label for="goal" class="form-label">Metas</label>
+                <div class="accordion bg-light rounded">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button bg-white border rounded " type="button" data-bs-toggle="collapse" data-bs-target="#collapseGoal" aria-expanded="true" aria-controls="collapseGoal">
+                            Lista de Metas
+                        </button>
+                    </h2>
+                    <div id="collapseGoal" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="allGoalsSelected" value="allGoalsSelected" formControlName="allGoalsSelected" (change)="checkAllGoals()">
+                                <label for="allGoalsSelected" class="form-check-label"> Seleccionar Todas </label>
+                            </div>
+                            <div class="row m-0" formArrayName="goalList">
+                                @for(ods of selectedOds; track ods){
+                                    <div class="col ps-0">
+                                        <p class="my-3 fs-4 border-bottom">{{ods.description}}</p>
+                                    </div>
+                                    <div class="col-1 d-flex align-items-center">
+                                        <img src="odsIcons/{{ods.id}}.png" alt="" class="img-fluid rounded-2 shadow" style="cursor: pointer;">
+                                    </div>
+                                    
+                                    
+                                    @for(goal of goalList; track $index){
+                                        @if(goal.ods === ods.id){
+                                            <div class="form-check mb-3">
+                                                <input type="checkbox" class="form-check-input" value="{{goal.id}}" formControlName="{{$index}}">
+                                                <label class="form-check-label" for="goal{{goal.id}}"> {{goal.description}} </label>
+                                            </div>  
+                                        }
+                                    }
+                                }
+                            </div>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         }
