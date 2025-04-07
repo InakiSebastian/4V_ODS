@@ -1,4 +1,4 @@
-<div class="card" >
+<div class="card" [ngStyle]="{'background-color': this.getColor()}">
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -53,8 +53,9 @@
 
             <!--CUATROVIENTOS PÁGINA-->
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <audio id="audio" src="generic-icons/flying-free.mp3"></audio>
                 @if (this.degrees.length != 0){
-                <h5 class="modal-title d-flex justify-content-center">
+                <h5 class="modal-title d-flex justify-content-center" (click)="click1f()">
                     Ciclos y módulos participantes:
                 </h5>
                 <hr>
@@ -78,8 +79,9 @@
                     No participa ningún módulo
                 </p>
                 }
+                
                 @if(this.teachers.length != 0){
-                <h5 class="modal-title d-flex justify-content-center mt-3">
+                <h5 class="modal-title d-flex justify-content-center mt-3" (auxclick)="click2f()">
                     Profesores participantes:
                 </h5>
                 <hr>

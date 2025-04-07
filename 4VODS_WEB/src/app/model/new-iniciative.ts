@@ -1,3 +1,4 @@
+import { ExternalEntity } from "./external-entity";
 import { IniciativeType } from "./iniciativeType";
 
 export class NewIniciative {
@@ -16,8 +17,9 @@ export class NewIniciative {
     public modules: number[];
     public diffusions: number[];
     public goals: number[]
+    public companies: number[]
 
-    constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, schoolYear: string, ods: number[], iniciativeType: IniciativeType, innovative: number, teachers: number[], modules: number[], diffusions: number[], goals: number[]) {
+    constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, schoolYear: string, ods: number[], iniciativeType: IniciativeType, innovative: number, teachers: number[], modules: number[], diffusions: number[], goals: number[], companies: number[]) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -31,6 +33,7 @@ export class NewIniciative {
         this.teachers = teachers;
         this.modules = modules;
         this.diffusions = diffusions;
-        this.goals = goals
+        this.goals = goals;
+        this.companies = companies
     }
 }

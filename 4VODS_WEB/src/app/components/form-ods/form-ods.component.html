@@ -30,7 +30,7 @@
                     <select class="form-select" id="goals" formControlName="goals">
                         <option value="-1" disabled selected>Selecciona una meta para '{{clickedOds}}'</option>
                         @for (goal of goalList; track goal){
-                            <option value="{{goal.idGoal}}">{{goal.description}}</option>
+                            <option value="{{goal.id}}">{{goal.description}}</option>
                         }
                     </select>
                 </div>

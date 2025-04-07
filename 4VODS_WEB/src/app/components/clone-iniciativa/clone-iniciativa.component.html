@@ -3,7 +3,7 @@
     <form class="scrollable-container-form">
         <div class="row m-4">
             <div class="col-5">
-                <label for="iniciative" class="iniciative-label">Nombre del Curso</label>
+                <label for="iniciative" class="iniciative-label">Curso:</label>
                 <select class="form-select mt-2" aria-label="Default select" name="iniciative" [(ngModel)]="this.selectedIniciativeId" (change)="selectIniciative()">
                     <option value="-1" selected disabled>Seleccione una iniciativa</option>
                     <option value="{{iniciative.id}}" *ngFor="let iniciative of this.iniciatives">{{iniciative.name}}</option>

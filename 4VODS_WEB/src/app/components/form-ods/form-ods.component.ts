@@ -113,7 +113,7 @@ export class FormOdsComponent {
 
   async setGoalList(ods: Ods){
     this.odsSelected = ods;
-    this.goalList = (await this.goalService.getGoalsByOds(ods.Id)).filter(goal => !this.selectedGoals.filter(goal => goal.ods === ods.Id).map(goal => goal.idGoal).includes(goal.idGoal));
+    this.goalList = (await this.goalService.getGoalsByOds(ods.Id)).filter(goal => !this.selectedGoals.filter(goal => goal.ods === ods.Id).map(goal => goal.id).includes(goal.id));
     
     this.clickedOds = ods.Description;
   }
@@ -129,11 +129,11 @@ export class FormOdsComponent {
   }
 
   async removeGoal(goalToPush: Goal, ods: Ods){
-    this.selectedGoals = await this.goalService.removeSelectedGoal(Number(goalToPush.idGoal), Number(ods.Id));
+    this.selectedGoals = await this.goalService.removeSelectedGoal(Number(goalToPush.id), Number(ods.Id));
 
     this.setGoalList(ods);
 
-    this.goalList.sort((a, b) => a.idGoal - b.idGoal);
+    this.goalList.sort((a, b) => a.id - b.id);
   }
 
   //TODODevolver todas las metas eliminadas al combobox

@@ -32,6 +32,9 @@ export class IniciativeDetailComponent {
   startDate: Date = new Date();
   endDate: Date | null = null;
   hours: number = 0;
+  click1: number = 0;
+  sound: boolean = false;
+
   iniciativeType: string = '';
   odsList: Ods[] = [];
   academicYear: string = '';
@@ -86,7 +89,6 @@ export class IniciativeDetailComponent {
     this.startDate = iniciative.startDate;
     this.endDate = iniciative.endDate;
     this.hours = iniciative.hours;
-    alert(iniciative.innovative);
     this.innovative = iniciative.innovative == 1;
     this.iniciativeType = iniciative.type;
     this.modules = iniciative.modules;
@@ -107,7 +109,7 @@ export class IniciativeDetailComponent {
 
     this.degrees = [];
     this.idDegrees = [];
-    
+
     this.modules.forEach((m) => {
       if (!this.idDegrees.includes(m.idDegree)) {
         this.idDegrees.push(m.idDegree);
@@ -127,11 +129,12 @@ export class IniciativeDetailComponent {
     //pasa a un objeto combinadoe ntre ciclo y módulos
     return this.degrees.map((d) => ({
       name: d.name,
-      modulesD: this.modules.filter((m) => m.idDegree === d.id).map((m)=>  
-      {return {
-        name: m.name,
-        color: this.generateColor()
-      }}), // Filtra solo los módulos que pertenecen al grado
+      modulesD: this.modules.filter((m) => m.idDegree === d.id).map((m) => {
+        return {
+          name: m.name,
+          color: this.generateColor()
+        }
+      }), // Filtra solo los módulos que pertenecen al grado
     }));
   }
 
@@ -173,6 +176,13 @@ export class IniciativeDetailComponent {
     return `rgb(${r}, ${g}, ${b})`;
   }
 
+  getColor(){
+    if(!this.sound){
+      return "#fff"
+    }
+    return this.generateColor();
+  }
+
   getIcon(difusion: Difusion) {
     if (difusion.type.toLocaleLowerCase().includes('facebook')) {
       return 'rrss/Facebook.png';
@@ -195,13 +205,44 @@ export class IniciativeDetailComponent {
     return 'rrss/rrss-generico.png';
   }
 
-  close(){
+  close() {
     this.modalService.closeModal();
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe(); 
+      this.subscription.unsubscribe();
     }
+  }
+
+
+  click1f() {
+    this.click1 += 1;
+    if (this.click1 >= 5) {
+      this.except()
+    }
+  }
+
+  async except() {
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        this.click1 = 0;
+        resolve();
+      }, 5000);
+    });
+  }
+
+  click2f() {
+    if (this.click1 >= 5) {
+      this.click1 = 0;
+      this.play();
+    }
+  }
+
+  play() {
+    const audio = document.getElementById('audio') as HTMLAudioElement;
+    audio!.volume = 1.0; // volumen al máximo dentro del navegador
+    audio!.play();
+    this.sound = true
   }
 }

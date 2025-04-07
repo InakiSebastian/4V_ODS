@@ -24,6 +24,7 @@ import { IniciativeCreatedModalComponent } from "../modals/iniciative-created-mo
 import { ValidatorService } from '../../services/validator.service';
 import { TeacherService } from '../../services/teacher.service';
 import { NewIniciative } from '../../model/new-iniciative';
+import { ExternalEntity } from '../../model/external-entity';
 
 
 @Component({
@@ -216,12 +217,9 @@ export class FormAddIniciativeComponent {
       
       newDifusions.push(new Difusion(index+1, newid,  difusionType, difusionLink));
     });
-
-    //const iniciativeNew = new Iniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType));
-    const compliteIniciative = new NewIniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds.map(ods => ods.id), this.setIniciativeType(newIniciativeType),newIsInnovative , newTeachers.map(teacher => teacher.id), newModules.map(module => module.id), newDifusions.map(difusion => difusion.idDiffusion), newGoals.map(goal => goal.idGoal));
+    const compliteIniciative = new NewIniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds.map(ods => ods.id), this.setIniciativeType(newIniciativeType),newIsInnovative , newTeachers.map(teacher => teacher.id), newModules.map(module => module.id), newDifusions.map(difusion => difusion.idDiffusion), newGoals.map(goal => goal.id), [1]);
     
     if (this.iniciative != null) {
-      //iniciativeNew.id = this.iniciative.id;
       compliteIniciative.id = this.iniciative.id;
       this.iniciativeService.updateCompliteIniciative(compliteIniciative);
       this.iniciative = null;
