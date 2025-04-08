@@ -17,6 +17,9 @@
                                 ODS
                             </div>
                             <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(4)">
+                                Entidades Externas
+                            </div>
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(5)">
                                 RRSS
                             </div>
                             <div class="px-3 pb-3 border-0 bg-primary-subtle h-100 d-flex flex-column justify-content-end mt-5">
@@ -65,6 +68,9 @@
                                 ODS
                             </div>
                             <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(4)">
+                                Entidades Externas
+                            </div>
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(5)">
                                 RRSS
                             </div>
                             <div class="px-3 pb-3 border-0 bg-primary-subtle h-100 d-flex flex-column justify-content-end mt-5">
@@ -113,6 +119,9 @@
                     <div class="col p-0">
                         <div class="list-group rounded-3 rounded-start-0 rounded-bottom-0 bg-primary-subtle h-100">
                             <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(4)">
+                                Entidades Externas
+                            </div>
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(5)">
                                 RRSS
                             </div>
                             <div class="px-3 pb-3 border-0 bg-primary-subtle h-100 d-flex flex-column justify-content-end mt-5">
@@ -158,6 +167,61 @@
                     </div>
                     
                     <div class="px-3 py-2 pointer">
+                        Entidades Externas
+                    </div>
+                </div>    
+                <div class="row m-0 flex-grow-1">
+                    <div class="col p-0">
+                        <div class="list-group rounded-3 rounded-start-0 rounded-bottom-0 bg-primary-subtle h-100">
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(5)">
+                                RRSS
+                            </div>
+                            <div class="px-3 pb-3 border-0 bg-primary-subtle h-100 d-flex flex-column justify-content-end mt-5">
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-dark" (click)="prev()"><</button>
+                                    <button type="submit" class="btn btn-outline-dark w-75" data-bs-toggle="modal" data-bs-target="#iniciativeCreatedModal">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="col-9 p-4">
+                <div class="row p-2 g-4">
+                    <h1 class="display-6">Lugar de Difusión</h1>
+                    @if(iniciative !== null){
+                        <button type="button" class="btn-close close-btn" aria-label="Close" (click)="close()"></button>
+                    }
+                    <app-form-external-entities [externalEntities]="externalsI" /> <!--[externalEntities]="this.iniciative!=null?this.iniciative.colaborators: []"-->
+                </div>
+            </div>
+        </div>
+    }
+
+    @if(currentSection === 5){
+        <div class="row m-0 h-100">
+            <div class="col-3 p-0 d-flex flex-column h-100">
+                <div class="row m-0">            
+                    <div class="col p-0">
+                        <div class="list-group rounded-3 rounded-start-0 rounded-top-0 bg-primary-subtle h-100">
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(1)">
+                                Datos Generales
+                            </div>
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(2)">
+                                4Vientos
+                            </div>
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(3)">
+                                ODS
+                            </div>
+                            <div class="list-group-item border-0 bg-primary-subtle pointer" (click)="chooseSection(4)">
+                                Entidades Externas
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="px-3 py-2 pointer">
                         RRSS
                     </div>
                 </div>    
@@ -187,7 +251,6 @@
             </div>
         </div>
     }
-
 
 </form>
 

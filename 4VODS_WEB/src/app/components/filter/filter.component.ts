@@ -57,8 +57,6 @@ export class FilterComponent {
     });
   }
 
-
-
   async ngOnInit() {
     this.odsList = await this.odsService.getOds();
     this.teachersList = await this.teacherService.getTeachers();

@@ -14,6 +14,10 @@
                     aria-controls="disabled" aria-selected="false">2030</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" id="disabled-tab" data-bs-toggle="tab" href="#externo" role="tab"
+                  aria-controls="disabled" aria-selected="false">Externo</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" id="disabled-tab" data-bs-toggle="tab" href="#rrss" role="tab"
                     aria-controls="disabled" aria-selected="false">RRSS</a>
             </li>
@@ -46,7 +50,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="editIniciative($event)">Editar</button>
+                    <button type="button" class="btn btn-primary" (click)="cloneIniciative($event)">Clonar</button>
+                    <button type="button" class="btn btn-primary ms-2" (click)="editIniciative($event)">Editar</button>
                     <button type="button" class="btn btn-danger ms-2" (click)="deleteIniciative($event)">Borrar</button>
                 </div>
             </div>
@@ -66,7 +71,7 @@
                         </div>
                         <div class="card-body">
                             <div class="card mt-2" *ngFor="let module of dgree.modulesD">
-                                <div class="card-header" [style]="{'background-color': module.color}">
+                                <div class="card-header">
                                     {{ module.name }}
                                 </div>
                             </div>
@@ -183,6 +188,38 @@
               ></button>
             </div>
           </div>
+        </div>
+      </div>
+
+
+      <!--EXTERNOS PÁGINA-->
+      <div
+        class="tab-pane fade"
+        id="externo"
+        role="tabpanel"
+        aria-labelledby="profile-tab"
+      >
+        <div class="container mt-4">
+          @if(this.difusions.length != 0){
+
+          <h5 class="modal-title d-flex justify-content-center">
+            Entidades externas que colaboran:
+          </h5>
+          <hr />
+          <div class="row">
+            <div class="col-md-4 mb-3" *ngFor="let entity of externalEntities">
+              <div class="card shadow-sm">
+                <p class="m-3">
+                  {{ entity.name }}
+                </p>
+              </div>
+            </div>
+          </div>
+          } @else {
+          <p class="modal-title d-flex justify-content-center mb-5">
+            No esta siendo difundida
+          </p>
+          }
         </div>
       </div>
 

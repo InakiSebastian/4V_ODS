@@ -40,7 +40,7 @@ export class IniciativeService {
   }
 
   async getCompliteIniciativas() {
-    var a = firstValueFrom(
+    return firstValueFrom(
       this.http.get<CompliteIniciative[]>(
         'http://127.0.0.1:8000/iniciatives/complete',
         {
@@ -48,9 +48,17 @@ export class IniciativeService {
           observe: 'response',
         }
       )
-    ).then((response) => response.body as CompliteIniciative[]);
-    return a;
+    ).then((response) => {
+      const iniciativas = response.body as any[];
+      // map companies -> externalEntities
+      return iniciativas.map((item) => {
+        item.externalEntities = item.companies;
+        delete item.companies;
+        return item as CompliteIniciative;
+      });
+    });
   }
+  
 
   async addCompliteIniciative(iniciative: NewIniciative) {
     try {
@@ -98,10 +106,13 @@ export class IniciativeService {
           observe: 'response',
         }
       )
-    ).then((response) => response.body as CompliteIniciative);
+    ).then((response) => {
+      const item = response.body as any;
+      item.externalEntities = item.companies;
+      delete item.companies;
+      return item as CompliteIniciative;
+    });
   }
-
-  getSimpleIniciatives() {}
 
   async updateCompliteIniciative(iniciative: NewIniciative) {
     try {

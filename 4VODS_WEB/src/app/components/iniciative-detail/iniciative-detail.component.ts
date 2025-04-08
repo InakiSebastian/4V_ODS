@@ -15,6 +15,8 @@ import { IniciativeService } from '../../services/iniciative.service';
 import { ModalService } from '../../services/modal.service';
 import { DegreeService } from '../../services/degree.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { ExternalEntity } from '../../model/external-entity';
 
 @Component({
   selector: 'app-iniciative-detail',
@@ -44,6 +46,7 @@ export class IniciativeDetailComponent {
   teachers: Teacher[] = [];
   goals: Goal[] = [];
   difusions: Difusion[] = [];
+  externalEntities: ExternalEntity[] = [];
 
   // Datos para la visualización
   idDegrees: number[] = [];
@@ -67,7 +70,8 @@ export class IniciativeDetailComponent {
   constructor(
     private iniciativeService: IniciativeService,
     private modalService: ModalService,
-    private degreeService: DegreeService
+    private degreeService: DegreeService,
+    private router: Router
   ) {
     this.modalService.isLoading();
   }
@@ -98,6 +102,7 @@ export class IniciativeDetailComponent {
     this.difusions = iniciative.diffusions;
     this.odsList = iniciative.ods;
     this.academicYear = iniciative.schoolYear;
+    this.externalEntities = iniciative.externalEntities
 
 
     //visualización
@@ -131,8 +136,7 @@ export class IniciativeDetailComponent {
       name: d.name,
       modulesD: this.modules.filter((m) => m.idDegree === d.id).map((m) => {
         return {
-          name: m.name,
-          color: this.generateColor()
+          name: m.name
         }
       }), // Filtra solo los módulos que pertenecen al grado
     }));
@@ -152,6 +156,9 @@ export class IniciativeDetailComponent {
     this.selectedImage = `odsIcons/${idODS}.png`;
   }
 
+  //externo
+  
+
   //gestón de botones
   //eliminar
   deleteIniciative(event: MouseEvent) {
@@ -164,6 +171,12 @@ export class IniciativeDetailComponent {
   editIniciative($event: MouseEvent) {
     $event.preventDefault();
     this.modalService.openModal('form', this.iniciative);
+  }
+
+  //Clonar
+  cloneIniciative($event: MouseEvent) {
+    $event.preventDefault();
+    this.router.navigate(['/clone-iniciativa', this.idIniciative]);
   }
 
   //efectos de visualización

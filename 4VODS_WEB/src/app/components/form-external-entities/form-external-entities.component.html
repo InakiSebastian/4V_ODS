@@ -1,0 +1,114 @@
+<div class="row gy-4 scrollable-container-form">
+    <h5>
+        Entidades externas:
+    </h5>
+    <hr>
+    <div class="row">
+
+        <div class="container row" formArrayName="teachers">
+
+            <div class="col-6" >
+                <div *ngIf="this.restUnSelected.length > 0">
+                    <p>
+                        Entidades que ya han colavorado con Cuatrovientos:
+                    </p>
+                    <div class="card " id="scrollable-container">
+                        <!-- Header con búsqueda y toggle -->
+                        <div class="card-header d-flex justify-between items-center">
+                            <input type="text" class="form-control" (input)="filterEntities($event)"
+                                placeholder="Buscar profesor..." />
+                            <button class="btn btn-primary ms-2" (click)="toggleShow($event)">
+                                {{ isExpanded ? 'Ocultar' : 'Mostrar' }}
+                            </button>
+                        </div>
+    
+                        <!-- Body con lista y scroll -->
+                        <div class="card-body scrollable-container-form" *ngIf="isExpanded">
+                            <ul class="list-group">
+                                <li class="list-group-item bg-success bg-opacity-25" *ngIf="filtredEntities.length != 0">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            Seleccionar todos
+                                        </div>
+    
+                                        <div class="col-2">
+                                            <img src="generic-icons/plus-circle-fill.svg" alt="" style="height: 100%;"
+                                                (click)="addEntity(null)">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item" *ngFor="let extEnt of filtredEntities">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            {{ extEnt.name }}
+                                        </div>
+    
+                                        <div class="col-2">
+                                            <img src="generic-icons/plus-circle-fill.svg" alt="" style="height: 100%;"
+                                                (click)="addEntity(extEnt.id)">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <p *ngIf="filtredEntities.length == 0">
+                                No hay entidades con el segmento de nombre buscado
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="restUnSelected.length == 0">
+                    No hay más entidades que hayan colaborado con Cuatrovientos
+                </div>
+                <hr>
+                <p class="mt-3">
+                    Formulario para añadir una entidad nueva:
+                </p>
+                <div class="card">
+                    <div class="card-header">
+                        Nueva Entidad externa
+                    </div>
+                    <div class="card-body d-flex justify-between items-center">
+                        <input type="text" class="form-control" id="name" name="name"
+                            placeholder="Nombre de la entidad externa" autocomplete="on" [(ngModel)]="name">
+
+                        <button class="btn btn-primary ms-3" (click)="createEntity($event)">Crear</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <label class="form-label fs-5 fw-bold">Profesores seleccionados:</label>
+                <ul class="list-group w-100" style="width: 100%;">
+                    <li class="list-group-item bg-danger bg-opacity-25 w-100"
+                        *ngIf="externalEntities!=null && externalEntities.length > 0" style="width: 100%;">
+                        <div class="row">
+                            <div class="col-10">
+                                Eliminar todos
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-close" (click)="removeTeacher($event, null)"
+                                    style="margin-left: auto;"></button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item" *ngFor="let extEnt of externalEntities">
+
+                        <div class="row">
+                            <div class="col-10">
+                                {{ extEnt.name }}
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-close" (click)="removeTeacher($event, extEnt.id)"
+                                    style="margin-left: auto;"></button>
+                            </div>
+                        </div>
+
+                    </li>
+                </ul>
+                <p *ngIf="this.externalEntities.length == 0">
+                    No hay profesores seleccionados
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

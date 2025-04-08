@@ -25,11 +25,12 @@ import { ValidatorService } from '../../services/validator.service';
 import { TeacherService } from '../../services/teacher.service';
 import { NewIniciative } from '../../model/new-iniciative';
 import { ExternalEntity } from '../../model/external-entity';
+import { FormExternalEntitiesComponent } from '../form-external-entities/form-external-entities.component';
 
 
 @Component({
   selector: 'app-form-add-iniciative',
-  imports: [ReactiveFormsModule, FormsModule, FormDetailsComponent, FormAcademicComponent, FormOdsComponent, FormDifusionComponent, IniciativeCreatedModalComponent],
+  imports: [FormExternalEntitiesComponent, ReactiveFormsModule, FormsModule, FormDetailsComponent, FormAcademicComponent, FormOdsComponent, FormDifusionComponent, IniciativeCreatedModalComponent],
   templateUrl: './form-add-iniciative.component.html',
   styleUrl: './form-add-iniciative.component.scss'
 })
@@ -55,6 +56,7 @@ export class FormAddIniciativeComponent {
   detailsI: (IDetails | null) = null;
   academicI: (IFourWinds | null) = null;
   difusionI: (IRrss | null) = null;
+  externalsI: ExternalEntity[] = [];
 
   isFormValid = false;
 
@@ -92,6 +94,8 @@ export class FormAddIniciativeComponent {
       this.difusionI = {
         rrss: this.iniciative.diffusions
       }
+
+      this.externalsI = this.iniciative.externalEntities
 
       this.odsService.setSelectedOds(this.iniciative.ods);
       this.goalService.setSelectedGoals(this.iniciative.goals);
