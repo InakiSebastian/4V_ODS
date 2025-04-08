@@ -3,10 +3,11 @@ import { ExternalEntity } from '../../model/external-entity';
 import { CommonModule } from '@angular/common';
 import { ExternalEntitiesService } from '../../services/external-entities.service';
 import { FormsModule } from '@angular/forms';
+import { LoaderComponent } from '../loader/loader.component';
 
 @Component({
   selector: 'app-form-external-entities',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LoaderComponent],
   templateUrl: './form-external-entities.component.html',
   styleUrl: './form-external-entities.component.scss'
 })
@@ -20,10 +21,13 @@ export class FormExternalEntitiesComponent {
   isExpanded: boolean = true;
   serched: string = '';
 
+  isLoading: boolean = false
+
   //formulario para crear
   name: string = '';
 
   constructor(private externalEntitiesService: ExternalEntitiesService) {
+    this.isLoading = true
     if (this.externalEntities==null || this.externalEntities == undefined) {
       this.externalEntities = [];
     }
@@ -33,7 +37,8 @@ export class FormExternalEntitiesComponent {
     this.allEntities = await this.externalEntitiesService.getExternalEntities();
 
     this.filterEntities(null)
-    this.setRestUnSelected()
+    this.setRestUnSelected();
+    this.isLoading = false
   }
 
   toggleShow(event: Event) {

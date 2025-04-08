@@ -36,6 +36,5 @@ export class FormDetailsComponent {
     } else if (endOrStart === 'end') {
       this.details!.endDate = new Date(event.target.value);
     }
-    alert(this.details!.startDate + ' editando ' + this.details!.endDate);
   }
 }

@@ -3,17 +3,16 @@ import { FormsModule } from '@angular/forms';
 import { CompliteIniciative } from '../../model/complite-iniciative';
 import { IniciativeService } from '../../services/iniciative.service';
 import { CommonModule } from '@angular/common';
-import { Teacher } from '../../model/teacher';
 import { Degree } from '../../model/degree';
 import { DegreeService } from '../../services/degree.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '../../services/modal.service';
 import { NewIniciative } from '../../model/new-iniciative';
-import { ExternalEntity } from '../../model/external-entity';
+import { LoaderComponent } from '../loader/loader.component';
 
 @Component({
   selector: 'app-clone-iniciativa',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, LoaderComponent],
   templateUrl: './clone-iniciativa.component.html',
   styleUrl: './clone-iniciativa.component.scss'
 })
@@ -31,7 +30,9 @@ export class CloneIniciativaComponent {
 
   degrees: Degree[] = [];
 
-  constructor(private route: ActivatedRoute, private modalService: ModalService, private iniciativeService: IniciativeService, private degreeService: DegreeService, private router: Router) {}
+  isLoading: boolean = false;
+
+  constructor(private route: ActivatedRoute, private modalService: ModalService, private iniciativeService: IniciativeService, private degreeService: DegreeService, private router: Router) {this.isLoading = true;}
 
   async ngOnInit(){
     this.iniciatives = await this.iniciativeService.getCompliteIniciativas();
@@ -42,6 +43,7 @@ export class CloneIniciativaComponent {
         this.selectIniciative();
       }
     });
+    this.isLoading = false
   }
 
   create(){
