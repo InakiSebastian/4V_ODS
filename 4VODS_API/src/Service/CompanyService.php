@@ -5,6 +5,7 @@ namespace App\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Company;
 use App\Model\NewCompanyDTO;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class CompanyService
 {
 
-    public function __construct(private EntityManagerInterface $entityManager, private ValidatorInterface $validator)
+    public function __construct(private EntityManagerInterface $entityManager, private ValidatorInterface $validator, private LoggerInterface $logger)
     {
         $this->entityManager = $entityManager;
     }
@@ -38,7 +39,7 @@ class CompanyService
     {
 
         $errors = $this->validator->validate($dto);
-
+        $this->logger->info(sprintf("%s", $dto));
         if (count($errors) > 0) {
             throw new BadRequestHttpException(implode(', ', array_map(fn($e) => $e->getMessage(), iterator_to_array($errors))));
         }

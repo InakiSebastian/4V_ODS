@@ -135,7 +135,7 @@ class IniciativeService
 
 
             $iniciativeDTO['goals'][] = [
-                'id' => $goal->getId(),
+                'id' => $goal->getIdGoal()->getId(),
                 'description' => $goal->getIdGoal()->getDescription(),
                 'ods' => $goal->getIdGoal()->getIdOds()->getId()
             ];
@@ -234,7 +234,7 @@ class IniciativeService
 
 
                 $iniciativeDTO['goals'][] = [
-                    'id' => $goal->getId(),
+                    'id' => $goal->getIdGoal()->getId(),
                     'description' => $goal->getIdGoal()->getDescription(),
                     'ods' => $goal->getIdGoal()->getIdOds()->getId()
                 ];
