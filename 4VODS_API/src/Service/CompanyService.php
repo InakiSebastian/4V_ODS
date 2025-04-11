@@ -104,4 +104,14 @@ class CompanyService
         return true;
     }
 
+    public function getCompany(int $id)
+    {
+        $company = $this->entityManager->getRepository(Company::class)->find($id);
+
+        if (!$company) {
+            return false;
+        }
+
+        return $this->toDTO($company);
+    }
 }

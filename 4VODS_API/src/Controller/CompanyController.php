@@ -15,14 +15,14 @@ class CompanyController extends AbstractController
 {
     public function __construct(private CompanyService $companyService) {}
 
-    #[Route('/', name: 'get_all', methods: ['GET'])]
+    #[Route('', name: 'get_all', methods: ['GET'])]
     public function getListCompanies(): JsonResponse
     {
         $companies = $this->companyService->getAllCompanies();
         return $this->json($companies);
     }
 
-    #[Route('/', name: 'createCompany', methods: ['POST'])]
+    #[Route('', name: 'createCompany', methods: ['POST'])]
     public function createCompany(#[MapRequestPayload] NewCompanyDTO $newCompany): JsonResponse
     {
         $company = $this->companyService->createCompany($newCompany);
@@ -42,8 +42,18 @@ class CompanyController extends AbstractController
     {
         $deleted = $this->companyService->deleteCompany($id);
         if (!$deleted) {
-            return $this->json(['message' => 'Iniciative not found'], 404);
+            return $this->json(['message' => 'Company not found'], 404);
         }
-        return $this->json(['message' => 'Iniciative deleted'], 200);
+        return $this->json(['message' => 'Company deleted'], 200);
+    }
+
+    #[Route('/{id}', name: 'get_company', methods: ['GET'])]
+    public function getCompany(int $id): JsonResponse
+    {
+        $company = $this->companyService->getCompany($id);
+        if (!$company) {
+            return $this->json(['message' => 'Company not found'], 404);
+        }
+        return $this->json($company);
     }
 }
