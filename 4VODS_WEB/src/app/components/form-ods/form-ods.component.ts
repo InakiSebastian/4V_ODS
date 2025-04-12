@@ -25,7 +25,7 @@ export class FormOdsComponent {
 
   async ngOnInit() {
     this.odsList = await this.odsService.getOds();
-    this.goalList = await this.goalService.getGoals();  
+    this.goalList = await this.goalService.getGoals();
     
     this.odsForm = this.fb.group({
       odsList: this.fb.array([]),
@@ -33,6 +33,8 @@ export class FormOdsComponent {
       allOdsSelected: [false],
       allGoalsSelected: [false]
     });
+
+      
 
     let formOdsList = this.odsForm.get('odsList') as FormArray;
     
