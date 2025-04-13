@@ -283,13 +283,16 @@ class IniciativeService
         $iniciative->setName($dto->getName());
         $iniciative->setDescription($dto->getDescription());
         $iniciative->setStartDate($dto->getStartDate());
-        $iniciative->setEndDate($dto->getEndDate());
+        if ($dto->getEndDate()) {
+            $iniciative->setEndDate($dto->getEndDate());
+        } 
         $iniciative->setHours($dto->getHours());
         $iniciative->setSchoolYear($dto->getSchoolYear());
         $iniciative->setInnovative($dto->getInnovative());
         $iniciative->setType($dto->getType());
 
         $this->entityManager->persist($iniciative);
+        //SE PASAN ODS PERO NO ES NECESARIO PORQUE RELACIONAMOS A PARTIR DE LAS GOALS
 
         $teachers = [];
         foreach ($dto->getTeachers() as $teacherId) {
@@ -304,19 +307,7 @@ class IniciativeService
             }
         }
 
-        $companies = [];
-        foreach ($dto->getCompanies() as $companyId) {
-            $company = $this->entityManager->getRepository(Company::class)->find($companyId);
-            if ($company) {
-                $companyIniciative = new CompanyIniciative();
-                $companyIniciative->setIdCompany($company);
-                $companyIniciative->setIdIniciative($iniciative);
-                $this->entityManager->persist($companyIniciative);
-                $iniciative->addCompanyIniciative($companyIniciative);
-                $companies[] = ['id' => $company->getId(), 'name' => $company->getName()];
-            }
-        }
-
+        
         $modules = [];
         foreach ($dto->getModules() as $moduleId) {
             $module = $this->entityManager->getRepository(Module::class)->find($moduleId);
@@ -347,6 +338,34 @@ class IniciativeService
             }
         }
 
+        $companies = [];
+        foreach ($dto->getCompanies() as $companyId) {
+            $company = $this->entityManager->getRepository(Company::class)->find($companyId);
+            if ($company) {
+                $companyIniciative = new CompanyIniciative();
+                $companyIniciative->setIdCompany($company);
+                $companyIniciative->setIdIniciative($iniciative);
+                $this->entityManager->persist($companyIniciative);
+                $iniciative->addCompanyIniciative($companyIniciative);
+                $companies[] = ['id' => $company->getId(), 'name' => $company->getName()];
+            }
+        }
+
+        $diffusions = $dto->getDiffusions();
+        foreach ($diffusions as $diffusion) {
+            $newDiffusion = new Diffusion();
+            $newDiffusion->setType($diffusion['type']);
+            $newDiffusion->setLink($diffusion['link']);
+            $newDiffusion->setIniciative($iniciative);
+            $this->entityManager->persist($newDiffusion);
+            $iniciative->addDiffusion($newDiffusion);
+        }
+        $this->entityManager->persist($iniciative);
+
+
+
+     
+
         $this->entityManager->flush();
 
         return [
@@ -362,7 +381,12 @@ class IniciativeService
             'teachers' => $teachers,
             'companies' => $companies,
             'modules' => $modules,
-            'goals' => $goals
+            'goals' => $goals,
+            'diffusions' => $iniciative->getDiffusions()->map(fn($diffusion) => [
+                'idDiffusion' => $diffusion->getId(),
+                'type' => $diffusion->getType(),
+                'link' => $diffusion->getLink()
+            ])->toArray()
         ];
     }
 
