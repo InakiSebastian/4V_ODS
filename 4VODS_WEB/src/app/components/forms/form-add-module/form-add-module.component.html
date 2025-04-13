@@ -10,23 +10,38 @@
                 <form action="" [formGroup]="moduleForm" (ngSubmit)="submit()">
                     <div class="mb-3">
                         <label for="moduleName" class="form-label">Nombred el módulo</label>
-                        <input type="text" class="form-control" id="moduleName" aria-describedby="módulo">
+                        <input type="text" class="form-control" id="moduleName" aria-describedby="módulo" formControlName="name">
+                        @if(moduleForm.get('name')?.invalid && (moduleForm.get('name')?.dirty || moduleForm.get('name')?.touched)) {
+                            <div class="alert alert-danger p-2" role="alert">
+                                El nombre del módulo es obligatorio.
+                            </div>
+                        }
                     </div>
 
                     <div class="mb-3">
                         <label for="degree" class="form-label">Ciclo</label>
-                        <select type="text" class="form-select" id="degree" aria-describedby="ciclo">
+                        <select type="text" class="form-select" id="degree" aria-describedby="ciclo" formControlName="degree">
                             @for(degree of degreeList; track $index){
                             <option value="{{degree.id}}">{{degree.name}}</option>
                             }
                         </select>
+                        @if(moduleForm.get('degree')?.invalid && (moduleForm.get('degree')?.dirty || moduleForm.get('degree')?.touched)) {
+                            <div class="alert alert-danger p-2" role="alert">
+                                El ciclo es obligatorio.
+                            </div>
+                        }
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        @if(moduleForm.valid) {
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                        } @else {
+                            <button type="submit" class="btn btn-primary" disabled>Guardar</button>
+                        }
                     </div>
                 </form>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>

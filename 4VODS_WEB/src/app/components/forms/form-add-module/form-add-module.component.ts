@@ -26,5 +26,11 @@ export class FormAddModuleComponent {
     this.degreeList = await this.degreeService.getDegrees();
   }
 
-  submit(){}
+  submit(){
+    if (this.moduleForm.valid) {
+      console.log(this.moduleForm.value);
+      this.moduleForm.reset();
+      alert("¡Módulo agregado correctamente!");
+    }
+  }
 }
