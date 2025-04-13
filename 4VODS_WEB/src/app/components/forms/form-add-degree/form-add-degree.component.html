@@ -1,32 +1,56 @@
 <div class="modal" id="addDegreeModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered custom-modal-dialog">
+        <div class="modal-content custom-modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Añade un Ciclo</h5>
+                <h5 class="modal-title">Gestión de Ciclos</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="reset()"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body overflow-auto">
 
-                <form action="" [formGroup]="degreeForm" (ngSubmit)="submit()">
-                    <div class="mb-3">
-                        <label for="degreeName" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="degreeName" aria-describedby="ciclo" formControlName="name">
-                        @if(degreeForm.get('name')?.invalid && (degreeForm.get('name')?.dirty || degreeForm.get('name')?.touched)) {
-                            <div class="alert alert-danger p-2" role="alert">
-                                El nombre del ciclo es obligatorio.
+                <div class="row">
+                    <div class="col-7">
+                        <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Cant. Módulos</th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody class="scrollable-tbody-form">
+                              <tr *ngFor="let degree of degrees" >
+                                <td>{{degree.name}}</td>
+                                <td>{{getModulesCount(degree.id)}}</td>
+                                <td><img src="generic-icons/pencil.svg" alt="edit" class="pointer" (click)="setEditMode(degree.id)    "></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                    <div class="col-5">
+                        <h5 class="modal-title">{{editMode ? 'Editar Ciclo' : 'Crear Ciclo'}}</h5>
+                        <hr>
+                        <form action="" [formGroup]="degreeForm" (ngSubmit)="submit()">
+                            <div class="mb-3">
+                                <label for="degreeName" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="degreeName" aria-describedby="ciclo" formControlName="name">
+                                @if(degreeForm.get('name')?.invalid && (degreeForm.get('name')?.dirty || degreeForm.get('name')?.touched)) {
+                                    <div class="alert alert-danger p-2" role="alert">
+                                        El nombre del ciclo es obligatorio.
+                                    </div>
+                                }
                             </div>
-                        }
+        
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" (click)="reset()">{{editMode ? 'Cancelar' : 'Limpiar'}}</button>
+                                @if(degreeForm.valid) {
+                                    <button type="submit" class="btn btn-primary">{{editMode ? 'Editar' : 'Crear'}}</button>
+                                } @else {
+                                    <button type="submit" class="btn btn-primary" disabled>{{editMode ? 'Editar' : 'Crear'}}</button>
+                                }
+                            </div>
+                        </form>
                     </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()">Close</button>
-                        @if(degreeForm.valid) {
-                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
-                        } @else {
-                            <button type="submit" class="btn btn-primary" disabled>Guardar</button>
-                        }
-                    </div>
-                </form>
+                </div>
 
             </div>
         </div>

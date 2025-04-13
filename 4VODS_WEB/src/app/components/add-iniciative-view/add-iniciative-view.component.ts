@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormAddIniciativeComponent } from '../form-add-iniciative/form-add-iniciative.component';
 import { CommonModule } from '@angular/common';
-import { CloneIniciativaComponent } from '../clone-iniciativa/clone-iniciativa.component';
+import { CloneIniciativaComponent } from '../form-create-edit/clone-iniciativa/clone-iniciativa.component';
 
 @Component({
   selector: 'app-add-iniciative-view',

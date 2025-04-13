@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IDetails } from '../form-add-iniciative/interfaces/details.interface';
-import { FormatDatePipe } from '../../pipes/format-date.pipe';
+import { IDetails } from '../../form-add-iniciative/interfaces/details.interface';
 
 @Component({
   selector: 'app-form-details',

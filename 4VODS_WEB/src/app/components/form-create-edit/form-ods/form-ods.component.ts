@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Ods } from '../../model/ods';
-import { Goal } from '../../model/goal';
-import { OdsService } from '../../services/ods.service';
-import { GoalService } from '../../services/goal.service';
-import { LoaderComponent } from '../loader/loader.component';
 import { CommonModule } from '@angular/common';
+import { Goal } from '../../../model/goal';
+import { Ods } from '../../../model/ods';
+import { GoalService } from '../../../services/goal.service';
+import { OdsService } from '../../../services/ods.service';
+import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   selector: 'app-form-ods',

@@ -4,6 +4,7 @@ import { FormAddDegreeComponent } from '../../forms/form-add-degree/form-add-deg
 import { FormAddModuleComponent } from '../../forms/form-add-module/form-add-module.component';
 import { FormAddOdsComponent } from "../../forms/form-add-ods/form-add-ods.component";
 import { FormAddGoalComponent } from "../../forms/form-add-goal/form-add-goal.component";
+import { ModalComponent } from '../../modals/modal/modal.component';
 
 @Component({
   selector: 'app-external-entities-page',

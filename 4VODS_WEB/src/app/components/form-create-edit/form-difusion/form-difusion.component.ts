@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IRrss } from '../form-add-iniciative/interfaces/rrss.interface';
-import { Difusion } from '../../model/difusion';
+import { Difusion } from '../../../model/difusion';
+import { IRrss } from '../../form-add-iniciative/interfaces/rrss.interface';
 
 @Component({
   selector: 'app-form-difusion',
