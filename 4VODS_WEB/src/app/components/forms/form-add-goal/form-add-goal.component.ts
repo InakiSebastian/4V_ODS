@@ -17,12 +17,12 @@ export class FormAddGoalComponent {
   constructor(private fb: FormBuilder, private odsService: OdsService){}
 
   async ngOnInit() {
-    this.odsList = await this.odsService.getOds();
-
     this.goalForm = this.fb.group({
       name: ['', Validators.required],
       ods: ['', Validators.required],
     });
+    
+    this.odsList = await this.odsService.getOds();
   }
 
   submit(){}

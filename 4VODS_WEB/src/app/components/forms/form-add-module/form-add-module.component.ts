@@ -18,12 +18,12 @@ export class FormAddModuleComponent {
   constructor(private fb: FormBuilder, private degreeService: DegreeService){}
 
   async ngOnInit() {
-    this.degreeList = await this.degreeService.getDegrees();
-
     this.moduleForm = this.fb.group({
       name: ['', Validators.required],
       degree: ['', Validators.required],
     });
+    
+    this.degreeList = await this.degreeService.getDegrees();
   }
 
   submit(){}

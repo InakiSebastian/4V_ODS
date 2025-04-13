@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModuleService } from '../../../services/module.service';
 import { Module } from '../../../model/module';
 
@@ -18,13 +18,19 @@ export class FormAddTeacherComponent {
   constructor(private fb: FormBuilder, private moduleService: ModuleService){}
 
   async ngOnInit() {
-    this.moduleList = await this.moduleService.getModules();
-
     this.teacherForm = this.fb.group({
-      name: ['', Validators.required],
-      module: ['', Validators.required],
+      name: new FormControl ('', [Validators.required]),
+      module: new FormControl ('', [Validators.required]),
     });
+    
+    this.moduleList = await this.moduleService.getModules();
   }
 
-  submit(){}
+  submit(){
+    if (this.teacherForm.invalid) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+    console.log(this.teacherForm.value);
+  }
 }

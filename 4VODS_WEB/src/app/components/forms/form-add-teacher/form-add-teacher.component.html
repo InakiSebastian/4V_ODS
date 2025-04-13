@@ -10,23 +10,24 @@
                 <form action="" [formGroup]="teacherForm" (ngSubmit)="submit()">
                     <div class="mb-3">
                         <label for="teacherName" class="form-label">Nombre del docente</label>
-                        <input type="text" class="form-control" id="teacherName" aria-describedby="nombreProfesor">
+                        <input type="text" class="form-control" id="teacherName" aria-describedby="nombreProfesor" formControlName="name">
                     </div>
 
                     <div class="mb-3">
                         <label for="module" class="form-label">Módulo</label>
-                        <select type="text" class="form-select" id="module" aria-describedby="módulo">
+                        <select type="text" class="form-select" id="module" aria-describedby="módulo" formControlName="module">
                             @for(module of moduleList; track $index){
                             <option value="{{module.id}}">{{module.name}}</option>
                             }
                         </select>
                     </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
                 </form>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
