@@ -60,15 +60,15 @@ class OdsService
         $this->entityManager->flush();
 
 
-        foreach ($dto->getGoals() as $goalDescription) {
+        // foreach ($dto->getGoals() as $goalDescription) {
 
-            $goal = new Goal();
-            $goal->setDescription($goalDescription);
-            $goal->setIdOds($newODS);
-            $this->entityManager->persist($goal);
-        }
+        //     $goal = new Goal();
+        //     $goal->setDescription($goalDescription);
+        //     $goal->setIdOds($newODS);
+        //     $this->entityManager->persist($goal);
+        // }
 
-        $this->entityManager->flush();
+        // $this->entityManager->flush();
 
 
         $companyDTO = $this->toDTO($newODS);
