@@ -33,4 +33,8 @@ export class FormAddModuleComponent {
       alert("¡Módulo agregado correctamente!");
     }
   }
+
+  reset(){
+    this.moduleForm.reset();
+  }
 }

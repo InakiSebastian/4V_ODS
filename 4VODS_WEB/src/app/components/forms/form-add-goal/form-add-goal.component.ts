@@ -32,4 +32,8 @@ export class FormAddGoalComponent {
       alert("¡Profesor agregado correctamente!");
     }
   }
+
+  reset(){
+    this.goalForm.reset();
+  }
 }

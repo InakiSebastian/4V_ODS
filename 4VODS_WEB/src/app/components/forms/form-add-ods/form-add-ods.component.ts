@@ -25,4 +25,8 @@ export class FormAddOdsComponent {
       alert("¡Ods agregado correctamente!");
     }
   }
+
+  reset(){
+    this.odsForm.reset();
+  }
 }

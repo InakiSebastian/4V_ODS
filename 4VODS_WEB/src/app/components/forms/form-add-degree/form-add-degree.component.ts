@@ -26,4 +26,8 @@ export class FormAddDegreeComponent {
       alert("¡Ciclo agregado correctamente!");
     }
   }
+
+  reset(){
+    this.degreeForm.reset();
+  }
 }

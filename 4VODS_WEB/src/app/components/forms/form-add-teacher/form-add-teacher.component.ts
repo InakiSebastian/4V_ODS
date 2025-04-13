@@ -34,4 +34,8 @@ export class FormAddTeacherComponent {
     }
     
   }
+
+  reset(){
+    this.teacherForm.reset();
+  }
 }
