@@ -18,5 +18,11 @@ export class FormAddOdsComponent {
     });
   }
 
-  submit(){}
+  submit(){
+    if (this.odsForm.valid) {
+      console.log(this.odsForm.value);
+      this.odsForm.reset();
+      alert("¡Ods agregado correctamente!");
+    }
+  }
 }
