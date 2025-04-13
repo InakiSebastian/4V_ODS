@@ -10,14 +10,24 @@
                 <form action="" [formGroup]="degreeForm" (ngSubmit)="submit()">
                     <div class="mb-3">
                         <label for="degreeName" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="degreeName" aria-describedby="ciclo">
+                        <input type="text" class="form-control" id="degreeName" aria-describedby="ciclo" formControlName="name">
+                        @if(degreeForm.get('name')?.invalid && (degreeForm.get('name')?.dirty || degreeForm.get('name')?.touched)) {
+                            <div class="alert alert-danger p-2" role="alert">
+                                El nombre del ciclo es obligatorio.
+                            </div>
+                        }
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        @if(degreeForm.valid) {
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                        } @else {
+                            <button type="submit" class="btn btn-primary" disabled>Guardar</button>
+                        }
                     </div>
                 </form>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>

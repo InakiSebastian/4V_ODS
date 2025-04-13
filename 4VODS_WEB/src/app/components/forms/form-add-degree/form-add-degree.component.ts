@@ -19,5 +19,11 @@ export class FormAddDegreeComponent {
     });
   }
 
-  submit(){}
+  submit(){
+    if (this.degreeForm.valid) {
+      console.log(this.degreeForm.value);
+      this.degreeForm.reset();
+      alert("¡Ciclo agregado correctamente!");
+    }
+  }
 }
