@@ -204,7 +204,7 @@ export class FormAddIniciativeComponent {
     const newOds: Ods[] = [];
     this.selectedOds?.forEach(ods => {
       console.log(ods.id + ' ' + ods.description);
-      newOds.push(new Ods(ods.id,1, ods.Description));
+      newOds.push(new Ods(ods.id, "social", ods.description));
     });
 
     // //Metas

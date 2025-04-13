@@ -34,12 +34,13 @@ export class FormAddDegreeComponent {
     
   }
 
-  submit(){
+  async submit(){
     if (this.degreeForm.valid) {
       if(!this.editMode){
         console.log(this.degreeForm.value);
         alert("¡Ciclo agregado correctamente!");
-        this.degrees.push(new Degree(this.degrees.length + 1, this.degreeForm.value.name)); //añadir el ide que devulva cuando cree
+        const degree = await this.degreeService.createDegree(new Degree(-1, this.degreeForm.value.name));
+        this.degrees.push(degree); 
         this.degreeForm.reset();
       }
       else{

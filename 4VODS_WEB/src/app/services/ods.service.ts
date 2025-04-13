@@ -27,8 +27,18 @@ export class OdsService {
     ).then((response) => response.body as Ods[]);
   }
 
+  createODS(ods: Ods) {
+      return firstValueFrom(
+      this.http
+        .post<Ods>('http://127.0.0.1:8000/ods', ods, {
+          headers: this.headers,
+          observe: 'response',
+        })
+      ).then(response => response.body as Ods);
+    }
+
   async getOdsById(id: number): Promise<number | undefined> {
-    return (await this.getOds()).find((o) => o.Id === id)?.Id;
+    return (await this.getOds()).find((o) => o.id === id)?.id;
   }
 
   //SelectedOds
@@ -41,7 +51,7 @@ export class OdsService {
   }
 
   removeSelectedOds(id: number): Ods[] {
-    return (this.selectedOds = this.selectedOds.filter((ods) => ods.Id !== id));
+    return (this.selectedOds = this.selectedOds.filter((ods) => ods.id !== id));
   }
 
   clearSelectedOds(): Ods[] {

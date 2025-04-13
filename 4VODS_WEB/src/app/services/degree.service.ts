@@ -22,6 +22,16 @@ export class DegreeService {
     ).then((response) => response.body as Degree[]);
   }
 
+  createDegree(degree: Degree) {
+      return firstValueFrom(
+      this.http
+        .post<Degree>('http://127.0.0.1:8000/degree', degree, {
+          headers: this.headers,
+          observe: 'response',
+        })
+      ).then(response => response.body as Degree);
+    }
+
   async getDegreeById(degreeSelect: number) {
     return (await this.getDegrees()).filter(
       (degree) => degree.id == degreeSelect

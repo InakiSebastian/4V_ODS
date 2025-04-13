@@ -13,8 +13,6 @@ class NewOdsDTO
         #[Assert\NotBlank(message: "El nombre del ODS es obligatorio")]
         private string $description,
 
-        private array $goals,
-
         #[Assert\NotBlank(message: "La dimensión es obligatorio")]
         private string $dimension,
     ) {}
@@ -27,18 +25,6 @@ class NewOdsDTO
     public function setDescription(string $description): void
     {
         $this->description = $description;
-    }
-
-
-
-    public function getGoals(): array
-    {
-        return $this->goals;
-    }
-
-    public function setGoals(array $goals): void
-    {
-        $this->goals = $goals;
     }
 
 

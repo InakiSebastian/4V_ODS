@@ -69,7 +69,7 @@ export class FilterComponent {
   }
 
   parseToCheckObject(ods: Ods[] = this.odsList) {
-    this.selectedOds = ods.map(ods => new OdsCheckbox(ods.id, ods.idDimension, ods.Description, false));
+    this.selectedOds = ods.map(ods => new OdsCheckbox(ods.id, ods.dimension, ods.description, false));
   }
 
   toggleAdvancedFilters() {
@@ -88,14 +88,14 @@ export class FilterComponent {
   }
 
   filterOds() {
-    if (this.dimensions.every(dimension => !dimension.value)) {
-      this.filtredOds = this.odsList;
-    } else {
-      this.filtredOds = this.odsList.filter(ods =>
-        this.dimensions.some(dim => dim.value && dim.id === ods.idDimension)
-      );
-      this.filtredOds.sort((a, b) => a.IdDimension - b.IdDimension);
-    }
+    //if (this.dimensions.every(dimension => !dimension.value)) {
+    //  this.filtredOds = this.odsList;
+    //} else {
+    //  this.filtredOds = this.odsList.filter(ods =>
+    //    //this.dimensions.some(dim => dim.value && dim.id === ods.dimension) TODO NO FUNCIONA POR QUE SE HA CAMBIADO DE idDimension a dimension ( el nombre de la dimension)
+    //  );
+    //  
+    //}
     
     
 
@@ -163,7 +163,7 @@ export class FilterComponent {
 class OdsCheckbox {
   constructor(
     public id: number,
-    public idDim: number,
+    public dimension: string,
     public name: string,
     public selected: boolean
   ) {}

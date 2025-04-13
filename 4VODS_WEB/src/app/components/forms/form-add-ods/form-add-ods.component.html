@@ -18,6 +18,21 @@
                         }
                     </div>
 
+                    <div class="mb-3">
+                        <label for="odsDimension" class="form-label">Dimensión del Ods</label>
+                        <select class="form-select" id="odsDimension" formControlName="dimension">
+                        <option value="" disabled selected>Selecciona una dimensión</option>
+                        <option [value]="dim.name" *ngFor="let dim of dimensions">{{ dim.name }}</option>
+
+                        </select>
+                        @if(odsForm.get('dimension')?.invalid && (odsForm.get('dimension')?.dirty || odsForm.get('dimension')?.touched)) {
+                          <div class="alert alert-danger p-2" role="alert">
+                            La dimensión es obligatoria.
+                          </div>
+                        }
+                      </div>
+                      
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()">Close</button>
                         @if(odsForm.valid) {
