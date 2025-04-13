@@ -1,23 +1,23 @@
-<div class="modal" id="addTeacherModal" tabindex="-1">
+<div class="modal" id="addGoalModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Añade un Docente</h5>
+                <h5 class="modal-title">Añade una Meta</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
-                <form action="" [formGroup]="teacherForm" (ngSubmit)="submit()">
+                <form action="" [formGroup]="goalForm" (ngSubmit)="submit()">
                     <div class="mb-3">
-                        <label for="teacherName" class="form-label">Nombre del docente</label>
-                        <input type="text" class="form-control" id="teacherName" aria-describedby="nombreProfesor">
+                        <label for="goalName" class="form-label">Nombre de la meta</label>
+                        <input type="text" class="form-control" id="goalName" aria-describedby="nombreMeta">
                     </div>
 
                     <div class="mb-3">
-                        <label for="module" class="form-label">Módulo</label>
-                        <select type="text" class="form-select" id="module" aria-describedby="módulo">
-                            @for(module of moduleList; track $index){
-                            <option value="{{module.id}}">{{module.name}}</option>
+                        <label for="ods" class="form-label">Ods</label>
+                        <select type="text" class="form-select" id="ods" aria-describedby="ods">
+                            @for(ods of odsList; track $index){
+                            <option value="{{ods.id}}">{{ods.description}}</option>
                             }
                         </select>
                     </div>
@@ -31,5 +31,3 @@
         </div>
     </div>
 </div>
-
-

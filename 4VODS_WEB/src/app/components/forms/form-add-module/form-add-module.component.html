@@ -1,5 +1,5 @@
 <div class="modal" id="addModuleModal" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Añade un Módulo</h5>
@@ -9,13 +9,13 @@
 
                 <form action="" [formGroup]="moduleForm" (ngSubmit)="submit()">
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" aria-describedby="nombreProfesor">
+                        <label for="moduleName" class="form-label">Nombred el módulo</label>
+                        <input type="text" class="form-control" id="moduleName" aria-describedby="módulo">
                     </div>
 
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Módulo</label>
-                        <select type="text" class="form-select" id="name" aria-describedby="nombreProfesor">
+                        <label for="degree" class="form-label">Módulo</label>
+                        <select type="text" class="form-select" id="degree" aria-describedby="ciclo">
                             @for(degree of degreeList; track $index){
                             <option value="{{degree.id}}">{{degree.name}}</option>
                             }
