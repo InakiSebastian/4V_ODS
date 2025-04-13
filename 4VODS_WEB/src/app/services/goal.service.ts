@@ -15,8 +15,8 @@ export class GoalService {
   odsList: Ods[] = [];
 
   headers = new HttpHeaders({
-        'Content-Type': 'application/json', // O cualquier otro tipo según el backend
-      });
+    'Content-Type': 'application/json', // O cualquier otro tipo según el backend
+  });
 
   constructor(private odsService: OdsService, private http: HttpClient) {
     this.odsList = this.odsService.getSelectedOds();
@@ -32,11 +32,20 @@ export class GoalService {
           observe: 'response',
         }
       )).then(response => response.body as Goal[]);
+  }
 
+  createGoal(goal: Goal) {
+    return firstValueFrom(
+      this.http
+        .post<Goal>('http://127.0.0.1:8000/goal', goal, {
+          headers: this.headers,
+          observe: 'response',
+        })
+    ).then(response => response.body as Goal);
   }
 
   async getGoalsByOds(idOds: number) {
-    return  (await this.getGoals()).filter(goal => goal.ods === Number(idOds));
+    return (await this.getGoals()).filter(goal => goal.ods === Number(idOds));
   }
 
   //SelectedGoals
@@ -54,7 +63,7 @@ export class GoalService {
     return this.selectedGoals = this.selectedGoals.filter(goal => goal.id !== idGoal || goal.id !== odsId);
   }
 
-  async clearSelectedGoalsByOds(idOds: number): Promise<Goal[]>  {
+  async clearSelectedGoalsByOds(idOds: number): Promise<Goal[]> {
     let odsId: number = await this.odsService.getOdsById(idOds) ?? -1;
 
     return this.selectedGoals = this.selectedGoals.filter(goal => goal.ods !== odsId);

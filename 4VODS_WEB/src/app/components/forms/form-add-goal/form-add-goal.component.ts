@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Ods } from '../../../model/ods';
 import { OdsService } from '../../../services/ods.service';
+import { GoalService } from '../../../services/goal.service';
+import { Goal } from '../../../model/goal';
 
 @Component({
   selector: 'app-form-add-goal',
@@ -14,7 +16,7 @@ export class FormAddGoalComponent {
 
   odsList: Ods[] = [];
 
-  constructor(private fb: FormBuilder, private odsService: OdsService){}
+  constructor(private fb: FormBuilder, private odsService: OdsService, private goalService: GoalService){}
 
   async ngOnInit() {
     this.goalForm = this.fb.group({
@@ -25,8 +27,9 @@ export class FormAddGoalComponent {
     this.odsList = await this.odsService.getOds();
   }
 
-  submit(){
+  async submit(){
     if (this.goalForm.valid) {
+      const goal = await this.goalService.createGoal(new Goal(-1, Number(this.goalForm.value.ods), this.goalForm.value.name));
       console.log(this.goalForm.value);
       this.goalForm.reset();
       alert("¡Profesor agregado correctamente!");

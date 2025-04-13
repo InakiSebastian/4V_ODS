@@ -49,7 +49,7 @@ export class FilterComponent {
     private degreeService: DegreeService,
     private teacherService: TeacherService
   ) {
-    this.parseToCheckObject();
+    
 
     this.modalService.recharge$.subscribe(async () => {
       this.iniciativeList = await this.iniciativeService.getCompliteIniciativas();
@@ -59,6 +59,7 @@ export class FilterComponent {
 
   async ngOnInit() {
     this.odsList = await this.odsService.getOds();
+    this.parseToCheckObject();
     this.teachersList = await this.teacherService.getTeachers();
     this.degreeList = (await this.degreeService.getDegrees()).map(degree => new DegreeCheckbox(degree.id, degree.name));
 
@@ -70,6 +71,7 @@ export class FilterComponent {
 
   parseToCheckObject(ods: Ods[] = this.odsList) {
     this.selectedOds = ods.map(ods => new OdsCheckbox(ods.id, ods.dimension, ods.description, false));
+    console.log("Eestos son los ods", this.selectedOds)
   }
 
   toggleAdvancedFilters() {
