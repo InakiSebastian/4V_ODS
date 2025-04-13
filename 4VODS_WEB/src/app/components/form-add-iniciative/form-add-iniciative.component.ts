@@ -4,10 +4,6 @@ import { IniciativeService } from '../../services/iniciative.service';
 import { Teacher } from '../../model/teacher';
 import { Module } from '../../model/module';
 import { Difusion } from '../../model/difusion';
-import { FormDetailsComponent } from '../form-details/form-details.component';
-import { FormAcademicComponent } from '../form-academic/form-academic.component';
-import { FormOdsComponent } from '../form-ods/form-ods.component';
-import { FormDifusionComponent } from '../form-difusion/form-difusion.component';
 import { OdsService } from '../../services/ods.service';
 import { GoalService } from '../../services/goal.service';
 import { Ods } from '../../model/ods';
@@ -25,7 +21,11 @@ import { ValidatorService } from '../../services/validator.service';
 import { TeacherService } from '../../services/teacher.service';
 import { NewIniciative } from '../../model/new-iniciative';
 import { ExternalEntity } from '../../model/external-entity';
-import { FormExternalEntitiesComponent } from '../form-external-entities/form-external-entities.component';
+import { FormAcademicComponent } from '../form-create-edit/form-academic/form-academic.component';
+import { FormDetailsComponent } from '../form-create-edit/form-details/form-details.component';
+import { FormDifusionComponent } from '../form-create-edit/form-difusion/form-difusion.component';
+import { FormExternalEntitiesComponent } from '../form-create-edit/form-external-entities/form-external-entities.component';
+import { FormOdsComponent } from '../form-create-edit/form-ods/form-ods.component';
 
 
 @Component({

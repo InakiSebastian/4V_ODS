@@ -1,16 +1,17 @@
 // Importaciones necesarias para el componente
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Degree } from '../../model/degree';
-import { DegreeService } from '../../services/degree.service';
-import { IFourWinds } from '../form-add-iniciative/interfaces/4winds.inteface';
-import { Teacher } from '../../model/teacher';
-import { DegreeModules, ModuleCheck, ModuleService } from '../../services/module.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TeacherService } from '../../services/teacher.service';
-import { Module } from '../../model/module';
-import { LoaderComponent } from '../loader/loader.component';
+import { Degree } from '../../../model/degree';
+import { Module } from '../../../model/module';
+import { Teacher } from '../../../model/teacher';
+import { DegreeService } from '../../../services/degree.service';
+import { DegreeModules, ModuleService, ModuleCheck } from '../../../services/module.service';
+import { TeacherService } from '../../../services/teacher.service';
+import { IFourWinds } from '../../form-add-iniciative/interfaces/4winds.inteface';
+import { LoaderComponent } from '../../loader/loader.component';
+
 
 @Component({
   selector: 'app-form-academic',

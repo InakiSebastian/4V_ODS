@@ -8,6 +8,21 @@
         <div class="container row" formArrayName="teachers">
 
             <div class="col-6" >
+                <p class="mt-3">
+                    Formulario para añadir una entidad nueva:
+                </p>
+                <div class="card">
+                    <div class="card-header">
+                        Nueva Entidad externa
+                    </div>
+                    <div class="card-body d-flex justify-between items-center">
+                        <input type="text" class="form-control" id="name" name="name"
+                            placeholder="Nombre de la entidad externa" autocomplete="on" [(ngModel)]="name">
+
+                        <button class="btn btn-primary ms-3" (click)="createEntity($event)">Crear</button>
+                    </div>
+                </div>
+                <hr>
                 <div *ngIf="this.restUnSelected.length > 0">
                     <p>
                         Entidades que ya han colavorado con Cuatrovientos:
@@ -58,21 +73,6 @@
                 </div>
                 <div *ngIf="restUnSelected.length == 0">
                     No hay más entidades que hayan colaborado con Cuatrovientos
-                </div>
-                <hr>
-                <p class="mt-3">
-                    Formulario para añadir una entidad nueva:
-                </p>
-                <div class="card">
-                    <div class="card-header">
-                        Nueva Entidad externa
-                    </div>
-                    <div class="card-body d-flex justify-between items-center">
-                        <input type="text" class="form-control" id="name" name="name"
-                            placeholder="Nombre de la entidad externa" autocomplete="on" [(ngModel)]="name">
-
-                        <button class="btn btn-primary ms-3" (click)="createEntity($event)">Crear</button>
-                    </div>
                 </div>
             </div>
             

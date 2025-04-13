@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { ExternalEntity } from '../../model/external-entity';
 import { CommonModule } from '@angular/common';
-import { ExternalEntitiesService } from '../../services/external-entities.service';
 import { FormsModule } from '@angular/forms';
-import { LoaderComponent } from '../loader/loader.component';
+import { LoaderComponent } from '../../loader/loader.component';
+import { ExternalEntity } from '../../../model/external-entity';
+import { ExternalEntitiesService } from '../../../services/external-entities.service';
+
 
 @Component({
   selector: 'app-form-external-entities',

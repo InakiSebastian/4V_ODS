@@ -4,7 +4,7 @@
     <form class="scrollable-container-form">
         <div class="row m-4">
             <div class="col-5">
-                <label for="iniciative" class="iniciative-label">Curso:</label>
+                <label for="iniciative" class="iniciative-label">Iniciativa:</label>
                 <select class="form-select mt-2" aria-label="Default select" name="iniciative" [(ngModel)]="this.selectedIniciativeId" (change)="selectIniciative()">
                     <option value="-1" selected disabled>Seleccione una iniciativa</option>
                     <option value="{{iniciative.id}}" *ngFor="let iniciative of this.iniciatives">{{iniciative.name}}</option>
@@ -13,7 +13,7 @@
             <div class="col-7">
                 <div class="row mb-3">
                     <div class="col-12 mb-3">
-                        <label for="curso" class="form-label">Nombre del Curso</label>
+                        <label for="curso" class="form-label">Curso</label>
                         <input name="curso" type="text" class="form-control" id="curso" placeholder="Ingrese el nombre del curso" [(ngModel)]="this.schoolYear" required>
                     </div>
                     <div class="col-6">

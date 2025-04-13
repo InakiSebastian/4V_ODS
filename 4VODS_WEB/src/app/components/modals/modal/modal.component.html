@@ -1,6 +1,6 @@
 <!-- Modal personalizado -->
 <div class="custom-modal-overlay " *ngIf="showModal">
-    <div class="modal-content custom-modal-width">
+    <div class="modal-content custom-modal-width" >
         <ng-container *ngIf="contentType === 'detail'">
             <app-iniciative-detail (delete)="delete()"></app-iniciative-detail>
         </ng-container>

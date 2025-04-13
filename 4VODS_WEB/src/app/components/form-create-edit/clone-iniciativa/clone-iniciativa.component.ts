@@ -1,14 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CompliteIniciative } from '../../model/complite-iniciative';
-import { IniciativeService } from '../../services/iniciative.service';
-import { CommonModule } from '@angular/common';
-import { Degree } from '../../model/degree';
-import { DegreeService } from '../../services/degree.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalService } from '../../services/modal.service';
-import { NewIniciative } from '../../model/new-iniciative';
-import { LoaderComponent } from '../loader/loader.component';
+import { CompliteIniciative } from '../../../model/complite-iniciative';
+import { Degree } from '../../../model/degree';
+import { NewIniciative } from '../../../model/new-iniciative';
+import { DegreeService } from '../../../services/degree.service';
+import { IniciativeService } from '../../../services/iniciative.service';
+import { ModalService } from '../../../services/modal.service';
+import { LoaderComponent } from '../../loader/loader.component';
+
 
 @Component({
   selector: 'app-clone-iniciativa',
@@ -68,7 +69,6 @@ export class CloneIniciativaComponent {
       alert('La fecha de inicio no puede ser posterior a la de finalización.');
       return;
     }
-    console.log(1, this.selectedIniciative!.name,this.selectedIniciative!.description, this.startDate, this.endDate, this.selectedIniciative!.hours, sanitizedYear, this.selectedIniciative!.ods, this.selectedIniciative!.type, 1, this.selectedIniciative!.teachers, this.selectedIniciative!.modules, this.selectedIniciative!.diffusions, this.selectedIniciative!.goals, [1])
     this.iniciativeService.addCompliteIniciative(new NewIniciative(1, this.selectedIniciative!.name,this.selectedIniciative!.description, this.startDate, this.endDate, this.selectedIniciative!.hours, sanitizedYear, this.selectedIniciative!.ods.map((o)=>o.id), this.selectedIniciative!.type, 1, this.selectedIniciative!.teachers.map((t)=>t.id), this.selectedIniciative!.modules.map((m)=>m.id), this.selectedIniciative!.diffusions.map((d)=>d.idDiffusion), this.selectedIniciative!.goals.map((g)=>g.id), [1]));
     //TODO: recibir el ide con el que se crea
     this.modalService.openModal('detail', this.selectedIniciative);
