@@ -20,7 +20,7 @@ export class OdsService {
   //Ods
   getOds() {
     return firstValueFrom(
-      this.http.get<Ods[]>('http://127.0.0.1:8000/ods', {
+      this.http.get<Ods[]>('http://127.0.0.1:8000/ods/ods', {
         headers: this.headers,
         observe: 'response',
       })

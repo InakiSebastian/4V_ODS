@@ -22,7 +22,7 @@ export class TeacherService {
   getTeachers() {
     return firstValueFrom(
       this.http.get<Teacher[]>(
-        'http://127.0.0.1:8000/teacher/',
+        'http://127.0.0.1:8000/teacher/teachers',
         {
           headers: this.headers,
           observe: 'response',

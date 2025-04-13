@@ -19,7 +19,7 @@ export class ModuleService {
 
   getModules(): Promise<Module[]> {
     return firstValueFrom(
-      this.http.get<Module[]>('http://127.0.0.1:8000/module', {
+      this.http.get<Module[]>('http://127.0.0.1:8000/module/modules', {
         headers: this.headers,
         observe: 'response',
       })
