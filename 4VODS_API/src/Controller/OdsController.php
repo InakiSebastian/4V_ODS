@@ -16,7 +16,7 @@ class OdsController extends AbstractController
 {
     public function __construct(private OdsService $odsService) {}
 
-    #[Route('', name: 'get_all', methods: ['GET'])]
+    #[Route('/ods', name: 'get_all', methods: ['GET'])]
     public function getListOdss(): JsonResponse
     {
         $odss = $this->odsService->getAllOdss();
