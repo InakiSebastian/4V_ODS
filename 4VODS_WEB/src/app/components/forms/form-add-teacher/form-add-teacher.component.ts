@@ -27,10 +27,11 @@ export class FormAddTeacherComponent {
   }
 
   submit(){
-    if (this.teacherForm.invalid) {
-      alert('Please fill in all required fields.');
-      return;
+    if (this.teacherForm.valid) {
+      console.log(this.teacherForm.value);
+      this.teacherForm.reset();
+      alert("¡Profesor agregado correctamente!");
     }
-    console.log(this.teacherForm.value);
+    
   }
 }
