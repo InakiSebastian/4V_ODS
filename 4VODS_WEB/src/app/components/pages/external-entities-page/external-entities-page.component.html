@@ -5,49 +5,51 @@
 <div class="row mx-0 mt-4 px-5 d-flex justify-content-center gap-5">
 
     <div class="col-2">
-        <div class="card rounded p-0 pointer">
-            <div class="m-4  p-3 rounded bg-light border border border-2 d-flex justify-content-center align-items-center">
+        <div class="card rounded p-0 pointer border-0" data-bs-toggle="modal" data-bs-target="#addTeacherModal">
+            <div class="m-4  p-3 rounded bg-light border d-flex justify-content-center align-items-center">
                 <img src="generic-icons/people.png" alt="" class="img-fluid">
             </div>
             <div class="card-body p-1 text-center">
                 <h5>Docente</h5>
             </div>
         </div>
+
+        <app-form-add-teacher></app-form-add-teacher>
     </div>
 
     <div class="col-2">
-        <div class="card rounded p-0 pointer">
-            <div class="m-4 p-3 rounded bg-light border border border-2 d-flex justify-content-center align-items-center">
+        <div class="card rounded p-0 pointer border-0" data-bs-toggle="modal" data-bs-target="#addDegreeModal">
+            <div class="m-4 p-3 rounded bg-light border d-flex justify-content-center align-items-center">
                 <img src="generic-icons/university.png" alt="" class="img-fluid h-75" >
             </div>
             <div class="card-body p-1 text-center">
                 <h5>Ciclo</h5>
             </div>
         </div>
+
+        <app-form-add-degree></app-form-add-degree>
     </div>
     
     <div class="col-2">
-        <div class="card rounded p-0 pointer">
-            <div class="m-4 p-3 rounded bg-light border border border-2 d-flex justify-content-center align-items-center">
+        <div class="card rounded p-0 pointer border-0" data-bs-toggle="modal" data-bs-target="#addModuleModal">
+            <div class="m-4 p-3 rounded bg-light border d-flex justify-content-center align-items-center">
                 <img src="generic-icons/bookmark.png" alt="" class="img-fluid h-75" >
             </div>
             <div class="card-body p-1 text-center">
                 <h5>Módulo</h5>
             </div>
         </div>
-    </div>
-    
-    
-    
 
-    <!-- <app-form-add-teacher></app-form-add-teacher> -->
+        <app-form-add-module></app-form-add-module>
+    </div>
+
 </div>
 
 <div class="row mx-0 mt-5 mb-5 px-5 d-flex justify-content-center gap-5">
 
     <div class="col-2">
-        <div class="card rounded p-0 pointer">
-            <div class="m-4 p-3 rounded bg-light border border border-2 d-flex justify-content-center align-items-center">
+        <div class="card rounded p-0 pointer border-0">
+            <div class="m-4 p-3 rounded bg-light border d-flex justify-content-center align-items-center">
                 <img src="generic-icons/odsLogo.png" alt="" class="img-fluid h-75" >
             </div>
             <div class="card-body p-1 text-center">
@@ -57,8 +59,8 @@
     </div>
 
     <div class="col-2">
-        <div class="card rounded p-0 pointer">
-            <div class="m-4 p-3 rounded bg-light border border border-2 d-flex justify-content-center align-items-center">
+        <div class="card rounded p-0 pointer border-0">
+            <div class="m-4 p-3 rounded bg-light border d-flex justify-content-center align-items-center">
                 <img src="generic-icons/target.png" alt="" class="img-fluid h-75" >
             </div>
             <div class="card-body p-1 text-center">
@@ -68,3 +70,4 @@
     </div>
     
 </div>
+

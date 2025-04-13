@@ -1,25 +1,16 @@
-<div class="modal" id="addTeacherModal" tabindex="-1">
+<div class="modal" id="addDegreeModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Añade un Docente</h5>
+                <h5 class="modal-title">Añade un Ciclo</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
-                <form action="" [formGroup]="teacherForm" (ngSubmit)="submit()">
+                <form action="" [formGroup]="degreeForm" (ngSubmit)="submit()">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="name" aria-describedby="nombreProfesor">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Módulo</label>
-                        <select type="text" class="form-select" id="name" aria-describedby="nombreProfesor">
-                            @for(module of moduleList; track $index){
-                            <option value="{{module.id}}">{{module.name}}</option>
-                            }
-                        </select>
                     </div>
                 </form>
 
@@ -31,5 +22,3 @@
         </div>
     </div>
 </div>
-
-
