@@ -25,5 +25,11 @@ export class FormAddGoalComponent {
     this.odsList = await this.odsService.getOds();
   }
 
-  submit(){}
+  submit(){
+    if (this.goalForm.valid) {
+      console.log(this.goalForm.value);
+      this.goalForm.reset();
+      alert("¡Profesor agregado correctamente!");
+    }
+  }
 }
