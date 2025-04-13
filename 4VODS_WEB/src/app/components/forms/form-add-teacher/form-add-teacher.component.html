@@ -1,0 +1,17 @@
+<h3>Añade un Profesor</h3>
+<form action="" [formGroup]="teacherForm" (ngSubmit)="submit()">
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="name" aria-describedby="nombreProfesor">
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Módulo</label>
+        <select type="text" class="form-select" id="name" aria-describedby="nombreProfesor">
+            @for(module of moduleList; track $index){
+                <option value="{{module.id}}">{{module.name}}</option>
+            }
+        </select>
+    </div>
+
+</form>
