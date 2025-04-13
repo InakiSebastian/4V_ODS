@@ -15,7 +15,7 @@ class NewModuleDTO
         #[Assert\NotBlank(message: "El nombre es obligatorio")]
         private string $name,
         #[Assert\NotBlank(message: "El id del grado es obligatiorio")]
-        private int $degree,
+        private int $idDegree,
 
 
     ) {}
@@ -32,7 +32,7 @@ class NewModuleDTO
 
     public function getDegree(): int
     {
-        return $this->degree;
+        return $this->idDegree;
     }   
 
 }

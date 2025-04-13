@@ -29,4 +29,16 @@ export class TeacherService {
         }
       )).then(response => response.body as Teacher[]);
   }
+
+  createTeacher(teacher: Teacher) {
+    return firstValueFrom(
+      this.http.post<Teacher>(
+        'http://127.0.0.1:8000/teacher',
+        teacher,
+        {
+          headers: this.headers,
+          observe: 'response',
+        }
+      )).then(response => response.body as Teacher);
+  }
 }

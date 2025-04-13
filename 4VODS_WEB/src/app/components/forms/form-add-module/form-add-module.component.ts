@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Degree } from '../../../model/degree';
 import { DegreeService } from '../../../services/degree.service';
+import { ModuleService } from '../../../services/module.service';
+import { Module } from '../../../model/module';
 
 @Component({
   selector: 'app-form-add-module',
@@ -15,7 +17,7 @@ export class FormAddModuleComponent {
 
   degreeList: Degree[] = [];
 
-  constructor(private fb: FormBuilder, private degreeService: DegreeService){}
+  constructor(private fb: FormBuilder, private degreeService: DegreeService, private moduleService: ModuleService){}
 
   async ngOnInit() {
     this.moduleForm = this.fb.group({
@@ -26,9 +28,11 @@ export class FormAddModuleComponent {
     this.degreeList = await this.degreeService.getDegrees();
   }
 
-  submit(){
+  async submit(){
     if (this.moduleForm.valid) {
       console.log(this.moduleForm.value);
+      alert(Number(this.moduleForm.value.degree))
+      const module = await this.moduleService.createModule(new Module(-1, Number(this.moduleForm.value.degree), this.moduleForm.value.name));
       this.moduleForm.reset();
       alert("¡Módulo agregado correctamente!");
     }

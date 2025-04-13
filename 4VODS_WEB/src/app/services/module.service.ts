@@ -45,6 +45,17 @@ export class ModuleService {
       (module) => new Module(module.id, module.idDegree, module.name)
     );
   }
+
+  createModule(module: Module) {
+    return firstValueFrom(
+    this.http
+      .post<Module>('http://127.0.0.1:8000/module', module, {
+        headers: this.headers,
+        observe: 'response',
+      })
+    ).then(response => response.body as Module);
+  }
+
 }
 
 export class DegreeModules extends Degree {
