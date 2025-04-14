@@ -129,7 +129,7 @@ export class IndicatorsComponent {
     ],
     series: [
       {
-        name: 'Search Engine',
+        name: 'Iniciativas totales',
         type: 'bar',
         data: this.values,
         emphasis: {
@@ -146,7 +146,7 @@ export class IndicatorsComponent {
         name: 'Baidu',
         type: 'bar',
         barWidth: 5,
-        stack: 'Search Engine',
+        stack: 'Iniciativas totales',
         emphasis: {
           focus: 'series'
         },
@@ -155,7 +155,7 @@ export class IndicatorsComponent {
       {
         name: 'Google',
         type: 'bar',
-        stack: 'Search Engine',
+        stack: 'Iniciativas totales',
         emphasis: {
           focus: 'series'
         },
@@ -164,7 +164,7 @@ export class IndicatorsComponent {
       {
         name: 'Bing',
         type: 'bar',
-        stack: 'Search Engine',
+        stack: 'Iniciativas totales',
         emphasis: {
           focus: 'series'
         },
@@ -173,7 +173,7 @@ export class IndicatorsComponent {
       {
         name: 'Others',
         type: 'bar',
-        stack: 'Search Engine',
+        stack: 'Iniciativas totales',
         emphasis: {
           focus: 'series'
         },
