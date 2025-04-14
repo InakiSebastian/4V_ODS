@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Degree } from '../model/degree';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +20,10 @@ export class DegreeService {
         observe: 'response',
       })
     ).then((response) => response.body as Degree[]);
+  }
+
+  getDegreess(): Observable<Degree[]> {
+    return this.http.get<Degree[]>('http://127.0.0.1:8000/degree/');
   }
 
   createDegree(degree: Degree) {

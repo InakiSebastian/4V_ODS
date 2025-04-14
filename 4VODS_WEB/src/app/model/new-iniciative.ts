@@ -15,7 +15,7 @@ export class NewIniciative {
 
     public teachers: number[];
     public modules: number[];
-    public diffusions: number[];
+    public diffusions: number[]; // Debería ser diffusion
     public goals: number[]
     public companies: number[]
 

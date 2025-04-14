@@ -224,7 +224,20 @@ export class FormAddIniciativeComponent {
     });
 
     //const iniciativeNew = new Iniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType));
-    const compliteIniciative = new NewIniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds.map(ods => ods.id), this.setIniciativeType(newIniciativeType),newIsInnovative , newTeachers.map(teacher => teacher.id), newModules.map(module => module.id), newDifusions.map(difusion => difusion.idDiffusion), newGoals.map(goal => goal.id), [1]);
+    const compliteIniciative = new NewIniciative(
+      newid, 
+      newName, 
+      newDescription, 
+      newStartDate, 
+      newEndDate, 
+      newHours, 
+      newschoolYear, 
+      this.odsService.selectedOds.map(ods => ods.id), 
+      this.setIniciativeType(newIniciativeType),
+      newIsInnovative , newTeachers.map(teacher => teacher.id), 
+      newModules.map(module => module.id), 
+      newDifusions.map(difusion => difusion.idDiffusion), 
+      newGoals.map(goal => goal.id), [1]);
     
     if (this.iniciative != null) {
       //iniciativeNew.id = this.iniciative.id;

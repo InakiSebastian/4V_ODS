@@ -10,12 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.javierprado.android_4vods.R;
-import com.javierprado.android_4vods.helpers.ModuleDataHelper;
 import com.javierprado.android_4vods.models.Degree;
 import com.javierprado.android_4vods.models.Module;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,12 +21,12 @@ public class DegreeModuleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int VIEW_TYPE_DEGREE = 0;
     private static final int VIEW_TYPE_MODULE = 1;
 
-    private List<Object> items; // Lista visible en el RecyclerView
-    private Map<Degree, List<Module>> degreeModuleMap; // Mapa de módulos por Degree
+    private List<Object> items;  // Contains both Degree and Module
+    private Map<Degree, List<Module>> degreeModuleMap;  // Map to store modules for each degree
 
-    public DegreeModuleAdapter(List<Module> modules) {
-        this.degreeModuleMap = ModuleDataHelper.groupModulesByDegree(modules); // Agrupar módulos
-        this.items = new ArrayList<>(degreeModuleMap.keySet()); // Inicialmente, solo los Degrees
+    public DegreeModuleAdapter(List<Object> items, Map<Degree, List<Module>> degreeModuleMap) {
+        this.items = items;
+        this.degreeModuleMap = degreeModuleMap;
     }
 
     @Override
@@ -65,7 +62,6 @@ public class DegreeModuleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return items.size();
     }
 
-    // ViewHolder para Degree
     class DegreeViewHolder extends RecyclerView.ViewHolder {
         TextView degreeName;
         ImageView expandCollapseIndicator;
@@ -86,13 +82,12 @@ public class DegreeModuleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 } else {
                     expandModules(degree, position);
                 }
-                degree.setExpanded(!degree.isExpanded());
-                notifyDataSetChanged();
+                degree.setExpanded(!degree.isExpanded());  // Toggle the expanded state
+                notifyItemChanged(position);  // Notify only this degree item
             });
         }
     }
 
-    // ViewHolder para Module
     class ModuleViewHolder extends RecyclerView.ViewHolder {
         TextView moduleName;
 
@@ -106,19 +101,23 @@ public class DegreeModuleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    // Expande el Degree agregando sus módulos en la lista
     private void expandModules(Degree degree, int position) {
+        // Get the modules for this degree
         List<Module> modules = degreeModuleMap.get(degree);
         if (modules != null) {
-            items.addAll(position + 1, modules);
+            items.addAll(position + 1, modules);  // Add the modules right after the degree
+            notifyItemRangeInserted(position + 1, modules.size());  // Notify inserted modules
         }
     }
 
-    // Colapsa el Degree eliminando sus módulos de la lista
     private void collapseModules(Degree degree, int position) {
+        // Get the modules for this degree
         List<Module> modules = degreeModuleMap.get(degree);
         if (modules != null) {
-            items.subList(position + 1, position + 1 + modules.size()).clear();
+            int start = position + 1;
+            int end = start + modules.size();
+            items.subList(start, end).clear();  // Remove the modules from the list
+            notifyItemRangeRemoved(start, modules.size());  // Notify removed modules
         }
     }
 }
