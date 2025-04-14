@@ -11,7 +11,7 @@ export class DegreeService {
     'Content-Type': 'application/json', // O cualquier otro tipo según el backend
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getDegrees(): Promise<Degree[]> {
     return firstValueFrom(
@@ -23,14 +23,24 @@ export class DegreeService {
   }
 
   createDegree(degree: Degree) {
-      return firstValueFrom(
+    return firstValueFrom(
       this.http
         .post<Degree>('http://127.0.0.1:8000/degree', degree, {
           headers: this.headers,
           observe: 'response',
         })
-      ).then(response => response.body as Degree);
-    }
+    ).then(response => response.body as Degree);
+  }
+
+  editDegree(degree: Degree) {
+    return firstValueFrom(
+      this.http
+        .put<Degree>('http://127.0.0.1:8000/degree/' + degree.id, degree, {
+          headers: this.headers,
+          observe: 'response',
+        })
+    );
+  }
 
   async getDegreeById(degreeSelect: number) {
     return (await this.getDegrees()).filter(

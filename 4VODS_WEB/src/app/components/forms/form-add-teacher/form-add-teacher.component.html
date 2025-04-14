@@ -1,47 +1,78 @@
 <div class="modal" id="addTeacherModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered custom-modal-dialog">
+        <div class="modal-content custom-modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Añade un Docente</h5>
+                <h5 class="modal-title">Gestión de Docentes</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="reset()"></button>
             </div>
             <div class="modal-body">
 
-                <form action="" [formGroup]="teacherForm" (ngSubmit)="submit()">
-                    <div class="mb-3">
-                        <label for="teacherName" class="form-label">Nombre del docente</label>
-                        <input type="text" class="form-control" id="teacherName" aria-describedby="nombreProfesor" formControlName="name">
-                        @if(teacherForm.get('name')?.invalid && (teacherForm.get('name')?.dirty || teacherForm.get('name')?.touched)) {
-                            <div class="alert alert-danger p-2" role="alert">
-                                El nombre del docente es obligatorio.
+                <div class="row">
+                    <div class="col-7">
+                        <div class="row">
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="goalName" name="teacherName" placeholder="Busca por nombre" [(ngModel)]="searchTeacher" (input)="this.filter()">
                             </div>
-                        }
-                    </div>
 
-                    <!--<div class="mb-3">
-                        <label for="module" class="form-label">Módulo</label>
-                        <select type="text" class="form-select" id="module" aria-describedby="módulo" formControlName="module">
-                            <option value="" disabled selected>Selecciona un módulo</option>
-                            @for(module of moduleList; track $index){
-                            <option value="{{module.id}}">{{module.name}}</option>
-                            }
-                        </select>
-                        @if(teacherForm.get('module')?.invalid && (teacherForm.get('module')?.dirty || teacherForm.get('module')?.touched)) {
-                            <div class="alert alert-danger p-2" role="alert">
-                                El módulo es obligatorio.
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody class="scrollable-tbody-form">
+                              <tr *ngFor="let teacher of filtredTeachers" >
+                                <td>{{teacher.name}}</td>
+                                <td><img src="generic-icons/pencil.svg" alt="edit" class="pointer" (click)="setEditMode(teacher.id)"></td>
+                              </tr>
+                              <p *ngIf="filtredTeachers.length == 0">
+                                No hay metas (con esos filtros)
+                              </p>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-5">
+                        <h5 class="modal-title">Añade un Docente</h5>
+                        <hr>
+                        <form action="" [formGroup]="teacherForm" (ngSubmit)="submit()">
+                            <div class="mb-3">
+                                <label for="teacherName" class="form-label">Nombre del docente</label>
+                                <input type="text" class="form-control" id="teacherName" aria-describedby="nombreProfesor" formControlName="name">
+                                @if(teacherForm.get('name')?.invalid && (teacherForm.get('name')?.dirty || teacherForm.get('name')?.touched)) {
+                                    <div class="alert alert-danger p-2" role="alert">
+                                        El nombre del docente es obligatorio.
+                                    </div>
+                                }
                             </div>
-                        }
-                    </div>-->
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()">Close</button>
-                        @if(teacherForm.valid) {
-                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
-                        } @else {
-                            <button type="submit" class="btn btn-primary" disabled>Guardar</button>
-                        }
+        
+                            <!--<div class="mb-3">
+                                <label for="module" class="form-label">Módulo</label>
+                                <select type="text" class="form-select" id="module" aria-describedby="módulo" formControlName="module">
+                                    <option value="" disabled selected>Selecciona un módulo</option>
+                                    @for(module of moduleList; track $index){
+                                    <option value="{{module.id}}">{{module.name}}</option>
+                                    }
+                                </select>
+                                @if(teacherForm.get('module')?.invalid && (teacherForm.get('module')?.dirty || teacherForm.get('module')?.touched)) {
+                                    <div class="alert alert-danger p-2" role="alert">
+                                        El módulo es obligatorio.
+                                    </div>
+                                }
+                            </div>-->
+        
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" (click)="reset(); editMode = false">{{editMode ? 'Cancelar' : 'Limpiar'}}</button>
+                                @if(teacherForm.valid) {
+                                    <button type="submit" class="btn btn-primary">{{editMode ? 'Editar' : 'Crear'}}</button>
+                                } @else {
+                                    <button type="submit" class="btn btn-primary" disabled>{{editMode ? 'Editar' : 'Crear'}}</button>
+                                }
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
 
             </div>
         </div>

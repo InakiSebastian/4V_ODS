@@ -44,6 +44,16 @@ export class GoalService {
     ).then(response => response.body as Goal);
   }
 
+  editGoal(goal: Goal) {
+    return firstValueFrom(
+      this.http
+        .put<Goal>('http://127.0.0.1:8000/goal/' + goal.id, goal, {
+          headers: this.headers,
+          observe: 'response',
+        })
+    ).then(response => response.body as Goal);
+  }
+
   async getGoalsByOds(idOds: number) {
     return (await this.getGoals()).filter(goal => goal.ods === Number(idOds));
   }

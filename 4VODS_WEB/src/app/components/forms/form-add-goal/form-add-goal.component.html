@@ -1,46 +1,83 @@
 <div class="modal" id="addGoalModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered custom-modal-dialog">
+        <div class="modal-content custom-modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Añade una Meta</h5>
+                <h5 class="modal-title">Gestión de Metas</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="reset()"></button>
             </div>
             <div class="modal-body">
 
-                <form action="" [formGroup]="goalForm" (ngSubmit)="submit()">
-                    <div class="mb-3">
-                        <label for="goalName" class="form-label">Nombre de la meta</label>
-                        <input type="text" class="form-control" id="goalName" aria-describedby="nombreMeta" formControlName="name">
-                        @if(goalForm.get('name')?.invalid && (goalForm.get('name')?.dirty || goalForm.get('name')?.touched)) {
-                            <div class="alert alert-danger p-2" role="alert">
-                                El nombre de la meta es obligatorio.
+                <div class="row">
+                    <div class="col-7">
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="text" class="form-control" id="goalName" name="goalName" placeholder="Busca por ods" [(ngModel)]="searchODS" (input)="this.filter()">
                             </div>
-                        }
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="ods" class="form-label">Ods</label>
-                        <select type="text" class="form-select" id="ods" aria-describedby="ods" formControlName="ods">
-                            @for(ods of odsList; track $index){
-                            <option value="{{ods.id}}">{{ods.description}}</option>
-                            }
-                        </select>
-                        @if(goalForm.get('ods')?.invalid && (goalForm.get('ods')?.dirty || goalForm.get('ods')?.touched)) {
-                            <div class="alert alert-danger p-2" role="alert">
-                                El ODS es obligatorio.
+                            <div class="col-6">
+                                <input type="text" class="form-control" id="goalName" name="goalName" placeholder="Busca por nombre" [(ngModel)]="searchGoal" (input)="this.filter()">
                             </div>
-                        }
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">Ods</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody class="scrollable-tbody-form">
+                              <tr *ngFor="let goal of goalsRows" >
+                                <td>{{goal.ods}}</td>
+                                <td>{{goal.description}}</td>
+                                <td><img src="generic-icons/pencil.svg" alt="edit" class="pointer" (click)="setEditMode(goal.id)"></td>
+                              </tr>
+                              <p *ngIf="goalsRows.length == 0">
+                                No hay metas (con esos filtros)
+                              </p>
+                            </tbody>
+                          </table>
                     </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()">Close</button>
-                        @if(goalForm.valid) {
-                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
-                        } @else {
-                            <button type="submit" class="btn btn-primary" disabled>Guardar</button>
-                        }
+                    <div class="col-5">
+                        <h5 class="modal-title">Añade una Meta</h5>
+                        <hr>
+                        <form action="" [formGroup]="goalForm" (ngSubmit)="submit()">
+                
+                            <div class="mb-3">
+                                <label for="ods" class="form-label">Ods</label>
+                                <select type="text" class="form-select" id="ods" aria-describedby="ods" formControlName="ods">
+                                    <option value="-1" disabled selected>Selecciona un ODS</option>
+                                    @for(ods of odsList; track $index){
+                                    <option value="{{ods.id}}">{{ods.description}}</option>
+                                    }
+                                </select>
+                                @if(goalForm.get('ods')?.invalid && (goalForm.get('ods')?.dirty || goalForm.get('ods')?.touched)) {
+                                    <div class="alert alert-danger p-2" role="alert">
+                                        El ODS es obligatorio.
+                                    </div>
+                                }
+                            </div>
+        
+                            <div class="mb-3">
+                                <label for="goalName" class="form-label">Nombre de la meta</label>
+                                <input type="text" class="form-control" id="goalName" aria-describedby="nombreMeta" formControlName="name" placeholder="Inserta nombre de la nueva meta">
+                                @if(goalForm.get('name')?.invalid && (goalForm.get('name')?.dirty || goalForm.get('name')?.touched)) {
+                                    <div class="alert alert-danger p-2" role="alert">
+                                        El nombre de la meta es obligatorio.
+                                    </div>
+                                }
+                            </div>
+                            
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" (click)="reset(); editMode = false">{{editMode ? 'Cancelar' : 'Limpiar'}}</button>
+                                @if(goalForm.valid) {
+                                    <button type="submit" class="btn btn-primary">{{editMode ? 'Editar' : 'Crear'}}</button>
+                                } @else {
+                                    <button type="submit" class="btn btn-primary" disabled>{{editMode ? 'Editar' : 'Crear'}}</button>
+                                }
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
 
             </div>
         </div>

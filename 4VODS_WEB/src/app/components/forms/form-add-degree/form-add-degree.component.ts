@@ -37,18 +37,17 @@ export class FormAddDegreeComponent {
   async submit(){
     if (this.degreeForm.valid) {
       if(!this.editMode){
-        console.log(this.degreeForm.value);
-        alert("¡Ciclo agregado correctamente!");
         const degree = await this.degreeService.createDegree(new Degree(-1, this.degreeForm.value.name));
         this.degrees.push(degree); 
+        alert("¡Ciclo agregado correctamente!");
         this.degreeForm.reset();
       }
-      else{
-        console.log(this.degreeForm.value);
-        alert("¡Ciclo editado correctamente!");
-        this.degrees.find(degree => degree.id == this.selectedDegree?.id)!.name = this.degreeForm.value.name;
+      else if (this.selectedDegree){
+        this.degrees.find(degree => degree.id == this.selectedDegree!.id)!.name = this.degreeForm.value.name;
+        await this.degreeService.editDegree(this.selectedDegree);
         this.editMode = false;
         this.selectedDegree = undefined;
+        alert("¡Ciclo editado correctamente!");
         this.degreeForm.reset();
       }
     }

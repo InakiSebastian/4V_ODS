@@ -18,10 +18,10 @@
                               </tr>
                             </thead>
                             <tbody class="scrollable-tbody-form">
-                              <tr *ngFor="let degree of degrees" >
+                              <tr *ngFor="let degree of degrees">
                                 <td>{{degree.name}}</td>
                                 <td>{{getModulesCount(degree.id)}}</td>
-                                <td><img src="generic-icons/pencil.svg" alt="edit" class="pointer" (click)="setEditMode(degree.id)    "></td>
+                                <td><img src="generic-icons/pencil.svg" alt="edit" class="pointer" (click)="setEditMode(degree.id)"></td>
                               </tr>
                             </tbody>
                           </table>

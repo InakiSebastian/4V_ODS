@@ -41,4 +41,16 @@ export class TeacherService {
         }
       )).then(response => response.body as Teacher);
   }
+
+  editTeacher(teacher: Teacher) {
+    return firstValueFrom(
+      this.http.put<Teacher>(
+        'http://127.0.0.1:8000/teacher/' + teacher.id,
+        teacher,
+        {
+          headers: this.headers,
+          observe: 'response',
+        }
+      )).then(response => response.body as Teacher);
+  }
 }

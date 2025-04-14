@@ -16,7 +16,7 @@ class NewGoalDTO
         private string $description,
 
         #[Assert\NotBlank(message: "El ids del ODS relacionado es obligatorio")]
-        private int $idOds,
+        private int $ods,
     ) {}
 
     public function getDescription(): string
@@ -31,11 +31,11 @@ class NewGoalDTO
 
     public function getIdOds(): int
     {
-        return $this->idOds;
+        return $this->ods;
     }
 
     public function setIdOds(int $idOds): void
     {
-        $this->idOds = $idOds;
+        $this->ods = $idOds;
     }
 }

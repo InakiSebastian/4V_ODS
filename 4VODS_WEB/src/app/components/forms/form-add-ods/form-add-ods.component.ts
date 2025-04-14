@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class FormAddOdsComponent {
   odsForm!: FormGroup;
-  dimensions! : {id: number, name: string}[] 
+  dimensions : {id: number, name: string}[] = []
 
   constructor(private fb: FormBuilder, private odsService: OdsService, private staticService: StaticService){
     this.dimensions = this.staticService.getDimensions();
