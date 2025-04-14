@@ -19,10 +19,11 @@ public class Iniciative implements Serializable {
     private List<Company> companies;
     private List<Module> modules;
     private List<Goal> goals;
+    private List<Diffusion> diffusions;
 
     // Getters y setters
     public Iniciative() {}
-    public Iniciative(int id, String name, String description, String startDate, String endDate, int hours, String schoolYear, String initiativeType, List<Teacher> teachers, List<Company> companies, List<Module> modules, List<Goal> goals) {
+    public Iniciative(int id, String name, String description, String startDate, String endDate, int hours, String schoolYear, String initiativeType, List<Teacher> teachers, List<Company> companies, List<Module> modules, List<Goal> goals, List<Diffusion> diffusions) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -35,6 +36,7 @@ public class Iniciative implements Serializable {
         this.companies = companies;
         this.modules = modules;
         this.goals = goals;
+        this.diffusions = diffusions;
     }
 
     public List<Goal> getGoals() {
@@ -67,6 +69,14 @@ public class Iniciative implements Serializable {
 
     public void setTeachers(List<Teacher> teachers) {
         this.teachers = teachers;
+    }
+
+    public List<Diffusion> getDiffusions() {
+        return diffusions;
+    }
+
+    public void setDiffusions(List<Diffusion> diffusions) {
+        this.diffusions = diffusions;
     }
 
     public String getSchoolYear() {

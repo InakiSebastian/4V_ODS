@@ -3,14 +3,14 @@ package com.javierprado.android_4vods.models;
 public class Module {
     private int id;
     private String name;
-    private Degree degree;
+    private int idDegree;
 
     // Getters y setters
 
-    public Module(int id, String name, Degree degree) {
+    public Module(int id, String name, int idDegree) {
         this.id = id;
         this.name = name;
-        this.degree = degree;
+        this.idDegree = idDegree;
     }
 
     public int getId() {
@@ -29,11 +29,11 @@ public class Module {
         this.name = name;
     }
 
-    public Degree getDegree() {
-        return degree;
+    public int getDegree() {
+        return idDegree;
     }
 
-    public void setDegree(Degree degree) {
-        this.degree = degree;
+    public void setDegree(int idDegree) {
+        this.idDegree = idDegree;
     }
 }
