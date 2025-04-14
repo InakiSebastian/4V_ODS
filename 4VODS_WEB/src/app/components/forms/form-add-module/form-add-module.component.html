@@ -10,10 +10,12 @@
                 <div class="row">
                     <div class="col-7">
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col-6">
+                                <input type="text" class="form-control" id="goalName" name="teacherName" placeholder="Busca por grado" [(ngModel)]="searchDegree" (input)="this.filter()">
+                            </div>
+                            <div class="col-6">
                                 <input type="text" class="form-control" id="goalName" name="teacherName" placeholder="Busca por nombre" [(ngModel)]="searchModule" (input)="this.filter()">
                             </div>
-
                         </div>
                         <table class="table table-striped">
                             <thead>
@@ -25,6 +27,7 @@
                             </thead>
                             <tbody class="scrollable-tbody-form">
                               <tr *ngFor="let module of filtredModules" >
+                                <td>{{module.degree}}</td>
                                 <td>{{module.name}}</td>
                                 <td><img src="generic-icons/pencil.svg" alt="edit" class="pointer" (click)="setEditMode(module.id)"></td>
                               </tr>
@@ -35,6 +38,8 @@
                           </table>
                     </div>
                     <div class="col-5">
+                        <h5 class="modal-title">Añade un Módulo</h5>
+                        <hr>
                         <form action="" [formGroup]="moduleForm" (ngSubmit)="submit()">
                             <div class="mb-3">
                                 <label for="moduleName" class="form-label">Nombred el módulo</label>
@@ -61,9 +66,9 @@
                             </div>
         
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()">Close</button>
+                                <button type="button" class="btn btn-secondary" (click)="reset()">Close</button>
                                 @if(moduleForm.valid) {
-                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
                                 } @else {
                                     <button type="submit" class="btn btn-primary" disabled>Guardar</button>
                                 }

@@ -56,6 +56,16 @@ export class ModuleService {
     ).then(response => response.body as Module);
   }
 
+  editModule(module: Module) {
+    return firstValueFrom(
+    this.http
+      .put<Module>('http://127.0.0.1:8000/module/' + module.id, module, {
+        headers: this.headers,
+        observe: 'response',
+      })
+    ).then(response => response.body as Module);
+  }
+
 }
 
 export class DegreeModules extends Degree {

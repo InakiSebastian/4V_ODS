@@ -30,6 +30,7 @@ export class FormAddModuleComponent {
 
   //filtrado
   searchModule: string = '';
+  searchDegree: string = '';
 
   constructor(private fb: FormBuilder, private degreeService: DegreeService, private moduleService: ModuleService){}
 
@@ -46,11 +47,26 @@ export class FormAddModuleComponent {
 
   async submit(){
     if (this.moduleForm.valid) {
-      console.log(this.moduleForm.value);
-      alert(Number(this.moduleForm.value.degree))
-      const module = await this.moduleService.createModule(new Module(-1, Number(this.moduleForm.value.degree), this.moduleForm.value.name));
-      this.moduleForm.reset();
-      alert("¡Módulo agregado correctamente!");
+      if (!this.editMode) {
+        console.log(this.moduleForm.value);
+        const module = await this.moduleService.createModule(new Module(-1, Number(this.moduleForm.value.degree), this.moduleForm.value.name));
+        this.moduleList.push(module);
+        this.setRows();
+        this.moduleForm.reset();
+        alert("¡Módulo agregado correctamente!");
+      }
+      else if(this.selectedModule) {
+        this.moduleList.find(module => module.id == this.selectedModule!.id)!.name = this.moduleForm.value.name;
+        this.moduleList.find(module => module.id == this.selectedModule!.id)!.idDegree = Number(this.moduleForm.value.degree);
+        this.selectedModule!.name = this.moduleForm.value.name;
+        this.selectedModule!.idDegree = Number(this.moduleForm.value.degree);
+        await this.moduleService.editModule(this.selectedModule!);
+        this.editMode = false;
+        this.selectedModule = undefined;
+        this.setRows();
+        this.moduleForm.reset();
+        alert("¡Módulo editado correctamente!");
+      }
     }
   }
 
@@ -80,6 +96,8 @@ export class FormAddModuleComponent {
   filter() {
     console.log(this.filtredModules)
     if (this.searchModule == '') this.setRows();
-    else this.filtredModules = this.getRows().filter(module => module.degree);
+    else this.filtredModules = this.getRows()
+    .filter(module => module.degree.toLowerCase().includes(this.searchDegree.toLowerCase()))
+    .filter(module => module.name.toLowerCase().includes(this.searchModule.toLowerCase()));
   }
 }
