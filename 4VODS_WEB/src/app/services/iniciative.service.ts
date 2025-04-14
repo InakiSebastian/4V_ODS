@@ -5,7 +5,7 @@ import { Iniciative } from '../model/iniciative';
 import { Ods } from '../model/ods';
 import { ModuleService } from './module.service';
 import { OdsService } from './ods.service';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { NewIniciative } from '../model/new-iniciative';
 
 @Injectable({
@@ -37,6 +37,10 @@ export class IniciativeService {
         }
       )
     ).then(response => response.body as CompliteIniciative[]);
+  }
+
+  getIniciativess(): Observable<CompliteIniciative[]> {
+    return this.http.get<CompliteIniciative[]>('http://127.0.0.1:8000/iniciatives/complete');
   }
 
   async getCompliteIniciativas() {
