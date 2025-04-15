@@ -23,6 +23,8 @@ export class FormDetailsComponent {
         ? new Date(this.details.endDate).toISOString().split('T')[0]
         : '';
     }
+
+    console.log(this.details!.iniciativeType);
   }
 
   formatDate(date: Date) {

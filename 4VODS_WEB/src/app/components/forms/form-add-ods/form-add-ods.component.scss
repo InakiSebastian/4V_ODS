@@ -14,3 +14,16 @@
     flex: 1 1 auto;
     overflow-y: auto;
 }
+
+.scrollable-tbody-form {
+    display: block;
+    max-height: 300px; /* o la altura que necesites */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.table thead, .table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}

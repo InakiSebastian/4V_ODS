@@ -2,46 +2,97 @@
     <div class="modal-dialog modal-dialog-centered custom-modal-dialog">
         <div class="modal-content custom-modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Añade un Ods</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="reset()"></button>
+                <h5 class="modal-title">Gestión de ODS-s</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="reset()"></button>
             </div>
             <div class="modal-body">
 
-                <form action="" [formGroup]="odsForm" (ngSubmit)="submit()">
-                    <div class="mb-3">
-                        <label for="odsName" class="form-label">Nombre del Ods</label>
-                        <input type="text" class="form-control" id="odsName" aria-describedby="ods" formControlName="name">
-                        @if(odsForm.get('name')?.invalid && (odsForm.get('name')?.dirty || odsForm.get('name')?.touched)) {
-                            <div class="alert alert-danger p-2" role="alert">
-                                El nombre del Ods es obligatorio.
+                <div class="row">
+                    <div class="col-7">
+                        <div class="row">                     
+                            <div class="col-6">
+                                <input type="text" class="form-control" id="goalName" name="teacherName"
+                                    placeholder="Busca por nombre" [(ngModel)]="searchOds" (input)="this.filter()">
                             </div>
-                        }
+                            <div class="col-6">
+                                <select name="goal" class="form-select" id="" [(ngModel)]="selectedDimension"
+                                    (change)="this.filter()">
+                                    <option value="-1" selected>Busca por dimensión (TODAS)</option>
+                                    @for (dimension of this.dimensions; track dimension){
+                                    <option value="{{dimension.name}}">{{dimension.name}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Dimensión</th>
+                                    <th scope="col"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="scrollable-tbody-form">
+                                <tr *ngFor="let odsrow of filtredOds">
+                                    <td><img [src]="odsrow.src" alt="" class="img-fluid w-25 ms-5"></td>
+                                    <td>{{odsrow.ods.description}}</td>
+                                    <td>{{odsrow.ods.dimension}}</td>
+                                    <td><img src="generic-icons/pencil.svg" alt="edit" class="pointer"
+                                            (click)="setEditMode(odsrow.ods.id)"></td>
+                                </tr>
+                                <p *ngIf="filtredOds.length == 0">
+                                    No hay ODS-s (con esos filtros)
+                                </p>
+                            </tbody>
+                        </table>
                     </div>
+                    <div class="col-5">
+                        <h5 class="modal-title">{{this.editMode ? "Editar" : "Añadir"}} un Ods</h5>
+                        <hr>
+                        <form action="" [formGroup]="odsForm" (ngSubmit)="submit()">
+                            <div class="mb-3">
+                                <label for="odsName" class="form-label">Nombre del Ods</label>
+                                <input type="text" class="form-control" id="odsName" aria-describedby="ods"
+                                    formControlName="name">
+                                @if(odsForm.get('name')?.invalid && (odsForm.get('name')?.dirty ||
+                                odsForm.get('name')?.touched)) {
+                                <div class="alert alert-danger p-2" role="alert">
+                                    El nombre del Ods es obligatorio.
+                                </div>
+                                }
+                            </div>
 
-                    <div class="mb-3">
-                        <label for="odsDimension" class="form-label">Dimensión del Ods</label>
-                        <select class="form-select" id="odsDimension" formControlName="dimension">
-                        <option value="" disabled selected>Selecciona una dimensión</option>
-                        <option [value]="dim.name" *ngFor="let dim of dimensions">{{ dim.name }}</option>
+                            <div class="mb-3">
+                                <label for="odsDimension" class="form-label">Dimensión del Ods</label>
+                                <select class="form-select" id="odsDimension" formControlName="dimension">
+                                    <option value="" disabled selected>Selecciona una dimensión</option>
+                                    <option [value]="dim.name" *ngFor="let dim of dimensions">{{ dim.name }}</option>
 
-                        </select>
-                        @if(odsForm.get('dimension')?.invalid && (odsForm.get('dimension')?.dirty || odsForm.get('dimension')?.touched)) {
-                          <div class="alert alert-danger p-2" role="alert">
-                            La dimensión es obligatoria.
-                          </div>
-                        }
-                      </div>
-                      
+                                </select>
+                                @if(odsForm.get('dimension')?.invalid && (odsForm.get('dimension')?.dirty ||
+                                odsForm.get('dimension')?.touched)) {
+                                <div class="alert alert-danger p-2" role="alert">
+                                    La dimensión es obligatoria.
+                                </div>
+                                }
+                            </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()">Close</button>
-                        @if(odsForm.valid) {
-                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
-                        } @else {
-                            <button type="submit" class="btn btn-primary" disabled>Guardar</button>
-                        }
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    (click)="reset(); editMode = false">{{editMode ? 'Cancelar' : 'Limpiar'}}</button>
+                                @if(odsForm.valid) {
+                                <button type="submit" class="btn btn-primary">{{editMode ? 'Editar' : 'Crear'}}</button>
+                                } @else {
+                                <button type="submit" class="btn btn-primary" disabled>{{editMode ? 'Editar' :
+                                    'Crear'}}</button>
+                                }
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
 
             </div>
         </div>

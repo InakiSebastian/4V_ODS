@@ -53,6 +53,7 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
   //-------------------------- LIFECYCLE HOOKS --------------------------
   async ngOnInit() {
     this.selectedTeachers = this.teachersService.selectedTeachers || [];
+    console.log("profes en el oninit",this.selectedTeachers)
     this.initializeFormControls();
     this.teacherList = await this.teachersService.getTeachers();
     this.allModules = await this.moduleService.getModules();
@@ -60,7 +61,6 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
     if (!this.moduleService.degree_modules) {
       this.selectedDegreeModules = [];
     } else {
-      console.log("Modulos llegados: ", this.moduleService.degree_modules);
       this.selectedDegreeModules = this.moduleService.degree_modules;
     }
   
@@ -96,7 +96,6 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
   //----------------------- MANEJO DEL MODO EDICIÓN -----------------------
   private async handleEditMode() {
     // Carga profesores seleccionados
-    //alert(this.academic!.teachers.length);
     const teachers = this.academic!.teachers || [];
     teachers.forEach(teacher => this.addTeacher(teacher));
 
@@ -152,11 +151,19 @@ export class FormAcademicComponent implements OnInit, OnDestroy {
   // Añade/elimina profesores del formulario
   addTeacher(teacher: Teacher | null) {
     if(!teacher) {
-      this.filteredTeachers.forEach(teacher => this.selectedTeachers.push(teacher));
+      this.filteredTeachers.forEach(teacher => {
+        const exists = this.selectedTeachers.some(t => t.id === teacher.id);
+        if (exists) return;
+        this.selectedTeachers.push(teacher)
+      });
+      return;
     }
-    else this.selectedTeachers.push(teacher!);
+  const exists = this.selectedTeachers.some(t => t.id === teacher.id);
+  if (!exists) { // Solo añade si no existe
+    this.selectedTeachers.push(teacher);
     this.filterTeachers(this.serched);
   }
+}
 
   removeTeacher(event:Event, id: number | null) {
     event.preventDefault();

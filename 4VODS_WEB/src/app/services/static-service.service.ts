@@ -7,7 +7,7 @@ export class StaticService {
 
   dimensions = [
     { id: 1, name: 'Social' },
-    { id: 2, name: 'Económico' },
+    { id: 2, name: 'Económica' },
     { id: 3, name: 'Medioambiental' }
   ];
 

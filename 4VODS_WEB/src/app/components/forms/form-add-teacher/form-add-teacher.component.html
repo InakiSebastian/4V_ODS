@@ -34,7 +34,7 @@
                         </table>
                     </div>
                     <div class="col-5">
-                        <h5 class="modal-title">Añade un Docente</h5>
+                        <h5 class="modal-title">{{this.editMode ? "Editar" : "Añadir"}} un Docente</h5>
                         <hr>
                         <form action="" [formGroup]="teacherForm" (ngSubmit)="submit()">
                             <div class="mb-3">

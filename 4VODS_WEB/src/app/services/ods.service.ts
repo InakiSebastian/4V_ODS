@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Ods } from '../model/ods';
-import { Iniciative } from '../model/iniciative';
 import { firstValueFrom } from 'rxjs';
-import { Goal } from '../model/goal';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -10,12 +8,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class OdsService {
   headers = new HttpHeaders({
-    'Content-Type': 'application/json', // O cualquier otro tipo según el backend
+    'Content-Type': 'application/json',
   });
 
   selectedOds: Ods[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   //Ods
   getOds() {
@@ -28,14 +26,24 @@ export class OdsService {
   }
 
   createODS(ods: Ods) {
-      return firstValueFrom(
+    return firstValueFrom(
       this.http
         .post<Ods>('http://127.0.0.1:8000/ods', ods, {
           headers: this.headers,
           observe: 'response',
         })
-      ).then(response => response.body as Ods);
-    }
+    ).then(response => response.body as Ods);
+  }
+
+  editODS(ods: Ods) {
+    return firstValueFrom(
+      this.http
+        .put<Ods>('http://127.0.0.1:8000/ods/' + ods.id, ods, {
+          headers: this.headers,
+          observe: 'response',
+        })
+    ).then(response => response.body as Ods);
+  }
 
   async getOdsById(id: number): Promise<number | undefined> {
     return (await this.getOds()).find((o) => o.id === id)?.id;
@@ -60,6 +68,6 @@ export class OdsService {
 
   setSelectedOds(ods: Ods[]) {
     this.selectedOds = ods;
-    
+
   }
 }

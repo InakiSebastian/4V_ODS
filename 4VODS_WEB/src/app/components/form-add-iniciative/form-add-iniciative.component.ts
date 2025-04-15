@@ -196,6 +196,7 @@ export class FormAddIniciativeComponent {
     // Profesores
     var newTeachers: Teacher[] = [];
     newTeachers = this.teacherService.selectedTeachers || [];   
+    console.log(newTeachers)
 
     // Módulos
     const newModules: Module[] = this.moduleService.getCheckedModules() || [];
@@ -234,7 +235,8 @@ export class FormAddIniciativeComponent {
       newschoolYear, 
       this.odsService.selectedOds.map(ods => ods.id), 
       this.setIniciativeType(newIniciativeType),
-      newIsInnovative , newTeachers.map(teacher => teacher.id), 
+      newIsInnovative , 
+      newTeachers.map(teacher => teacher.id), 
       newModules.map(module => module.id), 
       newDifusions.map(difusion => difusion.idDiffusion), 
       newGoals.map(goal => goal.id), [1]);

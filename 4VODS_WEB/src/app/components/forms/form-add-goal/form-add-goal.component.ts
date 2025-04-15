@@ -16,11 +16,11 @@ export class FormAddGoalComponent {
   goalForm!: FormGroup;
 
   goalList: Goal[] = [];
-  goalsRows!: {
+  goalsRows: {
     id: number;
     ods: string;
     description: string;
-  }[];
+  }[] = [];
 
   //buscadores
   searchODS: string = '';
