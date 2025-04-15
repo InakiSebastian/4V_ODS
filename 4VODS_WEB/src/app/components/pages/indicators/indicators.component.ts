@@ -42,23 +42,23 @@ export class IndicatorsComponent {
       this.iniciativeList = data;
       console.log(this.iniciativeList);
   
-      this.extractDegreeIds();
+      // this.extractDegreeIds();
     });
   }
   
-  private extractDegreeIds() {
-    this.iniciativeList.forEach(ini => {
-      ini.modules.forEach(mod => {
-        if(!this.degreesId.includes(mod.idDegree))
-        this.degreesId.push(mod.idDegree);
-      });
-    });
-  }
+  // private extractDegreeIds() {
+  //   this.iniciativeList.forEach(ini => {
+  //     ini.modules.forEach(mod => {
+  //       this.degreesId.push(mod.idDegree);
+  //     });
+  //   }); console.log('todos los módulos '+this.degreesId);
+  // }
   
   private loadDegrees() {
     this.degreeService.getDegreess().subscribe((data) => {
       this.degrees = data.map(degree => degree.name);
       this.degreesId = data.map(degree => degree.id);
+      console.log('todos los degrees'+this.degreesId);
   
       this.loadValues();
       this.updateChartXAxis();
@@ -66,16 +66,20 @@ export class IndicatorsComponent {
   }
 
   private loadValues() {
-    this.values = new Array(this.degreesId.length).fill(0);
-
-    this.iniciativeList.forEach(ini => {
-      ini.modules?.forEach(mod => {
-        const index = this.degreesId.indexOf(mod.idDegree);
-        if (index !== -1) {
-          this.values[index] += 1; // suma al ciclo correspondiente
+    this.iniciativeList.forEach(ini=> {
+      this.degreesId.forEach(degreeId => {
+        if(ini.modules.some(mod => mod.idDegree === degreeId)){
+          const index = this.degreesId.indexOf(degreeId);
+          if(index !== -1){
+            this.values[index] = (this.values[index] || 0) + 1; // suma 1 al contador de iniciativas por degree
+          }else{
+            this.values.push(1); // si no existe, lo inicializa a 1
+          }
         }
       });
     });
+
+    console.log('valores por degree' + this.values);
 
     this.option.series[0].data = this.values;
     this.option = { ...this.option }; // fuerza redibujo
