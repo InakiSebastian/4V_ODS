@@ -92,15 +92,12 @@ export class FormExternalEntitiesComponent {
       alert('El nombre no puede estar vacio.');
       return
     }
-    let id = await this.externalEntitiesService.createExternalEntity(this.name);
-    id = this.numeroAleatorio();
-    this.externalEntities.push(new ExternalEntity(id, this.name));
-    this.allEntities.push(new ExternalEntity(id, this.name));
+    let externalEntity = (await this.externalEntitiesService.createExternalEntity(this.name));
+    this.externalEntities.push(externalEntity);
+    this.allEntities.push(externalEntity);
     this.filterEntities(this.serched)
     this.name = '';
+    alert('Entidad creada correctamente.');
   }
 
-  numeroAleatorio() {
-    return Math.floor(Math.random() * (999 - 10 + 1)) + 10;
-  }
 }

@@ -208,12 +208,6 @@ export class FormAddIniciativeComponent {
       newOds.push(new Ods(ods.id, "social", ods.description));
     });
 
-    // //Metas
-    const newGoals: Goal[] = [];
-    this.selectedGoals?.forEach((goal, index: number) => {
-      newGoals.push(new Goal(index+1, goal.ods, goal.description));
-    });
-
     //Difusión
     const difusions = this.Difusion.get('difusions') as FormArray;
     const newDifusions: Difusion[] = [];
@@ -223,6 +217,8 @@ export class FormAddIniciativeComponent {
       
       newDifusions.push(new Difusion(index+1, newid,  difusionType, difusionLink));
     });
+
+    console.log(this.externalsI)
 
     //const iniciativeNew = new Iniciative(newid, newName, newDescription, newStartDate, newEndDate, newHours, newschoolYear, this.odsService.selectedOds, this.setIniciativeType(newIniciativeType));
     const compliteIniciative = new NewIniciative(
@@ -239,10 +235,11 @@ export class FormAddIniciativeComponent {
       newTeachers.map(teacher => teacher.id), 
       newModules.map(module => module.id), 
       newDifusions.map(difusion => difusion.idDiffusion), 
-      newGoals.map(goal => goal.id), [1]);
+      this.goalService.selectedGoals.map(goal => goal.id), 
+      this.externalsI.map(external => external.id)
+    );
     
     if (this.iniciative != null) {
-      //iniciativeNew.id = this.iniciative.id;
       compliteIniciative.id = this.iniciative.id;
       this.iniciativeService.updateCompliteIniciative(compliteIniciative);
       this.iniciative = null;

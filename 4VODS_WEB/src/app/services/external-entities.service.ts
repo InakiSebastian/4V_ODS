@@ -8,6 +8,8 @@ import { firstValueFrom } from 'rxjs';
 })
 export class ExternalEntitiesService {
 
+  selectedExternalEntity: ExternalEntity[] | null = null;
+
   headers = new HttpHeaders({
     'Content-Type': 'application/json', // O cualquier otro tipo según el backend
   });
@@ -24,7 +26,13 @@ export class ExternalEntitiesService {
   }
 
   async createExternalEntity(name: string) {
-    //TODO CREAR LA ENTIDAD Y RECOGER EL ID PARA DEVOLVERLO
-    return 1;
+    const company = new ExternalEntity(-1, name);
+    return firstValueFrom(
+      this.http
+      .post<ExternalEntity>('http://127.0.0.1:8000/company',company, {
+        headers: this.headers,
+        observe: 'response',
+      })
+    ).then(response => response.body as ExternalEntity)
   }
 }

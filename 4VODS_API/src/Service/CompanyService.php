@@ -39,7 +39,7 @@ class CompanyService
     {
 
         $errors = $this->validator->validate($dto);
-        $this->logger->info(sprintf("%s", $dto));
+        $this->logger->info(sprintf("Nombre: %s", $dto->getName()));
         if (count($errors) > 0) {
             throw new BadRequestHttpException(implode(', ', array_map(fn($e) => $e->getMessage(), iterator_to_array($errors))));
         }
