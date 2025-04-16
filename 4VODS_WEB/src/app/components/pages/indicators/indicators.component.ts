@@ -41,24 +41,13 @@ export class IndicatorsComponent {
     this.iniciativeService.getIniciativess().subscribe((data) => {
       this.iniciativeList = data;
       console.log(this.iniciativeList);
-  
-      // this.extractDegreeIds();
     });
   }
-  
-  // private extractDegreeIds() {
-  //   this.iniciativeList.forEach(ini => {
-  //     ini.modules.forEach(mod => {
-  //       this.degreesId.push(mod.idDegree);
-  //     });
-  //   }); console.log('todos los módulos '+this.degreesId);
-  // }
   
   private loadDegrees() {
     this.degreeService.getDegreess().subscribe((data) => {
       this.degrees = data.map(degree => degree.name);
       this.degreesId = data.map(degree => degree.id);
-      console.log('todos los degrees'+this.degreesId);
   
       this.loadValues();
       this.updateChartXAxis();
@@ -78,8 +67,6 @@ export class IndicatorsComponent {
         }
       });
     });
-
-    console.log('valores por degree' + this.values);
 
     this.option.series[0].data = this.values;
     this.option = { ...this.option }; // fuerza redibujo
