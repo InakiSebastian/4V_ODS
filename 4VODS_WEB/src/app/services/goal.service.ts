@@ -78,6 +78,7 @@ export class GoalService {
 
     return this.selectedGoals = this.selectedGoals.filter(goal => goal.ods !== odsId);
   }
+  
   clearSelectedGoals(): Goal[] {
     return this.selectedGoals = [];
   }

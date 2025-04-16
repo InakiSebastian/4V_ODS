@@ -7,6 +7,7 @@ import { ModuleService } from './module.service';
 import { OdsService } from './ods.service';
 import { firstValueFrom, Observable } from 'rxjs';
 import { NewIniciative } from '../model/new-iniciative';
+import { NewIniciativeCreate } from '../model/new-iniciative-create';
 
 @Injectable({
   providedIn: 'root',
@@ -64,7 +65,7 @@ export class IniciativeService {
   }
   
 
-  async addCompliteIniciative(iniciative: NewIniciative) {
+  async addCompliteIniciative(iniciative: NewIniciativeCreate) {
     try {
       const response = await firstValueFrom(
         this.http.post<{ message: string }>(
@@ -79,7 +80,7 @@ export class IniciativeService {
       return response.body?.message || 'Unknown response';
     } catch (error) {
       console.error('Error adding initiative:', error);
-      return '';
+      return error;
     }
   }
 
