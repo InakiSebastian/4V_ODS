@@ -986,6 +986,102 @@ paths:
 
         "400":
           description: Any problem in the Server
+
+  /indicators/iniciatives/ods:
+    get:
+      tags:
+        - Indicator
+      summary: get iniciatives by ODS
+      operationId: getIniciativeByOds
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  2 - Quality Education:
+                    type: array
+                    items:
+                      type: string
+                      example:
+                        - Tech for all 2024-2025
+
+        "400":
+          description: Any problem in the Server
+  /indicators/iniciatives/countGrouped:
+    get:
+      tags:
+        - Indicator
+      summary: get count iniciatives by degree
+      operationId: getCountIniciativeByOdsGrouped
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Computer Science:
+                    type: object
+                    properties:
+                      Total:
+                        type: integer
+                        example: 2
+                      modules:
+                        type: object
+                        properties:
+                          Software Development:
+                            type: integer
+                            example: 1
+                          Data Science:
+                            type: integer
+                            example: 1
+
+        "400":
+          description: Any problem in the Server
+  /indicators/iniciatives/countGrouped/{schoolYear}:
+    get:
+      tags:
+        - Indicator
+      summary: get count iniciatives by degree and school year
+      operationId: getCountIniciativeByOdsGroupedBySchoolYear
+      parameters:
+        - name: schoolYear
+          in: path
+          description: Filter by school year
+          required: true
+          schema:
+            type: string
+            example: "2024-2025"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Computer Science:
+                    type: object
+                    properties:
+                      Total:
+                        type: integer
+                        example: 2
+                      modules:
+                        type: object
+                        properties:
+                          Software Development:
+                            type: integer
+                            example: 1
+                          Data Science:
+                            type: integer
+                            example: 1
+        "400":
+          description: Any problem in the Server
+
 components:
   schemas:
     newIniciatives:
@@ -1016,7 +1112,7 @@ components:
           items:
             type: integer
           example: [2, 3]
-        
+
         type:
           type: string
           enum:
@@ -1033,29 +1129,29 @@ components:
           items:
             type: integer
           example:
-             - 2
-             - 3
+            - 2
+            - 3
         modules:
           type: array
           items:
             type: integer
           example:
-              - 2
-              - 3
+            - 2
+            - 3
         goals:
           type: array
           items:
             type: integer
           example:
-              - 2
-              - 3
+            - 2
+            - 3
         companies:
           type: array
           items:
             type: integer
           example:
-              - 1
-              - 3
+            - 1
+            - 3
         diffusions:
           type: array
           items:
@@ -1071,7 +1167,6 @@ components:
               link:
                 type: string
                 example: https://www.facebook.com/sharer/sharer.php?
-            
 
     iniciatives:
       type: object

@@ -98,36 +98,40 @@ class IndicatorService
             if (!$degree->isActive()) continue;
 
             $degreeName = $degree->getName();
-            $modulesSummary = [];
-            $degreeIniciativeCount = 0;
+            $degreeSummary = [];
 
             foreach ($degree->getModules() as $module) {
                 if (!$module->isActive()) continue;
-
-                $moduleName = $module->getName();
-                $moduleIniciativeCount = 0;
 
                 foreach ($module->getModuleIniciatives() as $moduleIniciative) {
                     if (!$moduleIniciative->isActive()) continue;
 
                     $iniciative = $moduleIniciative->getIdIniciative();
                     if ($iniciative && $iniciative->isActive()) {
-                        $moduleIniciativeCount++;
-                        $degreeIniciativeCount++;
+                        $schoolYear = $iniciative->getSchoolYear();
+
+                        // Initialize year array if not already set
+                        if (!isset($degreeSummary[$schoolYear])) {
+                            $degreeSummary[$schoolYear] = [
+                                'total' => 0,
+                                'modules' => []
+                            ];
+                        }
+
+                        $moduleName = $module->getName();
+
+                        // Initialize module count for the year if not already set
+                        if (!isset($degreeSummary[$schoolYear]['modules'][$moduleName])) {
+                            $degreeSummary[$schoolYear]['modules'][$moduleName] = 0;
+                        }
+
+                        $degreeSummary[$schoolYear]['modules'][$moduleName]++;
+                        $degreeSummary[$schoolYear]['total']++;
                     }
                 }
-
-                if ($moduleIniciativeCount > 0) {
-                    $modulesSummary[$moduleName] = $moduleIniciativeCount;
-                }
             }
 
-            if ($degreeIniciativeCount > 0) {
-                $result[$degreeName] = [
-                    'total' => $degreeIniciativeCount,
-                    'modules' => $modulesSummary
-                ];
-            }
+                $result[$degreeName] = $degreeSummary;
         }
 
         return $result;
@@ -182,12 +186,10 @@ class IndicatorService
                 }
             }
 
-            if ($degreeIniciativeCount > 0) {
-                $result[$degreeName] = [
-                    'total' => $degreeIniciativeCount,
-                    'modules' => $modulesSummary
-                ];
-            }
+            $result[$degreeName] = [
+                'total' => $degreeIniciativeCount,
+                'modules' => $modulesSummary
+            ];
         }
 
         return $result;
