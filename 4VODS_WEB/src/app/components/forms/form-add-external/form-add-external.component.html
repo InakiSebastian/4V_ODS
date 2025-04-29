@@ -1,0 +1,66 @@
+<div class="modal" id="addExternalEntity" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered custom-modal-dialog">
+        <div class="modal-content custom-modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Gestión de Ciclos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="reset()"></button>
+            </div>
+            <div class="modal-body overflow-auto">
+
+                <div class="row">
+                    <div class="col-7">
+                        <div class="row">
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="goalName" name="goalName" placeholder="Busca por ods" [(ngModel)]="searchExtEnt" (input)="this.filter()">
+                            </div>
+                        </div>
+                        <table class="table table-striped" >
+                            <thead>
+                              <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody class="scrollable-tbody-form" *ngIf="this.filtedEntities.length > 0">
+                                <tr *ngFor="let extEnt of filtedEntities">
+                                    <td>{{extEnt.name}}</td>
+                                    <td><img src="generic-icons/pencil.svg" alt="edit" class="pointer" (click)="setEditMode(extEnt.id)"></td>
+                                  </tr>
+                            </tbody>
+                            <div *ngIf="this.filtedEntities.length == 0">
+                                <p>
+                                    No hay entidades externas con el nombre insertado
+                                </p>
+                            </div>
+                          </table>
+                    </div>
+                    <div class="col-5">
+                        <h5 class="modal-title">{{editMode ? 'Editar Entidad externa' : 'Crear Entidad externa'}}</h5>
+                        <hr>
+                        <form action="" [formGroup]="entityForm" (ngSubmit)="submit()">
+                            <div class="mb-3">
+                                <label for="degreeName" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="degreeName" aria-describedby="ciclo" formControlName="name">
+                                @if(entityForm.get('name')?.invalid && (entityForm.get('name')?.dirty || entityForm.get('name')?.touched)) {
+                                    <div class="alert alert-danger p-2" role="alert">
+                                        El nombre del ciclo es obligatorio.
+                                    </div>
+                                }
+                            </div>
+        
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" (click)="reset(); editMode = false">{{editMode ? 'Cancelar' : 'Limpiar'}}</button>
+                                @if(entityForm.valid) {
+                                    <button type="submit" class="btn btn-primary">{{editMode ? 'Editar' : 'Crear'}}</button>
+                                } @else {
+                                    <button type="submit" class="btn btn-primary" disabled>{{editMode ? 'Editar' : 'Crear'}}</button>
+                                }
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

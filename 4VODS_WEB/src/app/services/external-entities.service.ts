@@ -35,4 +35,15 @@ export class ExternalEntitiesService {
       })
     ).then(response => response.body as ExternalEntity)
   }
+
+  async editExternalEntity(id: number, name: string) {
+    const company = new ExternalEntity(id, name);
+    return firstValueFrom(
+      this.http
+      .put<ExternalEntity>('http://127.0.0.1:8000/company/' + id, company, {
+        headers: this.headers,
+        observe: 'response',
+      })
+    ).then(response => response.body as ExternalEntity)
+  }
 }
