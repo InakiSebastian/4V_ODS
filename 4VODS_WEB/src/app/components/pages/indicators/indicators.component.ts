@@ -132,43 +132,6 @@ export class IndicatorsComponent {
           },
           data: [[{ type: 'min' }, { type: 'max' }]]
         }
-      },
-      {
-        name: 'Baidu',
-        type: 'bar',
-        barWidth: 5,
-        stack: 'Iniciativas totales',
-        emphasis: {
-          focus: 'series'
-        },
-        data: [6, 7, 7, 4, 1, 1, 2]
-      },
-      {
-        name: 'Google',
-        type: 'bar',
-        stack: 'Iniciativas totales',
-        emphasis: {
-          focus: 'series'
-        },
-        data: [6, 7, 7, 4, 1, 1, 2]
-      },
-      {
-        name: 'Bing',
-        type: 'bar',
-        stack: 'Iniciativas totales',
-        emphasis: {
-          focus: 'series'
-        },
-        data: [6, 7, 7, 4, 1, 1, 2]
-      },
-      {
-        name: 'Others',
-        type: 'bar',
-        stack: 'Iniciativas totales',
-        emphasis: {
-          focus: 'series'
-        },
-        data: [6, 7, 7, 4, 1, 1, 2]
       }
     ]
   };

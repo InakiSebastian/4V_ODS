@@ -4,7 +4,8 @@ export interface IDetails {
     startDate: Date
     endDate: Date | null
     hours: number
-    academicYear: string
+    initialAcademicYear: number
+    finalAcademicYear: number
     iniciativeType: string
     isInovative: boolean
 }
