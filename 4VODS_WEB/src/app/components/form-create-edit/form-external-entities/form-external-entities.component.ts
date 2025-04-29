@@ -32,13 +32,16 @@ export class FormExternalEntitiesComponent {
     if (this.externalEntities==null || this.externalEntities == undefined) {
       this.externalEntities = [];
     }
+    
   }
 
   async ngOnInit(){
+    this.externalEntities = this.externalEntitiesService.selectedExternalEntity || this.externalEntities;
     this.allEntities = await this.externalEntitiesService.getExternalEntities();
 
     this.filterEntities(null)
     this.setRestUnSelected();
+
     this.isLoading = false
   }
 
@@ -49,6 +52,7 @@ export class FormExternalEntitiesComponent {
 
   filterEntities(event: Event | string | null = null) {
     if (!event) {
+      console.log("entre", this.externalEntities)
       this.filtredEntities = this.allEntities.filter(entity => !this.externalEntities.map(t => t.id).includes(entity.id));
       return;
     }
@@ -100,4 +104,7 @@ export class FormExternalEntitiesComponent {
     alert('Entidad creada correctamente.');
   }
 
+  ngOnDestroy() {
+    this.externalEntitiesService.selectedExternalEntity = this.externalEntities
+  }
 }

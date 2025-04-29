@@ -65,10 +65,10 @@ export class IniciativeService {
   }
   
 
-  async addCompliteIniciative(iniciative: NewIniciativeCreate) {
+  async addCompliteIniciative(iniciative: NewIniciativeCreate): Promise<CompliteIniciative | Error> {
     try {
-      const response = await firstValueFrom(
-        this.http.post<{ message: string }>(
+      return await firstValueFrom(
+        this.http.post<CompliteIniciative>(
           'http://127.0.0.1:8000/iniciatives/',
           iniciative,
           {
@@ -76,11 +76,11 @@ export class IniciativeService {
             observe: 'response',
           }
         )
-      );
-      return response.body?.message || 'Unknown response';
+      ).then(response => response.body as CompliteIniciative);
+      
     } catch (error) {
       console.error('Error adding initiative:', error);
-      return error;
+      return error as Error;
     }
   }
 
