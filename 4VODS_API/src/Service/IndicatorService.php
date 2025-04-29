@@ -99,6 +99,7 @@ class IndicatorService
 
             $degreeName = $degree->getName();
             $degreeSummary = [];
+            $degreeTotal = 0;
 
             foreach ($degree->getModules() as $module) {
                 if (!$module->isActive()) continue;
@@ -127,11 +128,15 @@ class IndicatorService
 
                         $degreeSummary[$schoolYear]['modules'][$moduleName]++;
                         $degreeSummary[$schoolYear]['total']++;
+                        $degreeTotal++;
                     }
                 }
             }
 
-                $result[$degreeName] = $degreeSummary;
+            $result[$degreeName] = [
+                'schoolYears' => $degreeSummary,
+                'total' => $degreeTotal
+            ];
         }
 
         return $result;

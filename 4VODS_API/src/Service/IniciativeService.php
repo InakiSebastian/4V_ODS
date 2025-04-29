@@ -521,7 +521,8 @@ class IniciativeService
         return $this->entityManager->getRepository(Iniciative::class)->count();
     }
 
-    public function getSchoolYears(){
+    public function getSchoolYears(): array
+    {
         $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
         $schoolYears = [];
 
@@ -530,6 +531,8 @@ class IniciativeService
                 $schoolYears[] = $iniciative->getSchoolYear();
             }
         }
+
+        rsort($schoolYears); // Sort the school years in descending order
 
         return $schoolYears;
     }
