@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { FormAddIniciativeComponent } from '../form-add-iniciative/form-add-iniciative.component';
+import { Component, Input } from '@angular/core';
+import { FormAddIniciativeComponent } from '../../form-add-iniciative/form-add-iniciative.component';
 import { CommonModule } from '@angular/common';
-import { CloneIniciativaComponent } from '../form-create-edit/clone-iniciativa/clone-iniciativa.component';
+import { CloneIniciativaComponent } from '../../form-create-edit/clone-iniciativa/clone-iniciativa.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-iniciative-view',
@@ -10,11 +11,22 @@ import { CloneIniciativaComponent } from '../form-create-edit/clone-iniciativa/c
   styleUrl: './add-iniciative-view.component.scss'
 })
 export class AddIniciativeViewComponent {
+
   section: string = 'select';
 
   hoverInfo: string = "";
 
   countSeconds: number = 0;
+
+  constructor(private route: ActivatedRoute){
+
+  }
+
+  ngOnInit() {
+    const action = this.route.snapshot.paramMap.get('acction');
+    if(!action)return
+    this.section = action
+  }
 
   counter() {
     let interval = setInterval(() => {

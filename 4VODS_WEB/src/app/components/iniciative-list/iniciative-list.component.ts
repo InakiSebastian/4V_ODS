@@ -7,6 +7,7 @@ import { ModalService } from '../../services/modal.service';
 import { FilterComponent } from '../filter/filter.component';
 import { CommonModule } from '@angular/common';
 import { ModalLoadComponent } from '../modal-load/modal-load.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class IniciativeListComponent {
 
   constructor(
     private iniciativeService: IniciativeService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private router: Router
   ) {
     this.modalService.loading$.subscribe((loading) => {
       console.log("Acabó del todo")
@@ -52,5 +54,13 @@ export class IniciativeListComponent {
   //filtrar iniciativas
   onFilterChanged(filteredList: Iniciative[]) {
     this.iniciativeList = filteredList;
+  }
+
+  createIniciative(){
+    this.router.navigate(['addIniciatives/new']);
+  }
+
+  cloneIniciative() {
+    this.router.navigate(['addIniciatives/clone']);
   }
 }
