@@ -14,6 +14,9 @@ export class FormDetailsComponent {
   startDateStr: string = '';
   endDateStr: string = '';
 
+  initialYear: number = new Date().getFullYear();
+  finalYear: number = new Date().getFullYear()+1;
+
   constructor() {}
 
   ngOnInit() {
@@ -22,6 +25,12 @@ export class FormDetailsComponent {
       this.endDateStr = this.details.endDate
         ? new Date(this.details.endDate).toISOString().split('T')[0]
         : '';
+
+      this.details.initialAcademicYear = this.initialYear;
+      this.details.finalAcademicYear = this.finalYear;
+
+      console.log('Año inicio ' + this.details.initialAcademicYear);
+      console.log(this.details.finalAcademicYear);
     }
 
     console.log(this.details!.iniciativeType);
@@ -36,6 +45,13 @@ export class FormDetailsComponent {
       this.details!.startDate = new Date(event.target.value);
     } else if (endOrStart === 'end') {
       this.details!.endDate = new Date(event.target.value);
+    }
+  }
+
+  updateAcademicYear(){
+    if(this.details){
+      this.details.initialAcademicYear = this.initialYear;
+      this.details.finalAcademicYear = this.finalYear;
     }
   }
 }
