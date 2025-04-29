@@ -13,7 +13,7 @@ final class OptionsController extends AbstractController {
     public function __construct(private IniciativeService $iniciativeService) {}
 
     
-    #[Route('/years', name: 'get_years', methods: ['GET'])]
+    #[Route('/schoolYears', name: 'get_years', methods: ['GET'])]
     public function getYears(): JsonResponse
     {
         $schoolYears = $this->iniciativeService->getSchoolYears();
