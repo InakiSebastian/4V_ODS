@@ -25,6 +25,8 @@ tags:
     description: Everything about Diffusion
   - name: Indicator
     description: Everything about Indicators
+  - name: Options
+    description: Data for the select options in the forms
 
 paths:
   /iniciatives:
@@ -1027,18 +1029,21 @@ paths:
                   Computer Science:
                     type: object
                     properties:
-                      Total:
-                        type: integer
-                        example: 2
-                      modules:
+                      2024-2025:
                         type: object
                         properties:
-                          Software Development:
+                          Total:
                             type: integer
-                            example: 1
-                          Data Science:
-                            type: integer
-                            example: 1
+                            example: 2
+                          modules:
+                            type: object
+                            properties:
+                              Software Development:
+                                type: integer
+                                example: 1
+                              Data Science:
+                                type: integer
+                                example: 1
 
         "400":
           description: Any problem in the Server
@@ -1079,6 +1084,26 @@ paths:
                           Data Science:
                             type: integer
                             example: 1
+        "400":
+          description: Any problem in the Server
+  /options/schoolYears:
+    get:
+      tags:
+        - Options
+      summary: get all school years
+      operationId: getAllSchoolYears
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  example: 
+                  - "2024-2025"
+                  - "2025-2026"
         "400":
           description: Any problem in the Server
 
