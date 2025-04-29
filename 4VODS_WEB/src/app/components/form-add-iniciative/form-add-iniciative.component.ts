@@ -76,13 +76,15 @@ export class FormAddIniciativeComponent {
     });
   
     if (this.iniciative) {
+      const [initialAcademicYear, finalAcademicYear] = this.iniciative.schoolYear.split('-');
       this.detailsI = {
         name: this.iniciative.name,
         description: this.iniciative.description,
         startDate: this.iniciative.startDate,
         endDate: this.iniciative.endDate ?? null,
         hours: this.iniciative.hours,
-        academicYear: this.iniciative.schoolYear,
+        initialAcademicYear: Number(initialAcademicYear),
+        finalAcademicYear: Number(finalAcademicYear),
         iniciativeType: this.iniciative.type,
         isInovative: this.iniciative.innovative === 1,
       };
@@ -186,7 +188,7 @@ export class FormAddIniciativeComponent {
     const formattedEndDate = this.detailsI!.endDate? new Date(this.detailsI!.endDate).toISOString().split('T')[0] : null;
     
     const newHours = this.detailsI!.hours
-    const newschoolYear = this.detailsI!.academicYear
+    const newschoolYear = this.detailsI!.initialAcademicYear + '-' + this.detailsI!.finalAcademicYear;
     const newIniciativeType = this.detailsI!.iniciativeType
 
     const newIsInnovative: number = this.detailsI!.isInovative ? 1 : 0
@@ -314,7 +316,8 @@ export class FormAddIniciativeComponent {
       startDate: new Date(),
       endDate: null,
       hours: 10,
-      academicYear: '',
+      initialAcademicYear: new Date().getTime(),
+      finalAcademicYear: new Date().getTime()+1,
       iniciativeType: '',
       isInovative: false,
     };

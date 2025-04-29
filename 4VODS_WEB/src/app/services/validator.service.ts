@@ -42,16 +42,13 @@ export class ValidatorService {
       return false;
     }
 
-    if (!detailsI?.academicYear) {
-      alert('El año académico es obligatorio.');
+    if (detailsI?.initialAcademicYear >= detailsI?.finalAcademicYear){
+      alert('El año académico inicial debe ser menor que el año académico final.')
       return false;
     }
 
-    const sanitizedYear = detailsI.academicYear.toString().replace(/[-\s]/g, '');
-
-    
-    if (isNaN(sanitizedYear) || sanitizedYear <= 0) {
-      alert('El año académico debe ser un número válido convinado con "-" y espacios.');
+    if ((detailsI?.finalAcademicYear - detailsI?.initialAcademicYear) > 1){
+      alert('El año académico final no puede ser mayor que el año académico inicial por más de 1 año.')
       return false;
     }
 
