@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Degree;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Iniciative;
+use App\Entity\Ods;
 
 class IndicatorService
 {
@@ -19,10 +20,9 @@ class IndicatorService
         $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
         $result = [];
 
-        // Loop over each initiative
+        // Loop over  initiative
         foreach ($iniciatives as $iniciative) {
 
-            // Loop over each initiative goal
             foreach ($iniciative->getIniciativeGoals() as $iniciativeGoal) {
                 $goal = $iniciativeGoal->getIdGoal();
                 $ods = $goal->getIdOds();
@@ -51,40 +51,43 @@ class IndicatorService
     }
 
     public function iniciativesByOdsGrouped(): array
-    {
-        $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
-        $result = [];
+{
+    $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
+    $odsList = $this->entityManager->getRepository(Ods::class)->findAll();
+    $result = [];
 
-        foreach ($iniciatives as $iniciative) {
-            $schoolYear = $iniciative->getSchoolYear();
+    foreach ($iniciatives as $iniciative) {
+        $schoolYear = $iniciative->getSchoolYear();
 
-            if (!isset($result[$schoolYear])) {
-                $result[$schoolYear] = [];
-            }
+        if (!isset($result[$schoolYear])) {
+            $result[$schoolYear] = [];
 
-            $odsCounted = [];
-
-            foreach ($iniciative->getIniciativeGoals() as $iniciativeGoal) {
-                $goal = $iniciativeGoal->getIdGoal();
-                $ods = $goal->getIdOds();
-
-                if ($ods) {
-                    $odsTitle = $ods->getId() . ' - ' . $ods->getDescription();
-
-                    if (!isset($odsCounted[$odsTitle])) {
-                        if (!isset($result[$schoolYear][$odsTitle])) {
-                            $result[$schoolYear][$odsTitle] = 0;
-                        }
-
-                        $result[$schoolYear][$odsTitle]++;
-                        $odsCounted[$odsTitle] = true;
-                    }
-                }
+            foreach ($odsList as $ods) {
+                $odsTitle = $ods->getId() . ' - ' . $ods->getDescription();
+                $result[$schoolYear][$odsTitle] = 0;
             }
         }
 
-        return $result;
+        $odsCounted = [];
+
+        foreach ($iniciative->getIniciativeGoals() as $iniciativeGoal) {
+            $goal = $iniciativeGoal->getIdGoal();
+            $ods = $goal->getIdOds();
+
+            if ($ods) {
+                $odsTitle = $ods->getId() . ' - ' . $ods->getDescription();
+
+                if (!isset($odsCounted[$odsTitle])) {
+                    $result[$schoolYear][$odsTitle]++;
+                    $odsCounted[$odsTitle] = true;
+                }
+            }
+        }
     }
+
+    return $result;
+}
+
 
     public function indicativeCount(): array
     {
