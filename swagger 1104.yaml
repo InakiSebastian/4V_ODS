@@ -986,30 +986,6 @@ paths:
 
         "400":
           description: Any problem in the Server
-  /indicators/iniciatives/ods:
-    get:
-      tags:
-        - Indicator
-      summary: get iniciatives by ODS
-      operationId: getIniciativeByOds
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  2 - Quality Education:
-                    type: array
-                    items:
-                      type: string
-                      example:
-                        - Tech for all 2024-2025
-
-        "400":
-          description: Any problem in the Server
-
 components:
   schemas:
     newIniciatives:

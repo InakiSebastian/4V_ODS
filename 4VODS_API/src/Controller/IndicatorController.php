@@ -20,7 +20,7 @@ class IndicatorController extends AbstractController
         $iniciatives = $this->indicatorService->iniciativesByOdsGrouped();
         return $this->json($iniciatives);
     }
-    
+
     #[Route('/iniciatives/ods', name: 'get_by_ods', methods: ['GET'])]
     public function getIniciativesByOds(): JsonResponse
     {
@@ -42,6 +42,9 @@ class IndicatorController extends AbstractController
         return $this->json($iniciatives);
     }
 
-    
-
+    #[Route('/iniciatives/count', methods: ['GET'])]
+    public function getNumberOfIniciatives(): JsonResponse
+    {
+        return $this->json(['count' => $this->indicatorService->numberOfIniciatives()]);
+    }
 }
