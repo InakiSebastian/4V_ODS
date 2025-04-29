@@ -532,7 +532,7 @@ class IniciativeService
             }
         }
 
-        sort($schoolYears); // Sort the school years in ascending order
+        rsort($schoolYears); // Sort the school years in descending order
 
         return $schoolYears;
     }
