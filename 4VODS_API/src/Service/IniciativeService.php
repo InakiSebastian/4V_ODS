@@ -520,4 +520,17 @@ class IniciativeService
     {
         return $this->entityManager->getRepository(Iniciative::class)->count();
     }
+
+    public function getSchoolYears(){
+        $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
+        $schoolYears = [];
+
+        foreach ($iniciatives as $iniciative) {
+            if (!in_array($iniciative->getSchoolYear(), $schoolYears)) {
+                $schoolYears[] = $iniciative->getSchoolYear();
+            }
+        }
+
+        return $schoolYears;
+    }
 }

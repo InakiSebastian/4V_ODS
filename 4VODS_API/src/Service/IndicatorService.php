@@ -132,4 +132,49 @@ class IndicatorService
 
         return $result;
     }
+
+    public function indicativeCountByYear($year): array
+    {
+        $degrees = $this->entityManager->getRepository(Degree::class)->findAll();
+        $result = [];
+
+        foreach ($degrees as $degree) {
+            if (!$degree->isActive()) continue;
+
+            $degreeName = $degree->getName();
+            $modulesSummary = [];
+            $degreeIniciativeCount = 0;
+
+            foreach ($degree->getModules() as $module) {
+                if (!$module->isActive()) continue;
+
+                $moduleName = $module->getName();
+                $moduleIniciativeCount = 0;
+
+                foreach ($module->getModuleIniciatives() as $moduleIniciative) {
+                    if (!$moduleIniciative->isActive()) continue;
+
+                    $iniciative = $moduleIniciative->getIdIniciative();
+                    if ($iniciative && $iniciative->isActive() && $iniciative->getSchoolYear() == $year) {
+                        $moduleIniciativeCount++;
+                        $degreeIniciativeCount++;
+                    }
+                }
+
+                if ($moduleIniciativeCount > 0) {
+                    $modulesSummary[$moduleName] = $moduleIniciativeCount;
+                }
+            }
+
+            if ($degreeIniciativeCount > 0) {
+                $result[$degreeName] = [
+                    'total' => $degreeIniciativeCount,
+                    'modules' => $modulesSummary
+                ];
+            }
+        }
+
+        return $result;
+    }
+
 }

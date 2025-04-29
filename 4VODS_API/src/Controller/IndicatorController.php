@@ -6,6 +6,8 @@ use App\Service\IndicatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+
 
 #[Route('/indicators', name: 'company')]
 class IndicatorController extends AbstractController
@@ -32,4 +34,14 @@ class IndicatorController extends AbstractController
         $iniciatives = $this->indicatorService->indicativeCount();
         return $this->json($iniciatives);
     }
+
+    #[Route('/iniciatives/countGrouped/{year}', name: 'get_count_by_year', methods: ['GET'])]
+    public function getQuantityInicitiavesByYear($year): JsonResponse
+    {
+        $iniciatives = $this->indicatorService->indicativeCountByYear($year);
+        return $this->json($iniciatives);
+    }
+
+    
+
 }
