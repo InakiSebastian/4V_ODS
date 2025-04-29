@@ -20,125 +20,26 @@ echarts.use([BarChart, GridComponent,TitleComponent, CanvasRenderer, TooltipComp
   styleUrls: ['./totalIniciativesByDegree.component.css']
 })
 export class TotalIniciativesByDegreeComponent implements OnInit {
-  schoolYears: string[] = [];
+  chart = {}; 
+
   allValues: {[degree: string]: {[year: string]: number}} = {};
-  degrees: any[] = [];
-  values: any[] = [];
 
   constructor(private indicatorService: IndicatorsService){}
 
   ngOnInit() {
-    this.loadSchoolYears();
     this.loadIniciatives();
-    this.loadIniciatives2();
-  }
-
-  private loadSchoolYears(){
-    this.indicatorService.getSchoolYears().subscribe(data => {
-      this.schoolYears = data;
-      console.log(data);
-    })
   }
 
   private loadIniciatives() {
     this.indicatorService.getNumberIniciatives().subscribe((data: any) => {
-
-      // Mapeamos el JSON para quedarnos con ciclo: totalIniciativas.
+  
       this.updateAllValues(data);
-
-      // Metemos los valores del objeto allValues en los arrays degrees y values
-      this.degrees = Object.keys(this.allValues);
-      this.values = Object.values(this.allValues);
-
-      console.log(data);
-      console.log(this.allValues);
-      console.log(this.degrees);
-      console.log(this.values);
-
-      this.updateChartXAxis();
-      this.updateChartYAxis();
+  
+      this.paintChart();
     });
-  }
+  }  
 
-  private loadIniciatives2() {
-    this.indicatorService.getNumberIniciatives().subscribe((data: any) => {
-  
-      this.updateAllValues2(data);
-  
-      this.degrees = Object.keys(this.allValues);
-      this.values = this.degrees.map(degree =>
-        Object.values(this.allValues[degree]).reduce((a, b) => a + b, 0)
-      );
-  
-      this.updateChartXAxis();
-      this.updateChartYAxis();
-  
-      const schoolYearsSet = new Set<string>();
-
-// Recolectamos los años escolares únicos
-for (const degree in this.allValues) {
-  for (const year in this.allValues[degree]) {
-    schoolYearsSet.add(year);
-  }
-}
-
-const schoolYears = Array.from(schoolYearsSet).sort();
-const degrees = Object.keys(this.allValues);
-
-// Creamos una serie por cada año escolar
-const series = schoolYears.map(year => {
-  return {
-    name: year,
-    type: 'bar',
-    stack: 'total', // <- Apila las barras
-    emphasis: {
-      focus: 'series'
-    },
-    data: degrees.map(degree => this.allValues[degree][year] || 0)
-  };
-});
-
-this.option2 = {
-  title: {
-    text: 'Iniciativas por ciclo y año escolar (acumuladas)',
-    left: 'left',
-    top: 0,
-    textStyle: { fontSize: 18 }
-  },
-  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-  legend: { data: schoolYears,
-    top: 40
-   },
-  grid: {
-    top: 80,  
-    left: '3%',
-    right: '4%',
-    bottom: '3%',
-    containLabel: true
-  },
-  xAxis: {
-    type: 'category',
-    data: degrees,
-    axisLabel: {
-      interval: 0,
-      formatter: (value: string) => value.split(' ').join('\n')
-    }
-  },
-  yAxis: { type: 'value' },
-  series: series
-};
-    });
-  }
-
-  updateAllValues(data: any[]){
-    for(const key in data){ // hasOwnProperty sirve para verificar si una propiedad es propiedad directa del objeto, y no heredada de su prototipo.
-      if(data.hasOwnProperty(key)){
-        this.allValues[key] = data[key].total;
-      }
-    }
-  }
-
-  updateAllValues2(data: any){
+  updateAllValues(data: any){
     this.allValues = {}; // Limpiar por si acaso
   
     for (const degree in data) {
@@ -155,90 +56,95 @@ this.option2 = {
     }
   }
 
-  private updateChartXAxis() {
-    this.option.xAxis[0].data = this.degrees;
-    this.option = { ...this.option }; // Fuerza redibujo
-  }
+  paintChart(){
+    const schoolYearsSet = new Set<string>();
 
-  private updateChartYAxis() {
-    this.option.series[0].data = this.values;
-    this.option = { ...this.option };
-  }
+    // Recolectamos los años escolares únicos
+    for (const degree in this.allValues) {
+      for (const year in this.allValues[degree]) {
+        schoolYearsSet.add(year);
+      }
+    }
 
-  option = {
-    title: {
-      text: 'Número de iniciativas por ciclo',
-      left: 'left', // lo centra horizontalmente
-      top: 0, // espacio desde el top
-      textStyle: {
-        fontSize: 18,
-        fontWeight: ''
-      }
-    },
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow'
-      }
-    },
-    legend: {},
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true
-    },
-    xAxis: [
-      {
-        type: 'category',
-        data: this.degrees,
-        axisLabel: {
-          interval: 0,
-          formatter: function (value: string) {
-            // parte en salto de línea si el texto tiene espacios
-            return value.split(' ').join('\n');
-          }
-        }
-      }
-    ],
-    yAxis: [
-      {
-        type: 'value'
-      }
-    ],
-    series: [
-      {
-        name: 'Iniciativas totales',
+    const schoolYears = Array.from(schoolYearsSet).sort();
+    const degrees = Object.keys(this.allValues);
+
+    // Creamos una serie por cada año escolar
+    const series: any[] = schoolYears.map(year => {
+      return {
+        name: year,
         type: 'bar',
-        data: this.values,
+        stack: 'total', // <- Apila las barras
         emphasis: {
           focus: 'series'
         },
-        markLine: {
-          lineStyle: {
-            type: 'dashed'
-          },
-          data: [[{ type: 'min' }, { type: 'max' }]]
-        }
-      }
-    ]
-  };
+        data: degrees.map(degree => this.allValues[degree][year] || 0)
+      };
+    });
 
-  option2 = {
-    title: {},
-    tooltip: {},
-    legend: {},
-    grid: {},
-    yAxis: {
-      type: 'value'
-    },
-    xAxis: {
-      axisLabel: {},
-      type: 'category',
-      data: [] as string[]
-    },
-    series:[] as any[]
-  };
+    series[series.length - 1].label = {
+      show: true,
+      position: 'top',
+      distance: 5,
+      fontWeight: 'bold',
+      formatter: (params: any) => {
+        const degree = params.name;
+        const total = Object.values(this.allValues[degree] || {}).reduce((a, b) => a + b, 0);
+        return total;
+      }
+    };
+
+    this.chart = {
+      title: {
+        text: 'Iniciativas por ciclo y año escolar (acumuladas)',
+        left: 'left',
+        top: 0,
+        textStyle: { 
+          fontSize: 18,
+          fontWeight: 'normal'
+         },
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: { type: 'shadow' },
+        formatter: (params: any) => {
+          const degree = params[0].name;
+      
+          let tooltipContent = `<strong>${degree}</strong><br/>`;
+      
+          let total = 0;
+      
+          for (const item of params) {
+            tooltipContent += `${item.marker} ${item.seriesName}: ${item.value}<br/>`;
+            total += item.value;
+          }
+      
+          tooltipContent += `<strong>Total: ${total}</strong>`;
+          return tooltipContent;
+        }
+      },
+      legend: { data: schoolYears,
+        top: 40
+      },
+      grid: {
+        top: 80,  
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        data: degrees,
+        axisLabel: {
+          interval: 0,
+          formatter: (value: string) => value.split(' ').join('\n')
+        }
+      },
+      yAxis: { type: 'value' },
+      series: series
+    };
+  }
 
 }
 
