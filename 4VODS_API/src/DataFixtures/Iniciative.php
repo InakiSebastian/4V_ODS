@@ -25,7 +25,7 @@ class Iniciative extends Fixture implements DependentFixtureInterface
         $iniciative1->setEndDate(new \DateTime('2024-06-30'));
         $iniciative1->setHours(20);
         $iniciative1->setType("Charla");
-        $iniciative1->setSchoolYear('2023-2024');
+        $iniciative1->setSchoolYear('2024-2025');
         $iniciative1->setInnovative(true);
     
         foreach ([$teachers[0], $teachers[1]] as $teacher) {
