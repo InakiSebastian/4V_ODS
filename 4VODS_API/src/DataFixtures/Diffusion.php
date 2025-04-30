@@ -15,10 +15,10 @@ class Diffusion extends Fixture implements DependentFixtureInterface
 
         // Métodos de difusión y links personalizados
         $diffusionMethods = [
-            'Instagram' => 'https://example.com/redes-sociales/{id}',
-            'Facebook' => 'https://example.com/pagina-web/{id}',
-            'Linkedin' => 'https://example.com/boletin/{id}',
-            'Twitter' => 'https://example.com/reuniones/{id}',
+            'instagram' => 'https://example.com/redes-sociales/{id}',
+            'facebook' => 'https://example.com/pagina-web/{id}',
+            'linkedin' => 'https://example.com/boletin/{id}',
+            'twitter' => 'https://example.com/reuniones/{id}',
         ];
 
         // Recorrer cada iniciativa
