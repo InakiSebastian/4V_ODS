@@ -1,3 +1,6 @@
+
+@use './styles/variables' as var;
+
 /* You can add global styles to this file, and also import other style files */
 .pointer {
     cursor: pointer;
@@ -32,4 +35,18 @@
 .scrollable-container-form::-webkit-scrollbar-thumb:hover {
     background: #555;
     /* Color cuando pasas el mouse */
+}
+
+.bgc-primary {
+    background-color: var.$primary !important;
+}
+.bgc-secondary {
+    background: var.$secondary !important;
+}
+.success-color {
+    background: var.$success !important;
+}
+
+.warning-color {
+    background: var.$warning !important;
 }
