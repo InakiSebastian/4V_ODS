@@ -141,6 +141,7 @@ class IndicatorService
 
         return $result;
     }
+    
     public function numberOfIniciatives(): array
     {
         $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
