@@ -19,7 +19,7 @@
                         <input type="text" class="form-control" id="name" name="name"
                             placeholder="Nombre de la entidad externa" autocomplete="on" [(ngModel)]="name">
 
-                        <button class="btn btn-primary ms-3" (click)="createEntity($event)">Crear</button>
+                        <button class="btn btnc-primary ms-3" (click)="createEntity($event)">Crear</button>
                     </div>
                 </div>
                 <hr>
@@ -32,7 +32,7 @@
                         <div class="card-header d-flex justify-between items-center">
                             <input type="text" class="form-control" (input)="filterEntities($event)"
                                 placeholder="Buscar profesor..." />
-                            <button class="btn btn-primary ms-2" (click)="toggleShow($event)">
+                            <button class="btn btnc-primary ms-2" (click)="toggleShow($event)">
                                 {{ isExpanded ? 'Ocultar' : 'Mostrar' }}
                             </button>
                         </div>

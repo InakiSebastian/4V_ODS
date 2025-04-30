@@ -50,3 +50,13 @@
 .warning-color {
     background: var.$warning !important;
 }
+
+.btnc-primary {
+    background-color: var.$primary !important;
+    color: white !important;
+
+    &:hover {
+        background-color: var.$primary-success !important;
+        color: white !important;
+    }
+}
