@@ -43,6 +43,8 @@ export class FilterComponent {
     { id: 3, value: false }
   ];
 
+  iniciativeTypes: string[] = [];
+
   constructor(
     private iniciativeService: IniciativeService,
     private modalService: ModalService,
@@ -54,6 +56,11 @@ export class FilterComponent {
 
     this.modalService.recharge$.subscribe(async () => {
       this.iniciativeList = await this.iniciativeService.getCompliteIniciativas();
+      console.log("Se hace",this.iniciativeList)
+      this.iniciativeList.forEach(iniciative => {
+        console.log(iniciative.type)
+        if(this.iniciativeTypes.includes(iniciative.type) == false) this.iniciativeTypes.push(iniciative.type);
+      });
       this.applyFilters();
     });
   }
@@ -65,7 +72,11 @@ export class FilterComponent {
     this.degreeList = (await this.degreeService.getDegrees()).map(degree => new DegreeCheckbox(degree.id, degree.name));
 
     this.filtredOds = this.odsList;
-    this.iniciativeList = await this.iniciativeService.getCompliteIniciativas()
+    this.iniciativeList = await this.iniciativeService.getCompliteIniciativas();
+    this.iniciativeList.forEach(iniciative => {
+      console.log(iniciative.type)
+      if(this.iniciativeTypes.includes(iniciative.type) == false) this.iniciativeTypes.push(iniciative.type);
+    });
     this.applyFilters();
     console.log(this.iniciativeList)
   }

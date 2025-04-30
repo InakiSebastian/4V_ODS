@@ -9,9 +9,7 @@
                 <select class="form-select me-2" [(ngModel)]="selectedType" name="selectedType"
                     (change)="applyFilters()">
                     <option value="">Todos los tipos</option>
-                    <option value="proyecto">Proyecto</option>
-                    <option value="charla">Charla</option>
-                    <option value="excursion">Excursión</option>
+                    <option *ngFor="let type of this.iniciativeTypes" [value]="type" value="proyecto">{{type}}</option>
                 </select>
             </div>
             <div class="col-2 d-flex justify-content-center">
