@@ -14,7 +14,7 @@
                     <div class="card-header d-flex justify-between items-center">
                         <input type="text" class="form-control" (input)="filterTeachers($event)"
                             placeholder="Buscar profesor..." />
-                        <button class="btn btn-primary ms-2" (click)="toggleShow($event)">
+                        <button class="btn btnc-primary ms-2" (click)="toggleShow($event)">
                             {{ isExpanded ? 'Ocultar' : 'Mostrar' }}
                         </button>
                     </div>
@@ -109,7 +109,7 @@
 
             @if(academicForm.get('degrees')?.value > 0){
             <div class="col-2">
-                <button type="button" class="btn btn-primary" (click)="addDegree()">Añadir</button>
+                <button type="button" class="btn btnc-primary" (click)="addDegree()">Añadir</button>
             </div>
             }
 

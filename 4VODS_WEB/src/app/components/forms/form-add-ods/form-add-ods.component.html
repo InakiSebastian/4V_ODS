@@ -85,9 +85,9 @@
                                 <button type="button" class="btn btn-secondary"
                                     (click)="reset(); editMode = false">{{editMode ? 'Cancelar' : 'Limpiar'}}</button>
                                 @if(odsForm.valid) {
-                                <button type="submit" class="btn btn-primary">{{editMode ? 'Editar' : 'Crear'}}</button>
+                                <button type="submit" class="btn btnc-primary">{{editMode ? 'Editar' : 'Crear'}}</button>
                                 } @else {
-                                <button type="submit" class="btn btn-primary" disabled>{{editMode ? 'Editar' :
+                                <button type="submit" class="btn btnc-primary" disabled>{{editMode ? 'Editar' :
                                     'Crear'}}</button>
                                 }
                             </div>

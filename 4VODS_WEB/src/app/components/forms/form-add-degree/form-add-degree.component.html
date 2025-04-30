@@ -47,9 +47,9 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" (click)="reset()">{{editMode ? 'Cancelar' : 'Limpiar'}}</button>
                                 @if(degreeForm.valid) {
-                                    <button type="submit" class="btn btn-primary">{{editMode ? 'Editar' : 'Crear'}}</button>
+                                    <button type="submit" class="btn btnc-primary">{{editMode ? 'Editar' : 'Crear'}}</button>
                                 } @else {
-                                    <button type="submit" class="btn btn-primary" disabled>{{editMode ? 'Editar' : 'Crear'}}</button>
+                                    <button type="submit" class="btn btnc-primary" disabled>{{editMode ? 'Editar' : 'Crear'}}</button>
                                 }
                             </div>
                         </form>
