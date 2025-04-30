@@ -144,6 +144,7 @@ class IndicatorService
 
         return $result;
     }
+    
 
     public function numberOfIniciatives(): array
     {
