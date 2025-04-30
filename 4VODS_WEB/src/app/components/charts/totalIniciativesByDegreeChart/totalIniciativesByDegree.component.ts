@@ -30,9 +30,8 @@ export class TotalIniciativesByDegreeComponent implements OnInit {
     this.loadIniciatives();
   }
 
-  private loadIniciatives() {
+  loadIniciatives() {
     this.indicatorService.getNumberIniciatives().subscribe((data: any) => {
-  
       this.updateAllValues(data);
   
       this.paintChart();
@@ -40,7 +39,8 @@ export class TotalIniciativesByDegreeComponent implements OnInit {
   }  
 
   updateAllValues(data: any){
-    this.allValues = {}; // Limpiar por si acaso
+    // Lo limpiamos por si acaso
+    this.allValues = {}; 
   
     for (const degree in data) {
       if (data.hasOwnProperty(degree)) {
@@ -57,16 +57,8 @@ export class TotalIniciativesByDegreeComponent implements OnInit {
   }
 
   paintChart(){
-    const schoolYearsSet = new Set<string>();
-
-    // Recolectamos los años escolares únicos
-    for (const degree in this.allValues) {
-      for (const year in this.allValues[degree]) {
-        schoolYearsSet.add(year);
-      }
-    }
-
-    const schoolYears = Array.from(schoolYearsSet).sort();
+    //Transformamos en un los años Escolares en un Array para poder trabajar con él (sort, map, etc.)
+    const schoolYears = this.transformToArray();
     const degrees = Object.keys(this.allValues);
 
     // Creamos una serie por cada año escolar
@@ -74,7 +66,7 @@ export class TotalIniciativesByDegreeComponent implements OnInit {
       return {
         name: year,
         type: 'bar',
-        stack: 'total', // <- Apila las barras
+        stack: 'total', // Para apilar las barras
         emphasis: {
           focus: 'series'
         },
@@ -96,9 +88,9 @@ export class TotalIniciativesByDegreeComponent implements OnInit {
 
     this.chart = {
       title: {
-        text: 'Iniciativas por ciclo y año escolar (acumuladas)',
+        text: 'Iniciativas por Ciclo y Curso Académico',
         left: 'left',
-        top: 0,
+        top: 10,
         textStyle: { 
           fontSize: 18,
           fontWeight: 'normal'
@@ -144,6 +136,20 @@ export class TotalIniciativesByDegreeComponent implements OnInit {
       yAxis: { type: 'value' },
       series: series
     };
+  }
+
+  transformToArray(){
+    const schoolYearsSet = new Set<string>();
+
+    // Recolectamos los años escolares únicos
+    for (const degree in this.allValues) {
+      for (const year in this.allValues[degree]) {
+        schoolYearsSet.add(year);
+      }
+    }
+
+    const schoolYears = Array.from(schoolYearsSet).sort();
+    return schoolYears;
   }
 
 }
