@@ -28,8 +28,13 @@ export class FormAddGoalComponent {
 
   odsList: Ods[] = [];
 
-  editMode: boolean = false;
+  editMode: boolean|null = false;
   selectedGoal: Goal | undefined = undefined;
+
+  selectedId: number = -1;
+  deleteCountdown: number = 0;
+  deleteButtonEnabled: boolean = false;
+  countdownInterval: any;
 
   constructor(private fb: FormBuilder, private odsService: OdsService, private goalService: GoalService){}
 
@@ -97,5 +102,27 @@ export class FormAddGoalComponent {
     this.selectedGoal = this.goalList.find(goal => goal.id === goalId);
     if (!this.selectedGoal) return;
     this.goalForm.setValue({ name: this.selectedGoal.description, ods: this.selectedGoal.ods });
+  }
+
+  delete() {
+    this.goalList = this.goalList.filter(goal => goal.id !== this.selectedId);
+    this.resetRows();
+    this.filter();  
+    this.goalService.deleteGoal(this.selectedId);
+    this.editMode = false;
+  }
+
+  startDeleteCountdown() {
+    this.deleteCountdown = 4;
+    this.deleteButtonEnabled = false;
+  
+    this.countdownInterval = setInterval(() => {
+      this.deleteCountdown--;
+      if (this.deleteCountdown <= 0) {
+        this.deleteButtonEnabled = true;
+        clearInterval(this.countdownInterval);
+      }
+    }, 1000);
+    this.selectedGoal = this.goalList.find(goal => goal.description === this.searchGoal)
   }
 }

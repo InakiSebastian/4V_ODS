@@ -22,10 +22,15 @@ export class FormAddOdsComponent {
   odsList: Ods[] = []
   filtredOds: {ods: Ods, src: string}[] = []
 
-  editMode: boolean = false;
+  editMode: boolean|null = false;
   selectedOds: Ods | undefined = undefined;
 
   slectedImage: File | null = null;
+
+  selectedId: number = -1;
+  deleteCountdown: number = 0;
+  deleteButtonEnabled: boolean = false;
+  countdownInterval: any;
 
   constructor(private fb: FormBuilder, private odsService: OdsService, private staticService: StaticService){
     this.dimensions = this.staticService.getDimensions();
@@ -108,5 +113,28 @@ export class FormAddOdsComponent {
     });
     console.log(imgValid ? src : 'odsIcons/default.png')
     return imgValid ? src : 'odsIcons/default.png';
+  }
+
+  delete() {
+    this.odsList = this.odsList.filter(ods => ods.id !== this.selectedId);
+    this.filter();
+    this.odsService.deleteODS(this.selectedId);
+
+    this.editMode = false;
+  }
+
+  startDeleteCountdown() {
+    this.deleteCountdown = 4;
+    this.deleteButtonEnabled = false;
+  
+    this.countdownInterval = setInterval(() => {
+      this.deleteCountdown--;
+      if (this.deleteCountdown <= 0) {
+        this.deleteButtonEnabled = true;
+        clearInterval(this.countdownInterval);
+      }
+    }, 1000);
+
+    this.selectedOds = this.odsList.find(ods => ods.id == this.selectedId);
   }
 }
