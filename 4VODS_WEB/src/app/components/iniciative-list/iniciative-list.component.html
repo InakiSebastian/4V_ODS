@@ -8,18 +8,21 @@
 
         <div class="row h-100">
             <div class="col-6">
-                <div class="card bg-success text-white text-center shadow rounded-4 h-100 pointer" >
+                <div class="card bg-success text-white text-center shadow rounded-4 h-100 pointer">
                     <div class="card-body d-flex flex-column justify-content-center align-items-center h-100">
                         <h5 class="card-title mb-3 mb-4">Create Iniciative</h5>
-                        <img src="generic-icons/plus.png" alt="add" style="height: 100px !important; width: auto !important;">
+                        <img src="generic-icons/plus.png" alt="add"
+                            style="height: 100px !important; width: auto !important;">
                     </div>
                 </div>
             </div>
             <div class="col-6">
-                <div class="card bg-primary text-white text-center shadow rounded-4 h-100 pointer" (click)="cloneIniciative()" [style]="{'cursor': 'pointer'}">
+                <div class="card bg-primary text-white text-center shadow rounded-4 h-100 pointer"
+                    (click)="cloneIniciative()" [style]="{'cursor': 'pointer'}">
                     <div class="card-body d-flex flex-column justify-content-center align-items-center h-100">
                         <h5 class="card-title mb-3 mb-4">Clone Iniciative</h5>
-                        <img src="generic-icons/copy.svg" alt="add" style="height: 100px !important; width: auto !important;">
+                        <img src="generic-icons/copy.svg" alt="add"
+                            style="height: 100px !important; width: auto !important;">
                     </div>
                 </div>
             </div>
@@ -35,12 +38,31 @@
 
 }@else {
 
-<div class="row row-cols-2 gy-4 d-flex justify-content-center">
-    <div class="row d-flex justify-content-center text-secondary  mt-5">
-        <div class="col-4">
-            <img src="generic-icons/no-hay.png" alt="" class="img-fluid">
+<div class="">
+    <div class="row m-5">
+        <div class="col-6">
+            <div class="card bg-success text-white text-center shadow rounded-4 h-100 pointer">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center h-100">
+                    <h5 class="card-title mb-3 mb-4">Create Iniciative</h5>
+                    <img src="generic-icons/plus.png" alt="add"
+                        style="height: 100px !important; width: auto !important;">
+                </div>
+            </div>
         </div>
-        <div class="col-8 d-flex align-items-center">
+        <div class="col-6">
+            <div class="card bg-primary text-white text-center shadow rounded-4 h-100 pointer"
+                (click)="cloneIniciative()" [style]="{'cursor': 'pointer'}">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center h-100">
+                    <h5 class="card-title mb-3 mb-4">Clone Iniciative</h5>
+                    <img src="generic-icons/copy.svg" alt="add"
+                        style="height: 100px !important; width: auto !important;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-secondary mt-5">
+        <div class="col-12 d-flex flex-column align-items-center text-center">
+            <img src="generic-icons/no-hay.png" alt="" class="img-fluid mb-3" style="height: 40%">
             <h1>No se han encontrado iniciativas</h1>
         </div>
     </div>
@@ -49,4 +71,4 @@
 
 <app-modal />
 
-<app-modal-load *ngIf="loading" />
+<app-modal-load *ngIf="loading"/>
