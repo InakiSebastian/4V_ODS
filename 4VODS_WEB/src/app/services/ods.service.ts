@@ -45,6 +45,15 @@ export class OdsService {
     ).then(response => response.body as Ods);
   }
 
+  deleteODS(odsId: number) {
+    return firstValueFrom(
+      this.http.delete('http://127.0.0.1:8000/ods/' + odsId, {
+        headers: this.headers,
+        observe: 'response',
+      })
+    );
+  }
+
   async getOdsById(id: number): Promise<number | undefined> {
     return (await this.getOds()).find((o) => o.id === id)?.id;
   }

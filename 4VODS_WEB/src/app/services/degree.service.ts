@@ -46,6 +46,15 @@ export class DegreeService {
     );
   }
 
+  deleteDegree(degreeId: number) {
+    return firstValueFrom(
+      this.http.delete('http://127.0.0.1:8000/degree/' + degreeId, {
+        headers: this.headers,
+        observe: 'response',
+      })
+    );
+  }
+
   async getDegreeById(degreeSelect: number) {
     return (await this.getDegrees()).filter(
       (degree) => degree.id == degreeSelect

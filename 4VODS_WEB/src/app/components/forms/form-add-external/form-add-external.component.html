@@ -19,12 +19,14 @@
                               <tr>
                                 <th scope="col">Nombre</th>
                                 <th scope="col"></th>
+                                <th scope="col"></th>
                               </tr>
                             </thead>
                             <tbody class="scrollable-tbody-form" *ngIf="this.filtedEntities.length > 0">
                                 <tr *ngFor="let extEnt of filtedEntities">
                                     <td>{{extEnt.name}}</td>
-                                    <td><img src="generic-icons/pencil.svg" alt="edit" class="pointer" (click)="setEditMode(extEnt.id)"></td>
+                                    <td><img src="generic-icons/pencil.svg" alt="edit" class="pointer ms-5" (click)="setEditMode(extEnt.id)"></td>
+                                    <td><img src="generic-icons/borrar.png" alt="delete" class="pointer ms-5" (click)="selectedId=extEnt.id; editMode=null; startDeleteCountdown()" style="height:20px"></td>
                                   </tr>
                             </tbody>
                             <div *ngIf="this.filtedEntities.length == 0">
@@ -34,7 +36,7 @@
                             </div>
                           </table>
                     </div>
-                    <div class="col-5">
+                    <div class="col-5" *ngIf="editMode!=null">
                         <h5 class="modal-title">{{editMode ? 'Editar Entidad externa' : 'Crear Entidad externa'}}</h5>
                         <hr>
                         <form action="" [formGroup]="entityForm" (ngSubmit)="submit()">
@@ -57,6 +59,23 @@
                                 }
                             </div>
                         </form>
+                    </div>
+                    <div class="col-5" *ngIf="editMode==null">
+                        <h5>
+                            Borrar Entidad Externa: {{this.selectedEntity!.name}}
+                        </h5>
+                        <hr>
+                        <p>
+                            Recuerda que las entidades que se borren no se podrán recuperar en ningún momento y no podrán ser utilizadas, aún que a la hora de mostrar, sí aparecerán si están asociadas a una entidad existente.
+                        </p>
+                        <button type="button" class="btn btn-danger p-2" (click)="delete()"
+                                [disabled]="!deleteButtonEnabled">
+                          {{ deleteButtonEnabled ? 'Confirmar' : 'Se habilita en ' + deleteCountdown + 's' }}
+                        </button>
+                        <button type="button" class="btn btn-secondary ms-4 p-2" (click)="editMode = false">
+                               Cancelar 
+                        </button>
+
                     </div>
                 </div>
 

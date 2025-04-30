@@ -53,4 +53,13 @@ export class TeacherService {
         }
       )).then(response => response.body as Teacher);
   }
+
+  deleteTeacher(teacherId: number) {
+    return firstValueFrom(
+      this.http.delete('http://127.0.0.1:8000/teacher/' + teacherId, {
+        headers: this.headers,
+        observe: 'response',
+      })
+    );
+  }
 }

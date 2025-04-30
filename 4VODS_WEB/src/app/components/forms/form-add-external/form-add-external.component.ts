@@ -16,10 +16,15 @@ export class FormAddExternalComponent {
   externalEntities: ExternalEntity[] = []
   filtedEntities: ExternalEntity[] = []
 
-  editMode: boolean = false;
+  editMode: boolean|null = false;
   selectedEntity: ExternalEntity | undefined = undefined;
 
   searchExtEnt: string = '';
+
+  selectedId: number = -1;
+  deleteCountdown: number = 0;
+  deleteButtonEnabled: boolean = false;
+  countdownInterval: any;
 
   constructor(private fb: FormBuilder, private externalService: ExternalEntitiesService) {
     this.entityForm = this.fb.group({
@@ -69,5 +74,26 @@ export class FormAddExternalComponent {
       this.filtedEntities = this.externalEntities
         .filter(entity => entity.name.toLowerCase().includes(this.searchExtEnt.toLowerCase()));
     }
+  }
+
+  delete() {
+    this.externalEntities = this.externalEntities.filter(extent => extent.id !== this.selectedId);
+    this.filter();
+    this.externalService.deleteExternalEntity(this.selectedId);
+    this.editMode = false;
+  }
+
+  startDeleteCountdown() {
+    this.deleteCountdown = 4;
+    this.deleteButtonEnabled = false;
+  
+    this.countdownInterval = setInterval(() => {
+      this.deleteCountdown--;
+      if (this.deleteCountdown <= 0) {
+        this.deleteButtonEnabled = true;
+        clearInterval(this.countdownInterval);
+      }
+    }, 1000);
+    this.selectedEntity = this.externalEntities.find(extent => extent.id == this.selectedId);
   }
 }

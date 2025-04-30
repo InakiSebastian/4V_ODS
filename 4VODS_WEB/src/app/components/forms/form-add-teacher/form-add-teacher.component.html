@@ -26,6 +26,7 @@
                               <tr *ngFor="let teacher of filtredTeachers" >
                                 <td>{{teacher.name}}</td>
                                 <td><img src="generic-icons/pencil.svg" alt="edit" class="pointer" (click)="setEditMode(teacher.id)"></td>
+                                <td><img src="generic-icons/borrar.png" alt="delete" class="pointer ms-5" (click)="selectedId=teacher.id; editMode=null; startDeleteCountdown()" style="height:20px"></td> 
                               </tr>
                               <p *ngIf="filtredTeachers.length == 0">
                                 No hay metas (con esos filtros)
@@ -33,7 +34,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-5">
+                    <div class="col-5" *ngIf="editMode!=null">
                         <h5 class="modal-title">{{this.editMode ? "Editar" : "Añadir"}} un Docente</h5>
                         <hr>
                         <form action="" [formGroup]="teacherForm" (ngSubmit)="submit()">
@@ -71,6 +72,22 @@
                                 }
                             </div>
                         </form>
+                    </div>
+                    <div class="col-5" *ngIf="editMode==null">
+                        <h5>
+                            Borrar Docente: {{selectedTeacher?.name}}
+                        </h5>
+                        <hr>
+                        <p>
+                            Recuerda que las entidades que se borren no se podrán recuperar en ningún momento y no podrán ser utilizadas, aún que a la hora de mostrar, sí aparecerán si están asociadas a una entidad existente.
+                        </p>
+                        <button type="button" class="btn btn-danger p-2"
+                                [disabled]="!deleteButtonEnabled">
+                          {{ deleteButtonEnabled ? 'Confirmar' : 'Se habilita en ' + deleteCountdown + 's' }}
+                        </button>
+                        <button type="button" class="btn btn-secondary ms-4 p-2" (click)="editMode = false">
+                            Cancelar 
+                     </button>
                     </div>
                 </div>
 

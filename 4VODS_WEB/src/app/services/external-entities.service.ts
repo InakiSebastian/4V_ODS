@@ -46,4 +46,13 @@ export class ExternalEntitiesService {
       })
     ).then(response => response.body as ExternalEntity)
   }
+
+  deleteExternalEntity(id: number) {
+    return firstValueFrom(
+      this.http.delete('http://127.0.0.1:8000/company/' + id, {
+        headers: this.headers,
+        observe: 'response',
+      })
+    );
+  }
 }

@@ -40,8 +40,9 @@
                                     <td><img [src]="odsrow.src" alt="" class="img-fluid w-25 ms-5"></td>
                                     <td>{{odsrow.ods.description}}</td>
                                     <td>{{odsrow.ods.dimension}}</td>
-                                    <td><img src="generic-icons/pencil.svg" alt="edit" class="pointer"
+                                    <td><img src="generic-icons/pencil.svg" alt="edit" class="pointer ms-5"
                                             (click)="setEditMode(odsrow.ods.id)"></td>
+                                    <td><img src="generic-icons/borrar.png" alt="delete" class="pointer ms-5" (click)="selectedId=odsrow.ods.id; editMode=null; startDeleteCountdown()" style="height:20px"></td>
                                 </tr>
                                 <p *ngIf="filtredOds.length == 0">
                                     No hay ODS-s (con esos filtros)
@@ -49,7 +50,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-5">
+                    <div class="col-5" *ngIf="editMode!=null">
                         <h5 class="modal-title">{{this.editMode ? "Editar" : "Añadir"}} un Ods</h5>
                         <hr>
                         <form action="" [formGroup]="odsForm" (ngSubmit)="submit()">
@@ -91,6 +92,22 @@
                                 }
                             </div>
                         </form>
+                    </div>
+                    <div class="col-5" *ngIf="editMode==null">
+                        <h5>
+                            Borrar ODS: {{selectedOds?.description}}
+                        </h5>
+                        <hr>
+                        <p>
+                            Recuerda que las entidades que se borren no se podrán recuperar en ningún momento y no podrán ser utilizadas, aún que a la hora de mostrar, sí aparecerán si están asociadas a una entidad existente.
+                        </p>
+                        <button type="button" class="btn btn-danger p-2" (click)="delete()"
+                                [disabled]="!deleteButtonEnabled">
+                          {{ deleteButtonEnabled ? 'Confirmar' : 'Se habilita en ' + deleteCountdown + 's' }}
+                        </button>
+                        <button type="button" class="btn btn-secondary ms-4 p-2" (click)="editMode = false">
+                            Cancelar 
+                     </button>
                     </div>
                 </div>
 

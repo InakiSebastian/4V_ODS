@@ -20,8 +20,13 @@ export class FormAddTeacherComponent {
   //buscador
   searchTeacher: string = '';
 
-  editMode: boolean = false;
+  editMode: boolean|null = false;
   selectedTeacher: Teacher | undefined = undefined
+
+  selectedId: number = -1;
+  deleteCountdown: number = 0;
+  deleteButtonEnabled: boolean = false;
+  countdownInterval: any;
 
   constructor(private fb: FormBuilder, private teacherService: TeacherService){}
 
@@ -71,5 +76,28 @@ export class FormAddTeacherComponent {
     this.selectedTeacher = this.teacherList.find(teacher => teacher.id == teacherId);
     if (!this.selectedTeacher) return;
     this.teacherForm.setValue({ name: this.selectedTeacher.name });
+  }
+
+  delete() {
+    this.teacherList = this.teacherList.filter(teacher => teacher.id !== this.selectedId);
+    this.filter();
+    this.teacherService.deleteTeacher(this.selectedId);
+
+    this.editMode = false;
+  }
+
+  startDeleteCountdown() {
+    this.deleteCountdown = 4;
+    this.deleteButtonEnabled = false;
+  
+    this.countdownInterval = setInterval(() => {
+      this.deleteCountdown--;
+      if (this.deleteCountdown <= 0) {
+        this.deleteButtonEnabled = true;
+        clearInterval(this.countdownInterval);
+      }
+    }, 1000);
+
+    this.selectedTeacher = this.teacherList.find(teacher => teacher.id == this.selectedId);
   }
 }
