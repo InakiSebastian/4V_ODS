@@ -21,8 +21,8 @@ class Iniciative extends Fixture implements DependentFixtureInterface
         $iniciative1 = new \App\Entity\Iniciative();
         $iniciative1->setName('Reciclaje Electrónico');
         $iniciative1->setDescription('Iniciativa para la recolección y reciclaje de dispositivos electrónicos.');
-        $iniciative1->setStartDate(new \DateTime('2023-09-01'));
-        $iniciative1->setEndDate(new \DateTime('2024-06-30'));
+        $iniciative1->setStartDate(new \DateTime('2024-09-01'));
+        $iniciative1->setEndDate(new \DateTime('2025-06-30'));
         $iniciative1->setHours(20);
         $iniciative1->setType("Charla");
         $iniciative1->setSchoolYear('2024-2025');
