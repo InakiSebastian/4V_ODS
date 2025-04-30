@@ -262,4 +262,24 @@ class IndicatorService
 
         return $result;
     }
+    public function hoursBySchoolYear(): array
+    {
+        $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
+        $result = [];
+
+        foreach ($iniciatives as $iniciative) {
+            if (!$iniciative->isActive()) continue;
+
+            $schoolYear = $iniciative->getSchoolYear();
+            $hours = $iniciative->getHours() ?? 0;
+
+            if (!isset($result[$schoolYear])) {
+                $result[$schoolYear] = 0;
+            }
+
+            $result[$schoolYear] += $hours;
+        }
+
+        return $result;
+    }
 }
