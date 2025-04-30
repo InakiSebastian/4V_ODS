@@ -32,6 +32,7 @@ export class FilterComponent {
   degreeList: DegreeCheckbox[] = [];
   teachersList: Teacher[] = [];
   selectedTeacher: number = -1;
+  innovative: boolean = false;
 
   now: boolean = false;
   estrictoODS: boolean = false;
@@ -136,7 +137,11 @@ export class FilterComponent {
         }
         return true;
       })
-      .filter(iniciative => this.selectedTeacher != -1 ? iniciative.teachers.some(teacher => teacher.id == this.selectedTeacher) : true);
+      .filter(iniciative => this.selectedTeacher != -1 ? iniciative.teachers.some(teacher => teacher.id == this.selectedTeacher) : true)
+      .filter(iniciative => {
+        if(this.innovative==false) return true;
+        else return iniciative.innovative
+      })
     this.filterChanged.emit(await this.getSimpleIniciativesFromComplite(filteredIniciatives));
       this.modalService.stopLoading();
   } 
