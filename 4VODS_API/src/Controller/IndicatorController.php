@@ -47,4 +47,12 @@ class IndicatorController extends AbstractController
     {
         return $this->json(['count' => $this->indicatorService->numberOfIniciatives()]);
     }
+
+    #[Route('/iniciatives/hours/by-degree-year', name: 'get_hours_by_degree_year', methods: ['GET'])]
+    public function getHoursByDegreeAndYear(): JsonResponse
+    {
+        $data = $this->indicatorService->hoursByDegreeBySchoolYear();
+        return $this->json($data);
+    }
+
 }
