@@ -51,42 +51,45 @@ class IndicatorService
     }
 
     public function iniciativesByOdsGrouped(): array
-{
-    $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
-    $odsList = $this->entityManager->getRepository(Ods::class)->findAll();
-    $result = [];
+    {
+        $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
+        $result = [];
 
-    foreach ($iniciatives as $iniciative) {
-        $schoolYear = $iniciative->getSchoolYear();
+        foreach ($iniciatives as $iniciative) {
+            $schoolYear = $iniciative->getSchoolYear();
 
-        if (!isset($result[$schoolYear])) {
-            $result[$schoolYear] = [];
+            foreach ($iniciative->getIniciativeGoals() as $iniciativeGoal) {
+                $goal = $iniciativeGoal->getIdGoal();
+                $ods = $goal->getIdOds();
 
-            foreach ($odsList as $ods) {
-                $odsTitle = $ods->getId() . ' - ' . $ods->getDescription();
-                $result[$schoolYear][$odsTitle] = 0;
-            }
-        }
+                if ($ods) {
+                    $odsTitle = $ods->getId() . ' - ' . $ods->getDescription();
 
-        $odsCounted = [];
+                    if (!isset($result[$odsTitle])) {
+                        $result[$odsTitle] = [
+                            'schoolYears' => [],
+                            'total' => 0
+                        ];
+                    }
 
-        foreach ($iniciative->getIniciativeGoals() as $iniciativeGoal) {
-            $goal = $iniciativeGoal->getIdGoal();
-            $ods = $goal->getIdOds();
+                    if (!isset($result[$odsTitle]['schoolYears'][$schoolYear])) {
+                        $result[$odsTitle]['schoolYears'][$schoolYear] = ['total' => 0];
+                    }
 
-            if ($ods) {
-                $odsTitle = $ods->getId() . ' - ' . $ods->getDescription();
-
-                if (!isset($odsCounted[$odsTitle])) {
-                    $result[$schoolYear][$odsTitle]++;
-                    $odsCounted[$odsTitle] = true;
+                    $result[$odsTitle]['schoolYears'][$schoolYear]['total']++;
+                    $result[$odsTitle]['total']++;
                 }
             }
         }
-    }
 
-    return $result;
-}
+        foreach ($result as &$odsData) {
+            ksort($odsData['schoolYears']);
+        }
+
+        ksort($result);
+
+        return $result;
+    }
 
 
     public function indicativeCount(): array
@@ -142,6 +145,7 @@ class IndicatorService
         return $result;
     }
     
+
     public function numberOfIniciatives(): array
     {
         $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
@@ -159,6 +163,7 @@ class IndicatorService
 
         return $result;
     }
+
     public function indicativeCountByYear($year): array
     {
         $degrees = $this->entityManager->getRepository(Degree::class)->findAll();
@@ -197,6 +202,54 @@ class IndicatorService
                 'modules' => $modulesSummary
             ];
         }
+
+        return $result;
+    }
+
+    public function hoursByDegreeBySchoolYear(): array
+    {
+        $degrees = $this->entityManager->getRepository(Degree::class)->findAll();
+        $result = [];
+
+        foreach ($degrees as $degree) {
+            if (!$degree->isActive()) continue;
+
+            $degreeName = $degree->getName();
+
+            foreach ($degree->getModules() as $module) {
+                if (!$module->isActive()) continue;
+
+                foreach ($module->getModuleIniciatives() as $moduleIniciative) {
+                    if (!$moduleIniciative->isActive()) continue;
+
+                    $iniciative = $moduleIniciative->getIdIniciative();
+                    if (!$iniciative || !$iniciative->isActive()) continue;
+
+                    $year = $iniciative->getSchoolYear();
+                    $hours = $iniciative->getHours() ?? 0;
+
+                    if (!isset($result[$degreeName])) {
+                        $result[$degreeName] = [
+                            'schoolYears' => [],
+                            'total' => 0
+                        ];
+                    }
+
+                    if (!isset($result[$degreeName]['schoolYears'][$year])) {
+                        $result[$degreeName]['schoolYears'][$year] = ['total' => 0];
+                    }
+
+                    $result[$degreeName]['schoolYears'][$year]['total'] += $hours;
+                    $result[$degreeName]['total'] += $hours;
+                }
+            }
+        }
+
+        foreach ($result as &$degreeData) {
+            ksort($degreeData['schoolYears']);
+        }
+
+        ksort($result);
 
         return $result;
     }
