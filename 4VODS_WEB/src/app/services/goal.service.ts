@@ -58,6 +58,15 @@ export class GoalService {
     return (await this.getGoals()).filter(goal => goal.ods === Number(idOds));
   }
 
+  deleteGoal(goalId: number) {
+    return firstValueFrom(
+      this.http.delete('http://127.0.0.1:8000/goal/' + goalId, {
+        headers: this.headers,
+        observe: 'response',
+      })
+    );
+  }
+
   //SelectedGoals
   getSelectedGoals(): Goal[] {
     return this.selectedGoals;

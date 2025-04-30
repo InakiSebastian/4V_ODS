@@ -25,12 +25,17 @@ export class FormAddModuleComponent {
 
   degreeList: Degree[] = [];
 
-  editMode: boolean = false;
+  editMode: boolean|null = false;
   selectedModule: Module| undefined = undefined;
 
   //filtrado
   searchModule: string = '';
   searchDegree: string = '';
+
+  selectedId: number = -1;
+  deleteCountdown: number = 0;
+  deleteButtonEnabled: boolean = false;
+  countdownInterval: any;
 
   constructor(private fb: FormBuilder, private degreeService: DegreeService, private moduleService: ModuleService){}
 
@@ -95,9 +100,37 @@ export class FormAddModuleComponent {
 
   filter() {
     console.log(this.filtredModules)
-    if (this.searchModule == '') this.setRows();
-    else this.filtredModules = this.getRows()
-    .filter(module => module.degree.toLowerCase().includes(this.searchDegree.toLowerCase()))
-    .filter(module => module.name.toLowerCase().includes(this.searchModule.toLowerCase()));
+  this.filtredModules = this.getRows()
+    .filter(module => {
+      if(this.searchDegree == '') return true;
+      return module.degree.toLowerCase().includes(this.searchDegree.toLowerCase());
+    })
+    .filter(module => {
+      if(this.searchModule == '') return true;
+      return module.name.toLowerCase().includes(this.searchModule.toLowerCase());
+    });
+  }
+
+  delete(){
+    this.moduleService.deleteModule(this.selectedId);
+    this.moduleList = this.moduleList.filter(module => module.id != this.selectedId);
+    this.setRows();
+    this.filter();
+
+    this.editMode = false;
+  }
+
+  startDeleteCountdown() {
+    this.deleteCountdown = 4;
+    this.deleteButtonEnabled = false;
+  
+    this.countdownInterval = setInterval(() => {
+      this.deleteCountdown--;
+      if (this.deleteCountdown <= 0) {
+        this.deleteButtonEnabled = true;
+        clearInterval(this.countdownInterval);
+      }
+    }, 1000);
+    this.selectedModule = this.moduleList.find(module => module.id == this.selectedId);
   }
 }

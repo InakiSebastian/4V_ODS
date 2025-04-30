@@ -19,8 +19,13 @@ export class FormAddDegreeComponent {
   degrees: Degree[] = [];
   modules: Module[] = [];
 
-  editMode: boolean = false;
+  editMode: boolean|null = false;
   selectedDegree: Degree | undefined = undefined;
+  
+  selectedId: number = -1;
+  deleteCountdown: number = 0;
+  deleteButtonEnabled: boolean = false;
+  countdownInterval: any;
 
   constructor(private moduleService: ModuleService,private degreeService: DegreeService,private fb: FormBuilder){
     this.degreeForm = this.fb.group({
@@ -67,5 +72,27 @@ export class FormAddDegreeComponent {
     this.selectedDegree = this.degrees.find(degree => degree.id === degreeId);
     if (!this.selectedDegree) return;
     this.degreeForm.setValue({ name: this.selectedDegree!.name });
+  }
+
+  delete() {
+    if(this.selectedId == -1) return;
+    
+    this.degrees = this.degrees.filter(degree => degree.id !== this.selectedId);
+    this.degreeService.deleteDegree(this.selectedId);
+    this.editMode = false;
+  }
+
+  startDeleteCountdown() {
+    this.deleteCountdown = 4;
+    this.deleteButtonEnabled = false;
+  
+    this.countdownInterval = setInterval(() => {
+      this.deleteCountdown--;
+      if (this.deleteCountdown <= 0) {
+        this.deleteButtonEnabled = true;
+        clearInterval(this.countdownInterval);
+      }
+    }, 1000);
+    this.selectedDegree = this.degrees.find(degree => degree.id == this.selectedId);
   }
 }

@@ -53,7 +53,21 @@ class IndicatorService
     public function iniciativesByOdsGrouped(): array
     {
         $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
+        $odsList = $this->entityManager->getRepository(Ods::class)->findAll();
+
+        $odsMap = [];
+        foreach ($odsList as $ods) {
+            $odsTitle = $ods->getId() . ' - ' . $ods->getDescription();
+            $odsMap[$ods->getId()] = $odsTitle;
+        }
+
         $result = [];
+        foreach ($odsMap as $id => $odsTitle) {
+            $result[$odsTitle] = [
+                'schoolYears' => [],
+                'total' => 0
+            ];
+        }
 
         foreach ($iniciatives as $iniciative) {
             $schoolYear = $iniciative->getSchoolYear();
@@ -64,13 +78,6 @@ class IndicatorService
 
                 if ($ods) {
                     $odsTitle = $ods->getId() . ' - ' . $ods->getDescription();
-
-                    if (!isset($result[$odsTitle])) {
-                        $result[$odsTitle] = [
-                            'schoolYears' => [],
-                            'total' => 0
-                        ];
-                    }
 
                     if (!isset($result[$odsTitle]['schoolYears'][$schoolYear])) {
                         $result[$odsTitle]['schoolYears'][$schoolYear] = ['total' => 0];
@@ -86,7 +93,9 @@ class IndicatorService
             ksort($odsData['schoolYears']);
         }
 
-        ksort($result);
+        uksort($result, function ($a, $b) {
+            return intval(explode(' - ', $a)[0]) <=> intval(explode(' - ', $b)[0]);
+        });
 
         return $result;
     }
@@ -144,7 +153,7 @@ class IndicatorService
 
         return $result;
     }
-    
+
 
     public function numberOfIniciatives(): array
     {
@@ -250,6 +259,26 @@ class IndicatorService
         }
 
         ksort($result);
+
+        return $result;
+    }
+    public function hoursBySchoolYear(): array
+    {
+        $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
+        $result = [];
+
+        foreach ($iniciatives as $iniciative) {
+            if (!$iniciative->isActive()) continue;
+
+            $schoolYear = $iniciative->getSchoolYear();
+            $hours = $iniciative->getHours() ?? 0;
+
+            if (!isset($result[$schoolYear])) {
+                $result[$schoolYear] = 0;
+            }
+
+            $result[$schoolYear] += $hours;
+        }
 
         return $result;
     }

@@ -66,6 +66,15 @@ export class ModuleService {
     ).then(response => response.body as Module);
   }
 
+  deleteModule(id: number) {
+    return firstValueFrom(
+    this.http
+      .delete<Module>('http://127.0.0.1:8000/module/' + id, {
+        headers: this.headers,
+        observe: 'response',
+      })
+    ).then(response => response.body as Module);
+  }
 }
 
 export class DegreeModules extends Degree {
