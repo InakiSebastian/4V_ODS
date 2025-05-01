@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bgc-secondary pt-4">
-    <div class="container-fluid h-50">
-        <form class="d-flex w-100 row ms-4">
+<nav class="navbar navbar-expand-lg navbar-light bgc-secondary shadow-sm">
+    <div class="container-fluid px-4 m-0 h-50">
+        <form class="d-flex align-items-center w-100 row mx-0">
             <div class="col-3">
                 <input class="form-control me-2" type="search" placeholder="Buscar por nombre" [(ngModel)]="searchTerm"
                     name="searchTerm" (input)="applyFilters()">
@@ -19,13 +19,16 @@
                         name="now" (change)="applyFilters()">
                 </div>
             </div>
-            <div class="col-2 d-flex justify-content-end">
-                <button class="btn btnc-primary" type="button"
-                    (click)="toggleAdvancedFilters()">{{buttonText}}</button>
+            <div class="col">
+                <div class="row mx-0 justify-content-end">
+                    <div class="col p-0 d-flex justify-content-end">
+                        <button class="btn btnc-primary" type="button"(click)="toggleAdvancedFilters()">{{buttonText}}</button>
+                        <button class="btn btn-danger ms-4" type="button" (click)="cleanFilters()">Borrar filtros</button>    
+                    </div>
+                </div>
+                
             </div>
-            <div class="col-2 d-flex">
-                <button class="btn btn-danger" type="button" (click)="cleanFilters()">Borrar filtros</button>
-            </div>
+            
         </form>
     </div>
 </nav>
