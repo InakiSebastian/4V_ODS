@@ -1,5 +1,9 @@
-
-
+.card{
+    &:hover{
+        transform: scale(1.05);
+        transition: 0.2s;
+    }
+}
 .scrollable-container {
     max-height: 200px;
     max-width: 100px;

@@ -1,33 +1,46 @@
-<div class="container rounded-4 bgc-secondary  shadow h-100">
+<div class="container card rounded-4 bgc-secondary shadow h-100 pointer">
     <div class="row rounded-4 h-100 border overflow-hidden">
-        <div class="col-10 rounded-4 bg-light p-4 h-100">
-           <!--Titulo--> 
-           <div class="row">
-                <div class="col">
-                    <p class="fs-4">
-                        {{iniciative.name}}
-                    </p>
+        <div class="col-10 d-flex flex-column justify-content-between rounded-4 bg-light p-4 h-100">
+           <div class="container p-0 m-0">
+                <!--Titulo--> 
+                <div class="row mx-0">
+                    <div class="col-10 ps-0">
+                        <p class="fs-4 m-0">
+                            {{iniciative.name}}
+                        </p>
+                    </div>
+                    <div class="col p-0 d-flex justify-content-end align-items-top">
+                        <p class="small m-0 d-flex align-items-center">{{iniciative.schoolYear}}</p>
+                    </div>
                 </div>
-                <div class="col p-0 d-flex justify-content-end align-items-center">
-                    <p class="small">{{iniciative.schoolYear}}</p>
+
+                <div class="row mx-0 mb-4 p-0">
+                    @if(iniciative.endDate){
+                        <p class="m-0 small p-0 text-secondary">{{iniciative.startDate | date}} - {{iniciative.endDate | date}}</p>  
+                    }@else {
+                        <p class="m-0 small p-0 text-secondary">{{iniciative.startDate | date}}</p> 
+                    }
+                    
+                </div>
+
+                <!--Descripción-->
+                <div class="row mx-0">
+                    <div class="col p-0">
+                        <p>
+                            {{description1Line}}
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <!--Descripción-->
-            <div class="row">
-                <div class="col">
-                    <p>
-                        {{description1Line}}
-                    </p>
+            <div class="row mx-0">
+                <div class="col d-flex align-items-center p-0">
+                    <img class="me-1" src="/generic-icons/time.svg" alt="" style="width: 20px; height:20px">
+                    <p class="m-0">{{iniciative.hours}} horas</p>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <p>Duración: {{iniciative.hours}} horas</p>
-                </div>
-                <div class="col">
-                    <p>Tipo: {{iniciative.type}}</p>
+                <div class="col d-flex justify-content-end align-items-center p-0">
+                    <img class="me-1" src="/generic-icons/gear.svg" alt="" style="width: 20px; height:20px">
+                    <p class="m-0">{{iniciative.type}}</p>
                 </div>
             </div>
         </div>
