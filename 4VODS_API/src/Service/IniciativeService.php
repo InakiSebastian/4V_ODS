@@ -353,9 +353,11 @@ class IniciativeService
 
         $diffusions = $dto->getDiffusions();
         foreach ($diffusions as $diffusion) {
+            
             $newDiffusion = new Diffusion();
-            $newDiffusion->setType($diffusion['type']);
-            $newDiffusion->setLink($diffusion['link']);
+            $diffusionBD = $this->entityManager->getRepository(Diffusion::class)->find($diffusion);
+            $newDiffusion->setType($diffusionBD->getType());
+            $newDiffusion->setLink($diffusionBD->getLink());
             $newDiffusion->setIniciative($iniciative);
             $this->entityManager->persist($newDiffusion);
             $iniciative->addDiffusion($newDiffusion);
