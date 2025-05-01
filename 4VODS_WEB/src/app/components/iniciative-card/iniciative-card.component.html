@@ -1,6 +1,6 @@
-<div class="container card rounded-4 bgc-secondary shadow h-100 pointer">
-    <div class="row rounded-4 h-100 border overflow-hidden">
-        <div class="col-10 d-flex flex-column justify-content-between rounded-4 bg-light p-4 h-100">
+<div class="container border-0 p-0 card rounded-4 bgc-secondary shadow h-100 pointer">
+    <div class="row mx-0 rounded-4 h-100 overflow-hidden">
+        <div class="col-10 d-flex flex-column justify-content-between rounded-4 bg-light p-4">
            <div class="container p-0 m-0">
                 <!--Titulo--> 
                 <div class="row mx-0">
@@ -16,9 +16,9 @@
 
                 <div class="row mx-0 mb-4 p-0">
                     @if(iniciative.endDate){
-                        <p class="m-0 small p-0 text-secondary">{{iniciative.startDate | date}} - {{iniciative.endDate | date}}</p>  
+                        <p class="m-0 small p-0 text-secondary">{{iniciative.startDate | formatDate:'d MMM, yyyy'}} - {{iniciative.endDate | formatDate:'d MMM, yyyy'}}</p>  
                     }@else {
-                        <p class="m-0 small p-0 text-secondary">{{iniciative.startDate | date}}</p> 
+                        <p class="m-0 small p-0 text-secondary">{{iniciative.startDate | formatDate:'d MMM, yyyy'}}</p> 
                     }
                     
                 </div>
