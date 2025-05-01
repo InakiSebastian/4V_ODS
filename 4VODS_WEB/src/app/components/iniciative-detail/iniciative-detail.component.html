@@ -1,4 +1,4 @@
-<div class="card" [ngStyle]="{'background-color': this.getColor()}">
+<div class="card" [ngStyle]="{'background-color': this.getColor()}" style="min-height: 90vh;">
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -136,7 +136,7 @@
         }
 
         <!-- Contenedor de la imagen grande y la información -->
-        <div class="container mt-4" *ngIf="this.showDetailOds">
+        <div class="container scrollable-container-y mt-4" *ngIf="this.showDetailOds">
           <div class="row">
             <!-- Imagen grande (50% del ancho) -->
             <div class="col-md-4 text-center">
