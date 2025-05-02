@@ -16,13 +16,13 @@ class Ods extends Fixture
                 'goals' => [
                     'Erradicar la pobreza extrema para todas las personas en el mundo.',
                     'Reducir al menos a la mitad la proporción de personas que viven en la pobreza en todas sus dimensiones.',
-                    'Garantizar el acceso de todos a recursos económicos, servicios básicos, propiedad y control sobre la tierra.',
+                    'Garantizar el acceso de todos a recursos Económicas, servicios básicos, propiedad y control sobre la tierra.',
                     'Aumentar la resiliencia de los pobres y personas en situaciones vulnerables ante desastres.',
                 ],
             ],
             [
                 'description' => 'Hambre cero',
-                'dimension' => 'Económico',
+                'dimension' => 'Económica',
                 'goals' => [
                     'Poner fin al hambre y asegurar el acceso a alimentos nutritivos.',
                     'Acabar con todas las formas de malnutrición.',
@@ -81,10 +81,10 @@ class Ods extends Fixture
                 ],
             ],
             [
-                'description' => 'Trabajo decente y crecimiento económico',
-                'dimension' => 'Económico',
+                'description' => 'Trabajo decente y crecimiento Económica',
+                'dimension' => 'Económica',
                 'goals' => [
-                    'Mantener el crecimiento económico per cápita de acuerdo a las circunstancias nacionales.',
+                    'Mantener el crecimiento Económica per cápita de acuerdo a las circunstancias nacionales.',
                     'Lograr niveles más elevados de productividad económica.',
                     'Promover políticas orientadas al desarrollo que apoyen actividades productivas.',
                     'Lograr el empleo pleno y productivo y el trabajo decente para todos.',
@@ -92,7 +92,7 @@ class Ods extends Fixture
             ],
             [
                 'description' => 'Industria, innovación e infraestructura',
-                'dimension' => 'Económico',
+                'dimension' => 'Económica',
                 'goals' => [
                     'Desarrollar infraestructuras fiables, sostenibles y resilientes.',
                     'Promover la industrialización inclusiva y sostenible.',
@@ -122,7 +122,7 @@ class Ods extends Fixture
             ],
             [
                 'description' => 'Producción y consumo responsables',
-                'dimension' => 'Económico',
+                'dimension' => 'Económica',
                 'goals' => [
                     'Implementar el marco decenal de programas sobre modalidades de consumo y producción sostenibles.',
                     'Lograr la gestión sostenible y el uso eficiente de los recursos naturales.',
@@ -172,7 +172,7 @@ class Ods extends Fixture
             ],
             [
                 'description' => 'Alianzas para lograr los objetivos',
-                'dimension' => 'Económico',
+                'dimension' => 'Económica',
                 'goals' => [
                     'Fortalecer la movilización de recursos internos mediante el apoyo internacional.',
                     'Promover un sistema de comercio multilateral universal, basado en normas, abierto y equitativo.',
