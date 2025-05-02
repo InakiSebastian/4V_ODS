@@ -25,7 +25,7 @@ public interface Api4VService {
     @GET("degree/{id}")
     Call<Degree> getDegreeById(@Path("id") int id);
 
-    @GET("indicators/iniciatives/ods/grouped")
+    @GET("indicators/iniciatives/ods/grouped/android")
     Call<Map<String, Map<String, List<String>>>> getIniciativesByOdsGrouped();
 
     @GET("indicators/iniciatives/ods")

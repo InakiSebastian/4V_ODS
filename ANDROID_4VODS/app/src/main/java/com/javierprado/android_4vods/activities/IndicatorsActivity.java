@@ -1,15 +1,19 @@
 package com.javierprado.android_4vods.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.graphics.Typeface;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.anychart.AnyChart;
@@ -19,6 +23,7 @@ import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.chart.common.listener.Event;
 import com.anychart.chart.common.listener.ListenersInterface;
 import com.anychart.charts.Pie;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.javierprado.android_4vods.API.Api4VService;
 import com.javierprado.android_4vods.API.ApiClient;
 import com.javierprado.android_4vods.R;
@@ -48,6 +53,17 @@ public class IndicatorsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_indicators);
 
+        MaterialToolbar toolbar = findViewById(R.id.topAppBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Indicadores");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupMenu(v);
+            }
+        });
+
         apiService = ApiClient.getApi4VService();
         chartView = findViewById(R.id.chartOds);
         yearSpinner = findViewById(R.id.schoolYearSpinner);
@@ -68,7 +84,7 @@ public class IndicatorsActivity extends AppCompatActivity {
                     groupedData.clear();
                     groupedData.putAll(processRawData(response.body()));
                     setupYearSpinner();
-                    showChartForYear(ALL_YEARS);  // Show the chart for "Todos los cursos" by default
+                    showChartForYear(ALL_YEARS);
                 } else {
                     showToast("Error cargando datos");
                 }
@@ -104,7 +120,7 @@ public class IndicatorsActivity extends AppCompatActivity {
     private void setupYearSpinner() {
         List<String> years = new ArrayList<>(groupedData.keySet());
         Collections.sort(years, Collections.reverseOrder());
-        years.add(0, ALL_YEARS); // "Todos los cursos" at the top
+        years.add(0, ALL_YEARS);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, years);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -130,15 +146,19 @@ public class IndicatorsActivity extends AppCompatActivity {
                     dataToShow.clear();
                     dataToShow.putAll(response.body());
 
-                    // Optional: Fill in labels if needed
-                    for (String odsKey : response.body().keySet()) {
-                        if (!odsLabels.containsKey(odsKey)) {
-                            odsLabels.put(odsKey, odsKey);
-                        }
+                    Map<String, List<String>> mappedOds = new HashMap<>();
+                    for (Map.Entry<String, List<String>> entry : response.body().entrySet()) {
+                        String[] split = entry.getKey().split(" - ");
+                        String number = split[0].trim();
+                        odsLabels.put(number, entry.getKey());
+                        mappedOds.put(number, entry.getValue());
                     }
 
+                    dataToShow.clear();
+                    dataToShow.putAll(mappedOds);
+
                     createPieChart(dataToShow);
-                    showOdsDetails(dataToShow);  // Call this method to populate details
+                    showOdsDetails(dataToShow);
                 } else {
                     showToast("Error cargando datos para todos los cursos");
                 }
@@ -175,8 +195,8 @@ public class IndicatorsActivity extends AppCompatActivity {
         List<DataEntry> data = new ArrayList<>();
 
         for (Map.Entry<String, List<String>> entry : dataToShow.entrySet()) {
-            String fullLabel = odsLabels.getOrDefault(entry.getKey(), entry.getKey());
-            data.add(new ValueDataEntry(fullLabel, entry.getValue().size()));
+            String number = entry.getKey(); // Solo el número, sin nombre
+            data.add(new ValueDataEntry(number, entry.getValue().size()));
         }
 
         pieChart.data(data);
@@ -198,16 +218,20 @@ public class IndicatorsActivity extends AppCompatActivity {
         LinearLayout detailsContainer = findViewById(R.id.odsDetailsContainer);
         detailsContainer.removeAllViews();  // Clear previous data
 
-        // Create a section for each ODS
-        for (Map.Entry<String, List<String>> entry : dataToShow.entrySet()) {
-            String odsName = odsLabels.getOrDefault(entry.getKey(), entry.getKey());
+        // Ordenar las claves numéricamente
+        List<String> sortedKeys = new ArrayList<>(dataToShow.keySet());
+        Collections.sort(sortedKeys, Comparator.comparingInt(Integer::parseInt));
+
+        for (String key : sortedKeys) {
+            String odsName = odsLabels.getOrDefault(key, key);
 
             // Prepend the ODS label if not already there
             if (!odsName.startsWith("ODS")) {
                 odsName = "ODS " + odsName;
             }
 
-            List<String> initiatives = entry.getValue();
+            List<String> initiatives = new ArrayList<>(dataToShow.get(key));
+            Collections.sort(initiatives); // Orden alfabético
 
             LinearLayout odsLayout = new LinearLayout(this);
             odsLayout.setOrientation(LinearLayout.VERTICAL);
@@ -234,7 +258,30 @@ public class IndicatorsActivity extends AppCompatActivity {
     }
 
 
+
     private void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    private void showPopupMenu(View anchor) {
+        PopupMenu popupMenu = new PopupMenu(this, anchor);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_main, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.nav_home) {
+                    startActivity(new Intent(IndicatorsActivity.this, MainActivity.class));
+                    return true;
+                } else if (id == R.id.nav_indicators) {
+                    startActivity(new Intent(IndicatorsActivity.this, IndicatorsActivity.class));
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        popupMenu.show();
     }
 }

@@ -36,7 +36,7 @@ public class RrssFragment extends Fragment {
         }
 
         if (receivedIniciative != null) {
-            displaySocialIcons(receivedIniciative.getDiffusions());  // Directly use the diffusions
+            displaySocialIcons(receivedIniciative.getDiffusions());
         }
 
         return view;
@@ -52,7 +52,7 @@ public class RrssFragment extends Fragment {
             if (resId != 0) {
                 icon.setImageResource(resId);
             } else {
-                icon.setImageResource(R.drawable.ic_launcher_foreground); // Default icon if not found
+                icon.setImageResource(R.drawable.ic_launcher_foreground);
             }
 
             // Set fixed size (80x80 dp)

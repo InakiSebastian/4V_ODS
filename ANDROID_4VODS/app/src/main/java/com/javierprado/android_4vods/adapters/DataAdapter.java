@@ -71,6 +71,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataHolder> {
             txtType.setText(iniciative.getType());
             txtName.setText(iniciative.getName());
             txtDescription.setText(iniciative.getDescription());
+            imageContainer.removeAllViews();
+
             if (!iniciative.getInnovative()){
                 imageInnovative.setImageResource(R.drawable.x);
             }
