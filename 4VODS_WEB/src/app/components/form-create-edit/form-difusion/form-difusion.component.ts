@@ -17,13 +17,15 @@ export class FormDifusionComponent {
   constructor(private fb: FormBuilder){}
 
   ngOnInit(){
+    console.log('a')
     this.difusionForm.addControl('difusions', new FormArray([]))
-
+    console.log('difusin: ', this.difusionR);
     if (this.difusionR != null) {
       this.difusionR.rrss.forEach(difusion => {
-        this.addDifusion(difusion)
+        this.addDifusion(difusion);
       })
     }
+    
   }
 
   //DIFUSIÓN
@@ -33,8 +35,8 @@ export class FormDifusionComponent {
 
   createDifusionInput(difusion: Difusion | null): FormGroup {
     return this.fb.group({
-      type: new FormControl(difusion==null?'':difusion.Type),
-      link: new FormControl(difusion==null?'':difusion.Link),
+      type: new FormControl(difusion==null?'':difusion.type),
+      link: new FormControl(difusion==null?'':difusion.link),
     });
   }
 
