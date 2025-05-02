@@ -216,7 +216,7 @@ export class FormAddIniciativeComponent {
       newDifusions.push({ type: difusionType, link: difusionLink });
       
     });
-    console.log(newDifusions);
+    
     const compliteIniciative = new NewIniciative(
       newid, 
       newName, 
@@ -251,6 +251,7 @@ export class FormAddIniciativeComponent {
       this.goalService.selectedGoals.map(goal => goal.id), 
       (this.externalEntityService.selectedExternalEntity || []).map(external => external.id)
     );
+
     if (this.iniciative != null) {
       compliteIniciative.id = this.iniciative.id;
 
@@ -275,8 +276,6 @@ export class FormAddIniciativeComponent {
       this.selectedGoals = this.goalService.clearSelectedGoals();
 
       this.router.navigate(['/iniciatives/']);
-      
-      console.log(newIniciative);
     }
 
     //TODOResetear correctamente el formulario    
