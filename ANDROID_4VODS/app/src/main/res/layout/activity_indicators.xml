@@ -41,18 +41,21 @@
 
     <ScrollView
         android:id="@+id/detailsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/chartOds"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chartOds">
-
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:id="@+id/odsDetailsContainer"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:padding="16dp" />
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

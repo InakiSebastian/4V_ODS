@@ -53,6 +53,7 @@ export class ConfirmModalComponent {
     this.modalService.rechargeList();
     this.modalService.isLoading();
     this.modalService.closeModal();
+    
   }
   
 }

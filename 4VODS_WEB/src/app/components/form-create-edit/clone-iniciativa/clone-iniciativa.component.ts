@@ -53,7 +53,7 @@ export class CloneIniciativaComponent {
     this.isLoading = false;
   }
 
-  create() {
+  async create() {
     if (this.selectedIniciativeId == -1 && this.selectedIniciative == null) {
       alert('Debe seleccionar una iniciativa.');
       return;
@@ -65,7 +65,7 @@ export class CloneIniciativaComponent {
       sanitizedYear <= 0
     ) {
       alert(
-        'El año académico debe ser un número válido convinado con "-" y espacios.'
+        'El año académico debe ser un número válido combinado con "-" y espacios.'
       );
       return;
     }
@@ -79,7 +79,7 @@ export class CloneIniciativaComponent {
       alert('La fecha de inicio no puede ser posterior a la de finalización.');
       return;
     }
-    this.iniciativeService.addCompliteIniciative(
+    const iniciative = await this.iniciativeService.addCompliteIniciative(
       new NewIniciative(
         1,
         this.selectedIniciative!.name,
@@ -90,18 +90,30 @@ export class CloneIniciativaComponent {
         sanitizedYear,
         this.selectedIniciative!.ods.map((o) => o.id),
         this.selectedIniciative!.type,
-        1,
+        this.selectedIniciative!.innovative,
         this.selectedIniciative!.teachers.map((t) => t.id),
         this.selectedIniciative!.modules.map((m) => m.id),
         this.selectedIniciative!.diffusions.map((d) => d.idDiffusion),
         this.selectedIniciative!.goals.map((g) => g.id),
-        [1]
+        this.selectedIniciative!.externalEntities.map((e) => e.id)
       )
     );
-    //TODO: recibir el ide con el que se crea
     this.modalService.openModal('detail', this.selectedIniciative);
     this.modalService.rechargeList();
-    this.router.navigate(['/iniciatives']);
+    this.modalService.closeModal();
+    const id = (iniciative as CompliteIniciative).id;
+    if(iniciative instanceof Error) {
+      alert(iniciative.message);
+    } else {
+      this.modalService.isLoading();
+      const iniciative = await this.iniciativeService.getCompliteIniciativeById(id);
+      alert('La iniciativa ' + iniciative.name + ' ha sido clonada correctamente para el curso ' + this.schoolYear);
+        this.router.navigate(['/iniciatives/']);
+        this.modalService.rechargeList();
+        
+        this.modalService.isLoading();
+        
+    }
   }
 
   async selectIniciative() {

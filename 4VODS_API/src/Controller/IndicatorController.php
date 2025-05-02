@@ -21,6 +21,13 @@ class IndicatorController extends AbstractController
         return $this->json($iniciatives);
     }
 
+    #[Route('/iniciatives/ods/grouped/android', name: 'get_by_ods_grouped_android', methods: ['GET'])]
+    public function getIniciativesByOdsGroupedAndroid(): JsonResponse
+    {
+        $iniciatives = $this->indicatorService->iniciativesByOdsGroupedAndroid();
+        return $this->json($iniciatives);
+    }
+
     #[Route('/iniciatives/ods', name: 'get_by_ods', methods: ['GET'])]
     public function getIniciativesByOds(): JsonResponse
     {

@@ -20,26 +20,21 @@ class IndicatorService
         $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
         $result = [];
 
-        // Loop over  initiative
         foreach ($iniciatives as $iniciative) {
 
             foreach ($iniciative->getIniciativeGoals() as $iniciativeGoal) {
                 $goal = $iniciativeGoal->getIdGoal();
                 $ods = $goal->getIdOds();
 
-                // If ODS exists, add it to the result
                 if ($ods) {
                     $odsTitle = $ods->getId() . ' - ' . $ods->getDescription();
 
-                    // Initialize ODS array if not already set
                     if (!isset($result[$odsTitle])) {
                         $result[$odsTitle] = [];
                     }
 
-                    // Add initiative name
                     $initiativeNameWithYear = $iniciative->getName() . " " . $iniciative->getSchoolYear();
 
-                    // Verificar si ya existe en el array
                     if (!in_array($initiativeNameWithYear, $result[$odsTitle])) {
                         $result[$odsTitle][] = $initiativeNameWithYear;
                     }
@@ -100,6 +95,40 @@ class IndicatorService
         return $result;
     }
 
+    public function iniciativesByOdsGroupedAndroid(): array
+    {
+        $iniciatives = $this->entityManager->getRepository(Iniciative::class)->findAll();
+        $result = [];
+
+        foreach ($iniciatives as $iniciative) {
+            $schoolYear = $iniciative->getSchoolYear();
+            $odsCounted = [];
+
+            foreach ($iniciative->getIniciativeGoals() as $iniciativeGoal) {
+                $goal = $iniciativeGoal->getIdGoal();
+                $ods = $goal->getIdOds();
+
+                if ($ods) {
+                    $odsTitle = $ods->getId() . ' - ' . $ods->getDescription();
+
+                    if (!isset($odsCounted[$odsTitle])) {
+                        if (!isset($result[$schoolYear][$odsTitle])) {
+                            $result[$schoolYear][$odsTitle] = [];
+                        }
+
+                        if (!in_array($iniciative->getName(), $result[$schoolYear][$odsTitle])) {
+                            $result[$schoolYear][$odsTitle][] = $iniciative->getName();
+                        }
+
+                        $odsCounted[$odsTitle] = true;
+                    }
+                }
+            }
+        }
+
+        return $result;
+    }
+
 
     public function indicativeCount(): array
     {
@@ -123,7 +152,6 @@ class IndicatorService
                     if ($iniciative && $iniciative->isActive()) {
                         $schoolYear = $iniciative->getSchoolYear();
 
-                        // Initialize year array if not already set
                         if (!isset($degreeSummary[$schoolYear])) {
                             $degreeSummary[$schoolYear] = [
                                 'total' => 0,
@@ -133,7 +161,6 @@ class IndicatorService
 
                         $moduleName = $module->getName();
 
-                        // Initialize module count for the year if not already set
                         if (!isset($degreeSummary[$schoolYear]['modules'][$moduleName])) {
                             $degreeSummary[$schoolYear]['modules'][$moduleName] = 0;
                         }
