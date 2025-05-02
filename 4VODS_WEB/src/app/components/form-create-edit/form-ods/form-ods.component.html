@@ -95,7 +95,7 @@
 
 <div class="row gy-4 scrollable-container-form" [formGroup]="odsForm" *ngIf="!isLoading">
     <div class="row">
-        <div class="col-6 pb-1">
+        <div class="col-7 pb-1">
             <label for="ods" class="form-label">Ods</label>
             <div class="accordion bg-light rounded mb-5">
                 <h2 class="accordion-header">
@@ -114,6 +114,7 @@
                             @for (ods of odsList; track $index){
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="ods{{ods.id}}" value="{{ods.id}}" formControlName="{{$index}}">
+                                    <img [src]="'odsIcons/' + ods.id + '.png'" alt="" class="rounded me-2" style="width: 20px;">
                                     <label for="ods{{ods.id}}" class="form-check-label" > {{ods.description}} </label>
                                 </div>
                             }
