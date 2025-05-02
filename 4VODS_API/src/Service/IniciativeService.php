@@ -254,6 +254,10 @@ class IniciativeService
             array_push($response, $iniciativeDTO);
         }
 
+        usort($response, function ($a, $b) {
+            return $b['id'] <=> $a['id'];
+        });
+
 
         return $response;
     }
