@@ -214,8 +214,9 @@ export class FormAddIniciativeComponent {
       const difusionLink = difusion.get('link')?.value ?? -1;
       
       newDifusions.push({ type: difusionType, link: difusionLink });
+      
     });
-
+    console.log(newDifusions);
     const compliteIniciative = new NewIniciative(
       newid, 
       newName, 
