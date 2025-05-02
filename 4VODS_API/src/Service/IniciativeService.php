@@ -251,7 +251,7 @@ class IniciativeService
                 ];
             }
 
-            array_push($response,$iniciativeDTO);
+            array_push($response, $iniciativeDTO);
         }
 
 
@@ -285,7 +285,7 @@ class IniciativeService
         $iniciative->setStartDate($dto->getStartDate());
         if ($dto->getEndDate()) {
             $iniciative->setEndDate($dto->getEndDate());
-        } 
+        }
         $iniciative->setHours($dto->getHours());
         $iniciative->setSchoolYear($dto->getSchoolYear());
         $iniciative->setInnovative($dto->getInnovative());
@@ -307,7 +307,7 @@ class IniciativeService
             }
         }
 
-        
+
         $modules = [];
         foreach ($dto->getModules() as $moduleId) {
             $module = $this->entityManager->getRepository(Module::class)->find($moduleId);
@@ -353,11 +353,10 @@ class IniciativeService
 
         $diffusions = $dto->getDiffusions();
         foreach ($diffusions as $diffusion) {
-            
+
             $newDiffusion = new Diffusion();
-            $diffusionBD = $this->entityManager->getRepository(Diffusion::class)->find($diffusion);
-            $newDiffusion->setType($diffusionBD->getType());
-            $newDiffusion->setLink($diffusionBD->getLink());
+            $newDiffusion->setType($diffusion['type']);
+            $newDiffusion->setLink($diffusion['link']);
             $newDiffusion->setIniciative($iniciative);
             $this->entityManager->persist($newDiffusion);
             $iniciative->addDiffusion($newDiffusion);
@@ -366,7 +365,7 @@ class IniciativeService
 
 
 
-     
+
 
         $this->entityManager->flush();
 
@@ -515,9 +514,9 @@ class IniciativeService
         $this->entityManager->remove($iniciative);
         $this->entityManager->flush();
 
-        return true; 
+        return true;
     }
-    
+
     public function countIniciatives(): int
     {
         return $this->entityManager->getRepository(Iniciative::class)->count();
