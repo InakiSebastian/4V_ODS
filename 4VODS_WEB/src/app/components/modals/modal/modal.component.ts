@@ -36,6 +36,7 @@ export class ModalComponent {
       else {
         this.contentType = modInf.modalType;
         this.iniciative = modInf.iniciative;
+        console.log("Esto es en le modal ",this.iniciative)
       }
     })
    }

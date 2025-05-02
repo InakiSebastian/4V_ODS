@@ -30,7 +30,6 @@ export class IniciativeListComponent {
     private router: Router
   ) {
     this.modalService.loading$.subscribe((loading) => {
-      console.log("Acabó del todo")
       return this.loading = loading
     }
     );

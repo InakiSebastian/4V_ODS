@@ -22,104 +22,120 @@
             <div class="col">
                 <div class="row mx-0 justify-content-end">
                     <div class="col p-0 d-flex justify-content-end">
-                        <button class="btn btnc-primary" type="button"(click)="toggleAdvancedFilters()">{{buttonText}}</button>
-                        <button class="btn btn-danger ms-4" type="button" (click)="cleanFilters()">Borrar filtros</button>    
+                        <button class="btn btnc-primary" type="button"
+                            (click)="toggleAdvancedFilters()">{{buttonText}}</button>
+                        <button class="btn btn-danger ms-4" type="button" (click)="cleanFilters()">Borrar
+                            filtros</button>
                     </div>
                 </div>
-                
+
             </div>
-            
+
         </form>
     </div>
 </nav>
 
-<div class="w-100">
-    <div *ngIf="showAdvancedFilters" class="m-5 w-100">
+
+<div *ngIf="showAdvancedFilters" class="p-5 pb-0 row mx-0">
+
+
+    <!-- Dimensiones -->
+    <div class="col-md-2">
         <div class="row">
+            <div class="col-12">
+                <h5>Dimensiones</h5>
+            </div>
+            <div class="col-12">
+                <button id="dimension1" type="button" name="toggle1" class="btn btnc-primary mb-2 w-100"
+                    data-bs-toggle="button" autocomplete="on" [class.active]="dimensions[0].value"
+                    (click)="dimensions[0].value = !dimensions[0].value; filterOds()"
+                    
+                    [ngClass]="{
+                        'btnc-primary': !dimensions[0].value,
+                        'btn-selected': dimensions[0].value
+                      }">Social</button>
+                <button id="dimension2" type="button" name="toggle2" class="btn btnc-primary mb-2 w-100"
+                    data-bs-toggle="button" autocomplete="on" [class.active]="dimensions[1].value"
+                    (click)="dimensions[1].value = !dimensions[1].value; filterOds()"
+                    
+                    [ngClass]="{
+                        'btnc-primary': !dimensions[1].value,
+                        'btn-selected': dimensions[1].value
+                      }">Económica</button>
+                <button id="dimension3" type="button" name="toggle3" class="btn btnc-primary mb-2 w-100"
+                    data-bs-toggle="button" autocomplete="on" [class.active]="dimensions[2].value"
+                    (click)="dimensions[2].value = !dimensions[2].value; filterOds()"
+                    
+                    [ngClass]="{
+                        'btnc-primary': !dimensions[2].value,
+                        'btn-selected': dimensions[2].value
+                      }">Medioambiental</button>
 
-            <!-- Dimensiones -->
-            <div class="col-md-1">
+            </div>
+        </div>
+    </div>
+    <!-- ODS Checkboxes -->
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-8">
+                <h5>ODS</h5>
+            </div>
+            <div class="col-4" data-bs-toggle="tooltip" data-bs-placement="top"
+                title="Solo los que contengan los marcados"
+                data-bs-original-title="Solo los que contengan los marcados">
+                <label for="now">Estricto</label>
+                <input class="form-check-label m-2" for="flexSwitchCheckDefault" type="checkbox"
+                    [(ngModel)]="estrictoODS" name="strictOds" (change)="applyFilters()">
+            </div>
+        </div>
+        <div class="scrollable-container">
+            <div *ngFor="let ods of filtredOds; let i = index">
                 <div class="row">
-                    <div class="col-12">
-                        <h5>Dimensiones</h5>
+                    <div class="col-2">
+                        <img [src]="'odsIcons/' + ods.id + '.png'" alt="" class="img-fluid">
                     </div>
-                    <div class="col-12">
-                        <button id="dimension1" type="button" name="toggle1" class="btn btn-outline-primary mb-2 w-100" data-bs-toggle="button" autocomplete="on" [class.active]="dimensions[0].value" (click)="dimensions[0].value = !dimensions[0].value; filterOds()">Social</button>
-                        <button id="dimension2" type="button" name="toggle2" class="btn btn-outline-primary mb-2 w-100" data-bs-toggle="button" autocomplete="on" [class.active]="dimensions[1].value" (click)="dimensions[1].value = !dimensions[1].value; filterOds()">Económica</button>
-                        <button id="dimension3" type="button" name="toggle3" class="btn btn-outline-primary mb-2 w-100" data-bs-toggle="button" autocomplete="on" [class.active]="dimensions[2].value" (click)="dimensions[2].value = !dimensions[2].value; filterOds()">Medioambiental</button>
-                     
-                    </div>
-                </div>
-            </div>
-            <!-- ODS Checkboxes -->
-            <div class="col-md-3">
-                <div class="row">
-                    <div class="col-8">
-                        <h5>ODS</h5>
-                    </div>
-                    <div class="col-4" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="Solo los que contengan los marcados"
-                        data-bs-original-title="Solo los que contengan los marcados">
-                        <label for="now">Estricto</label>
-                        <input class="form-check-label m-2" for="flexSwitchCheckDefault" type="checkbox"
-                            [(ngModel)]="estrictoODS" name="strictOds" (change)="applyFilters()">
-                    </div>
-                </div>
-                <div class="scrollable-container">
-                    <div *ngFor="let ods of filtredOds; let i = index">
-                        <div class="row">
-                            <div class="col-2">
-                                <img [src]="'odsIcons/' + ods.id + '.png'" alt="" class="img-fluid">
-                            </div>
-                            <div class="col-10 ">
-                                <input class="mt-3" type="checkbox" [(ngModel)]="this.selectedOds[i].selected"
-                                    name="ods{{ods.id}}" (change)="applyFilters()">
-                                {{ ods.description }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Cursos Checkboxes -->
-            <div class="col-md-3">
-                <h5>Filtrar por Curso</h5>
-                <div class="scrollable-container">
-                    <div class="row">
-                        <div class="col-12" *ngFor="let degree of degreeList; let i = index">
-                            <input class="mt-3" type="checkbox" [(ngModel)]="this.degreeList[i].selected"
-                                name="degree{{degree.id}}" (change)="applyFilters()">
-                            {{ degree.name }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Profesor ComboBox -->
-            <div class="col-md-2">
-                <h5>Seleccionar Profesor</h5>
-                <select class="form-select" name="selectedProfesor"
-                    [(ngModel)]="selectedTeacher"
-                    (change)="applyFilters()">
-                    <option value="-1">Todos los profesores</option>
-                    <option *ngFor="let teacher of teachersList" [value]="teacher.id">{{ teacher.name }}</option>
-                </select>
-            </div>
-
-            <!-- Innovadora checkbox -->
-            <div class="col-md-2 ms-4">
-                <h5>Filtrar por Innovadora</h5>
-                <div class="row">
-                    <div class="col-12">
-                        <input class="mt-3" type="checkbox" [(ngModel)]="innovative" name="innovative"
-                            (change)="applyFilters()">
-                        Innovadora
+                    <div class="col-10 ">
+                        <input class="mt-3" type="checkbox" [(ngModel)]="this.selectedOds[i].selected"
+                            name="ods{{ods.id}}" (change)="applyFilters()">
+                        {{ ods.description }}
                     </div>
                 </div>
             </div>
         </div>
-        <hr>
+
     </div>
 
+    <!-- Ciclos Checkboxes -->
+    <div class="col-md-4">
+        <h5>Filtrar por Ciclo</h5>
+        <div class="scrollable-container">
+            <div class="row">
+                <div class="col-12" *ngFor="let degree of degreeList; let i = index">
+                    <input class="mt-3" type="checkbox" [(ngModel)]="this.degreeList[i].selected"
+                        name="degree{{degree.id}}" (change)="applyFilters()">
+                    {{ degree.name }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profesor ComboBox -->
+    <div class="col-md-3">
+        <h5>Seleccionar Profesor</h5>
+        <select class="form-select" name="selectedProfesor" [(ngModel)]="selectedTeacher" (change)="applyFilters()">
+            <option value="-1">Todos los profesores</option>
+            <option *ngFor="let teacher of teachersList" [value]="teacher.id">{{ teacher.name }}</option>
+        </select>
+        <hr class="mb-4 mt-4">
+        <!-- Innovadora checkbox -->
+        <h5>Filtrar por Innovadora</h5>
+        <div class="row">
+            <div class="col-12">
+                <input class="mt-3" type="checkbox" [(ngModel)]="innovative" name="innovative"
+                    (change)="applyFilters()">
+                Innovadora
+            </div>
+        </div>
+    </div>
+    <hr class="mt-4">
 </div>

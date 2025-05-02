@@ -38,9 +38,9 @@ export class FilterComponent {
   estrictoODS: boolean = false;
   filtredOds: Ods[] = [];
   dimensions = [
-    { id: 1, value: false },
-    { id: 2, value: false },
-    { id: 3, value: false }
+    { dimension: "Social", value: false },
+    { dimension: "Económica", value: false },
+    { dimension: "Medioambiental", value: false }
   ];
 
   iniciativeTypes: string[] = [];
@@ -54,7 +54,11 @@ export class FilterComponent {
   ) {
     
 
-    this.modalService.recharge$.subscribe(async () => {
+    
+  }
+
+  async ngOnInit() {
+    await this.modalService.recharge$.subscribe(async () => {
       this.iniciativeList = await this.iniciativeService.getCompliteIniciativas();
       console.log("Se hace",this.iniciativeList)
       this.iniciativeList.forEach(iniciative => {
@@ -63,9 +67,7 @@ export class FilterComponent {
       });
       this.applyFilters();
     });
-  }
 
-  async ngOnInit() {
     this.odsList = await this.odsService.getOds();
     this.parseToCheckObject();
     this.teachersList = await this.teacherService.getTeachers();
@@ -102,14 +104,14 @@ export class FilterComponent {
   }
 
   filterOds() {
-    //if (this.dimensions.every(dimension => !dimension.value)) {
-    //  this.filtredOds = this.odsList;
-    //} else {
-    //  this.filtredOds = this.odsList.filter(ods =>
-    //    //this.dimensions.some(dim => dim.value && dim.id === ods.dimension) TODO NO FUNCIONA POR QUE SE HA CAMBIADO DE idDimension a dimension ( el nombre de la dimension)
-    //  );
-    //  
-    //}
+    if (this.dimensions.every(dimension => !dimension.value)) {
+      this.filtredOds = this.odsList;
+    } else {
+      this.filtredOds = this.odsList.filter(ods =>
+        this.dimensions.some(dim => dim.value && dim.dimension.toLowerCase() === ods.dimension.toLowerCase())
+      );
+      
+    }
     
     
 

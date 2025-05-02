@@ -1,3 +1,5 @@
+@use '../../../styles/variables' as var;
+
 .scrollable-container {
     max-height: 200px;
     overflow-y: auto; /* Agrega scroll solo si es necesario */
@@ -28,24 +30,10 @@
 }
 
 
-#dimension1{
-    &:hover{
-        background-color: #9cdbff !important;
-        color: rgb(0, 14, 62) !important;
-    }
-}
-
-#dimension2{
-    &:hover{
-        background-color: #aaff9c !important;
-        color: rgb(0, 14, 62) !important;
-    }
-}
-
-#dimension3{
-    &:hover{
-        background-color: #ff9c9c !important;
-        color: rgb(0, 14, 62) !important;
-    }
-}
-
+.btn-selected {
+    background-color: var.$primary-success !important; // color alternativo para cuando está activo
+    color: var.$tertiary !important;
+    box-shadow: 0 0 10px var.$primary-success !important;
+    border-color: var.$blackBlue !important;
+  }
+  
