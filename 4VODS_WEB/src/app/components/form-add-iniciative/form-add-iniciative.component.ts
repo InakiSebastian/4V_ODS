@@ -274,7 +274,7 @@ export class FormAddIniciativeComponent {
       this.selectedOds = this.odsService.clearSelectedOds();
       this.selectedGoals = this.goalService.clearSelectedGoals();
 
-      this.router.navigate(['/iniciatives/' + (newIni as CompliteIniciative).id]);
+      this.router.navigate(['/iniciatives/']);
       
       console.log(newIniciative);
     }

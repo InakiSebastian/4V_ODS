@@ -15,11 +15,11 @@ export class NewIniciative {
 
     public teachers: number[];
     public modules: number[];
-    public diffusions: number[]; // Debería ser diffusion
+    public diffusions: { type: string, link: string }[]; // Debería ser diffusion
     public goals: number[]
     public companies: number[]
 
-    constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, schoolYear: string, ods: number[], iniciativeType: IniciativeType, innovative: number, teachers: number[], modules: number[], diffusions: number[], goals: number[], companies: number[]) {
+    constructor(id: number, name: string, description: string, startDate: Date, endDate: (Date|null), hours: number, schoolYear: string, ods: number[], iniciativeType: IniciativeType, innovative: number, teachers: number[], modules: number[], diffusions: { type: string, link: string }[], goals: number[], companies: number[]) {
         this.id = id;
         this.name = name;
         this.description = description;

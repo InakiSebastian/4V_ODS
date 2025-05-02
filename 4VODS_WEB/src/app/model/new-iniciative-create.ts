@@ -1,4 +1,3 @@
-import { Difusion } from "./difusion";
 import { IniciativeType } from "./iniciativeType";
 
 export class NewIniciativeCreate {
@@ -14,11 +13,11 @@ export class NewIniciativeCreate {
 
     public teachers: number[];
     public modules: number[];
-    public diffusions: any[]; // Debería ser diffusion
+    public diffusions: { type: string, link: string }[]; // Debería ser diffusion
     public goals: number[]
     public companies: number[]
 
-    constructor(name: string, description: string, startDate: Date, endDate: (Date | null), hours: number, schoolYear: string, ods: number[], iniciativeType: IniciativeType, innovative: number, teachers: number[], modules: number[], diffusions: any[], goals: number[], companies: number[]) {
+    constructor(name: string, description: string, startDate: Date, endDate: (Date | null), hours: number, schoolYear: string, ods: number[], iniciativeType: IniciativeType, innovative: number, teachers: number[], modules: number[], diffusions: { type: string, link: string }[], goals: number[], companies: number[]) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;

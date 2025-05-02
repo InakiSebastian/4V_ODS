@@ -41,8 +41,6 @@ export class IniciativeListComponent {
     this.loading = false
   }
 
-  //ngAfterViewInit() { this.loading = false}
-
   setIdIniciativa($event: MouseEvent, id: number) {
     $event.preventDefault();
     this.modalService.changeIdIniciative(id);

@@ -93,7 +93,9 @@ export class CloneIniciativaComponent {
         this.selectedIniciative!.innovative,
         this.selectedIniciative!.teachers.map((t) => t.id),
         this.selectedIniciative!.modules.map((m) => m.id),
-        this.selectedIniciative!.diffusions.map((d) => d.idDiffusion),
+        this.selectedIniciative!.diffusions.map((d) => {
+          return { type: d.type, link: d.link };
+        }),
         this.selectedIniciative!.goals.map((g) => g.id),
         this.selectedIniciative!.externalEntities.map((e) => e.id)
       )
