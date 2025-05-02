@@ -212,8 +212,8 @@ export class IniciativeDetailComponent {
     if (difusion.type.toLocaleLowerCase().includes('tiktok')) {
       return 'rrss/tiktok.png';
     }
-    if (difusion.type.toLocaleLowerCase().includes('x')) {
-      return 'rrss/X.png';
+    if (difusion.type.toLocaleLowerCase().includes('x') || difusion.type.toLocaleLowerCase().includes('twitter')) {
+      return 'rrss/x.png';
     }
     return 'rrss/rrss-generico.png';
   }
