@@ -3,6 +3,7 @@ import { FormArray, FormGroup } from '@angular/forms';
 import { IniciativeType } from '../model/iniciativeType';
 import { TeacherService } from './teacher.service';
 import { ModuleService } from './module.service';
+import { ExternalEntity } from '../model/external-entity';
 
 @Injectable({
   providedIn: 'root'
@@ -82,12 +83,7 @@ export class ValidatorService {
     return true;
   }
 
-  validateOds(selectedOds: any[], selectedGoals: any[]) {
-    // Validar ODS
-    if (!selectedOds || selectedOds.length === 0) {
-      alert('Debe seleccionar al menos un ODS.');
-      return false;
-    }
+  validateOds( selectedGoals: any[]) {
 
     // Validar metas
     if (!selectedGoals || selectedGoals.length === 0) {
@@ -95,6 +91,14 @@ export class ValidatorService {
       return false;
     }
 
+    return true;
+  }
+
+  validateExternal(externEnties: ExternalEntity[]) {
+    if(externEnties.length == 0){
+      alert('Debe seleccionar al menos una entidad externa.');
+      return false;
+    }
     return true;
   }
 }

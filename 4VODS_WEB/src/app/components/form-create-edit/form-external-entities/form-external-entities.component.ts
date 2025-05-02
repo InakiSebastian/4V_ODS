@@ -36,7 +36,9 @@ export class FormExternalEntitiesComponent {
   }
 
   async ngOnInit(){
+    
     this.externalEntities = this.externalEntitiesService.selectedExternalEntity || this.externalEntities;
+    this.externalEntitiesService.selectedExternalEntity = this.externalEntities
     this.allEntities = await this.externalEntitiesService.getExternalEntities();
 
     this.filterEntities(null)
@@ -76,6 +78,7 @@ export class FormExternalEntitiesComponent {
     else this.externalEntities!.push(this.filtredEntities.find(entity => entity.id == idEntity)!);
     this.setRestUnSelected()
     this.filterEntities(this.serched);
+    this.externalEntitiesService.selectedExternalEntity = this.externalEntities
   }
 
   removeTeacher(event: Event, id: number | null) {
@@ -84,6 +87,7 @@ export class FormExternalEntitiesComponent {
     else this.externalEntities = this.externalEntities!.filter(t => t.id !== id);
     this.filterEntities(this.serched);
     this.setRestUnSelected()
+    this.externalEntitiesService.selectedExternalEntity = this.externalEntities
   }
 
   setRestUnSelected(){

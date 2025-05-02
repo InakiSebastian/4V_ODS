@@ -110,22 +110,26 @@ export class FormAddIniciativeComponent {
   
 
   chooseSection(id: number): void {
-    // if(this.currentSection > id){
-    //   this.currentSection = id;
-    // }
+    if(this.currentSection > id){
+      this.currentSection = id;
+    }
     
-    // if(this.currentSection === 1 && !this.validatorService.validateDetails(this.detailsI)){
-    //   return;
-    // }
+    if(this.currentSection === 1 && !this.validatorService.validateDetails(this.detailsI)){
+      return;
+    }
 
     
-    // if(this.currentSection === 2 && !this.validatorService.validateAcademic()){
-    //   return;
-    // }
+    if(this.currentSection === 2 && !this.validatorService.validateAcademic()){
+      return;
+    }
+    this.goalService.setSelectedGoals
+    if(this.currentSection === 3 && !this.validatorService.validateOds(this.goalService.selectedGoals)){
+      return;
+    }
 
-    // if(this.currentSection === 3 && !this.validatorService.validateOds(this.selectedOds, this.selectedGoals)){
-    //   return;
-    // }
+    if(this.currentSection === 4 && !this.validatorService.validateExternal(this.externalEntityService.selectedExternalEntity || [])){
+      return;
+    }
     
     this.currentSection = id;
   }
@@ -139,7 +143,11 @@ export class FormAddIniciativeComponent {
       return;
     }
 
-    if(this.currentSection === 3 && !this.validatorService.validateOds(this.selectedOds, this.selectedGoals)){
+    if(this.currentSection === 3 && !this.validatorService.validateOds(this.goalService.selectedGoals)){
+      return;
+    }
+
+    if(this.currentSection === 4 && !this.validatorService.validateExternal(this.externalEntityService.selectedExternalEntity || [])){
       return;
     }
     
